@@ -10,8 +10,6 @@
 	
 	
 2、使用AES进行密码加密
-3、引入Log4j日志管理插件
-	
-	
-3、使用BaseServlet进行方法调度，目的是同一个Servlet处理不同的请求，根据method进行区分，使用Java的反射技术
-4、引入了C3p0数据库连接池
+3、引入Log4j日志管理插件	
+4、使用BaseServlet进行方法调度，目的是同一个Servlet处理不同的请求，根据method进行区分，使用Java的反射技术
+5、引入了C3p0数据库连接池
