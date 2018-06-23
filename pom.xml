@@ -72,10 +72,27 @@
             <version>4.12</version>
         </dependency>
 
+        <!--自己的工具类-->
+        <dependency>
+            <groupId>com.taowd</groupId>
+            <artifactId>common-utils</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
 
     </dependencies>
     <build>
         <plugins>
+            <!--跳过测试的插件-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.18.1</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
             <!-- 配置Tomcat插件 -->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>

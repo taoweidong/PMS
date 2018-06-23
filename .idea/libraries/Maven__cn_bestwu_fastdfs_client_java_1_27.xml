@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: cn.bestwu:fastdfs-client-java:1.27">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/cn/bestwu/fastdfs-client-java/1.27/fastdfs-client-java-1.27.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/cn/bestwu/fastdfs-client-java/1.27/fastdfs-client-java-1.27-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/cn/bestwu/fastdfs-client-java/1.27/fastdfs-client-java-1.27-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
