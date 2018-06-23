@@ -21,3 +21,9 @@
  1. 引入Maven框架进行项目管理
  2. 使用PMS.war包部署，可直接运行本项目2.0版本，数据库将连接远程Mysql数据库
  
+ 
+ # V3.0版本计划
+ - 引入Spring框架，使用JdbcTemplate操作数据库，完善日志处理
+ - 引入Mybatis框架
+ - 引入SpringMVC框架
+ 
