@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Client Side Pagination in TreeGrid - jQuery EasyUI Demo</title>
-	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
-	<link rel="stylesheet" type="text/css" href="../demo.css">
-	<script type="text/javascript" src="../../jquery.min.js"></script>
-	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+<meta charset="UTF-8">
+<title>Client Side Pagination in TreeGrid - jQuery EasyUI Demo</title>
+<link rel="stylesheet" type="text/css"
+	href="../../themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+<link rel="stylesheet" type="text/css" href="../demo.css">
+<script type="text/javascript" src="../../jquery.min.js"></script>
+<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
 </head>
 <body>
 	<h2>Client Side Pagination in TreeGrid</h2>
 	<div class="demo-info">
 		<div class="demo-tip icon-tip"></div>
-		<div>This sample shows how to implement client side pagination in TreeGrid.</div>
+		<div>This sample shows how to implement client side pagination
+			in TreeGrid.</div>
 	</div>
-	<div style="margin:10px 0;"></div>
-	<table id="tg" class="easyui-treegrid" title="Client Side Pagination" style="width:700px;height:250px"
-			data-options="
+	<div style="margin: 10px 0;"></div>
+	<table id="tg" class="easyui-treegrid" title="Client Side Pagination"
+		style="width: 700px; height: 250px"
+		data-options="
 				iconCls: 'icon-ok',
 				rownumbers: true,
 				animate: true,
@@ -38,7 +41,8 @@
 				<th data-options="field:'persons',width:60,align:'right'">Persons</th>
 				<th data-options="field:'begin',width:80">Begin Date</th>
 				<th data-options="field:'end',width:80">End Date</th>
-				<th data-options="field:'progress',width:120,formatter:formatProgress">Progress</th>
+				<th
+					data-options="field:'progress',width:120,formatter:formatProgress">Progress</th>
 			</tr>
 		</thead>
 	</table>

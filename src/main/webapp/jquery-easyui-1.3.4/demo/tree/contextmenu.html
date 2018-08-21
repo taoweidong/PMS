@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Tree Context Menu - jQuery EasyUI Demo</title>
-	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
-	<link rel="stylesheet" type="text/css" href="../demo.css">
-	<script type="text/javascript" src="../../jquery.min.js"></script>
-	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+<meta charset="UTF-8">
+<title>Tree Context Menu - jQuery EasyUI Demo</title>
+<link rel="stylesheet" type="text/css"
+	href="../../themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+<link rel="stylesheet" type="text/css" href="../demo.css">
+<script type="text/javascript" src="../../jquery.min.js"></script>
+<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
 </head>
 <body>
 	<h2>Tree Context Menu</h2>
@@ -15,9 +16,9 @@
 		<div class="demo-tip icon-tip"></div>
 		<div>Right click on a node to display context menu.</div>
 	</div>
-	<div style="margin:10px 0;">
-	</div>
-	<ul id="tt" class="easyui-tree" data-options="
+	<div style="margin: 10px 0;"></div>
+	<ul id="tt" class="easyui-tree"
+		data-options="
 			url: 'tree_data1.json',
 			method: 'get',
 			animate: true,
@@ -30,7 +31,7 @@
 				});
 			}
 		"></ul>
-	<div id="mm" class="easyui-menu" style="width:120px;">
+	<div id="mm" class="easyui-menu" style="width: 120px;">
 		<div onclick="append()" data-options="iconCls:'icon-add'">Append</div>
 		<div onclick="removeit()" data-options="iconCls:'icon-remove'">Remove</div>
 		<div class="menu-sep"></div>

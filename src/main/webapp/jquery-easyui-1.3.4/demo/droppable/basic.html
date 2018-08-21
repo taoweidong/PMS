@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Basic Droppable - jQuery EasyUI Demo</title>
-	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
-	<link rel="stylesheet" type="text/css" href="../demo.css">
-	<script type="text/javascript" src="../../jquery.min.js"></script>
-	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+<meta charset="UTF-8">
+<title>Basic Droppable - jQuery EasyUI Demo</title>
+<link rel="stylesheet" type="text/css"
+	href="../../themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+<link rel="stylesheet" type="text/css" href="../demo.css">
+<script type="text/javascript" src="../../jquery.min.js"></script>
+<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
 </head>
 <body>
 	<h2>Basic Droppable</h2>
@@ -15,8 +16,8 @@
 		<div class="demo-tip icon-tip"></div>
 		<div>Drag the boxed on left to the target area on right.</div>
 	</div>
-	<div style="margin:10px 0;"></div>
-	<div style="float:left;width:200px;margin-right:20px;">
+	<div style="margin: 10px 0;"></div>
+	<div style="float: left; width: 200px; margin-right: 20px;">
 		<div class="title">Source</div>
 		<div>
 			<div class="dragitem">Apple</div>
@@ -24,10 +25,10 @@
 			<div class="dragitem">Orange</div>
 		</div>
 	</div>
-	<div style="float:left;width:200px;">
+	<div style="float: left; width: 200px;">
 		<div class="title">Target</div>
 		<div class="easyui-droppable targetarea"
-				data-options="
+			data-options="
 					accept: '.dragitem',
 					onDragEnter:function(e,source){
 						$(this).html('enter');
@@ -41,27 +42,30 @@
 				">
 		</div>
 	</div>
-	<div style="clear:both"></div>
+	<div style="clear: both"></div>
 	<style type="text/css">
-		.title{
-			margin-bottom:10px;
-		}
-		.dragitem{
-			border:1px solid #ccc;
-			width:50px;
-			height:50px;
-			margin-bottom:10px;
-		}
-		.targetarea{
-			border:1px solid red;
-			height:150px;
-		}
-		.proxy{
-			border:1px solid #ccc;
-			width:80px;
-			background:#fafafa;
-		}
-	</style>
+.title {
+	margin-bottom: 10px;
+}
+
+.dragitem {
+	border: 1px solid #ccc;
+	width: 50px;
+	height: 50px;
+	margin-bottom: 10px;
+}
+
+.targetarea {
+	border: 1px solid red;
+	height: 150px;
+}
+
+.proxy {
+	border: 1px solid #ccc;
+	width: 80px;
+	background: #fafafa;
+}
+</style>
 	<script>
 		$(function(){
 			$('.dragitem').draggable({

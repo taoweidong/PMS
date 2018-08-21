@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>ComboBox Actions - jQuery EasyUI Demo</title>
-	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
-	<link rel="stylesheet" type="text/css" href="../demo.css">
-	<script type="text/javascript" src="../../jquery.min.js"></script>
-	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+<meta charset="UTF-8">
+<title>ComboBox Actions - jQuery EasyUI Demo</title>
+<link rel="stylesheet" type="text/css"
+	href="../../themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+<link rel="stylesheet" type="text/css" href="../demo.css">
+<script type="text/javascript" src="../../jquery.min.js"></script>
+<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
 </head>
 <body>
 	<h2>ComboBox</h2>
@@ -15,12 +16,16 @@
 		<div class="demo-tip icon-tip"></div>
 		<div>Click the buttons below to perform actions.</div>
 	</div>
-	
-	<div style="margin:10px 0;">
-		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="setvalue()">SetValue</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="alert($('#state').combobox('getValue'))">GetValue</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="$('#state').combobox('disable')">Disable</a>
-		<a href="javascript:void(0)" class="easyui-linkbutton" onclick="$('#state').combobox('enable')">Enable</a>
+
+	<div style="margin: 10px 0;">
+		<a href="javascript:void(0)" class="easyui-linkbutton"
+			onclick="setvalue()">SetValue</a> <a href="javascript:void(0)"
+			class="easyui-linkbutton"
+			onclick="alert($('#state').combobox('getValue'))">GetValue</a> <a
+			href="javascript:void(0)" class="easyui-linkbutton"
+			onclick="$('#state').combobox('disable')">Disable</a> <a
+			href="javascript:void(0)" class="easyui-linkbutton"
+			onclick="$('#state').combobox('enable')">Enable</a>
 	</div>
 	<script type="text/javascript">
 		function setvalue(){
@@ -31,8 +36,9 @@
 			});
 		}
 	</script>
-	
-	<select id="state" class="easyui-combobox" name="state" style="width:200px;">
+
+	<select id="state" class="easyui-combobox" name="state"
+		style="width: 200px;">
 		<option value="AL">Alabama</option>
 		<option value="AK">Alaska</option>
 		<option value="AZ">Arizona</option>

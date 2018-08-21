@@ -1,4 +1,5 @@
-<%@ page language="java" import="java.util.*,java.lang.*,com.pms.model.*;" pageEncoding="UTF-8"%>
+<%@ page language="java"
+	import="java.util.*,java.lang.*,com.pms.model.*;" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -32,12 +33,15 @@
 	}
 %>
 <!-- 引用CSS样式文件和 javaScript文件 -->
-<link rel="stylesheet" type="text/css" href="jquery-easyui-1.3.4/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css"
+	href="jquery-easyui-1.3.4/themes/default/easyui.css" />
 <link rel="stylesheet" type="text/css" href="css/wu.css" />
 <link rel="stylesheet" type="text/css" href="css/icon.css" />
 <script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
-<script type="text/javascript" src="jquery-easyui-1.3.4/jquery.easyui.min.js"></script>
-<script type="text/javascript" src="jquery-easyui-1.3.4/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript"
+	src="jquery-easyui-1.3.4/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="jquery-easyui-1.3.4/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript">
 	/**
 	 *功能：修改密码 时 校验旧密码是否在正确
@@ -208,12 +212,13 @@
 </script>
 
 </head>
-<body style="margin:5px;">
+<body style="margin: 5px;">
 	<%
 		if ("user".equals((String) session.getAttribute("userRole"))) {
 	%>
-	<table id="dg" title="职工信息" class="easyui-datagrid" fitColumns="true" pagination="true" fit="true" pageSize="20" rownumbers="true" url="PersionInfo"
-		toolbar="#tb">
+	<table id="dg" title="职工信息" class="easyui-datagrid" fitColumns="true"
+		pagination="true" fit="true" pageSize="20" rownumbers="true"
+		url="PersionInfo" toolbar="#tb">
 		<thead>
 			<tr>
 				<th field="cb" checkbox="true"></th>
@@ -234,8 +239,9 @@
 	<%
 		} else {
 	%>
-	<table id="dg" title="个人信息" class="easyui-datagrid" fitColumns="true" pagination="true" fit="true" pageSize="20" rownumbers="true" url="PersionInfo"
-		toolbar="#tb">
+	<table id="dg" title="个人信息" class="easyui-datagrid" fitColumns="true"
+		pagination="true" fit="true" pageSize="20" rownumbers="true"
+		url="PersionInfo" toolbar="#tb">
 		<thead>
 			<tr>
 				<th field="cb" checkbox="true"></th>
@@ -257,106 +263,106 @@
 	%>
 	<div id="tb">
 		<div>
-			<a href="javascript:openStudentModifyDialog()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改</a>
+			<a href="javascript:openStudentModifyDialog()"
+				class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改</a>
 		</div>
 
 	</div>
 	<%
 		if ("user".equals((String) session.getAttribute("userRole"))) {
 	%>
-	<div id="dlg" class="easyui-dialog" style="width: 570px;height: 350px;padding: 10px 20px" closed="true" buttons="#dia-buttons">
+	<div id="dlg" class="easyui-dialog"
+		style="width: 570px; height: 350px; padding: 10px 20px" closed="true"
+		buttons="#dia-buttons">
 		<form id="fm" method="post">
 			<table>
 				<tr>
 					<td width="80" align="right">姓名：</td>
-					<td>
-						<input type="text" name="EMP_NAME" id="EMP_NAME" class="easyui-validatebox" required="true" />
-					</td>
+					<td><input type="text" name="EMP_NAME" id="EMP_NAME"
+						class="easyui-validatebox" required="true" /></td>
 				</tr>
 				<tr>
 					<td width="80" align="right">性别：</td>
-					<td>
-						<select class="easyui-combobox" name="EMP_SEX" id="EMP_SEX" editable="false" panelHeight="auto" style="width:135px;">
+					<td><select class="easyui-combobox" name="EMP_SEX"
+						id="EMP_SEX" editable="false" panelHeight="auto"
+						style="width: 135px;">
 							<option value="">请选择...</option>
 							<option value="M">男</option>
 							<option value="F">女</option>
-						</select>
-					</td>
+					</select></td>
 					<td></td>
 					<td width="80" align="right">出生日期：</td>
-					<td>
-						<input class="easyui-datebox" id="EMP_Birthday" name="EMP_Birthday" editable="false" required="true" />
-					</td>
+					<td><input class="easyui-datebox" id="EMP_Birthday"
+						name="EMP_Birthday" editable="false" required="true" /></td>
 				</tr>
 				<tr>
 					<td width="80" align="right">政治面貌：</td>
-					<td>
-						<input class="easyui-combobox" id="PS_TYPE" name="PS_TYPE"
-							data-options=" panelHeight:'auto',editable:false,valueField:'PS_TYPE',textField:'PS_Name',url:'PoliticalStatusComboList'" />
+					<td><input class="easyui-combobox" id="PS_TYPE" name="PS_TYPE"
+						data-options=" panelHeight:'auto',editable:false,valueField:'PS_TYPE',textField:'PS_Name',url:'PoliticalStatusComboList'" />
 					</td>
 					<td></td>
 					<td width="80" align="right">电话：</td>
-					<td>
-						<input type="text" name="EMP_Phone" id="EMP_Phone" class="easyui-validatebox" required="true" maxlength="11" validType="phone" />
-					</td>
+					<td><input type="text" name="EMP_Phone" id="EMP_Phone"
+						class="easyui-validatebox" required="true" maxlength="11"
+						validType="phone" /></td>
 				</tr>
 				<tr>
 					<td width="80" align="right">地址：</td>
-					<td colspan="4">
-						<textarea rows="1" cols="60" name="EMP_Address" id="EMP_Address"></textarea>
-					</td>
+					<td colspan="4"><textarea rows="1" cols="60"
+							name="EMP_Address" id="EMP_Address"></textarea></td>
 				</tr>
 				<tr>
 					<td width="80" align="right">备注：</td>
-					<td colspan="4">
-						<textarea rows="7" cols="60" name="ext1" id="ext1"></textarea>
-					</td>
+					<td colspan="4"><textarea rows="7" cols="60" name="ext1"
+							id="ext1"></textarea></td>
 				</tr>
 			</table>
 		</form>
 	</div>
 	<div id="dia-buttons">
-		<a href="javascript:saveStudent()" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
-		<a href="javascript:closeStudentDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+		<a href="javascript:saveStudent()" class="easyui-linkbutton"
+			iconCls="icon-ok">保存</a> <a href="javascript:closeStudentDialog()"
+			class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
 	<%
 		} else {
 	%>
 
-	<div id="dlg" class="easyui-dialog" style="width: 570px;height: 300px;padding: 10px 20px" modal="true" closed="true" buttons="#dia-buttons">
+	<div id="dlg" class="easyui-dialog"
+		style="width: 570px; height: 300px; padding: 10px 20px" modal="true"
+		closed="true" buttons="#dia-buttons">
 		<form id="fm" method="post">
 			<table>
 				<tr>
 					<td width="100" align="right">登录账号：</td>
-					<td>
-						<input style="width: 150px" readonly="readonly" type="text" name="ADMIN_NO" id="ADMIN_NO" class="easyui-validatebox" required="true" />
-					</td>
+					<td><input style="width: 150px" readonly="readonly"
+						type="text" name="ADMIN_NO" id="ADMIN_NO"
+						class="easyui-validatebox" required="true" /></td>
 				</tr>
 				<tr>
 					<td width="100" align="right">姓名：</td>
-					<td>
-						<input style="width: 150px" type="text" name="ADMIN_NAME" id="ADMIN_NAME" class="easyui-validatebox" required="true" />
-					</td>
+					<td><input style="width: 150px" type="text" name="ADMIN_NAME"
+						id="ADMIN_NAME" class="easyui-validatebox" required="true" /></td>
 					<td></td>
 					<td width="100" align="right">电话：</td>
-					<td>
-						<input style="width: 150px" maxlength="11" type="text" name="ADMIN_PHONE" id="ADMIN_PHONE" class="easyui-validatebox" required="true" />
-					</td>
+					<td><input style="width: 150px" maxlength="11" type="text"
+						name="ADMIN_PHONE" id="ADMIN_PHONE" class="easyui-validatebox"
+						required="true" /></td>
 				</tr>
 
 				<tr>
 					<td width="100" align="right">备注：</td>
-					<td colspan="4">
-						<textarea rows="4" cols="60" name="Ext1" id="Ext1"></textarea>
-					</td>
+					<td colspan="4"><textarea rows="4" cols="60" name="Ext1"
+							id="Ext1"></textarea></td>
 				</tr>
 
 			</table>
 		</form>
 	</div>
 	<div id="dia-buttons">
-		<a href="javascript:saveAdmin()" class="easyui-linkbutton" iconCls="icon-ok">保存</a>
-		<a href="javascript:closeStudentDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+		<a href="javascript:saveAdmin()" class="easyui-linkbutton"
+			iconCls="icon-ok">保存</a> <a href="javascript:closeStudentDialog()"
+			class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
 
 	<%

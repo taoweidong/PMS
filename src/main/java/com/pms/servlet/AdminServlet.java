@@ -25,9 +25,8 @@ import com.pms.util.ResponseUtil;
 
 /**
  * 
- * @author Taowd
- * 功        能：管理员处理器，处理管理员增加，修改，删除，获取信息列表，设置超级管理员，取消超级管理员等功能
- * 编写时间：2017-5-6-下午12:02:06
+ * @author Taowd 功 能：管理员处理器，处理管理员增加，修改，删除，获取信息列表，设置超级管理员，取消超级管理员等功能
+ *         编写时间：2017-5-6-下午12:02:06
  */
 public class AdminServlet extends BaseServlet {
 
@@ -38,16 +37,14 @@ public class AdminServlet extends BaseServlet {
 
 	/**
 	 * 
-	 * Author:Taowd
-	 * 功能：更细管理员信息
-	 * 开发日期：2017-5-6-上午10:34:29
+	 * Author:Taowd 功能：更细管理员信息 开发日期：2017-5-6-上午10:34:29
+	 * 
 	 * @param request
 	 * @param response
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public void Update(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	public void Update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Log4jHelper.info("更新管理员信息");
 		request.setCharacterEncoding("utf-8");
 		String ADMIN_NO = request.getParameter("ADMIN_NO");
@@ -61,8 +58,7 @@ public class AdminServlet extends BaseServlet {
 		adminBean.setAdmin_id(ADMIN_ID);
 		adminBean.setAdmin_no(ADMIN_NO);
 		if (!StringUtils.isEmpty(ADMIN_PWD)) {
-			adminBean.setAdmin_pwd(AESUtil.parseByte2HexStr(AESUtil
-					.encrypt(ADMIN_PWD)));
+			adminBean.setAdmin_pwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(ADMIN_PWD)));
 		}
 		adminBean.setAdmin_name(ADMIN_NAME);
 		adminBean.setAdmin_phone(ADMIN_PHONE);
@@ -84,8 +80,8 @@ public class AdminServlet extends BaseServlet {
 
 	}
 
-	public void AdminPersionUpdate(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+	public void AdminPersionUpdate(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		Log4jHelper.info("更新管理员个人信息");
 		request.setCharacterEncoding("utf-8");
@@ -100,8 +96,7 @@ public class AdminServlet extends BaseServlet {
 		adminBean.setAdmin_id(ADMIN_ID);
 		adminBean.setAdmin_no(ADMIN_NO);
 		if (!StringUtils.isEmpty(ADMIN_PWD)) {
-			adminBean.setAdmin_pwd(AESUtil.parseByte2HexStr(AESUtil
-					.encrypt(ADMIN_PWD)));
+			adminBean.setAdmin_pwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(ADMIN_PWD)));
 		}
 		adminBean.setAdmin_name(ADMIN_NAME);
 		adminBean.setAdmin_phone(ADMIN_PHONE);
@@ -126,15 +121,13 @@ public class AdminServlet extends BaseServlet {
 
 	/**
 	 * 
-	 * Author:Taowd
-	 * 功能：管理员信息保存
-	 * 开发日期：2017-5-5-下午8:42:45
+	 * Author:Taowd 功能：管理员信息保存 开发日期：2017-5-5-下午8:42:45
+	 * 
 	 * @param request
 	 * @param response
-	 * @throws Exception 
+	 * @throws Exception
 	 */
-	public void AdminAdd(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public void AdminAdd(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		Log4jHelper.info("新增管理员个人信息");
 		request.setCharacterEncoding("utf-8");
@@ -149,8 +142,7 @@ public class AdminServlet extends BaseServlet {
 		adminBean.setAdmin_id(ADMIN_ID);
 		adminBean.setAdmin_no(ADMIN_NO);
 		if (!StringUtils.isEmpty(ADMIN_PWD)) {
-			adminBean.setAdmin_pwd(AESUtil.parseByte2HexStr(AESUtil
-					.encrypt(ADMIN_PWD)));
+			adminBean.setAdmin_pwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(ADMIN_PWD)));
 		}
 		adminBean.setAdmin_name(ADMIN_NAME);
 		adminBean.setAdmin_phone(ADMIN_PHONE);
@@ -184,15 +176,13 @@ public class AdminServlet extends BaseServlet {
 
 	/**
 	 * 
-	 * Author:Taowd
-	 * 功能：删除管理员信息
-	 * 开发日期：2017-5-6-上午11:38:45
+	 * Author:Taowd 功能：删除管理员信息 开发日期：2017-5-6-上午11:38:45
+	 * 
 	 * @param request
 	 * @param response
 	 * @throws Exception
 	 */
-	public void AdminDelete(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public void AdminDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		Log4jHelper.info("进入删除管理员的控制器");
 		String delIds = request.getParameter("delIds");// 取得删除的id字符串集合
@@ -215,15 +205,13 @@ public class AdminServlet extends BaseServlet {
 
 	/**
 	 * 
-	 * Author:Taowd
-	 * 功能：获取管理员信息列表
-	 * 开发日期：2017-5-6-上午11:51:20
+	 * Author:Taowd 功能：获取管理员信息列表 开发日期：2017-5-6-上午11:51:20
+	 * 
 	 * @param request
 	 * @param response
 	 * @throws Exception
 	 */
-	public void AdminInfoList(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public void AdminInfoList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		Log4jHelper.info("获取管理员信息列表");
 		Administrator adminInfo = new Administrator();
@@ -236,14 +224,12 @@ public class AdminServlet extends BaseServlet {
 
 		String page = request.getParameter("page");// 取得请求的参数
 		String rows = request.getParameter("rows");
-		PageBean pageBean = new PageBean(Integer.parseInt(page),
-				Integer.parseInt(rows));
+		PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
 		Connection con = null;
 		try {
 			con = DbUtils.getConnection();
 			JSONObject result = new JSONObject();
-			JSONArray jsonArray = JsonUtil.formatRsToJsonArray(adminDao
-					.GetAdminInfo(con, pageBean, adminInfo));// 取得json数据
+			JSONArray jsonArray = JsonUtil.formatRsToJsonArray(adminDao.GetAdminInfo(con, pageBean, adminInfo));// 取得json数据
 			int total = adminDao.GetAdminCount(adminInfo);// 总记录数
 			result.put("rows", jsonArray);// 封装数据
 			result.put("total", total);
@@ -262,15 +248,13 @@ public class AdminServlet extends BaseServlet {
 
 	/**
 	 * 
-	 * Author:Taowd
-	 * 功能：取消超级管理员
-	 * 开发日期：2017-5-6-下午12:08:40
+	 * Author:Taowd 功能：取消超级管理员 开发日期：2017-5-6-下午12:08:40
+	 * 
 	 * @param request
 	 * @param response
 	 * @throws Exception
 	 */
-	public void SetCancelSuperAdmin(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public void SetCancelSuperAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 
 		Log4jHelper.info("取消超级管理员的设置");
@@ -310,15 +294,13 @@ public class AdminServlet extends BaseServlet {
 
 	/**
 	 * 
-	 * Author:Taowd
-	 * 功能：设置超级管理员
-	 * 开发日期：2017-5-6-下午12:09:13
+	 * Author:Taowd 功能：设置超级管理员 开发日期：2017-5-6-下午12:09:13
+	 * 
 	 * @param request
 	 * @param response
 	 * @throws Exception
 	 */
-	public void SetSuperAdmin(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public void SetSuperAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
 		Log4jHelper.info("设置超级管理员");
 		String delIds = request.getParameter("delIds");// 取得设置超级管理员的的id字符串集合

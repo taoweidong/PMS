@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>Date Format - jQuery EasyUI Demo</title>
-	<link rel="stylesheet" type="text/css" href="../../themes/default/easyui.css">
-	<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
-	<link rel="stylesheet" type="text/css" href="../demo.css">
-	<script type="text/javascript" src="../../jquery.min.js"></script>
-	<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
+<meta charset="UTF-8">
+<title>Date Format - jQuery EasyUI Demo</title>
+<link rel="stylesheet" type="text/css"
+	href="../../themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../themes/icon.css">
+<link rel="stylesheet" type="text/css" href="../demo.css">
+<script type="text/javascript" src="../../jquery.min.js"></script>
+<script type="text/javascript" src="../../jquery.easyui.min.js"></script>
 </head>
 <body>
 	<h2>Date Format</h2>
 	<div class="demo-info">
 		<div class="demo-tip icon-tip"></div>
-		<div>Different date formats are applied to different DateBox components.</div>
+		<div>Different date formats are applied to different DateBox
+			components.</div>
 	</div>
-	<div style="margin:10px 0;"></div>
+	<div style="margin: 10px 0;"></div>
 	<input class="easyui-datebox"></input>
-	<input class="easyui-datebox" data-options="formatter:myformatter,parser:myparser"></input>
+	<input class="easyui-datebox"
+		data-options="formatter:myformatter,parser:myparser"></input>
 	<script type="text/javascript">
 		function myformatter(date){
 			var y = date.getFullYear();
