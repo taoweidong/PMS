@@ -1,5 +1,6 @@
 package com.pms.dao;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,169 +12,189 @@ import com.pms.util.DateUtil;
 import com.pms.util.Log4jHelper;
 import com.pms.util.StringUtil;
 
-public class PoliticalStatusDao {
 
-	/**
-	 * ¹¦ÄÜ£ºÕşÖÎÃæÃ²²éÑ¯ÁĞ±í
-	 * @param con
-	 * @param pageBean
-	 * @param grade
-	 * @return
-	 * @throws Exception
-	 */
-	public static ResultSet politicalStatusList(Connection con,
-			PageBean pageBean, PoliticalStatusBean ps) throws Exception {
-		StringBuffer sb = new StringBuffer(
-				"SELECT * FROM pms.t_politicalstatus");
-		if (ps != null && StringUtil.isNotEmpty(ps.getPs_type())) {
-			sb.append(" and t_politicalstatus.PS_TYPE like '%"
-					+ ps.getPs_type() + "%'");
-		}
-		if (ps != null && StringUtil.isNotEmpty(ps.getPs_name())) {
-			sb.append(" and t_politicalstatus.PS_Name like '%"
-					+ ps.getPs_name() + "%'");
-		}
-		if (pageBean != null) {
-			sb.append(" limit " + pageBean.getStart() + ","
-					+ pageBean.getRows());
-		}
+public class PoliticalStatusDao
+{
 
-		PreparedStatement pstmt = con.prepareStatement(sb.toString()
-				.replaceFirst("and", "where"));
+    /**
+     * åŠŸèƒ½ï¼šæ”¿æ²»é¢è²ŒæŸ¥è¯¢åˆ—è¡¨
+     * 
+     * @param con
+     * @param pageBean
+     * @param grade
+     * @return
+     * @throws Exception
+     */
+    public static ResultSet politicalStatusList(Connection con, PageBean pageBean,
+                                                PoliticalStatusBean ps)
+        throws Exception
+    {
+        StringBuffer sb = new StringBuffer("SELECT * FROM pms.t_politicalstatus");
+        if (ps != null && StringUtil.isNotEmpty(ps.getPs_type()))
+        {
+            sb.append(" and t_politicalstatus.PS_TYPE like '%" + ps.getPs_type() + "%'");
+        }
+        if (ps != null && StringUtil.isNotEmpty(ps.getPs_name()))
+        {
+            sb.append(" and t_politicalstatus.PS_Name like '%" + ps.getPs_name() + "%'");
+        }
+        if (pageBean != null)
+        {
+            sb.append(" limit " + pageBean.getStart() + "," + pageBean.getRows());
+        }
 
-		Log4jHelper.info("²éÑ¯ÕşÖÎÃæÃ²£º" + pstmt.toString());
-		return pstmt.executeQuery();
-	}
+        PreparedStatement pstmt = con.prepareStatement(sb.toString().replaceFirst("and", "where"));
 
-	/**
-	 * ¹¦ÄÜ£º»ñÈ¡×Ü¼ÇÂ¼Êı
-	 * @param con
-	 * @param grade
-	 * @return
-	 * @throws Exception
-	 */
-	public static int PoliticalStatusCount(Connection con,
-			PoliticalStatusBean ps) throws Exception {
-		StringBuffer sb = new StringBuffer(
-				"select count(*) as total from pms.t_politicalstatus");
-		if (ps != null && StringUtil.isNotEmpty(ps.getPs_type())) {
-			sb.append(" and t_politicalstatus.PS_TYPE like '%"
-					+ ps.getPs_type() + "%'");
-		}
-		PreparedStatement pstmt = con.prepareStatement(sb.toString()
-				.replaceFirst("and", "where"));
+        Log4jHelper.info("æŸ¥è¯¢æ”¿æ²»é¢è²Œï¼š" + pstmt.toString());
+        return pstmt.executeQuery();
+    }
 
-		Log4jHelper.info("»ñÈ¡×Ü¼ÇÂ¼Êı£º" + pstmt.toString());
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			return rs.getInt("total");
-		} else {
-			return 0;
-		}
-	}
+    /**
+     * åŠŸèƒ½ï¼šè·å–æ€»è®°å½•æ•°
+     * 
+     * @param con
+     * @param grade
+     * @return
+     * @throws Exception
+     */
+    public static int PoliticalStatusCount(Connection con, PoliticalStatusBean ps)
+        throws Exception
+    {
+        StringBuffer sb = new StringBuffer("select count(*) as total from pms.t_politicalstatus");
+        if (ps != null && StringUtil.isNotEmpty(ps.getPs_type()))
+        {
+            sb.append(" and t_politicalstatus.PS_TYPE like '%" + ps.getPs_type() + "%'");
+        }
+        PreparedStatement pstmt = con.prepareStatement(sb.toString().replaceFirst("and", "where"));
 
-	/**
-	 * ¹¦ÄÜ£ºÉ¾³ıÕşÖÎÃæÃ²¼ÇÂ¼
-	 * @param con
-	 * @param delIds
-	 * @return
-	 * @throws Exception
-	 */
-	public static int PoliticalStatusDelete(Connection con, String delIds)
-			throws Exception {
-		String sql = "delete from pms.t_politicalstatus where t_politicalstatus.PS_TYPE in("
-				+ delIds + ")";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		Log4jHelper.info("É¾³ıÕşÖÎÃæÃ²¼ÇÂ¼£º" + pstmt.toString());
-		return pstmt.executeUpdate();
-	}
+        Log4jHelper.info("è·å–æ€»è®°å½•æ•°ï¼š" + pstmt.toString());
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next())
+        {
+            return rs.getInt("total");
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
-	/**
-	 * ¹¦ÄÜ£ºĞÂÔöÒ»¸öÕşÖÎÃæÃ²ÀàĞÍ
-	 * @param con
-	 * @param grade
-	 * @return
-	 * @throws Exception
-	 */
-	public static int PoliticalStatusAdd(Connection con, PoliticalStatusBean ps)
-			throws Exception {
-		String sql = "INSERT INTO pms.t_politicalstatus VALUES(?,?,?,?,?)";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, ps.getPs_type());
-		pstmt.setString(2, ps.getPs_name());
-		// ±¸ÓÃ×Ö¶Î£º´Ë´¦µ±×öĞÂÔöÊ±¼ä´¦Àí
-		pstmt.setString(3, DateUtil.getCurrentDateStr());
-		pstmt.setString(4, ps.getExt2());
-		pstmt.setString(5, ps.getExt3());
+    /**
+     * åŠŸèƒ½ï¼šåˆ é™¤æ”¿æ²»é¢è²Œè®°å½•
+     * 
+     * @param con
+     * @param delIds
+     * @return
+     * @throws Exception
+     */
+    public static int PoliticalStatusDelete(Connection con, String delIds)
+        throws Exception
+    {
+        String sql = "delete from pms.t_politicalstatus where t_politicalstatus.PS_TYPE in("
+                     + delIds + ")";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        Log4jHelper.info("åˆ é™¤æ”¿æ²»é¢è²Œè®°å½•ï¼š" + pstmt.toString());
+        return pstmt.executeUpdate();
+    }
 
-		Log4jHelper.info("ĞÂÔöÒ»¸öÕşÖÎÃæÃ²ÀàĞÍ" + pstmt.toString());
-		return pstmt.executeUpdate();
-	}
+    /**
+     * åŠŸèƒ½ï¼šæ–°å¢ä¸€ä¸ªæ”¿æ²»é¢è²Œç±»å‹
+     * 
+     * @param con
+     * @param grade
+     * @return
+     * @throws Exception
+     */
+    public static int PoliticalStatusAdd(Connection con, PoliticalStatusBean ps)
+        throws Exception
+    {
+        String sql = "INSERT INTO pms.t_politicalstatus VALUES(?,?,?,?,?)";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, ps.getPs_type());
+        pstmt.setString(2, ps.getPs_name());
+        // å¤‡ç”¨å­—æ®µï¼šæ­¤å¤„å½“åšæ–°å¢æ—¶é—´å¤„ç†
+        pstmt.setString(3, DateUtil.getCurrentDateStr());
+        pstmt.setString(4, ps.getExt2());
+        pstmt.setString(5, ps.getExt3());
 
-	/**
-	 * ¹¦ÄÜ£ºĞŞ¸ÄÕşÖÎÃæÃ²ÀàĞÍ
-	 * @param con
-	 * @param grade
-	 * @return
-	 * @throws Exception
-	 */
-	public static int PoliticalStatusModify(Connection con,
-			PoliticalStatusBean ps) throws Exception {
-		String sql = "UPDATE pms.t_politicalstatus SET t_politicalstatus.PS_Name=?,t_politicalstatus.Ext1=?,t_politicalstatus.Ext2=?,t_politicalstatus.Ext3=? WHERE t_politicalstatus.PS_TYPE=?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(5, ps.getPs_type());
-		pstmt.setString(1, ps.getPs_name());
-		pstmt.setString(2, DateUtil.getCurrentDateStr());
-		pstmt.setString(3, ps.getExt2());
-		pstmt.setString(4, ps.getExt3());
-		Log4jHelper.info("ĞŞ¸ÄÕşÖÎÃæÃ²ÀàĞÍ" + pstmt.toString());
-		return pstmt.executeUpdate();
-	}
+        Log4jHelper.info("æ–°å¢ä¸€ä¸ªæ”¿æ²»é¢è²Œç±»å‹" + pstmt.toString());
+        return pstmt.executeUpdate();
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÅĞ¶Ï¸ÃÀàĞÍ±àºÅµÄÊÇ·ñ´æÔÚ
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-9-ÉÏÎç11:01:46
-	 * @param con
-	 * @param psb
-	 * @return
-	 * @throws SQLException 
-	 */
-	public static boolean IsExistence(Connection con, String ps_Type)
-			throws SQLException {
-		String sql = "SELECT * FROM pms.t_politicalstatus WHERE t_politicalstatus.PS_TYPE =?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, ps_Type);
-		Log4jHelper.info("¼ì²éÀàĞÍ±àºÅ£º" + pstmt.toString());
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    /**
+     * åŠŸèƒ½ï¼šä¿®æ”¹æ”¿æ²»é¢è²Œç±»å‹
+     * 
+     * @param con
+     * @param grade
+     * @return
+     * @throws Exception
+     */
+    public static int PoliticalStatusModify(Connection con, PoliticalStatusBean ps)
+        throws Exception
+    {
+        String sql = "UPDATE pms.t_politicalstatus SET t_politicalstatus.PS_Name=?,t_politicalstatus.Ext1=?,t_politicalstatus.Ext2=?,t_politicalstatus.Ext3=? WHERE t_politicalstatus.PS_TYPE=?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(5, ps.getPs_type());
+        pstmt.setString(1, ps.getPs_name());
+        pstmt.setString(2, DateUtil.getCurrentDateStr());
+        pstmt.setString(3, ps.getExt2());
+        pstmt.setString(4, ps.getExt3());
+        Log4jHelper.info("ä¿®æ”¹æ”¿æ²»é¢è²Œç±»å‹" + pstmt.toString());
+        return pstmt.executeUpdate();
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º²éÑ¯¸Ã½ÇÉ«ÏÂµÄÔ±¹¤ĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-10-ÏÂÎç1:36:10
-	 * @param con
-	 * @param string
-	 * @return
-	 * @throws SQLException 
-	 */
-	public static boolean getEmpByPsType(Connection con, String psType)
-			throws SQLException {
-		String sql = "SELECT * FROM pms.t_employee WHERE PS_ID =?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, psType);
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šåˆ¤æ–­è¯¥ç±»å‹ç¼–å·çš„æ˜¯å¦å­˜åœ¨ å¼€å‘æ—¥æœŸï¼š2017-4-9-ä¸Šåˆ11:01:46
+     * 
+     * @param con
+     * @param psb
+     * @return
+     * @throws SQLException
+     */
+    public static boolean IsExistence(Connection con, String ps_Type)
+        throws SQLException
+    {
+        String sql = "SELECT * FROM pms.t_politicalstatus WHERE t_politicalstatus.PS_TYPE =?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, ps_Type);
+        Log4jHelper.info("æ£€æŸ¥ç±»å‹ç¼–å·ï¼š" + pstmt.toString());
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæŸ¥è¯¢è¯¥è§’è‰²ä¸‹çš„å‘˜å·¥ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-10-ä¸‹åˆ1:36:10
+     * 
+     * @param con
+     * @param string
+     * @return
+     * @throws SQLException
+     */
+    public static boolean getEmpByPsType(Connection con, String psType)
+        throws SQLException
+    {
+        String sql = "SELECT * FROM pms.t_employee WHERE PS_ID =?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, psType);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /** Prevent instantiation */
+    private PoliticalStatusDao()
+    {}
 }

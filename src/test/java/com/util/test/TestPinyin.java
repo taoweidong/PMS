@@ -1,16 +1,23 @@
 package com.util.test;
 
+
 import com.pms.util.PinYinUtils;
 import org.junit.Test;
 
-public class TestPinyin {
+
+public class TestPinyin
+{
     @Test
-    public void TestPinyin1() {
+    public void testPinyin1()
+    {
 
-        System.out.println("×ªÆ´Òô£º" + PinYinUtils.getPingYin("Íõçù ÷Ò÷Ñ       tom 12345 %^%^   å¹Ç«  µ¥ĞÛĞÅ"));
+        System.out.println(
+            "è½¬æ‹¼éŸ³ï¼š" + PinYinUtils.getPingYin("ç‹ç¦ é¥•é¤®       tom 12345 %^%^   éªè°¦  å•é›„ä¿¡"));
 
-        System.out.println("×ªÆ´Òô£º" + PinYinUtils.getFirstSpell("Íõçù ÷Ò÷Ñ           tom 12345 %^%^             Çì¸£Ô° µ¥ĞÛĞÅ"));
+        System.out.println("è½¬æ‹¼éŸ³ï¼š" + PinYinUtils.getFirstSpell(
+            "ç‹ç¦ é¥•é¤®           tom 12345 %^%^             åº†ç¦å›­ å•é›„ä¿¡"));
 
-        System.out.println("×ªÆ´Òô£º" + PinYinUtils.getFullSpell("Íõçù ÷Ò÷Ñ             tom 12345 %^%^           å¹Ç«  µ¥ĞÛĞÅ"));
+        System.out.println("è½¬æ‹¼éŸ³ï¼š" + PinYinUtils.getFullSpell(
+            "ç‹ç¦ é¥•é¤®             tom 12345 %^%^           éªè°¦  å•é›„ä¿¡"));
     }
 }

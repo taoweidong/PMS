@@ -1,5 +1,6 @@
 package com.pms.util;
 
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,86 +12,103 @@ import org.apache.commons.dbutils.ResultSetHandler;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+
 /**
- * 
- * @author Taowd ¹¦ ÄÜ£ºÊı¾İ¿âÁ¬½ÓµÄ¹¤¾ßÀà ±àĞ´Ê±¼ä£º2017-5-4-ÏÂÎç12:42:29
+ * @author Taowd åŠŸ èƒ½ï¼šæ•°æ®åº“è¿æ¥çš„å·¥å…·ç±» ç¼–å†™æ—¶é—´ï¼š2017-5-4-ä¸‹åˆ12:42:29
  */
-public class DbUtils {
+public class DbUtils
+{
 
-	/**
-	 * »ñÈ¡Ò»¸öResultSetHandler¶ÔÏó·µ»Ø½á¹û¼¯ÎªResultSet
-	 */
-	public static final ResultSetHandler<ResultSet> GetRSH = new ResultSetHandler<ResultSet>() {
-		public ResultSet handle(ResultSet rs) throws SQLException {
-			return rs;
-		}
-	};
-	/**
-	 * Ê¹ÓÃÄ¬ÈÏÅäÖÃ»ñÈ¡Ò»¸öÊı¾İ¿âÁ¬½Ó¶ÔÏó
-	 */
-	private static ComboPooledDataSource dataSource = new ComboPooledDataSource("mysql-config");
+    /**
+     * è·å–ä¸€ä¸ªResultSetHandlerå¯¹è±¡è¿”å›ç»“æœé›†ä¸ºResultSet
+     */
+    public static final ResultSetHandler<ResultSet> GetRSH = new ResultSetHandler<ResultSet>()
+    {
+        public ResultSet handle(ResultSet rs)
+            throws SQLException
+        {
+            return rs;
+        }
+    };
 
-	/**
-	 * 
-	 * Author:Taowd ¹¦ÄÜ£º»ñÈ¡Ò»¸öÊı¾İ¿âÁ¬½Ó¶ÔÏó ¿ª·¢ÈÕÆÚ£º2017-5-4-ÏÂÎç12:44:15
-	 * 
-	 * @return Connection
-	 * @throws SQLException
-	 */
-	public static Connection getConnection() throws SQLException {
-		return dataSource.getConnection();
-	}
+    /**
+     * ä½¿ç”¨é»˜è®¤é…ç½®è·å–ä¸€ä¸ªæ•°æ®åº“è¿æ¥å¯¹è±¡
+     */
+    private static final ComboPooledDataSource dataSource = new ComboPooledDataSource("mysql-config");
 
-	/**
-	 * 
-	 * Author:Taowd ¹¦ÄÜ£º¹Ø±ÕÊı¾İ¿âÁ¬½Ó ¿ª·¢ÈÕÆÚ£º2017-5-4-ÏÂÎç12:52:36
-	 * 
-	 * @param conn Connection
-	 * @throws SQLException
-	 */
-	public static void CloseConn(Connection conn) throws SQLException {
-		if (conn != null) {
-			conn.close();
-		}
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè·å–ä¸€ä¸ªæ•°æ®åº“è¿æ¥å¯¹è±¡ å¼€å‘æ—¥æœŸï¼š2017-5-4-ä¸‹åˆ12:44:15
+     * 
+     * @return Connection
+     * @throws SQLException
+     */
+    public static Connection getConnection()
+        throws SQLException
+    {
+        return dataSource.getConnection();
+    }
 
-	/**
-	 * 
-	 * Author:Taowd ¹¦ÄÜ£º·µ»ØÒ»¸öÁ¬½Ó³Ø¶ÔÏó ¿ª·¢ÈÕÆÚ£º2017-5-4-ÏÂÎç12:48:36
-	 * 
-	 * @return
-	 */
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šå…³é—­æ•°æ®åº“è¿æ¥ å¼€å‘æ—¥æœŸï¼š2017-5-4-ä¸‹åˆ12:52:36
+     * 
+     * @param conn
+     *            Connection
+     * @throws SQLException
+     */
+    public static void CloseConn(Connection conn)
+        throws SQLException
+    {
+        if (conn != null)
+        {
+            conn.close();
+        }
+    }
 
-	public static DataSource getDataSource() {
-		return dataSource;
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè¿”å›ä¸€ä¸ªè¿æ¥æ± å¯¹è±¡ å¼€å‘æ—¥æœŸï¼š2017-5-4-ä¸‹åˆ12:48:36
+     * 
+     * @return
+     */
 
-	/**
-	 * 
-	 * Author:Taowd ¹¦ÄÜ£ºÉú³ÉÒ»¸öUUID ¿ª·¢ÈÕÆÚ£º2017-4-19-ÏÂÎç8:20:01
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	public static String GetUUID() throws Exception {
-		return UUID.randomUUID().toString().replace("-", "");
-	}
+    public static DataSource getDataSource()
+    {
+        return dataSource;
+    }
 
-	/**
-	 * 
-	 * Author:Taowd ¹¦ÄÜ£º²âÊÔÊı¾İ¿âÁ¬½Ó ¿ª·¢ÈÕÆÚ£º2017-5-4-ÏÂÎç12:53:53
-	 * 
-	 * @param args
-	 */
-	public static void main(String[] args) {
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šç”Ÿæˆä¸€ä¸ªUUID å¼€å‘æ—¥æœŸï¼š2017-4-19-ä¸‹åˆ8:20:01
+     * 
+     * @return
+     * @throws Exception
+     */
+    public static String GetUUID()
+        throws Exception
+    {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
 
-		try {
-			DbUtils.getConnection();
-			System.out.println("Êı¾İ¿âÁ¬½Ó³É¹¦£¡");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæµ‹è¯•æ•°æ®åº“è¿æ¥ å¼€å‘æ—¥æœŸï¼š2017-5-4-ä¸‹åˆ12:53:53
+     * 
+     * @param args
+     */
+    public static void main(String[] args)
+    {
+
+        try
+        {
+            DbUtils.getConnection();
+            System.out.println("æ•°æ®åº“è¿æ¥æˆåŠŸï¼");
+        }
+        catch (SQLException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+    /** Prevent instantiation */
+    private DbUtils()
+    {}
 
 }

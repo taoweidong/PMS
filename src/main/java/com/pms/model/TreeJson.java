@@ -1,170 +1,207 @@
 package com.pms.model;
 
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
- * easuiÖĞµÄtree_data.jsonÊı¾İ,Ö»ÄÜÓĞÒ»¸öroot½Úµã
- * [{   
- *   "id":1,   
- *  "text":"Folder1",   
- *   "iconCls":"icon-save",   
- *   "children":[{   
- *       "text":"File1",   
- *       "checked":true  
- *   }]   
- * }] 
- * Ìá¹©¾²Ì¬·½·¨formatTree(List<TreeJson> list) ·µ»Ø½á¹û
+ * easuiä¸­çš„tree_data.jsonæ•°æ®,åªèƒ½æœ‰ä¸€ä¸ªrootèŠ‚ç‚¹ [{ "id":1, "text":"Folder1", "iconCls":"icon-save",
+ * "children":[{ "text":"File1", "checked":true }] }] æä¾›é™æ€æ–¹æ³•formatTree(List<TreeJson> list) è¿”å›ç»“æœ
  * TreeJson.formatTree(treeJsonlist) ;
+ * 
  * @author Taowd
- *
  */
-public class TreeJson implements Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class TreeJson implements Serializable
+{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	private String id;
-	private String pid;
-	private String text;
-	// Í¼±íÂ·¾¶
-	private String iconCls;
-	private String state;
-	private boolean checked;
-	private List<TreeJson> children = new ArrayList<TreeJson>();
+    private String id;
 
-	/******** setter and getter **********/
-	/**
-	 * 
-	 * <p>·½  ·¨ Ãû: TreeJson.java</p>
-	 * <p>¹¦        ÄÜ: ½«List¶ÔÏó×ª³ÉTreeÊ÷½á¹¹</p>
-	 * <p>·µ  »Ø  Öµ: List<TreeJson></p>
-	 * <p>×÷        Õß£º Taowd</p>
-	 * <p>´´½¨Ê±¼ä £º 2017-4-3 ÏÂÎç7:45:29</p>
-	 */
-	public static List<TreeJson> formatTree(List<TreeJson> list) {
+    private String pid;
 
-		TreeJson root = new TreeJson();
-		TreeJson node = new TreeJson();
-		List<TreeJson> treelist = new ArrayList<TreeJson>();// Æ´´ÕºÃµÄjson¸ñÊ½µÄÊı¾İ
-		List<TreeJson> parentnodes = new ArrayList<TreeJson>();// parentnodes´æ·ÅËùÓĞµÄ¸¸½Úµã
+    private String text;
 
-		if (list != null && list.size() > 0) {
-			for (int i = 1; i < list.size(); i++) {
-				// Ñ°ÕÒ¸ù½Úµã--Ö»ÄÜÓĞÒ»¸ö¸ù½Úµã
-				if (list.get(i).pid.equals("0")) {
-					root = list.get(i);
-				}
-			}
-			// Ñ­»·±éÀúÊ÷²éÑ¯µÄËùÓĞ½Úµã
-			for (int i = 1; i < list.size(); i++) {
+    // å›¾è¡¨è·¯å¾„
+    private String iconCls;
 
-				node = list.get(i);
-				if (node.getPid().equals(root.getId())) {
-					// Îªtree root Ôö¼Ó×Ó½Úµã
-					parentnodes.add(node);
-					root.getChildren().add(node);
-				} else {
-					// »ñÈ¡root×Ó½ÚµãµÄº¢×Ó½Úµã
-					getChildrenNodes(parentnodes, node);
-					parentnodes.add(node);
-				}
-			}
-		}
-		treelist.add(root);
-		return treelist;
+    private String state;
 
-	}
+    private boolean checked;
 
-	public String getId() {
-		return id;
-	}
+    private List<TreeJson> children = new ArrayList<TreeJson>();
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    /******** setter and getter **********/
+    /**
+     * <p>
+     * æ–¹ æ³• å: TreeJson.java
+     * </p>
+     * <p>
+     * åŠŸ èƒ½: å°†Listå¯¹è±¡è½¬æˆTreeæ ‘ç»“æ„
+     * </p>
+     * <p>
+     * è¿” å› å€¼: List<TreeJson>
+     * </p>
+     * <p>
+     * ä½œ è€…ï¼š Taowd
+     * </p>
+     * <p>
+     * åˆ›å»ºæ—¶é—´ ï¼š 2017-4-3 ä¸‹åˆ7:45:29
+     * </p>
+     */
+    public static List<TreeJson> formatTree(List<TreeJson> list)
+    {
 
-	public String getPid() {
-		return pid;
-	}
+        TreeJson root = new TreeJson();
+        TreeJson node = new TreeJson();
+        List<TreeJson> treelist = new ArrayList<TreeJson>();// æ‹¼å‡‘å¥½çš„jsonæ ¼å¼çš„æ•°æ®
+        List<TreeJson> parentnodes = new ArrayList<TreeJson>();// parentnodeså­˜æ”¾æ‰€æœ‰çš„çˆ¶èŠ‚ç‚¹
 
-	public void setPid(String pid) {
-		this.pid = pid;
-	}
+        if (list != null && list.size() > 0)
+        {
+            for (int i = 1; i < list.size(); i++ )
+            {
+                // å¯»æ‰¾æ ¹èŠ‚ç‚¹--åªèƒ½æœ‰ä¸€ä¸ªæ ¹èŠ‚ç‚¹
+                if (list.get(i).pid.equals("0"))
+                {
+                    root = list.get(i);
+                }
+            }
+            // å¾ªç¯éå†æ ‘æŸ¥è¯¢çš„æ‰€æœ‰èŠ‚ç‚¹
+            for (int i = 1; i < list.size(); i++ )
+            {
 
-	public String getText() {
-		return text;
-	}
+                node = list.get(i);
+                if (node.getPid().equals(root.getId()))
+                {
+                    // ä¸ºtree root å¢åŠ å­èŠ‚ç‚¹
+                    parentnodes.add(node);
+                    root.getChildren().add(node);
+                }
+                else
+                {
+                    // è·å–rootå­èŠ‚ç‚¹çš„å­©å­èŠ‚ç‚¹
+                    getChildrenNodes(parentnodes, node);
+                    parentnodes.add(node);
+                }
+            }
+        }
+        treelist.add(root);
+        return treelist;
 
-	public void setText(String text) {
-		this.text = text;
-	}
+    }
 
-	public String getIconCls() {
-		return iconCls;
-	}
+    public String getId()
+    {
+        return id;
+    }
 
-	public void setIconCls(String iconCls) {
-		this.iconCls = iconCls;
-	}
+    public void setId(String id)
+    {
+        this.id = id;
+    }
 
-	public String getState() {
-		return state;
-	}
+    public String getPid()
+    {
+        return pid;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public void setPid(String pid)
+    {
+        this.pid = pid;
+    }
 
-	public boolean isChecked() {
-		return checked;
-	}
+    public String getText()
+    {
+        return text;
+    }
 
-	public void setChecked(boolean checked) {
-		this.checked = checked;
-	}
+    public void setText(String text)
+    {
+        this.text = text;
+    }
 
-	public List<TreeJson> getChildren() {
-		return children;
-	}
+    public String getIconCls()
+    {
+        return iconCls;
+    }
 
-	public void setChildren(List<TreeJson> children) {
-		this.children = children;
-	}
+    public void setIconCls(String iconCls)
+    {
+        this.iconCls = iconCls;
+    }
 
-	public TreeJson() {
-		super();
-	}
+    public String getState()
+    {
+        return state;
+    }
 
-	public TreeJson(String id, String pid, String text, String iconCls,
-			String state, boolean checked) {
-		super();
-		this.id = id;
-		this.pid = pid;
-		this.text = text;
-		this.iconCls = iconCls;
-		this.state = state;
-		this.checked = checked;
-	}
+    public void setState(String state)
+    {
+        this.state = state;
+    }
 
-	private static void getChildrenNodes(List<TreeJson> parentnodes,
-			TreeJson node) {
-		// Ñ­»·±éÀúËùÓĞ¸¸½ÚµãºÍnode½øĞĞÆ¥Åä£¬È·¶¨¸¸×Ó¹ØÏµ
-		for (int i = parentnodes.size() - 1; i >= 0; i--) {
+    public boolean isChecked()
+    {
+        return checked;
+    }
 
-			TreeJson pnode = parentnodes.get(i);
-			// Èç¹ûÊÇ¸¸×Ó¹ØÏµ£¬Îª¸¸½ÚµãÔö¼Ó×Ó½Úµã£¬ÍË³öforÑ­»·
-			if (pnode.getId().equals(node.getPid())) {
-				pnode.setState("closed");// ¹Ø±Õ¶ş¼¶Ê÷
-				pnode.getChildren().add(node);
-				return;
-			} else {
-				// Èç¹û²»ÊÇ¸¸×Ó¹ØÏµ£¬É¾³ı¸¸½ÚµãÕ»Àïµ±Ç°µÄ½Úµã£¬
-				// ¼ÌĞø´Ë´ÎÑ­»·£¬Ö±µ½È·¶¨¸¸×Ó¹ØÏµ»ò²»´æÔÚÍË³öforÑ­»·
-				parentnodes.remove(i);
-			}
-		}
-	}
+    public void setChecked(boolean checked)
+    {
+        this.checked = checked;
+    }
+
+    public List<TreeJson> getChildren()
+    {
+        return children;
+    }
+
+    public void setChildren(List<TreeJson> children)
+    {
+        this.children = children;
+    }
+
+    public TreeJson()
+    {
+        super();
+    }
+
+    public TreeJson(String id, String pid, String text, String iconCls, String state,
+                    boolean checked)
+    {
+        super();
+        this.id = id;
+        this.pid = pid;
+        this.text = text;
+        this.iconCls = iconCls;
+        this.state = state;
+        this.checked = checked;
+    }
+
+    private static void getChildrenNodes(List<TreeJson> parentnodes, TreeJson node)
+    {
+        // å¾ªç¯éå†æ‰€æœ‰çˆ¶èŠ‚ç‚¹å’Œnodeè¿›è¡ŒåŒ¹é…ï¼Œç¡®å®šçˆ¶å­å…³ç³»
+        for (int i = parentnodes.size() - 1; i >= 0; i-- )
+        {
+
+            TreeJson pnode = parentnodes.get(i);
+            // å¦‚æœæ˜¯çˆ¶å­å…³ç³»ï¼Œä¸ºçˆ¶èŠ‚ç‚¹å¢åŠ å­èŠ‚ç‚¹ï¼Œé€€å‡ºforå¾ªç¯
+            if (pnode.getId().equals(node.getPid()))
+            {
+                pnode.setState("closed");// å…³é—­äºŒçº§æ ‘
+                pnode.getChildren().add(node);
+                return;
+            }
+            else
+            {
+                // å¦‚æœä¸æ˜¯çˆ¶å­å…³ç³»ï¼Œåˆ é™¤çˆ¶èŠ‚ç‚¹æ ˆé‡Œå½“å‰çš„èŠ‚ç‚¹ï¼Œ
+                // ç»§ç»­æ­¤æ¬¡å¾ªç¯ï¼Œç›´åˆ°ç¡®å®šçˆ¶å­å…³ç³»æˆ–ä¸å­˜åœ¨é€€å‡ºforå¾ªç¯
+                parentnodes.remove(i);
+            }
+        }
+    }
 }

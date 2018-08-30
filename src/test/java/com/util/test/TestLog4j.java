@@ -1,21 +1,36 @@
 package com.util.test;
 
+
 import org.junit.Test;
 
 import com.pms.util.Log4jHelper;
 
-public class TestLog4j {
-	/**
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º²âÊÔLog4jÈÕÖ¾ÅäÖÃ
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-21-ÏÂÎç1:48:07
-	 * @param args
-	 */
-	@Test
-	public void testLog4j() {
 
-		Log4jHelper.info("²âÊÔ--");
-		Log4jHelper.error("²âÊÔ´íÎóĞÅÏ¢--");
-	}
+/**
+ * <æµ‹è¯•Log4jæ—¥å¿—é…ç½®>
+ * 
+ * @author Taowd
+ * @version 2018å¹´8æœˆ30æ—¥
+ * @see TestLog4j
+ */
+public class TestLog4j
+{
+    /**
+     * Description: æµ‹è¯•Log4jæ—¥å¿—é…ç½®<br>
+     * 1ã€â€¦<br>
+     * 2ã€â€¦<br>
+     * Implement: <br>
+     * 1ã€â€¦<br>
+     * 2ã€â€¦<br>
+     * 
+     * @see
+     */
+    @Test
+    public void testLog4j()
+    {
+
+        Log4jHelper.info("æµ‹è¯•--");
+        Log4jHelper.error("æµ‹è¯•é”™è¯¯ä¿¡æ¯--");
+    }
 
 }

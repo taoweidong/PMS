@@ -1,5 +1,6 @@
 package com.pms.dao;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,385 +12,434 @@ import com.pms.util.DateUtil;
 import com.pms.util.Log4jHelper;
 import com.pms.util.StringUtil;
 
-public class EmployeeDao {
-	/**
-	 * ¹¦ÄÜ£º¼ì²éÓÃ»§µÄÃÜÂë
-	 * @param con
-	 * @param emp
-	 * @return  ²éÑ¯µ½¸ÃÓÃ»§Ê±£¬·µ»Ø¸ÃÓÃ»§µÄĞÅÏ¢ÊµÌå£¬Ã»ÓĞ²éµ½Ê±·µ»Ønull
-	 * @throws Exception
-	 */
-	public Employee CheckPwd(Connection con, Employee emp) {
-		Employee resultUser = null;
-		String sql = "SELECT * FROM pms.t_employee WHERE t_employee.EMP_NO =? and t_employee.EMP_PWD=?";
-		PreparedStatement pstmt;
-		try {
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, emp.getEmp_no());
-			pstmt.setString(2, emp.getEmp_pwd());
-			Log4jHelper.info("ÆÕÍ¨ÓÃ»§¼ì²éÃÜÂë£º" + pstmt.toString());
-			ResultSet rs = pstmt.executeQuery();
-			if (rs.next()) {
-				resultUser = new Employee();
-				resultUser.setEmp_no(rs.getString(("EMP_NO")));
-				resultUser.setEmp_pwd(rs.getString("EMP_PWD"));
-				resultUser.setEmp_name(rs.getString("EMP_NAME"));
-				resultUser.setEmp_sex(rs.getString("EMP_SEX"));
-				resultUser.setEmp_birthday(rs.getDate("EMP_Birthday"));
-				resultUser.setPs_id(rs.getString("PS_ID"));
-				resultUser.setEmp_phone(rs.getString("EMP_Phone"));
-				resultUser.setEmp_address(rs.getString("EMP_Address"));
-			}
-		} catch (SQLException e) {
-			Log4jHelper.exception(e);
-		}
 
-		return resultUser;
-	}
+public class EmployeeDao
+{
+    /**
+     * åŠŸèƒ½ï¼šæ£€æŸ¥ç”¨æˆ·çš„å¯†ç 
+     * 
+     * @param con
+     * @param emp
+     * @return æŸ¥è¯¢åˆ°è¯¥ç”¨æˆ·æ—¶ï¼Œè¿”å›è¯¥ç”¨æˆ·çš„ä¿¡æ¯å®ä½“ï¼Œæ²¡æœ‰æŸ¥åˆ°æ—¶è¿”å›null
+     * @throws Exception
+     */
+    public Employee CheckPwd(Connection con, Employee emp)
+    {
+        Employee resultUser = null;
+        String sql = "SELECT * FROM pms.t_employee WHERE t_employee.EMP_NO =? and t_employee.EMP_PWD=?";
+        PreparedStatement pstmt;
+        try
+        {
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, emp.getEmp_no());
+            pstmt.setString(2, emp.getEmp_pwd());
+            Log4jHelper.info("æ™®é€šç”¨æˆ·æ£€æŸ¥å¯†ç ï¼š" + pstmt.toString());
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next())
+            {
+                resultUser = new Employee();
+                resultUser.setEmp_no(rs.getString(("EMP_NO")));
+                resultUser.setEmp_pwd(rs.getString("EMP_PWD"));
+                resultUser.setEmp_name(rs.getString("EMP_NAME"));
+                resultUser.setEmp_sex(rs.getString("EMP_SEX"));
+                resultUser.setEmp_birthday(rs.getDate("EMP_Birthday"));
+                resultUser.setPs_id(rs.getString("PS_ID"));
+                resultUser.setEmp_phone(rs.getString("EMP_Phone"));
+                resultUser.setEmp_address(rs.getString("EMP_Address"));
+            }
+        }
+        catch (SQLException e)
+        {
+            Log4jHelper.exception(e);
+        }
 
-	/**
-	 * ¹¦ÄÜ£º¸ù¾İÌõ¼ş²éÑ¯Ô±¹¤ĞÅÏ¢
-	 * @param con
-	 * @param pageBean
-	 * @param emp
-	 * @param bbirthday
-	 * @param ebirthday
-	 * @return
-	 * @throws Exception
-	 */
-	public static ResultSet EmployeetList(Connection con, PageBean pageBean,
-			Employee emp, String bbirthday, String ebirthday) throws Exception {
-		StringBuffer sb = new StringBuffer(
-				"SELECT  emp.EMP_NO,EMP_PWD,EMP_NAME,emp.emp_sex, (case WHEN emp_sex='F'then 'Å®' WHEN emp_sex='M'then 'ÄĞ' END ) as sexName,emp.EMP_Birthday,zzmm.PS_TYPE,zzmm.PS_Name,EMP_Phone, emp.EMP_Address, emp.ext1,emp.ext2 FROM pms.t_politicalstatus zzmm, pms.t_employee emp WHERE zzmm.PS_TYPE = emp.PS_ID ");
-		if (emp != null && StringUtil.isNotEmpty(emp.getEmp_name())) {
-			sb.append(" AND emp.emp_name LIKE '%" + emp.getEmp_name() + "%'");
-		}
-		if (emp != null && StringUtil.isNotEmpty(emp.getEmp_no())) {
-			sb.append("AND emp.emp_no LIKE '%" + emp.getEmp_no() + "%'");
-		}
-		if (emp != null && StringUtil.isNotEmpty(emp.getEmp_sex())) {
-			sb.append("AND emp.emp_sex LIKE '%" + emp.getEmp_sex() + "%'");
-		}
-		if (emp != null && StringUtil.isNotEmpty(emp.getEmp_phone())) {
-			sb.append("AND emp.EMP_Phone LIKE '%" + emp.getEmp_phone() + "%'");
-		}
-		if (emp != null && StringUtil.isNotEmpty(emp.getEmp_address())) {
-			sb.append("AND emp.EMP_Address LIKE '%" + emp.getEmp_address()
-					+ "%'");
-		}
-		// and zzmm.PS_TYPE = '102'
-		if (emp != null && StringUtil.isNotEmpty(emp.getPs_id())) {
-			sb.append("AND zzmm.PS_TYPE LIKE '%" + emp.getPs_id() + "%'");
-		}
-		if (emp != null && StringUtil.isNotEmpty(bbirthday)) {
-			sb.append(" and TO_DAYS(emp.EMP_Birthday) >= TO_DAYS('" + bbirthday
-					+ "')");
-		}
-		if (emp != null && StringUtil.isNotEmpty(ebirthday)) {
-			sb.append(" and TO_DAYS(emp.EMP_Birthday) <= TO_DAYS('" + ebirthday
-					+ "')");
-		}
-		if (emp != null && pageBean != null) {
-			sb.append(" limit " + pageBean.getStart() + ","
-					+ pageBean.getRows());
-		}
-		Log4jHelper.info("²éÑ¯Ô±¹¤ĞÅÏ¢£º" + sb.toString());
-		PreparedStatement pstmt = con.prepareStatement(sb.toString());
-		return pstmt.executeQuery();
-	}
+        return resultUser;
+    }
 
-	/**
-	 * ¹¦ÄÜ£º¸ù¾İÌõ¼ş»ñÈ¡Ô±¹¤×ÜÊı
-	 * @param con
-	 * @param student
-	 * @param bbirthday
-	 * @param ebirthday
-	 * @return Ô±¹¤×ÜÊı
-	 * @throws Exception
-	 */
-	public static int EmployeeCount(Connection con, Employee student,
-			String bbirthday, String ebirthday) throws Exception {
-		Log4jHelper.info("²ÎÊı£ºemp" + student.toString());
-		StringBuffer sb = new StringBuffer(
-				"SELECT  count(*) as total FROM pms.t_politicalstatus zzmm, pms.t_employee emp WHERE zzmm.PS_TYPE = emp.PS_ID ");
-		if (StringUtil.isNotEmpty(student.getEmp_name())) {
-			sb.append(" AND emp.emp_name LIKE '%" + student.getEmp_name()
-					+ "%'");
-		}
-		if (StringUtil.isNotEmpty(student.getEmp_no())) {
-			sb.append("AND emp.emp_no LIKE '%" + student.getEmp_no() + "%'");
-		}
-		if (StringUtil.isNotEmpty(student.getEmp_sex())) {
-			sb.append("AND emp.emp_sex LIKE '%" + student.getEmp_sex() + "%'");
-		}
-		if (StringUtil.isNotEmpty(student.getEmp_phone())) {
-			sb.append("AND emp.EMP_Phone LIKE '%" + student.getEmp_phone()
-					+ "%'");
-		}
-		if (StringUtil.isNotEmpty(student.getEmp_address())) {
-			sb.append("AND emp.EMP_Address LIKE '%" + student.getEmp_address()
-					+ "%'");
-		}
-		if (StringUtil.isNotEmpty(bbirthday)) {
-			sb.append(" and TO_DAYS(emp.EMP_Birthday) >= TO_DAYS('" + bbirthday
-					+ "')");
-		}
-		if (StringUtil.isNotEmpty(ebirthday)) {
-			sb.append(" and TO_DAYS(emp.EMP_Birthday) <= TO_DAYS('" + ebirthday
-					+ "')");
-		}
-		Log4jHelper.info(sb.toString());
-		PreparedStatement pstmt = con.prepareStatement(sb.toString());
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			return rs.getInt("total");
-		} else {
-			return 0;
-		}
-	}
+    /**
+     * åŠŸèƒ½ï¼šæ ¹æ®æ¡ä»¶æŸ¥è¯¢å‘˜å·¥ä¿¡æ¯
+     * 
+     * @param con
+     * @param pageBean
+     * @param emp
+     * @param bbirthday
+     * @param ebirthday
+     * @return
+     * @throws Exception
+     */
+    public static ResultSet EmployeetList(Connection con, PageBean pageBean, Employee emp,
+                                          String bbirthday, String ebirthday)
+        throws Exception
+    {
+        StringBuffer sb = new StringBuffer(
+            "SELECT  emp.EMP_NO,EMP_PWD,EMP_NAME,emp.emp_sex, (case WHEN emp_sex='F'then 'å¥³' WHEN emp_sex='M'then 'ç”·' END ) as sexName,emp.EMP_Birthday,zzmm.PS_TYPE,zzmm.PS_Name,EMP_Phone, emp.EMP_Address, emp.ext1,emp.ext2 FROM pms.t_politicalstatus zzmm, pms.t_employee emp WHERE zzmm.PS_TYPE = emp.PS_ID ");
+        if (emp != null && StringUtil.isNotEmpty(emp.getEmp_name()))
+        {
+            sb.append(" AND emp.emp_name LIKE '%" + emp.getEmp_name() + "%'");
+        }
+        if (emp != null && StringUtil.isNotEmpty(emp.getEmp_no()))
+        {
+            sb.append("AND emp.emp_no LIKE '%" + emp.getEmp_no() + "%'");
+        }
+        if (emp != null && StringUtil.isNotEmpty(emp.getEmp_sex()))
+        {
+            sb.append("AND emp.emp_sex LIKE '%" + emp.getEmp_sex() + "%'");
+        }
+        if (emp != null && StringUtil.isNotEmpty(emp.getEmp_phone()))
+        {
+            sb.append("AND emp.EMP_Phone LIKE '%" + emp.getEmp_phone() + "%'");
+        }
+        if (emp != null && StringUtil.isNotEmpty(emp.getEmp_address()))
+        {
+            sb.append("AND emp.EMP_Address LIKE '%" + emp.getEmp_address() + "%'");
+        }
+        // and zzmm.PS_TYPE = '102'
+        if (emp != null && StringUtil.isNotEmpty(emp.getPs_id()))
+        {
+            sb.append("AND zzmm.PS_TYPE LIKE '%" + emp.getPs_id() + "%'");
+        }
+        if (emp != null && StringUtil.isNotEmpty(bbirthday))
+        {
+            sb.append(" and TO_DAYS(emp.EMP_Birthday) >= TO_DAYS('" + bbirthday + "')");
+        }
+        if (emp != null && StringUtil.isNotEmpty(ebirthday))
+        {
+            sb.append(" and TO_DAYS(emp.EMP_Birthday) <= TO_DAYS('" + ebirthday + "')");
+        }
+        if (emp != null && pageBean != null)
+        {
+            sb.append(" limit " + pageBean.getStart() + "," + pageBean.getRows());
+        }
+        Log4jHelper.info("æŸ¥è¯¢å‘˜å·¥ä¿¡æ¯ï¼š" + sb.toString());
+        PreparedStatement pstmt = con.prepareStatement(sb.toString());
+        return pstmt.executeQuery();
+    }
 
-	/**
-	 * ¹¦ÄÜ£ºÉ¾³ıÔ±¹¤ĞÅÏ¢
-	 * @param con
-	 * @param delIds
-	 * @return É¾³ı³É¹¦µÄĞĞÊı
-	 * @throws Exception
-	 */
-	public static int EmlopyeeDelete(Connection con, String delIds)
-			throws Exception {
+    /**
+     * åŠŸèƒ½ï¼šæ ¹æ®æ¡ä»¶è·å–å‘˜å·¥æ€»æ•°
+     * 
+     * @param con
+     * @param student
+     * @param bbirthday
+     * @param ebirthday
+     * @return å‘˜å·¥æ€»æ•°
+     * @throws Exception
+     */
+    public static int EmployeeCount(Connection con, Employee student, String bbirthday,
+                                    String ebirthday)
+        throws Exception
+    {
+        Log4jHelper.info("å‚æ•°ï¼šemp" + student.toString());
+        StringBuffer sb = new StringBuffer(
+            "SELECT  count(*) as total FROM pms.t_politicalstatus zzmm, pms.t_employee emp WHERE zzmm.PS_TYPE = emp.PS_ID ");
+        if (StringUtil.isNotEmpty(student.getEmp_name()))
+        {
+            sb.append(" AND emp.emp_name LIKE '%" + student.getEmp_name() + "%'");
+        }
+        if (StringUtil.isNotEmpty(student.getEmp_no()))
+        {
+            sb.append("AND emp.emp_no LIKE '%" + student.getEmp_no() + "%'");
+        }
+        if (StringUtil.isNotEmpty(student.getEmp_sex()))
+        {
+            sb.append("AND emp.emp_sex LIKE '%" + student.getEmp_sex() + "%'");
+        }
+        if (StringUtil.isNotEmpty(student.getEmp_phone()))
+        {
+            sb.append("AND emp.EMP_Phone LIKE '%" + student.getEmp_phone() + "%'");
+        }
+        if (StringUtil.isNotEmpty(student.getEmp_address()))
+        {
+            sb.append("AND emp.EMP_Address LIKE '%" + student.getEmp_address() + "%'");
+        }
+        if (StringUtil.isNotEmpty(bbirthday))
+        {
+            sb.append(" and TO_DAYS(emp.EMP_Birthday) >= TO_DAYS('" + bbirthday + "')");
+        }
+        if (StringUtil.isNotEmpty(ebirthday))
+        {
+            sb.append(" and TO_DAYS(emp.EMP_Birthday) <= TO_DAYS('" + ebirthday + "')");
+        }
+        Log4jHelper.info(sb.toString());
+        PreparedStatement pstmt = con.prepareStatement(sb.toString());
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next())
+        {
+            return rs.getInt("total");
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
-		// ¼ì²ét_induction ±íÖĞÊÇ·ñ´æÔÚdelIdsÓÃ»§µÄĞÅÏ¢£¬Èç¹û´æÔÚÔò½øĞĞÉ¾³ı
-		String querySql = "select * from t_inductioninfo where EMP_NO in ( "
-				+ delIds + ")";
-		PreparedStatement queryPstmt = con.prepareStatement(querySql);
-		Log4jHelper.info("¼ì²ét_inductionÖĞÊÇ·ñÓĞdelIdsÓÃ»§µÄĞÅÏ¢£º"
-				+ queryPstmt.toString());
-		ResultSet rs = queryPstmt.executeQuery();
-		if (rs.next()) {
-			// É¾³ıt_induction±í¸ÃÓÃ»§µÄÊı¾İ
-			// É¾³ıÁ½ÖÖÀàĞÍµÄÊı¾İ£º ĞÂÔöÈëÖ°ÉêÇëÎ´Ìá½»£¬ÈëÖ°ÉêÇëÌá½»ÉóÅúÎ´Í¨¹ı
-			String sql1 = "delete from pms.t_inductioninfo where t_inductioninfo.EMP_NO in ( "
-					+ delIds + ")";
-			Log4jHelper.info("É¾³ıÉêÇëĞÅÏ¢:" + sql1);
-			PreparedStatement pstmt1 = con.prepareStatement(sql1);
-			if (pstmt1.executeUpdate() > 0) {
-				String sql = "DELETE FROM pms.t_employee WHERE t_employee.EMP_NO IN("
-						+ delIds + ")";
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				Log4jHelper.info("É¾³ıÔ±¹¤ĞÅÏ¢£º" + pstmt.toString());
-				return pstmt.executeUpdate();
-			} else {
+    /**
+     * åŠŸèƒ½ï¼šåˆ é™¤å‘˜å·¥ä¿¡æ¯
+     * 
+     * @param con
+     * @param delIds
+     * @return åˆ é™¤æˆåŠŸçš„è¡Œæ•°
+     * @throws Exception
+     */
+    public static int EmlopyeeDelete(Connection con, String delIds)
+        throws Exception
+    {
 
-				return 0;
-			}
-		} else {
-			// Èç¹ût_induction±íÖĞ²»´æÔÚ¸ÃÓÃ»§µÄĞÅÏ¢£¬ÔòÖ±½ÓÉ¾³ı
-			String sql = "DELETE FROM pms.t_employee WHERE t_employee.EMP_NO IN("
-					+ delIds + ")";
-			PreparedStatement pstmt = con.prepareStatement(sql);
-			Log4jHelper.info("É¾³ıÔ±¹¤ĞÅÏ¢£º" + pstmt.toString());
-			return pstmt.executeUpdate();
-		}
+        // æ£€æŸ¥t_induction è¡¨ä¸­æ˜¯å¦å­˜åœ¨delIdsç”¨æˆ·çš„ä¿¡æ¯ï¼Œå¦‚æœå­˜åœ¨åˆ™è¿›è¡Œåˆ é™¤
+        String querySql = "select * from t_inductioninfo where EMP_NO in ( " + delIds + ")";
+        PreparedStatement queryPstmt = con.prepareStatement(querySql);
+        Log4jHelper.info("æ£€æŸ¥t_inductionä¸­æ˜¯å¦æœ‰delIdsç”¨æˆ·çš„ä¿¡æ¯ï¼š" + queryPstmt.toString());
+        ResultSet rs = queryPstmt.executeQuery();
+        if (rs.next())
+        {
+            // åˆ é™¤t_inductionè¡¨è¯¥ç”¨æˆ·çš„æ•°æ®
+            // åˆ é™¤ä¸¤ç§ç±»å‹çš„æ•°æ®ï¼š æ–°å¢å…¥èŒç”³è¯·æœªæäº¤ï¼Œå…¥èŒç”³è¯·æäº¤å®¡æ‰¹æœªé€šè¿‡
+            String sql1 = "delete from pms.t_inductioninfo where t_inductioninfo.EMP_NO in ( "
+                          + delIds + ")";
+            Log4jHelper.info("åˆ é™¤ç”³è¯·ä¿¡æ¯:" + sql1);
+            PreparedStatement pstmt1 = con.prepareStatement(sql1);
+            if (pstmt1.executeUpdate() > 0)
+            {
+                String sql = "DELETE FROM pms.t_employee WHERE t_employee.EMP_NO IN(" + delIds
+                             + ")";
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                Log4jHelper.info("åˆ é™¤å‘˜å·¥ä¿¡æ¯ï¼š" + pstmt.toString());
+                return pstmt.executeUpdate();
+            }
+            else
+            {
 
-	}
+                return 0;
+            }
+        }
+        else
+        {
+            // å¦‚æœt_inductionè¡¨ä¸­ä¸å­˜åœ¨è¯¥ç”¨æˆ·çš„ä¿¡æ¯ï¼Œåˆ™ç›´æ¥åˆ é™¤
+            String sql = "DELETE FROM pms.t_employee WHERE t_employee.EMP_NO IN(" + delIds + ")";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            Log4jHelper.info("åˆ é™¤å‘˜å·¥ä¿¡æ¯ï¼š" + pstmt.toString());
+            return pstmt.executeUpdate();
+        }
 
-	/**
-	 * ¹¦ÄÜ£ºÔö¼ÓÓÃ»§ĞÅÏ¢
-	 * @param con
-	 * @param student
-	 * @return
-	 * @throws Exception
-	 */
-	public static int EmployeeAdd(Connection con, Employee emp)
-			throws Exception {
-		String sql = "INSERT INTO pms.t_employee() VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, emp.getEmp_no());
-		pstmt.setString(2, emp.getEmp_pwd());
-		pstmt.setString(3, emp.getEmp_name());
-		pstmt.setString(4, emp.getEmp_sex());
-		pstmt.setString(5,
-				DateUtil.formatDate(emp.getEmp_birthday(), "yyyy-MM-dd"));
-		pstmt.setString(6, emp.getPs_id());
-		pstmt.setString(7, emp.getEmp_phone());
-		pstmt.setString(8, emp.getEmp_address());
-		pstmt.setString(9, emp.getExt1());
-		pstmt.setString(10, DateUtil.getCurrentDateStr());
-		pstmt.setString(11, emp.getExt3());
+    }
 
-		Log4jHelper.info("ĞÂÔöÔ±¹¤ĞÅÏ¢£º" + pstmt.toString());
-		return pstmt.executeUpdate();
-	}
+    /**
+     * åŠŸèƒ½ï¼šå¢åŠ ç”¨æˆ·ä¿¡æ¯
+     * 
+     * @param con
+     * @param student
+     * @return
+     * @throws Exception
+     */
+    public static int EmployeeAdd(Connection con, Employee emp)
+        throws Exception
+    {
+        String sql = "INSERT INTO pms.t_employee() VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, emp.getEmp_no());
+        pstmt.setString(2, emp.getEmp_pwd());
+        pstmt.setString(3, emp.getEmp_name());
+        pstmt.setString(4, emp.getEmp_sex());
+        pstmt.setString(5, DateUtil.formatDate(emp.getEmp_birthday(), "yyyy-MM-dd"));
+        pstmt.setString(6, emp.getPs_id());
+        pstmt.setString(7, emp.getEmp_phone());
+        pstmt.setString(8, emp.getEmp_address());
+        pstmt.setString(9, emp.getExt1());
+        pstmt.setString(10, DateUtil.getCurrentDateStr());
+        pstmt.setString(11, emp.getExt3());
 
-	/**
-	 * ¹¦ÄÜ£ºÖ°¹¤×¢²á
-	 * @param con
-	 * @param student
-	 * @return
-	 * @throws Exception
-	 */
-	public static int EmployeeRegister(Connection con, Employee emp)
-			throws Exception {
-		String sql = "INSERT INTO pms.t_employee() VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement pstmt = con.prepareStatement(sql);
+        Log4jHelper.info("æ–°å¢å‘˜å·¥ä¿¡æ¯ï¼š" + pstmt.toString());
+        return pstmt.executeUpdate();
+    }
 
-		pstmt.setString(1, emp.getEmp_no());
-		// Ô±¹¤×¢²áÊ±£¬Ê¹ÓÃ×¢²áµÄÃÜÂë
-		pstmt.setString(2, emp.getEmp_pwd());
-		pstmt.setString(3, emp.getEmp_name());
-		pstmt.setString(4, emp.getEmp_sex());
-		pstmt.setString(5,
-				DateUtil.formatDate(emp.getEmp_birthday(), "yyyy-MM-dd"));
-		pstmt.setString(6, emp.getPs_id());
-		pstmt.setString(7, emp.getEmp_phone());
-		pstmt.setString(8, emp.getEmp_address());
-		pstmt.setString(9, emp.getExt1());
-		// ¸üĞÂÈÕÆÚ
-		pstmt.setString(10, DateUtil.getCurrentDateStr());
-		pstmt.setString(11, emp.getExt3());
-		Log4jHelper.info("Ô±¹¤×¢²á£º" + pstmt.toString());
-		return pstmt.executeUpdate();
-	}
+    /**
+     * åŠŸèƒ½ï¼šèŒå·¥æ³¨å†Œ
+     * 
+     * @param con
+     * @param student
+     * @return
+     * @throws Exception
+     */
+    public static int EmployeeRegister(Connection con, Employee emp)
+        throws Exception
+    {
+        String sql = "INSERT INTO pms.t_employee() VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement pstmt = con.prepareStatement(sql);
 
-	/**
-	 * ¹¦ÄÜ£ºĞŞ¸ÄÓÃ»§ĞÅÏ¢
-	 * @param con
-	 * @param student
-	 * @return ĞŞ¸Ä³É¹¦·µ»ØĞĞÊı
-	 * @throws Exception
-	 */
-	public static int EmployeeModify(Connection con, Employee emp) {
-		Log4jHelper.info("¸üĞÂ²ÎÊı£º" + emp.toString());
-		try {
-			if (emp != null && StringUtil.isNotEmpty(emp.getEmp_pwd())) {
-				String sql = "UPDATE pms.t_employee SET t_employee.EMP_NAME=?,EMP_PWD=?,t_employee.EMP_SEX=?,t_employee.EMP_Birthday =?,t_employee.PS_ID=?,t_employee.EMP_Phone=?,t_employee.EMP_Address=?,t_employee.ext1=?,t_employee.ext2=?,t_employee.ext3=? WHERE t_employee.EMP_NO=?";
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, emp.getEmp_name());
-				pstmt.setString(2, emp.getEmp_pwd());
-				pstmt.setString(3, emp.getEmp_sex());
-				pstmt.setString(4, DateUtil.formatDate(emp.getEmp_birthday(),
-						"yyyy-MM-dd"));
-				pstmt.setString(5, emp.getPs_id());
-				pstmt.setString(6, emp.getEmp_phone());
-				pstmt.setString(7, emp.getEmp_address());
-				pstmt.setString(8, emp.getExt1());
-				pstmt.setString(9, DateUtil.getCurrentDateStr());
-				pstmt.setString(10, emp.getExt3());
-				// ĞŞ¸ÄÌõ¼ş
-				pstmt.setString(11, emp.getEmp_no());
-				// ´òÓ¡Ö´ĞĞµÄSqlÓï¾ä
-				Log4jHelper.info("ĞŞ¸ÄµÄSqlÓï¾ä£º" + pstmt.toString());
-				return pstmt.executeUpdate();
-			} else {
-				String sql = "UPDATE pms.t_employee SET t_employee.EMP_NAME=?,t_employee.EMP_SEX=?,t_employee.EMP_Birthday =?,t_employee.PS_ID=?,t_employee.EMP_Phone=?,t_employee.EMP_Address=?,t_employee.ext1=?,t_employee.ext2=?,t_employee.ext3=? WHERE t_employee.EMP_NO=?";
-				PreparedStatement pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, emp.getEmp_name());
-				pstmt.setString(2, emp.getEmp_sex());
-				pstmt.setString(3, DateUtil.formatDate(emp.getEmp_birthday(),
-						"yyyy-MM-dd"));
-				pstmt.setString(4, emp.getPs_id());
-				pstmt.setString(5, emp.getEmp_phone());
-				pstmt.setString(6, emp.getEmp_address());
-				pstmt.setString(7, emp.getExt1());
-				pstmt.setString(8, DateUtil.getCurrentDateStr());
-				pstmt.setString(9, emp.getExt3());
-				// ĞŞ¸ÄÌõ¼ş
-				pstmt.setString(10, emp.getEmp_no());
-				// ´òÓ¡Ö´ĞĞµÄSqlÓï¾ä
-				Log4jHelper.info("ĞŞ¸ÄµÄSqlÓï¾ä£º" + pstmt.toString());
-				return pstmt.executeUpdate();
-			}
+        pstmt.setString(1, emp.getEmp_no());
+        // å‘˜å·¥æ³¨å†Œæ—¶ï¼Œä½¿ç”¨æ³¨å†Œçš„å¯†ç 
+        pstmt.setString(2, emp.getEmp_pwd());
+        pstmt.setString(3, emp.getEmp_name());
+        pstmt.setString(4, emp.getEmp_sex());
+        pstmt.setString(5, DateUtil.formatDate(emp.getEmp_birthday(), "yyyy-MM-dd"));
+        pstmt.setString(6, emp.getPs_id());
+        pstmt.setString(7, emp.getEmp_phone());
+        pstmt.setString(8, emp.getEmp_address());
+        pstmt.setString(9, emp.getExt1());
+        // æ›´æ–°æ—¥æœŸ
+        pstmt.setString(10, DateUtil.getCurrentDateStr());
+        pstmt.setString(11, emp.getExt3());
+        Log4jHelper.info("å‘˜å·¥æ³¨å†Œï¼š" + pstmt.toString());
+        return pstmt.executeUpdate();
+    }
 
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-			return 0;
-		}
-	}
+    /**
+     * åŠŸèƒ½ï¼šä¿®æ”¹ç”¨æˆ·ä¿¡æ¯
+     * 
+     * @param con
+     * @param student
+     * @return ä¿®æ”¹æˆåŠŸè¿”å›è¡Œæ•°
+     * @throws Exception
+     */
+    public static int EmployeeModify(Connection con, Employee emp)
+    {
+        Log4jHelper.info("æ›´æ–°å‚æ•°ï¼š" + emp.toString());
+        try
+        {
+            if (emp != null && StringUtil.isNotEmpty(emp.getEmp_pwd()))
+            {
+                String sql = "UPDATE pms.t_employee SET t_employee.EMP_NAME=?,EMP_PWD=?,t_employee.EMP_SEX=?,t_employee.EMP_Birthday =?,t_employee.PS_ID=?,t_employee.EMP_Phone=?,t_employee.EMP_Address=?,t_employee.ext1=?,t_employee.ext2=?,t_employee.ext3=? WHERE t_employee.EMP_NO=?";
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setString(1, emp.getEmp_name());
+                pstmt.setString(2, emp.getEmp_pwd());
+                pstmt.setString(3, emp.getEmp_sex());
+                pstmt.setString(4, DateUtil.formatDate(emp.getEmp_birthday(), "yyyy-MM-dd"));
+                pstmt.setString(5, emp.getPs_id());
+                pstmt.setString(6, emp.getEmp_phone());
+                pstmt.setString(7, emp.getEmp_address());
+                pstmt.setString(8, emp.getExt1());
+                pstmt.setString(9, DateUtil.getCurrentDateStr());
+                pstmt.setString(10, emp.getExt3());
+                // ä¿®æ”¹æ¡ä»¶
+                pstmt.setString(11, emp.getEmp_no());
+                // æ‰“å°æ‰§è¡Œçš„Sqlè¯­å¥
+                Log4jHelper.info("ä¿®æ”¹çš„Sqlè¯­å¥ï¼š" + pstmt.toString());
+                return pstmt.executeUpdate();
+            }
+            else
+            {
+                String sql = "UPDATE pms.t_employee SET t_employee.EMP_NAME=?,t_employee.EMP_SEX=?,t_employee.EMP_Birthday =?,t_employee.PS_ID=?,t_employee.EMP_Phone=?,t_employee.EMP_Address=?,t_employee.ext1=?,t_employee.ext2=?,t_employee.ext3=? WHERE t_employee.EMP_NO=?";
+                PreparedStatement pstmt = con.prepareStatement(sql);
+                pstmt.setString(1, emp.getEmp_name());
+                pstmt.setString(2, emp.getEmp_sex());
+                pstmt.setString(3, DateUtil.formatDate(emp.getEmp_birthday(), "yyyy-MM-dd"));
+                pstmt.setString(4, emp.getPs_id());
+                pstmt.setString(5, emp.getEmp_phone());
+                pstmt.setString(6, emp.getEmp_address());
+                pstmt.setString(7, emp.getExt1());
+                pstmt.setString(8, DateUtil.getCurrentDateStr());
+                pstmt.setString(9, emp.getExt3());
+                // ä¿®æ”¹æ¡ä»¶
+                pstmt.setString(10, emp.getEmp_no());
+                // æ‰“å°æ‰§è¡Œçš„Sqlè¯­å¥
+                Log4jHelper.info("ä¿®æ”¹çš„Sqlè¯­å¥ï¼š" + pstmt.toString());
+                return pstmt.executeUpdate();
+            }
 
-	/**
-	 * ¹¦ÄÜ£º¼ì²é×¢²áÓÃ»§ÊÇ·ñÒÑ¾­×¢²á
-	 * @param con 
-	 * @param stuNo  Ô±¹¤¹¤ºÅ
-	 * @return ²»´æÔÚ ·µ»Øfalse ´æÔÚ·µ»Øtrue
-	 * @throws SQLException 
-	 */
-	public static boolean IsExistence(Connection con, String empNo)
-			throws SQLException {
-		String sql = "SELECT * FROM pms.t_employee WHERE t_employee.EMP_NO=?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, empNo);
-		Log4jHelper.info("¼ì²éÔ±¹¤ºÅ£º" + pstmt.toString());
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+            return 0;
+        }
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¼ì²éÊÇ·ñÈëÖ° t_induction±íÖĞ½øĞĞ¼ì²é
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-25-ÏÂÎç1:26:26
-	 * @param con
-	 * @param string
-	 * @return
-	 * @throws SQLException 
-	 */
-	public static boolean IsInduction(Connection con, String emp_no)
-			throws SQLException {
-		// ¼ì²é£ºÈëÖ°ÉêÇëÒÑÉóÅúÍ¨¹ı£¬²»ÔÊĞíÉ¾³ı
-		String sql = "SELECT * FROM t_inductioninfo WHERE EMP_NO =? and EXT3='IN' and EXT1='11'";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, emp_no);
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    /**
+     * åŠŸèƒ½ï¼šæ£€æŸ¥æ³¨å†Œç”¨æˆ·æ˜¯å¦å·²ç»æ³¨å†Œ
+     * 
+     * @param con
+     * @param stuNo
+     *            å‘˜å·¥å·¥å·
+     * @return ä¸å­˜åœ¨ è¿”å›false å­˜åœ¨è¿”å›true
+     * @throws SQLException
+     */
+    public static boolean IsExistence(Connection con, String empNo)
+        throws SQLException
+    {
+        String sql = "SELECT * FROM pms.t_employee WHERE t_employee.EMP_NO=?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, empNo);
+        Log4jHelper.info("æ£€æŸ¥å‘˜å·¥å·ï¼š" + pstmt.toString());
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	public static boolean IsLeader(Connection con, String emp_no)
-			throws SQLException {
-		// ¼ì²é£º¸ÃÓÃ»§ÊÇ²»ÊÇ²¿ÃÅÁìµ¼
-		String sql = "SELECT * FROM t_department WHERE DEP_LEADER =?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, emp_no);
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæ£€æŸ¥æ˜¯å¦å…¥èŒ t_inductionè¡¨ä¸­è¿›è¡Œæ£€æŸ¥ å¼€å‘æ—¥æœŸï¼š2017-4-25-ä¸‹åˆ1:26:26
+     * 
+     * @param con
+     * @param string
+     * @return
+     * @throws SQLException
+     */
+    public static boolean IsInduction(Connection con, String emp_no)
+        throws SQLException
+    {
+        // æ£€æŸ¥ï¼šå…¥èŒç”³è¯·å·²å®¡æ‰¹é€šè¿‡ï¼Œä¸å…è®¸åˆ é™¤
+        String sql = "SELECT * FROM t_inductioninfo WHERE EMP_NO =? and EXT3='IN' and EXT1='11'";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, emp_no);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º»ñÈ¡ÆÕÍ¨Ô±¹¤¸öÈËĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç8:09:40
-	 * @param con
-	 * @param pageBean
-	 * @param emp
-	 * @param object
-	 * @param object2
-	 * @return
-	 * @throws SQLException 
-	 */
-	public static ResultSet EmployeetPersionInfo(Connection con,
-			PageBean pageBean, Employee emp) throws SQLException {
-		StringBuffer sb = new StringBuffer(
-				"SELECT  emp.EMP_NO,EMP_PWD,EMP_NAME,emp.emp_sex, (case WHEN emp_sex='F'then 'Å®' WHEN emp_sex='M'then 'ÄĞ' END ) as sexName,emp.EMP_Birthday,zzmm.PS_TYPE,zzmm.PS_Name,EMP_Phone, emp.EMP_Address, emp.ext1,emp.ext2 FROM pms.t_politicalstatus zzmm, pms.t_employee emp WHERE zzmm.PS_TYPE = emp.PS_ID ");
+    public static boolean IsLeader(Connection con, String emp_no)
+        throws SQLException
+    {
+        // æ£€æŸ¥ï¼šè¯¥ç”¨æˆ·æ˜¯ä¸æ˜¯éƒ¨é—¨é¢†å¯¼
+        String sql = "SELECT * FROM t_department WHERE DEP_LEADER =?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, emp_no);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-		if (emp != null && StringUtil.isNotEmpty(emp.getEmp_no())) {
-			sb.append("AND emp.emp_no =" + emp.getEmp_no() + "");
-		}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè·å–æ™®é€šå‘˜å·¥ä¸ªäººä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ8:09:40
+     * 
+     * @param con
+     * @param pageBean
+     * @param emp
+     * @param object
+     * @param object2
+     * @return
+     * @throws SQLException
+     */
+    public static ResultSet EmployeetPersionInfo(Connection con, PageBean pageBean, Employee emp)
+        throws SQLException
+    {
+        StringBuffer sb = new StringBuffer(
+            "SELECT  emp.EMP_NO,EMP_PWD,EMP_NAME,emp.emp_sex, (case WHEN emp_sex='F'then 'å¥³' WHEN emp_sex='M'then 'ç”·' END ) as sexName,emp.EMP_Birthday,zzmm.PS_TYPE,zzmm.PS_Name,EMP_Phone, emp.EMP_Address, emp.ext1,emp.ext2 FROM pms.t_politicalstatus zzmm, pms.t_employee emp WHERE zzmm.PS_TYPE = emp.PS_ID ");
 
-		Log4jHelper.info("²éÑ¯Ô±¹¤¸öÈËĞÅÏ¢£º" + sb.toString());
-		PreparedStatement pstmt = con.prepareStatement(sb.toString());
-		return pstmt.executeQuery();
-	}
+        if (emp != null && StringUtil.isNotEmpty(emp.getEmp_no()))
+        {
+            sb.append("AND emp.emp_no =" + emp.getEmp_no() + "");
+        }
+
+        Log4jHelper.info("æŸ¥è¯¢å‘˜å·¥ä¸ªäººä¿¡æ¯ï¼š" + sb.toString());
+        PreparedStatement pstmt = con.prepareStatement(sb.toString());
+        return pstmt.executeQuery();
+    }
 
 }

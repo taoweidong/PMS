@@ -1,5 +1,6 @@
 package com.pms.util;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,82 +8,92 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-public class QR<T> {
 
-	private DataSource dataSource;
+public class QR<T>
+{
 
-	public QR() {
-		super();
-	}
+    private DataSource dataSource;
 
-	public QR(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
+    public QR()
+    {
+        super();
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºinsert£¬update,delete²Ù×÷
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-4-ÏÂÎç1:14:24
-	 * @param sql
-	 * @param params
-	 * @return
-	 */
-	public int update(String sql, Object... params) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		try {
-			conn = dataSource.getConnection();
-			pstmt = conn.prepareStatement(sql);
-			initParams(pstmt, params);
-			return pstmt.executeUpdate();
+    public QR(DataSource dataSource)
+    {
+        this.dataSource = dataSource;
+    }
 
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		} finally {
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šinsertï¼Œupdate,deleteæ“ä½œ å¼€å‘æ—¥æœŸï¼š2017-5-4-ä¸‹åˆ1:14:24
+     * 
+     * @param sql
+     * @param params
+     * @return
+     */
+    public int update(String sql, Object... params)
+    {
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try
+        {
+            conn = dataSource.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            initParams(pstmt, params);
+            return pstmt.executeUpdate();
 
-			try {
-				if (pstmt != null)
-					pstmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+        finally
+        {
 
-		}
-	}
+            try
+            {
+                if (pstmt != null) pstmt.close();
+                if (conn != null) conn.close();
+            }
+            catch (SQLException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¸ø²ÎÊı¸³Öµ
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-4-ÏÂÎç1:26:42
-	 * @param pstmt
-	 * @param params
-	 * @throws SQLException 
-	 */
-	private void initParams(PreparedStatement pstmt, Object[] params)
-			throws SQLException {
-		for (int i = 0; i < params.length; i++) {
-			pstmt.setObject(i + 1, params[i]);
-		}
+        }
+    }
 
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šç»™å‚æ•°èµ‹å€¼ å¼€å‘æ—¥æœŸï¼š2017-5-4-ä¸‹åˆ1:26:42
+     * 
+     * @param pstmt
+     * @param params
+     * @throws SQLException
+     */
+    private void initParams(PreparedStatement pstmt, Object[] params)
+        throws SQLException
+    {
+        for (int i = 0; i < params.length; i++ )
+        {
+            pstmt.setObject(i + 1, params[i]);
+        }
 
-	public T query(String sql, RsHandler<T> rh, Object... params) {
-		return null;
-	}
+    }
+
+    public T query(String sql, RsHandler<T> rh, Object... params)
+    {
+        return null;
+    }
 }
 
+
 /**
- * 
- * @author Taowd
- * ¹¦        ÄÜ£ºÓÃÓÚ½«½á¹û½á¹û¼¯×ª³ÉÏàÓ¦µÄ¶ÔÏó
- * ±àĞ´Ê±¼ä£º2017-5-4-ÏÂÎç1:17:55
+ * @author Taowd åŠŸ èƒ½ï¼šç”¨äºå°†ç»“æœç»“æœé›†è½¬æˆç›¸åº”çš„å¯¹è±¡ ç¼–å†™æ—¶é—´ï¼š2017-5-4-ä¸‹åˆ1:17:55
  * @param <T>
  */
-interface RsHandler<T> {
-	public T handler(ResultSet rs) throws SQLException;
+interface RsHandler<T>
+{
+    public T handler(ResultSet rs)
+        throws SQLException;
 }

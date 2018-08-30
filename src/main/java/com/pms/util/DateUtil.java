@@ -1,104 +1,110 @@
 package com.pms.util;
 
+
 import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
+
 /**
- * 
- * @author Taowd
- * ¹¦        ÄÜ£ºÈÕÆÚ¹¤¾ßÀà
- * ±àĞ´Ê±¼ä£º2017-4-11-ÏÂÎç2:27:37
+ * @author Taowd åŠŸ èƒ½ï¼šæ—¥æœŸå·¥å…·ç±» ç¼–å†™æ—¶é—´ï¼š2017-4-11-ä¸‹åˆ2:27:37
  */
-public class DateUtil {
-	/**
-	 * Ò»ÌìµÄºÁÃëÊı
-	 */
-	public static final long SECOND_OF_DAY = 86400000L;
+public class DateUtil
+{
+    /**
+     * ä¸€å¤©çš„æ¯«ç§’æ•°
+     */
+    public static final long SECOND_OF_DAY = 86400000L;
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º½«ÈÕÆÚ×ª³ÉÖ¸¶¨¸ñÊ½µÄ×Ö·û´®
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-11-ÏÂÎç2:27:52
-	 * @param date
-	 * @param format
-	 * @return
-	 * @throws Exception
-	 */
-	public static String formatDate(Date date, String format) throws Exception {
-		String result = "";
-		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		if (date != null) {
-			result = sdf.format(date);
-		}
-		return result;
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šå°†æ—¥æœŸè½¬æˆæŒ‡å®šæ ¼å¼çš„å­—ç¬¦ä¸² å¼€å‘æ—¥æœŸï¼š2017-4-11-ä¸‹åˆ2:27:52
+     * 
+     * @param date
+     * @param format
+     * @return
+     * @throws Exception
+     */
+    public static String formatDate(Date date, String format)
+        throws Exception
+    {
+        String result = "";
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        if (date != null)
+        {
+            result = sdf.format(date);
+        }
+        return result;
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º½«Ö¸¶¨¸ñÊ½µÄ×Ö·û´®×ª³ÉÈÕÆÚ
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-11-ÏÂÎç2:28:29
-	 * @param str
-	 * @param format
-	 * @return
-	 * @throws Exception
-	 */
-	public static Date formatString(String str, String format) throws Exception {
-		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		return sdf.parse(str);
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šå°†æŒ‡å®šæ ¼å¼çš„å­—ç¬¦ä¸²è½¬æˆæ—¥æœŸ å¼€å‘æ—¥æœŸï¼š2017-4-11-ä¸‹åˆ2:28:29
+     * 
+     * @param str
+     * @param format
+     * @return
+     * @throws Exception
+     */
+    public static Date formatString(String str, String format)
+        throws Exception
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.parse(str);
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º»ñÈ¡µ±Ç°ÏµÍ³Ê±¼ä
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-11-ÏÂÎç9:49:50
-	 * @return µ±Ç°ÈÕÆÚµÄ×Ö·û´®
-	 * @throws Exception
-	 */
-	public static String getCurrentDateStr() throws Exception {
-		Date date = new Date();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		return sdf.format(date);
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè·å–å½“å‰ç³»ç»Ÿæ—¶é—´ å¼€å‘æ—¥æœŸï¼š2017-4-11-ä¸‹åˆ9:49:50
+     * 
+     * @return å½“å‰æ—¥æœŸçš„å­—ç¬¦ä¸²
+     * @throws Exception
+     */
+    public static String getCurrentDateStr()
+        throws Exception
+    {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¼ÆËãÁ½¸öÈÕÆÚ¼ä¸ôµÄÌìÊı£¬ºöÂÔÊ±·ÖÃë
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-8-ÉÏÎç10:37:25
-	 * @param dateStart ¿ªÊ¼ÈÕÆÚ
-	 * @param dateEnd ½áÊøÈÕÆÚ
-	 * @return ¼ä¸ôÌìÊı
-	 */
-	public static int dayLength(Date dateStart, Date dateEnd) {
-		int sign = 1;
-		// ÅĞ¶Ï¿ªÊ¼Ê±ÈÕÆÚÊÇ·ñÍíÓÚ½áÊøÈÕÆÚ
-		if (dateStart.after(dateEnd)) {
-			Date dateTemp = dateStart;
-			dateStart = dateEnd;
-			dateEnd = dateTemp;
-			sign = -1;
-		}
-		Calendar calendarStart = Calendar.getInstance();
-		calendarStart.setTime(dateStart);
-		calendarStart.set(Calendar.HOUR_OF_DAY, 1);
-		calendarStart.set(Calendar.MINUTE, 0);
-		calendarStart.set(Calendar.SECOND, 0);
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè®¡ç®—ä¸¤ä¸ªæ—¥æœŸé—´éš”çš„å¤©æ•°ï¼Œå¿½ç•¥æ—¶åˆ†ç§’ å¼€å‘æ—¥æœŸï¼š2017-5-8-ä¸Šåˆ10:37:25
+     * 
+     * @param dateStart
+     *            å¼€å§‹æ—¥æœŸ
+     * @param dateEnd
+     *            ç»“æŸæ—¥æœŸ
+     * @return é—´éš”å¤©æ•°
+     */
+    public static int dayLength(Date dateStart, Date dateEnd)
+    {
+        int sign = 1;
+        // åˆ¤æ–­å¼€å§‹æ—¶æ—¥æœŸæ˜¯å¦æ™šäºç»“æŸæ—¥æœŸ
+        if (dateStart.after(dateEnd))
+        {
+            Date dateTemp = dateStart;
+            dateStart = dateEnd;
+            dateEnd = dateTemp;
+            sign = -1;
+        }
+        Calendar calendarStart = Calendar.getInstance();
+        calendarStart.setTime(dateStart);
+        calendarStart.set(Calendar.HOUR_OF_DAY, 1);
+        calendarStart.set(Calendar.MINUTE, 0);
+        calendarStart.set(Calendar.SECOND, 0);
 
-		Calendar calendarEnd = Calendar.getInstance();
-		calendarEnd.setTime(dateEnd);
-		calendarEnd.set(Calendar.HOUR_OF_DAY, 2);
-		calendarEnd.set(Calendar.MINUTE, 0);
-		calendarEnd.set(Calendar.SECOND, 0);
+        Calendar calendarEnd = Calendar.getInstance();
+        calendarEnd.setTime(dateEnd);
+        calendarEnd.set(Calendar.HOUR_OF_DAY, 2);
+        calendarEnd.set(Calendar.MINUTE, 0);
+        calendarEnd.set(Calendar.SECOND, 0);
 
-		long diffScond = calendarEnd.getTimeInMillis()
-				- calendarStart.getTimeInMillis();
-		long diffDays = diffScond / SECOND_OF_DAY;
+        long diffScond = calendarEnd.getTimeInMillis() - calendarStart.getTimeInMillis();
+        long diffDays = diffScond / SECOND_OF_DAY;
 
-		return (int) diffDays * sign;
+        return (int)diffDays * sign;
 
-	}
+    }
+
+    /** Prevent instantiation */
+    private DateUtil()
+    {}
 }

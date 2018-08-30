@@ -1,5 +1,6 @@
 package com.pms.servlet;
 
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -23,317 +24,381 @@ import com.pms.util.JsonUtil;
 import com.pms.util.Log4jHelper;
 import com.pms.util.ResponseUtil;
 
+
 /**
- * 
- * @author Taowd ¹¦ ÄÜ£º¹ÜÀíÔ±´¦ÀíÆ÷£¬´¦Àí¹ÜÀíÔ±Ôö¼Ó£¬ĞŞ¸Ä£¬É¾³ı£¬»ñÈ¡ĞÅÏ¢ÁĞ±í£¬ÉèÖÃ³¬¼¶¹ÜÀíÔ±£¬È¡Ïû³¬¼¶¹ÜÀíÔ±µÈ¹¦ÄÜ
- *         ±àĞ´Ê±¼ä£º2017-5-6-ÏÂÎç12:02:06
+ * @author Taowd åŠŸ èƒ½ï¼šç®¡ç†å‘˜å¤„ç†å™¨ï¼Œå¤„ç†ç®¡ç†å‘˜å¢åŠ ï¼Œä¿®æ”¹ï¼Œåˆ é™¤ï¼Œè·å–ä¿¡æ¯åˆ—è¡¨ï¼Œè®¾ç½®è¶…çº§ç®¡ç†å‘˜ï¼Œå–æ¶ˆè¶…çº§ç®¡ç†å‘˜ç­‰åŠŸèƒ½ ç¼–å†™æ—¶é—´ï¼š2017-5-6-ä¸‹åˆ12:02:06
  */
-public class AdminServlet extends BaseServlet {
+public class AdminServlet extends BaseServlet
+{
 
-	private static final long serialVersionUID = 1L;
-	AdministratorDao adminDao = new AdministratorDao();
-	// Èç¹ûÊÇĞŞ¸ÄµÄ»°£¬·µ»ØĞŞ¸Ä³É¹¦µÄĞĞÊı
-	int saveNums = 0;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 * Author:Taowd ¹¦ÄÜ£º¸üÏ¸¹ÜÀíÔ±ĞÅÏ¢ ¿ª·¢ÈÕÆÚ£º2017-5-6-ÉÏÎç10:34:29
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void Update(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Log4jHelper.info("¸üĞÂ¹ÜÀíÔ±ĞÅÏ¢");
-		request.setCharacterEncoding("utf-8");
-		String ADMIN_NO = request.getParameter("ADMIN_NO");
-		String ADMIN_ID = request.getParameter("ADMIN_ID");
-		String ADMIN_PWD = request.getParameter("newPassword");
-		String ADMIN_NAME = request.getParameter("ADMIN_NAME");
-		String ADMIN_PHONE = request.getParameter("ADMIN_PHONE");
-		String Ext1 = request.getParameter("Ext1");
+    AdministratorDao adminDao = new AdministratorDao();
 
-		Administrator adminBean = new Administrator();
-		adminBean.setAdmin_id(ADMIN_ID);
-		adminBean.setAdmin_no(ADMIN_NO);
-		if (!StringUtils.isEmpty(ADMIN_PWD)) {
-			adminBean.setAdmin_pwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(ADMIN_PWD)));
-		}
-		adminBean.setAdmin_name(ADMIN_NAME);
-		adminBean.setAdmin_phone(ADMIN_PHONE);
-		adminBean.setExt1(Ext1);
+    //  å¦‚æœæ˜¯ä¿®æ”¹çš„è¯ï¼Œè¿”å›ä¿®æ”¹æˆåŠŸçš„è¡Œæ•°
+    int saveNums = 0;
 
-		try {
-			saveNums = adminDao.AdminModify(adminBean);
-			JSONObject result = new JSONObject();
-			if (saveNums > 0) {
-				result.put("success", true);
-			} else {
-				result.put("success", false);
-				result.put("errorMsg", "ĞŞ¸ÄÔ±¹¤ĞÅÏ¢Ê§°Ü£¡");
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæ›´ç»†ç®¡ç†å‘˜ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-6-ä¸Šåˆ10:34:29
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void Update(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("æ›´æ–°ç®¡ç†å‘˜ä¿¡æ¯");
+        request.setCharacterEncoding("utf-8");
+        String ADMIN_NO = request.getParameter("ADMIN_NO");
+        String ADMIN_ID = request.getParameter("ADMIN_ID");
+        String ADMIN_PWD = request.getParameter("newPassword");
+        String ADMIN_NAME = request.getParameter("ADMIN_NAME");
+        String ADMIN_PHONE = request.getParameter("ADMIN_PHONE");
+        String Ext1 = request.getParameter("Ext1");
 
-	}
+        Administrator adminBean = new Administrator();
+        adminBean.setAdmin_id(ADMIN_ID);
+        adminBean.setAdmin_no(ADMIN_NO);
+        if (!StringUtils.isEmpty(ADMIN_PWD))
+        {
+            adminBean.setAdmin_pwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(ADMIN_PWD)));
+        }
+        adminBean.setAdmin_name(ADMIN_NAME);
+        adminBean.setAdmin_phone(ADMIN_PHONE);
+        adminBean.setExt1(Ext1);
 
-	public void AdminPersionUpdate(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		Log4jHelper.info("¸üĞÂ¹ÜÀíÔ±¸öÈËĞÅÏ¢");
-		request.setCharacterEncoding("utf-8");
-		String ADMIN_NO = request.getParameter("ADMIN_NO");
-		String ADMIN_ID = request.getParameter("ADMIN_ID");
-		String ADMIN_PWD = request.getParameter("newPassword");
-		String ADMIN_NAME = request.getParameter("ADMIN_NAME");
-		String ADMIN_PHONE = request.getParameter("ADMIN_PHONE");
-		String Ext1 = request.getParameter("Ext1");
+        try
+        {
+            saveNums = adminDao.adminModify(adminBean);
+            JSONObject result = new JSONObject();
+            if (saveNums > 0)
+            {
+                result.put("success", true);
+            }
+            else
+            {
+                result.put("success", false);
+                result.put("errorMsg", "ä¿®æ”¹å‘˜å·¥ä¿¡æ¯å¤±è´¥ï¼");
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
 
-		Administrator adminBean = new Administrator();
-		adminBean.setAdmin_id(ADMIN_ID);
-		adminBean.setAdmin_no(ADMIN_NO);
-		if (!StringUtils.isEmpty(ADMIN_PWD)) {
-			adminBean.setAdmin_pwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(ADMIN_PWD)));
-		}
-		adminBean.setAdmin_name(ADMIN_NAME);
-		adminBean.setAdmin_phone(ADMIN_PHONE);
-		adminBean.setExt1(Ext1);
+    }
 
-		// Èç¹ûÊÇĞŞ¸ÄµÄ»°£¬·µ»ØĞŞ¸Ä³É¹¦µÄĞĞÊı
-		try {
-			saveNums = adminDao.AdminPersionModify(adminBean);
-			JSONObject result = new JSONObject();
-			if (saveNums > 0) {
-				result.put("success", true);
-			} else {
-				result.put("success", false);
-				result.put("errorMsg", "ĞŞ¸ÄÔ±¹¤ĞÅÏ¢Ê§°Ü£¡");
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		}
+    public void AdminPersionUpdate(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        request.setCharacterEncoding("utf-8");
+        Log4jHelper.info("æ›´æ–°ç®¡ç†å‘˜ä¸ªäººä¿¡æ¯");
+        request.setCharacterEncoding("utf-8");
+        String ADMIN_NO = request.getParameter("ADMIN_NO");
+        String ADMIN_ID = request.getParameter("ADMIN_ID");
+        String ADMIN_PWD = request.getParameter("newPassword");
+        String ADMIN_NAME = request.getParameter("ADMIN_NAME");
+        String ADMIN_PHONE = request.getParameter("ADMIN_PHONE");
+        String Ext1 = request.getParameter("Ext1");
 
-	}
+        Administrator adminBean = new Administrator();
+        adminBean.setAdmin_id(ADMIN_ID);
+        adminBean.setAdmin_no(ADMIN_NO);
+        if (!StringUtils.isEmpty(ADMIN_PWD))
+        {
+            adminBean.setAdmin_pwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(ADMIN_PWD)));
+        }
+        adminBean.setAdmin_name(ADMIN_NAME);
+        adminBean.setAdmin_phone(ADMIN_PHONE);
+        adminBean.setExt1(Ext1);
 
-	/**
-	 * 
-	 * Author:Taowd ¹¦ÄÜ£º¹ÜÀíÔ±ĞÅÏ¢±£´æ ¿ª·¢ÈÕÆÚ£º2017-5-5-ÏÂÎç8:42:45
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws Exception
-	 */
-	public void AdminAdd(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("utf-8");
-		Log4jHelper.info("ĞÂÔö¹ÜÀíÔ±¸öÈËĞÅÏ¢");
-		request.setCharacterEncoding("utf-8");
-		String ADMIN_NO = request.getParameter("ADMIN_NO");
-		String ADMIN_ID = request.getParameter("ADMIN_ID");
-		String ADMIN_PWD = request.getParameter("newPassword");
-		String ADMIN_NAME = request.getParameter("ADMIN_NAME");
-		String ADMIN_PHONE = request.getParameter("ADMIN_PHONE");
-		String Ext1 = request.getParameter("Ext1");
+        // å¦‚æœæ˜¯ä¿®æ”¹çš„è¯ï¼Œè¿”å›ä¿®æ”¹æˆåŠŸçš„è¡Œæ•°
+        try
+        {
+            saveNums = adminDao.adminPersionModify(adminBean);
+            JSONObject result = new JSONObject();
+            if (saveNums > 0)
+            {
+                result.put("success", true);
+            }
+            else
+            {
+                result.put("success", false);
+                result.put("errorMsg", "ä¿®æ”¹å‘˜å·¥ä¿¡æ¯å¤±è´¥ï¼");
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
 
-		Administrator adminBean = new Administrator();
-		adminBean.setAdmin_id(ADMIN_ID);
-		adminBean.setAdmin_no(ADMIN_NO);
-		if (!StringUtils.isEmpty(ADMIN_PWD)) {
-			adminBean.setAdmin_pwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(ADMIN_PWD)));
-		}
-		adminBean.setAdmin_name(ADMIN_NAME);
-		adminBean.setAdmin_phone(ADMIN_PHONE);
-		adminBean.setExt1(Ext1);
+    }
 
-		// ¼ì²éstuNoÊÇ·ñÒÑ¾­´æÔÚ
-		boolean isExistenceFlag;
-		JSONObject result = new JSONObject();
-		try {
-			isExistenceFlag = adminDao.IsExistence(ADMIN_NO);
-			// ¼ì²éĞÂÔöÔ±¹¤ºÅÊÇ·ñÒÑ¾­×¢²á
-			if (isExistenceFlag) {
-				result.put("success", false);
-				result.put("errorMsg", "Ô±¹¤ºÅÒÑ´æÔÚ£¡");
-			} else {
-				// ĞÂÔöÔ±¹¤£¬·µ»Ø³É¹¦µÄĞĞÊı
-				saveNums = adminDao.AdminAdd(adminBean);
-				if (saveNums > 0) {
-					result.put("success", true);
-				} else {
-					result.put("success", false);
-					result.put("errorMsg", "ĞÂÔöÔ±¹¤ĞÅÏ¢Ê§°Ü");
-				}
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (SQLException e) {
-			Log4jHelper.exception(e);
-		}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šç®¡ç†å‘˜ä¿¡æ¯ä¿å­˜ å¼€å‘æ—¥æœŸï¼š2017-5-5-ä¸‹åˆ8:42:45
+     * 
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    public void AdminAdd(HttpServletRequest request, HttpServletResponse response)
+        throws Exception
+    {
+        request.setCharacterEncoding("utf-8");
+        Log4jHelper.info("æ–°å¢ç®¡ç†å‘˜ä¸ªäººä¿¡æ¯");
+        request.setCharacterEncoding("utf-8");
+        String ADMIN_NO = request.getParameter("ADMIN_NO");
+        String ADMIN_ID = request.getParameter("ADMIN_ID");
+        String ADMIN_PWD = request.getParameter("newPassword");
+        String ADMIN_NAME = request.getParameter("ADMIN_NAME");
+        String ADMIN_PHONE = request.getParameter("ADMIN_PHONE");
+        String Ext1 = request.getParameter("Ext1");
 
-	}
+        Administrator adminBean = new Administrator();
+        adminBean.setAdmin_id(ADMIN_ID);
+        adminBean.setAdmin_no(ADMIN_NO);
+        if (!StringUtils.isEmpty(ADMIN_PWD))
+        {
+            adminBean.setAdmin_pwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(ADMIN_PWD)));
+        }
+        adminBean.setAdmin_name(ADMIN_NAME);
+        adminBean.setAdmin_phone(ADMIN_PHONE);
+        adminBean.setExt1(Ext1);
 
-	/**
-	 * 
-	 * Author:Taowd ¹¦ÄÜ£ºÉ¾³ı¹ÜÀíÔ±ĞÅÏ¢ ¿ª·¢ÈÕÆÚ£º2017-5-6-ÉÏÎç11:38:45
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws Exception
-	 */
-	public void AdminDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("utf-8");
-		Log4jHelper.info("½øÈëÉ¾³ı¹ÜÀíÔ±µÄ¿ØÖÆÆ÷");
-		String delIds = request.getParameter("delIds");// È¡µÃÉ¾³ıµÄid×Ö·û´®¼¯ºÏ
-		String[] str = delIds.split(",");
-		JSONObject result = new JSONObject();
-		for (int i = 0; i < str.length; i++) {
-			int delNums = adminDao.AdminInfoDelete(str[i]);// ·µ»ØÅúÁ¿É¾³ıµÄÊıÁ¿
-			if (delNums > 0) {
-				result.put("success", true);
-				result.put("delNums", delNums);
-			} else {
-				result.put("success", false);
-				result.put("errorMsg", "É¾³ıÊ§°Ü");
-			}
-		}
+        // æ£€æŸ¥stuNoæ˜¯å¦å·²ç»å­˜åœ¨
+        boolean isExistenceFlag;
+        JSONObject result = new JSONObject();
+        try
+        {
+            isExistenceFlag = adminDao.isExistence(ADMIN_NO);
+            // æ£€æŸ¥æ–°å¢å‘˜å·¥å·æ˜¯å¦å·²ç»æ³¨å†Œ
+            if (isExistenceFlag)
+            {
+                result.put("success", false);
+                result.put("errorMsg", "å‘˜å·¥å·å·²å­˜åœ¨ï¼");
+            }
+            else
+            {
+                // æ–°å¢å‘˜å·¥ï¼Œè¿”å›æˆåŠŸçš„è¡Œæ•°
+                saveNums = adminDao.adminAdd(adminBean);
+                if (saveNums > 0)
+                {
+                    result.put("success", true);
+                }
+                else
+                {
+                    result.put("success", false);
+                    result.put("errorMsg", "æ–°å¢å‘˜å·¥ä¿¡æ¯å¤±è´¥");
+                }
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (SQLException e)
+        {
+            Log4jHelper.exception(e);
+        }
 
-		ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
+    }
 
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šåˆ é™¤ç®¡ç†å‘˜ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-6-ä¸Šåˆ11:38:45
+     * 
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    public void AdminDelete(HttpServletRequest request, HttpServletResponse response)
+        throws Exception
+    {
+        request.setCharacterEncoding("utf-8");
+        Log4jHelper.info("è¿›å…¥åˆ é™¤ç®¡ç†å‘˜çš„æ§åˆ¶å™¨");
+        String delIds = request.getParameter("delIds");// å–å¾—åˆ é™¤çš„idå­—ç¬¦ä¸²é›†åˆ
+        String[] str = delIds.split(",");
+        JSONObject result = new JSONObject();
+        for (int i = 0; i < str.length; i++ )
+        {
+            int delNums = adminDao.adminInfoDelete(str[i]);// è¿”å›æ‰¹é‡åˆ é™¤çš„æ•°é‡
+            if (delNums > 0)
+            {
+                result.put("success", true);
+                result.put("delNums", delNums);
+            }
+            else
+            {
+                result.put("success", false);
+                result.put("errorMsg", "åˆ é™¤å¤±è´¥");
+            }
+        }
 
-	/**
-	 * 
-	 * Author:Taowd ¹¦ÄÜ£º»ñÈ¡¹ÜÀíÔ±ĞÅÏ¢ÁĞ±í ¿ª·¢ÈÕÆÚ£º2017-5-6-ÉÏÎç11:51:20
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws Exception
-	 */
-	public void AdminInfoList(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("utf-8");
-		Log4jHelper.info("»ñÈ¡¹ÜÀíÔ±ĞÅÏ¢ÁĞ±í");
-		Administrator adminInfo = new Administrator();
-		String admin_no = request.getParameter("ADMIN_NO");
-		String admin_name = request.getParameter("ADMIN_NAME");
-		String admin_phone = request.getParameter("ADMIN_PHONE");
-		adminInfo.setAdmin_no(admin_no);
-		adminInfo.setAdmin_name(admin_name);
-		adminInfo.setAdmin_phone(admin_phone);
+        ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
 
-		String page = request.getParameter("page");// È¡µÃÇëÇóµÄ²ÎÊı
-		String rows = request.getParameter("rows");
-		PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
-		Connection con = null;
-		try {
-			con = DbUtils.getConnection();
-			JSONObject result = new JSONObject();
-			JSONArray jsonArray = JsonUtil.formatRsToJsonArray(adminDao.GetAdminInfo(con, pageBean, adminInfo));// È¡µÃjsonÊı¾İ
-			int total = adminDao.GetAdminCount(adminInfo);// ×Ü¼ÇÂ¼Êı
-			result.put("rows", jsonArray);// ·â×°Êı¾İ
-			result.put("total", total);
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		} finally {
-			try {
-				DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-			} catch (Exception e) {
-				Log4jHelper.exception(e);
-			}
-		}
+    }
 
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè·å–ç®¡ç†å‘˜ä¿¡æ¯åˆ—è¡¨ å¼€å‘æ—¥æœŸï¼š2017-5-6-ä¸Šåˆ11:51:20
+     * 
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    public void AdminInfoList(HttpServletRequest request, HttpServletResponse response)
+        throws Exception
+    {
+        request.setCharacterEncoding("utf-8");
+        Log4jHelper.info("è·å–ç®¡ç†å‘˜ä¿¡æ¯åˆ—è¡¨");
+        Administrator adminInfo = new Administrator();
+        String admin_no = request.getParameter("ADMIN_NO");
+        String admin_name = request.getParameter("ADMIN_NAME");
+        String admin_phone = request.getParameter("ADMIN_PHONE");
+        adminInfo.setAdmin_no(admin_no);
+        adminInfo.setAdmin_name(admin_name);
+        adminInfo.setAdmin_phone(admin_phone);
 
-	/**
-	 * 
-	 * Author:Taowd ¹¦ÄÜ£ºÈ¡Ïû³¬¼¶¹ÜÀíÔ± ¿ª·¢ÈÕÆÚ£º2017-5-6-ÏÂÎç12:08:40
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws Exception
-	 */
-	public void SetCancelSuperAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("utf-8");
+        String page = request.getParameter("page");// å–å¾—è¯·æ±‚çš„å‚æ•°
+        String rows = request.getParameter("rows");
+        PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
+        Connection con = null;
+        try
+        {
+            con = DbUtils.getConnection();
+            JSONObject result = new JSONObject();
+            JSONArray jsonArray = JsonUtil.formatRsToJsonArray(
+                adminDao.getAdminInfo(con, pageBean, adminInfo));// å–å¾—jsonæ•°æ®
+            int total = adminDao.getAdminCount(adminInfo);// æ€»è®°å½•æ•°
+            result.put("rows", jsonArray);// å°è£…æ•°æ®
+            result.put("total", total);
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
+                Log4jHelper.exception(e);
+            }
+        }
 
-		Log4jHelper.info("È¡Ïû³¬¼¶¹ÜÀíÔ±µÄÉèÖÃ");
-		String delIds = request.getParameter("delIds");// È¡µÃÉèÖÃ³¬¼¶¹ÜÀíÔ±µÄµÄid×Ö·û´®¼¯ºÏ
-		try {
+    }
 
-			String[] str = delIds.split(",");
-			JSONObject result = new JSONObject();
-			int successSum = str.length;
-			for (int i = 0; i < str.length; i++) {
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šå–æ¶ˆè¶…çº§ç®¡ç†å‘˜ å¼€å‘æ—¥æœŸï¼š2017-5-6-ä¸‹åˆ12:08:40
+     * 
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    public void SetCancelSuperAdmin(HttpServletRequest request, HttpServletResponse response)
+        throws Exception
+    {
+        request.setCharacterEncoding("utf-8");
 
-				boolean f = adminDao.IsSuperAdmin(str[i]);
-				if (!f) {
-					result.put("success", false);
-					result.put("errorIndex", i);
-					result.put("errorMsg", "²»ÊÇ³¬¼¶¹ÜÀíÔ±£¬²»ÄÜÈ¡Ïû");
-					ResponseUtil.write(response, result);
-					return;
-				}
+        Log4jHelper.info("å–æ¶ˆè¶…çº§ç®¡ç†å‘˜çš„è®¾ç½®");
+        String delIds = request.getParameter("delIds");// å–å¾—è®¾ç½®è¶…çº§ç®¡ç†å‘˜çš„çš„idå­—ç¬¦ä¸²é›†åˆ
+        try
+        {
 
-				int delNums = adminDao.SetCancelSuperAdmin(str[i]);// ·µ»ØÅúÁ¿ĞŞ¸ÄµÄÊıÁ¿
-				if (delNums > 0) {
-					result.put("success", true);
-					result.put("delNums", successSum);
-				} else {
-					successSum--;
-					result.put("success", false);
-					result.put("errorMsg", "ÉèÖÃÊ§°Ü");
-				}
-			}
+            String[] str = delIds.split(",");
+            JSONObject result = new JSONObject();
+            int successSum = str.length;
+            for (int i = 0; i < str.length; i++ )
+            {
 
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		}
-	}
+                boolean f = adminDao.isSuperAdmin(str[i]);
+                if (!f)
+                {
+                    result.put("success", false);
+                    result.put("errorIndex", i);
+                    result.put("errorMsg", "ä¸æ˜¯è¶…çº§ç®¡ç†å‘˜ï¼Œä¸èƒ½å–æ¶ˆ");
+                    ResponseUtil.write(response, result);
+                    return;
+                }
 
-	/**
-	 * 
-	 * Author:Taowd ¹¦ÄÜ£ºÉèÖÃ³¬¼¶¹ÜÀíÔ± ¿ª·¢ÈÕÆÚ£º2017-5-6-ÏÂÎç12:09:13
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws Exception
-	 */
-	public void SetSuperAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		request.setCharacterEncoding("utf-8");
-		Log4jHelper.info("ÉèÖÃ³¬¼¶¹ÜÀíÔ±");
-		String delIds = request.getParameter("delIds");// È¡µÃÉèÖÃ³¬¼¶¹ÜÀíÔ±µÄµÄid×Ö·û´®¼¯ºÏ
-		try {
-			String[] str = delIds.split(",");
-			JSONObject result = new JSONObject();
-			int successSum = str.length;
-			for (int i = 0; i < str.length; i++) {
+                int delNums = adminDao.setCancelSuperAdmin(str[i]);// è¿”å›æ‰¹é‡ä¿®æ”¹çš„æ•°é‡
+                if (delNums > 0)
+                {
+                    result.put("success", true);
+                    result.put("delNums", successSum);
+                }
+                else
+                {
+                    successSum-- ;
+                    result.put("success", false);
+                    result.put("errorMsg", "è®¾ç½®å¤±è´¥");
+                }
+            }
 
-				boolean f = adminDao.IsSuperAdmin(str[i]);
-				if (f) {
-					result.put("success", false);
-					result.put("errorIndex", i);
-					result.put("errorMsg", "ÒÑ¾­ÊÇ³¬¼¶¹ÜÀíÔ±£¬²»ÄÜÖØ¸´ÉèÖÃ");
-					ResponseUtil.write(response, result);
-					return;
-				}
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
+    }
 
-				int delNums = adminDao.SetSuperAdmin(str[i]);// ·µ»ØÅúÁ¿É¾³ıµÄÊıÁ¿
-				if (delNums > 0) {
-					result.put("success", true);
-					result.put("delNums", successSum);
-				} else {
-					successSum--;
-					result.put("success", false);
-					result.put("errorMsg", "ÉèÖÃÊ§°Ü");
-				}
-			}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè®¾ç½®è¶…çº§ç®¡ç†å‘˜ å¼€å‘æ—¥æœŸï¼š2017-5-6-ä¸‹åˆ12:09:13
+     * 
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    public void SetSuperAdmin(HttpServletRequest request, HttpServletResponse response)
+        throws Exception
+    {
+        request.setCharacterEncoding("utf-8");
+        Log4jHelper.info("è®¾ç½®è¶…çº§ç®¡ç†å‘˜");
+        String delIds = request.getParameter("delIds");// å–å¾—è®¾ç½®è¶…çº§ç®¡ç†å‘˜çš„çš„idå­—ç¬¦ä¸²é›†åˆ
+        try
+        {
+            String[] str = delIds.split(",");
+            JSONObject result = new JSONObject();
+            int successSum = str.length;
+            for (int i = 0; i < str.length; i++ )
+            {
 
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		}
-	}
+                boolean f = adminDao.isSuperAdmin(str[i]);
+                if (f)
+                {
+                    result.put("success", false);
+                    result.put("errorIndex", i);
+                    result.put("errorMsg", "å·²ç»æ˜¯è¶…çº§ç®¡ç†å‘˜ï¼Œä¸èƒ½é‡å¤è®¾ç½®");
+                    ResponseUtil.write(response, result);
+                    return;
+                }
+
+                int delNums = adminDao.setSuperAdmin(str[i]);// è¿”å›æ‰¹é‡åˆ é™¤çš„æ•°é‡
+                if (delNums > 0)
+                {
+                    result.put("success", true);
+                    result.put("delNums", successSum);
+                }
+                else
+                {
+                    successSum-- ;
+                    result.put("success", false);
+                    result.put("errorMsg", "è®¾ç½®å¤±è´¥");
+                }
+            }
+
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
+    }
 
 }

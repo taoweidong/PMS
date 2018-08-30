@@ -1,5 +1,6 @@
 package com.pms.util;
 
+
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -7,40 +8,51 @@ import java.sql.ResultSetMetaData;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
+
 /**
- * 
- * @author Taowd
- * ¹¦        ÄÜ£º½«Êı¾İ¼¯×ª³ÉJSON´®
- * ±àĞ´Ê±¼ä£º2017-4-25-ÏÂÎç7:31:34
+ * @author Taowd åŠŸ èƒ½ï¼šå°†æ•°æ®é›†è½¬æˆJSONä¸² ç¼–å†™æ—¶é—´ï¼š2017-4-25-ä¸‹åˆ7:31:34
  */
-public class JsonUtil {
+public class JsonUtil
+{
 
-	/**
-	 * ¹¦ÄÜ£ºÊı¾İ¼¯·â×°ÔÚjsonÊı×éÖĞ
-	 * @param rs
-	 * @return
-	 * @throws Exception
-	 */
-	public static JSONArray formatRsToJsonArray(ResultSet rs) throws Exception {
-		ResultSetMetaData md = rs.getMetaData();// µÃµ½ResultSet¶ÔÏóÖĞÁĞÀàĞÍºÍÊôĞÔĞÅÏ¢¶ÔÏó
-		int num = md.getColumnCount();// µÃµ½ÁĞ×ÜÊı
-		JSONArray array = new JSONArray();// µÃµ½jsonÊı×é¶ÔÏó
-		while (rs.next()) {
-			JSONObject mapOfColValues = new JSONObject();// Json¶ÔÏó
-			for (int i = 1; i <= num; i++) {
-				Object o = rs.getObject(i);
-				if (o instanceof Date) {
-					mapOfColValues.put(md.getColumnName(i),
-							DateUtil.formatDate((Date) o, "yyyy-MM-dd"));
-				} else {
-					mapOfColValues.put(md.getColumnName(i), rs.getObject(i));
-				}
-			}
-			array.add(mapOfColValues);// jsonÊı×éÌí¼Ójson¶ÔÏó
-		}
+    /**
+     * åŠŸèƒ½ï¼šæ•°æ®é›†å°è£…åœ¨jsonæ•°ç»„ä¸­
+     * 
+     * @param rs
+     * @return
+     * @throws Exception
+     */
+    public static JSONArray formatRsToJsonArray(ResultSet rs)
+        throws Exception
+    {
+        ResultSetMetaData md = rs.getMetaData();// å¾—åˆ°ResultSetå¯¹è±¡ä¸­åˆ—ç±»å‹å’Œå±æ€§ä¿¡æ¯å¯¹è±¡
+        int num = md.getColumnCount();// å¾—åˆ°åˆ—æ€»æ•°
+        JSONArray array = new JSONArray();// å¾—åˆ°jsonæ•°ç»„å¯¹è±¡
+        while (rs.next())
+        {
+            JSONObject mapOfColValues = new JSONObject();// Jsonå¯¹è±¡
+            for (int i = 1; i <= num; i++ )
+            {
+                Object o = rs.getObject(i);
+                if (o instanceof Date)
+                {
+                    mapOfColValues.put(md.getColumnName(i),
+                        DateUtil.formatDate((Date)o, "yyyy-MM-dd"));
+                }
+                else
+                {
+                    mapOfColValues.put(md.getColumnName(i), rs.getObject(i));
+                }
+            }
+            array.add(mapOfColValues);// jsonæ•°ç»„æ·»åŠ jsonå¯¹è±¡
+        }
 
-		Log4jHelper.info("·µ»ØÒ³ÃæµÄJSONÊı¾İ¸ñÊ½£º" + array.toString());
+        Log4jHelper.info("è¿”å›é¡µé¢çš„JSONæ•°æ®æ ¼å¼ï¼š" + array.toString());
 
-		return array;
-	}
+        return array;
+    }
+
+    /** Prevent instantiation */
+    private JsonUtil()
+    {}
 }

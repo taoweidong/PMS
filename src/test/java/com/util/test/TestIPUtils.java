@@ -1,19 +1,25 @@
 package com.util.test;
 
+
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 import com.pms.util.IPUtils;
 
+
 /**
+ * <ÊµãËØïËé∑ÂèñIPÂú∞ÂùÄ>
  * 
  * @author Taowd
- * π¶        ƒ‹£∫≤‚ ‘ªÒ»°IPµÿ÷∑
- * ±‡–¥ ±º‰£∫2017-4-24-œ¬ŒÁ7:02:00
+ * @version 2018Âπ¥8Êúà30Êó•
+ * @see TestIPUtils
  */
-public class TestIPUtils {
-	@Test
-	public void testIp() {
-		System.out.println("ªÒ»°IPµÿ÷∑£∫" + IPUtils.HOST_NAME);
-
-	}
+public class TestIPUtils
+{
+    @Test
+    public void testIp()
+    {
+        assertEquals("Taowd-PC", IPUtils.HOST_NAME);
+    }
 }

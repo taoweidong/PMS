@@ -1,104 +1,102 @@
 package com.pms.util;
 
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+
 /**
- * 
- * @author Taowd
- * ¹¦        ÄÜ£ºLog4jµÄ·â×°Àà
- * ±àĞ´Ê±¼ä£º2017-4-24-ÏÂÎç8:18:04
+ * @author Taowd åŠŸ èƒ½ï¼šLog4jçš„å°è£…ç±» ç¼–å†™æ—¶é—´ï¼š2017-4-24-ä¸‹åˆ8:18:04
  */
-public class Log4jHelper {
+public class Log4jHelper
+{
 
-	/**
-	 * ¼ÓÔØlog4jµÄÅäÖÃÎÄ¼ş:Ä¬ÈÏ¼ÓÔØsrcÄ¿Â¼ÏÂµÄlog4j.propertiesÅäÖÃÎÄ¼ş
-	 */
-	static {
-		// DOMConfigurator.configure("/log4j.properties");
-	}
+    /**
+     * åŠ è½½log4jçš„é…ç½®æ–‡ä»¶:é»˜è®¤åŠ è½½srcç›®å½•ä¸‹çš„log4j.propertiesé…ç½®æ–‡ä»¶
+     */
+    static
+    {
+        // DOMConfigurator.configure("/log4j.properties");
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÊä³öÕı³£ĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-25-ÏÂÎç5:16:47
-	 * @param msg
-	 */
-	public static void info(Object msg) {
-		StackTraceElement stack[] = (new Throwable()).getStackTrace();
-		Logger logger = Logger.getLogger(stack[1].getClassName());
-		logger.log(Log4jHelper.class.getName(), Level.INFO, msg, null);
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè¾“å‡ºæ­£å¸¸ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-25-ä¸‹åˆ5:16:47
+     * 
+     * @param msg
+     */
+    public static void info(Object msg)
+    {
+        StackTraceElement stack[] = (new Throwable()).getStackTrace();
+        Logger logger = Logger.getLogger(stack[1].getClassName());
+        logger.log(Log4jHelper.class.getName(), Level.INFO, msg, null);
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÊä³ö´íÎóÈÕÖ¾
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-25-ÏÂÎç5:16:33
-	 * @param msg
-	 */
-	public static void error(Object msg) {
-		StackTraceElement stack[] = (new Throwable()).getStackTrace();
-		Logger logger = Logger.getLogger(stack[1].getClassName());
-		logger.log(Log4jHelper.class.getName(), Level.ERROR, msg, null);
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè¾“å‡ºé”™è¯¯æ—¥å¿— å¼€å‘æ—¥æœŸï¼š2017-4-25-ä¸‹åˆ5:16:33
+     * 
+     * @param msg
+     */
+    public static void error(Object msg)
+    {
+        StackTraceElement stack[] = (new Throwable()).getStackTrace();
+        Logger logger = Logger.getLogger(stack[1].getClassName());
+        logger.log(Log4jHelper.class.getName(), Level.ERROR, msg, null);
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÊä³öDebugĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-25-ÏÂÎç7:15:07
-	 * @param msg
-	 */
-	public static void debug(Object msg) {
-		StackTraceElement stack[] = (new Throwable()).getStackTrace();
-		Logger logger = Logger.getLogger(stack[1].getClassName());
-		logger.log(Log4jHelper.class.getName(), Level.DEBUG, msg, null);
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè¾“å‡ºDebugä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-25-ä¸‹åˆ7:15:07
+     * 
+     * @param msg
+     */
+    public static void debug(Object msg)
+    {
+        StackTraceElement stack[] = (new Throwable()).getStackTrace();
+        Logger logger = Logger.getLogger(stack[1].getClassName());
+        logger.log(Log4jHelper.class.getName(), Level.DEBUG, msg, null);
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÊä³ö¾¯¸æĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-25-ÏÂÎç7:15:48
-	 * @param msg
-	 */
-	public static void warn(Object msg) {
-		StackTraceElement stack[] = (new Throwable()).getStackTrace();
-		Logger logger = Logger.getLogger(stack[1].getClassName());
-		logger.log(Log4jHelper.class.getName(), Level.WARN, msg, null);
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè¾“å‡ºè­¦å‘Šä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-25-ä¸‹åˆ7:15:48
+     * 
+     * @param msg
+     */
+    public static void warn(Object msg)
+    {
+        StackTraceElement stack[] = (new Throwable()).getStackTrace();
+        Logger logger = Logger.getLogger(stack[1].getClassName());
+        logger.log(Log4jHelper.class.getName(), Level.WARN, msg, null);
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÊä³öÒì³£ĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-25-ÏÂÎç7:25:26
-	 * @param e
-	 */
-	public static void exception(Exception e) {
-		StackTraceElement stack[] = (new Throwable()).getStackTrace();
-		Logger logger = Logger.getLogger(stack[1].getClassName());
-		logger.log(Log4jHelper.class.getName(), Level.ERROR, getSatckTrace(e),
-				null);
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè¾“å‡ºå¼‚å¸¸ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-25-ä¸‹åˆ7:25:26
+     * 
+     * @param e
+     */
+    public static void exception(Exception e)
+    {
+        StackTraceElement stack[] = (new Throwable()).getStackTrace();
+        Logger logger = Logger.getLogger(stack[1].getClassName());
+        logger.log(Log4jHelper.class.getName(), Level.ERROR, getSatckTrace(e), null);
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º»ñÈ¡¶ÑÕ»ĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-25-ÏÂÎç7:23:29
-	 * @param e
-	 * @return
-	 */
-	private static String getSatckTrace(Exception e) {
-		StringWriter write = new StringWriter();
-		e.printStackTrace(new PrintWriter(write, true));
-		return write.toString();
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè·å–å †æ ˆä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-25-ä¸‹åˆ7:23:29
+     * 
+     * @param e
+     * @return
+     */
+    private static String getSatckTrace(Exception e)
+    {
+        StringWriter write = new StringWriter();
+        e.printStackTrace(new PrintWriter(write, true));
+        return write.toString();
+    }
+
+    /** Prevent instantiation */
+    private Log4jHelper()
+    {}
 
 }

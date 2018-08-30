@@ -1,30 +1,36 @@
 package com.pms.util;
 
+
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * 
- * @author ÌÕÎ°¶«
- * TODO£º·â×°jsonÊı¾İ·½·¨£¬·µ»Ø ¿Í»§¶Ë
- * ±àĞ´Ê±¼ä£ºÏÂÎç9:53:45
- */
-public class ResponseUtil {
 
-	/**
-	 * ·â×°jsonÊı¾İ·½·¨£¬·µ»Ø ¿Í»§¶Ë
-	 * @param response
-	 * @param o
-	 * @throws Exception
-	 */
-	public static void write(HttpServletResponse response, Object o)
-			throws Exception {
-		response.setContentType("text/plain;charset=utf-8");
-		PrintWriter out = response.getWriter();
-		System.out.println("·µ»ØÒ³ÃæµÄJSONÊı¾İ£º" + o.toString());
-		out.println(o.toString());
-		out.flush();
-		out.close();
-	}
+/**
+ * @author é™¶ä¼Ÿä¸œ TODOï¼šå°è£…jsonæ•°æ®æ–¹æ³•ï¼Œè¿”å› å®¢æˆ·ç«¯ ç¼–å†™æ—¶é—´ï¼šä¸‹åˆ9:53:45
+ */
+public class ResponseUtil
+{
+
+    /**
+     * å°è£…jsonæ•°æ®æ–¹æ³•ï¼Œè¿”å› å®¢æˆ·ç«¯
+     * 
+     * @param response
+     * @param o
+     * @throws Exception
+     */
+    public static void write(HttpServletResponse response, Object o)
+        throws Exception
+    {
+        response.setContentType("text/plain;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        System.out.println("è¿”å›é¡µé¢çš„JSONæ•°æ®ï¼š" + o.toString());
+        out.println(o.toString());
+        out.flush();
+        out.close();
+    }
+
+    /** Prevent instantiation */
+    private ResponseUtil()
+    {}
 }

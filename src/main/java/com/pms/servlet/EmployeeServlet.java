@@ -1,5 +1,6 @@
 package com.pms.servlet;
 
+
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -24,374 +25,446 @@ import com.pms.util.Log4jHelper;
 import com.pms.util.ResponseUtil;
 import com.pms.util.StringUtil;
 
-public class EmployeeServlet extends BaseServlet {
 
-	private static final long serialVersionUID = 1L;
+public class EmployeeServlet extends BaseServlet
+{
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºĞÂÔöÆÕÍ¨Ô±¹¤ĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç7:25:11
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void AddEmployee(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+    private static final long serialVersionUID = 1L;
 
-		Log4jHelper.info("-----------½øÈë±£´æÔ±¹¤ĞÅÏ¢µÄ¿ØÖÆÆ÷-----------");
-		request.setCharacterEncoding("utf-8");
-		String stuNo = request.getParameter("EMP_NO");
-		String passwd = request.getParameter("passwd");
-		String stuName = request.getParameter("EMP_NAME");
-		String sex = request.getParameter("EMP_SEX");
-		String birthday = request.getParameter("EMP_Birthday");
-		String ps_id = request.getParameter("PS_TYPE");
-		String emp_phone = request.getParameter("EMP_Phone");
-		String emp_address = request.getParameter("EMP_Address");
-		String ext1 = request.getParameter("ext1");
-		String ext2 = request.getParameter("ext2");
-		String ext3 = request.getParameter("ext3");
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæ–°å¢æ™®é€šå‘˜å·¥ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ7:25:11
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void AddEmployee(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
 
-		String encyPasswd = "";
-		if (!StringUtils.isEmpty(passwd)) {
-			encyPasswd = AESUtil.parseByte2HexStr(AESUtil.encrypt(passwd));
-		}
+        Log4jHelper.info("-----------è¿›å…¥ä¿å­˜å‘˜å·¥ä¿¡æ¯çš„æ§åˆ¶å™¨-----------");
+        request.setCharacterEncoding("utf-8");
+        String stuNo = request.getParameter("EMP_NO");
+        String passwd = request.getParameter("passwd");
+        String stuName = request.getParameter("EMP_NAME");
+        String sex = request.getParameter("EMP_SEX");
+        String birthday = request.getParameter("EMP_Birthday");
+        String ps_id = request.getParameter("PS_TYPE");
+        String emp_phone = request.getParameter("EMP_Phone");
+        String emp_address = request.getParameter("EMP_Address");
+        String ext1 = request.getParameter("ext1");
+        String ext2 = request.getParameter("ext2");
+        String ext3 = request.getParameter("ext3");
 
-		Employee empBean = null;
-		try {
-			empBean = new Employee(stuNo, encyPasswd, stuName, sex,
-					DateUtil.formatString(birthday, "yyyy-MM-dd"), ps_id,
-					emp_phone, emp_address, ext1, ext2, ext3);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+        String encyPasswd = "";
+        if (!StringUtils.isEmpty(passwd))
+        {
+            encyPasswd = AESUtil.parseByte2HexStr(AESUtil.encrypt(passwd));
+        }
 
-		Connection con = null;
-		try {
-			con = DbUtils.getConnection();
-			int saveNums = 0;
-			// ¼ì²éstuNoÊÇ·ñÒÑ¾­´æÔÚ
-			boolean isExistenceFlag = EmployeeDao.IsExistence(con, stuNo);
-			JSONObject result = new JSONObject();
+        Employee empBean = null;
+        try
+        {
+            empBean = new Employee(stuNo, encyPasswd, stuName, sex,
+                DateUtil.formatString(birthday, "yyyy-MM-dd"), ps_id, emp_phone, emp_address, ext1,
+                ext2, ext3);
+        }
+        catch (Exception e1)
+        {
+            e1.printStackTrace();
+        }
 
-			if (isExistenceFlag) {
-				result.put("success", false);
-				result.put("errorMsg", "Ô±¹¤ºÅÒÑ´æÔÚ£¡");
-			} else {
-				// ĞÂÔöÔ±¹¤£¬·µ»Ø³É¹¦µÄĞĞÊı
-				saveNums = EmployeeDao.EmployeeAdd(con, empBean);
-				if (saveNums > 0) {
-					result.put("success", true);
-				} else {
-					result.put("success", false);
-					result.put("errorMsg", "ĞÂÔöÔ±¹¤ĞÅÏ¢Ê§°Ü");
-				}
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
+        Connection con = null;
+        try
+        {
+            con = DbUtils.getConnection();
+            int saveNums = 0;
+            // æ£€æŸ¥stuNoæ˜¯å¦å·²ç»å­˜åœ¨
+            boolean isExistenceFlag = EmployeeDao.IsExistence(con, stuNo);
+            JSONObject result = new JSONObject();
 
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
+            if (isExistenceFlag)
+            {
+                result.put("success", false);
+                result.put("errorMsg", "å‘˜å·¥å·å·²å­˜åœ¨ï¼");
+            }
+            else
+            {
+                // æ–°å¢å‘˜å·¥ï¼Œè¿”å›æˆåŠŸçš„è¡Œæ•°
+                saveNums = EmployeeDao.EmployeeAdd(con, empBean);
+                if (saveNums > 0)
+                {
+                    result.put("success", true);
+                }
+                else
+                {
+                    result.put("success", false);
+                    result.put("errorMsg", "æ–°å¢å‘˜å·¥ä¿¡æ¯å¤±è´¥");
+                }
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
 
-		}
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
 
-	}
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÆÕÍ¨Ô±¹¤×¢²áĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç7:26:00
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void RegisterEmployee(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+    }
 
-		request.setCharacterEncoding("utf-8");
-		String empNo = request.getParameter("stuNo");
-		String passwd = request.getParameter("passwd");
-		String stuName = request.getParameter("stuName");
-		String sex = request.getParameter("sex");
-		String birthday = request.getParameter("birthday");
-		String ps_id = request.getParameter("ps_id");
-		String emp_phone = request.getParameter("phone");
-		String emp_address = request.getParameter("address");
-		String ext1 = request.getParameter("ext1");
-		String ext2 = request.getParameter("ext2");
-		String ext3 = request.getParameter("ext3");
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæ™®é€šå‘˜å·¥æ³¨å†Œä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ7:26:00
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void RegisterEmployee(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
 
-		Employee Emp = null;
-		try {
-			// 2017Äê4ÔÂ25ÈÕ19:33:33£ºĞÂÔö¹¦ÄÜ£¬ÃÜÂëÊ¹ÓÃMD5½øĞĞ¼ÓÃÜ
-			Emp = new Employee(empNo, AESUtil.parseByte2HexStr(AESUtil
-					.encrypt(passwd)), stuName, sex, DateUtil.formatString(
-					birthday, "yyyy-MM-dd"), ps_id, emp_phone, emp_address,
-					ext1, ext2, ext3);
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		}
+        request.setCharacterEncoding("utf-8");
+        String empNo = request.getParameter("stuNo");
+        String passwd = request.getParameter("passwd");
+        String stuName = request.getParameter("stuName");
+        String sex = request.getParameter("sex");
+        String birthday = request.getParameter("birthday");
+        String ps_id = request.getParameter("ps_id");
+        String emp_phone = request.getParameter("phone");
+        String emp_address = request.getParameter("address");
+        String ext1 = request.getParameter("ext1");
+        String ext2 = request.getParameter("ext2");
+        String ext3 = request.getParameter("ext3");
 
-		Connection con = null;
-		try {
-			con = DbUtils.getConnection();
-			boolean isExistenceFlag = false;
-			JSONObject result = new JSONObject();
-			isExistenceFlag = EmployeeDao.IsExistence(con, empNo);// ·µ»Ø²åÈë³É¹¦µÄÊı¾İ
-			if (!isExistenceFlag) {
-				// ¿ÉÒÔ½øĞĞ×¢²á
-				int saveNums = 0;
-				saveNums = EmployeeDao.EmployeeRegister(con, Emp);// ·µ»Ø²åÈë³É¹¦µÄÊı¾İ
-				if (saveNums > 0) {
-					result.put("success", true);
-				} else {
-					result.put("success", false);
-					result.put("errorMsg", "±£´æÊ§°Ü");
-				}
-				ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-			} else {
-				// ²»¿ÉÒÔ½øĞĞ×¢²á£¬·µ»Ø±¨´í
-				result.put("success", false);
-				result.put("errorMsg", "¸ÃÓÃ»§ÒÑ´æÔÚ");
-				ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-			}
+        Employee Emp = null;
+        try
+        {
+            // 2017å¹´4æœˆ25æ—¥19:33:33ï¼šæ–°å¢åŠŸèƒ½ï¼Œå¯†ç ä½¿ç”¨MD5è¿›è¡ŒåŠ å¯†
+            Emp = new Employee(empNo, AESUtil.parseByte2HexStr(AESUtil.encrypt(passwd)), stuName,
+                sex, DateUtil.formatString(birthday, "yyyy-MM-dd"), ps_id, emp_phone, emp_address,
+                ext1, ext2, ext3);
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
 
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		} finally {
-			try {
-				DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-			} catch (Exception e) {
-				Log4jHelper.exception(e);
-			}
-		}
+        Connection con = null;
+        try
+        {
+            con = DbUtils.getConnection();
+            boolean isExistenceFlag = false;
+            JSONObject result = new JSONObject();
+            isExistenceFlag = EmployeeDao.IsExistence(con, empNo);// è¿”å›æ’å…¥æˆåŠŸçš„æ•°æ®
+            if (!isExistenceFlag)
+            {
+                // å¯ä»¥è¿›è¡Œæ³¨å†Œ
+                int saveNums = 0;
+                saveNums = EmployeeDao.EmployeeRegister(con, Emp);// è¿”å›æ’å…¥æˆåŠŸçš„æ•°æ®
+                if (saveNums > 0)
+                {
+                    result.put("success", true);
+                }
+                else
+                {
+                    result.put("success", false);
+                    result.put("errorMsg", "ä¿å­˜å¤±è´¥");
+                }
+                ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+            }
+            else
+            {
+                // ä¸å¯ä»¥è¿›è¡Œæ³¨å†Œï¼Œè¿”å›æŠ¥é”™
+                result.put("success", false);
+                result.put("errorMsg", "è¯¥ç”¨æˆ·å·²å­˜åœ¨");
+                ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+            }
 
-	}
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
+                Log4jHelper.exception(e);
+            }
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÉ¾³ıÆÕÍ¨Ô±¹¤ĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç7:27:05
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void DeleteEmployee(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+    }
 
-		String delIds = request.getParameter("delIds");// È¡µÃÉ¾³ıµÄid×Ö·û´®¼¯ºÏ
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šåˆ é™¤æ™®é€šå‘˜å·¥ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ7:27:05
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void DeleteEmployee(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
 
-		Log4jHelper.info("É¾³ıµÄÔ±¹¤¹¤ºÅ£º" + delIds);
-		Connection con = null;
-		try {
-			con = DbUtils.getConnection();
-			String[] str = delIds.split(",");
-			JSONObject result = new JSONObject();
-			for (int i = 0; i < str.length; i++) {
-				// ¼ì²éÊÇ·ñÈëÖ°£¬ÆäËûÌõ¼şµÄ¾Í¿ÉÒÔÉ¾³ı£¬±ÈÈç£ºĞÂÔöÁËÈëÖ°ÉêÇëÎ´Ìá½»£¬¹ÜÀíÔ±¿ÉÇ¿ÖÆÉ¾³ı
-				boolean f = EmployeeDao.IsInduction(con, str[i]);
-				if (f) {
-					result.put("success", false);
-					result.put("errorIndex", i);
-					result.put("errorMsg", "ÈëÖ°ÉêÇëÒÑÉóÅúÍ¨¹ı£¬²»ÔÊĞíÉ¾³ı");
-					ResponseUtil.write(response, result);
-					return;
-				}
-				// ¼ì²éÊÇ·ñÎª²¿ÃÅÁìµ¼
-				boolean f2 = EmployeeDao.IsLeader(con, str[i]);
-				if (f2) {
-					result.put("success", false);
-					result.put("errorIndex", i);
-					result.put("errorMsg", "¸ÃÔ±¹¤Îª²¿ÃÅÁìµ¼£¬²»ÔÊĞíÉ¾³ı");
-					ResponseUtil.write(response, result);
-					return;
-				}
-			}
+        String delIds = request.getParameter("delIds");// å–å¾—åˆ é™¤çš„idå­—ç¬¦ä¸²é›†åˆ
 
-			int delNums = EmployeeDao.EmlopyeeDelete(con,
-					StringUtil.FormatDeleteDelIds(delIds));// ·µ»ØÅúÁ¿É¾³ıµÄÊıÁ¿
-			if (delNums > 0) {
-				result.put("success", true);
-				result.put("delNums", delNums);
-			} else {
-				result.put("success", false);
-				result.put("errorMsg", "É¾³ıÊ§°Ü");
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+        Log4jHelper.info("åˆ é™¤çš„å‘˜å·¥å·¥å·ï¼š" + delIds);
+        Connection con = null;
+        try
+        {
+            con = DbUtils.getConnection();
+            String[] str = delIds.split(",");
+            JSONObject result = new JSONObject();
+            for (int i = 0; i < str.length; i++ )
+            {
+                // æ£€æŸ¥æ˜¯å¦å…¥èŒï¼Œå…¶ä»–æ¡ä»¶çš„å°±å¯ä»¥åˆ é™¤ï¼Œæ¯”å¦‚ï¼šæ–°å¢äº†å…¥èŒç”³è¯·æœªæäº¤ï¼Œç®¡ç†å‘˜å¯å¼ºåˆ¶åˆ é™¤
+                boolean f = EmployeeDao.IsInduction(con, str[i]);
+                if (f)
+                {
+                    result.put("success", false);
+                    result.put("errorIndex", i);
+                    result.put("errorMsg", "å…¥èŒç”³è¯·å·²å®¡æ‰¹é€šè¿‡ï¼Œä¸å…è®¸åˆ é™¤");
+                    ResponseUtil.write(response, result);
+                    return;
+                }
+                // æ£€æŸ¥æ˜¯å¦ä¸ºéƒ¨é—¨é¢†å¯¼
+                boolean f2 = EmployeeDao.IsLeader(con, str[i]);
+                if (f2)
+                {
+                    result.put("success", false);
+                    result.put("errorIndex", i);
+                    result.put("errorMsg", "è¯¥å‘˜å·¥ä¸ºéƒ¨é—¨é¢†å¯¼ï¼Œä¸å…è®¸åˆ é™¤");
+                    ResponseUtil.write(response, result);
+                    return;
+                }
+            }
 
-	}
+            int delNums = EmployeeDao.EmlopyeeDelete(con, StringUtil.FormatDeleteDelIds(delIds));// è¿”å›æ‰¹é‡åˆ é™¤çš„æ•°é‡
+            if (delNums > 0)
+            {
+                result.put("success", true);
+                result.put("delNums", delNums);
+            }
+            else
+            {
+                result.put("success", false);
+                result.put("errorMsg", "åˆ é™¤å¤±è´¥");
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¸üĞÂÆÕÍ¨Ô±¹¤ĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç7:26:51
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void UpdateEmployee(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+    }
 
-		Log4jHelper.info("-----------½øÈë±£´æÔ±¹¤ĞÅÏ¢µÄ¿ØÖÆÆ÷-----------");
-		request.setCharacterEncoding("utf-8");
-		String stuNo = request.getParameter("EMP_NO");
-		String passwd = request.getParameter("passwd");
-		String stuName = request.getParameter("EMP_NAME");
-		String sex = request.getParameter("EMP_SEX");
-		String birthday = request.getParameter("EMP_Birthday");
-		String ps_id = request.getParameter("PS_TYPE");
-		String emp_phone = request.getParameter("EMP_Phone");
-		String emp_address = request.getParameter("EMP_Address");
-		String ext1 = request.getParameter("ext1");
-		String ext2 = request.getParameter("ext2");
-		String ext3 = request.getParameter("ext3");
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæ›´æ–°æ™®é€šå‘˜å·¥ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ7:26:51
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void UpdateEmployee(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
 
-		String encyPasswd = "";
-		if (!StringUtils.isEmpty(passwd)) {
-			encyPasswd = AESUtil.parseByte2HexStr(AESUtil.encrypt(passwd));
-		}
+        Log4jHelper.info("-----------è¿›å…¥ä¿å­˜å‘˜å·¥ä¿¡æ¯çš„æ§åˆ¶å™¨-----------");
+        request.setCharacterEncoding("utf-8");
+        String stuNo = request.getParameter("EMP_NO");
+        String passwd = request.getParameter("passwd");
+        String stuName = request.getParameter("EMP_NAME");
+        String sex = request.getParameter("EMP_SEX");
+        String birthday = request.getParameter("EMP_Birthday");
+        String ps_id = request.getParameter("PS_TYPE");
+        String emp_phone = request.getParameter("EMP_Phone");
+        String emp_address = request.getParameter("EMP_Address");
+        String ext1 = request.getParameter("ext1");
+        String ext2 = request.getParameter("ext2");
+        String ext3 = request.getParameter("ext3");
 
-		Employee empBean = null;
-		try {
-			empBean = new Employee(stuNo, encyPasswd, stuName, sex,
-					DateUtil.formatString(birthday, "yyyy-MM-dd"), ps_id,
-					emp_phone, emp_address, ext1, ext2, ext3);
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
+        String encyPasswd = "";
+        if (!StringUtils.isEmpty(passwd))
+        {
+            encyPasswd = AESUtil.parseByte2HexStr(AESUtil.encrypt(passwd));
+        }
 
-		Connection con = null;
-		try {
-			con = DbUtils.getConnection();
-			int saveNums = 0;
-			JSONObject result = new JSONObject();
-			// Èç¹ûÊÇĞŞ¸ÄµÄ»°£¬·µ»ØĞŞ¸Ä³É¹¦µÄĞĞÊı
-			saveNums = EmployeeDao.EmployeeModify(con, empBean);
-			if (saveNums > 0) {
-				result.put("success", true);
-			} else {
-				result.put("success", false);
-				result.put("errorMsg", "ĞŞ¸ÄÔ±¹¤ĞÅÏ¢Ê§°Ü£¡");
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		}
+        Employee empBean = null;
+        try
+        {
+            empBean = new Employee(stuNo, encyPasswd, stuName, sex,
+                DateUtil.formatString(birthday, "yyyy-MM-dd"), ps_id, emp_phone, emp_address, ext1,
+                ext2, ext3);
+        }
+        catch (Exception e1)
+        {
+            e1.printStackTrace();
+        }
 
-	}
+        Connection con = null;
+        try
+        {
+            con = DbUtils.getConnection();
+            int saveNums = 0;
+            JSONObject result = new JSONObject();
+            // å¦‚æœæ˜¯ä¿®æ”¹çš„è¯ï¼Œè¿”å›ä¿®æ”¹æˆåŠŸçš„è¡Œæ•°
+            saveNums = EmployeeDao.EmployeeModify(con, empBean);
+            if (saveNums > 0)
+            {
+                result.put("success", true);
+            }
+            else
+            {
+                result.put("success", false);
+                result.put("errorMsg", "ä¿®æ”¹å‘˜å·¥ä¿¡æ¯å¤±è´¥ï¼");
+            }
+            // å‘é€åˆ°å®¢æˆ·ç«¯
+            ResponseUtil.write(response, result);
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º»ñÈ¡ÆÕÍ¨Ô±¹¤ÏÂÀ­ÁĞ±í--Ö»»ñÈ¡Ô±¹¤ºÅºÍÔ±¹¤ĞÕÃû
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç7:27:47
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void ComboListEmployee(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+    }
 
-		Log4jHelper.info("½øÈë£¬»ñÈ¡»ñÈ¡²¿ÃÅÁìµ¼ÏÂÀ­Êı¾İµÄ´¦ÀíÂß¼­");
-		Connection con = null;
-		try {
-			con = DbUtils.getConnection();
-			JSONArray jsonArray = new JSONArray();
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("EMP_NO", "");
-			jsonObject.put("EMP_NAME", "ÇëÑ¡Ôñ...");
-			jsonArray.add(jsonObject);
-			// ¼ÓÈëÕû¸ö¼¯ºÏ
-			jsonArray.addAll(JsonUtil.formatRsToJsonArray(EmployeeDao
-					.EmployeetList(con, null, null, null, null)));// È¡µÃjsonÊı¾İ
-			ResponseUtil.write(response, jsonArray);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		} finally {
-			try {
-				DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-			} catch (Exception e) {
-				Log4jHelper.exception(e);
-			}
-		}
+    /**
+     * 1ã€è·å–æ™®é€šå‘˜å·¥ä¸‹æ‹‰åˆ—è¡¨--åªè·å–å‘˜å·¥å·å’Œå‘˜å·¥å§“å.<br>
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     * @see
+     */
+    public void ComboListEmployee(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
 
-	}
+        Log4jHelper.info("è¿›å…¥ï¼Œè·å–è·å–éƒ¨é—¨é¢†å¯¼ä¸‹æ‹‰æ•°æ®çš„å¤„ç†é€»è¾‘");
+        Connection con = null;
+        try
+        {
+            con = DbUtils.getConnection();
+            JSONArray jsonArray = new JSONArray();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("EMP_NO", "");
+            jsonObject.put("EMP_NAME", "è¯·é€‰æ‹©...");
+            jsonArray.add(jsonObject);
+            // åŠ å…¥æ•´ä¸ªé›†åˆ
+            jsonArray.addAll(JsonUtil.formatRsToJsonArray(
+                EmployeeDao.EmployeetList(con, null, null, null, null)));// å–å¾—jsonæ•°æ®
+            ResponseUtil.write(response, jsonArray);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
+                Log4jHelper.exception(e);
+            }
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º»ñÈ¡Ô±¹¤ÁĞ±íĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç7:29:11
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void EmployeeListInfo(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+    }
 
-		request.setCharacterEncoding("utf-8");
-		String stuNo = request.getParameter("EMP_NO");
-		String stuName = request.getParameter("EMP_NAME");
-		String sex = request.getParameter("EMP_SEX");
-		String bbirthday = request.getParameter("bbirthday");
-		String ebirthday = request.getParameter("ebirthday");
-		String gradeId = request.getParameter("PS_TYPE");
-		// String emp_phone = request.getParameter("EMP_Phone");
-		// String emp_address = request.getParameter("EMP_Address");
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè·å–å‘˜å·¥åˆ—è¡¨ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ7:29:11
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void EmployeeListInfo(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
 
-		Employee emp = new Employee();
-		if (gradeId != null) {
-			emp.setEmp_no(stuNo);
-			emp.setEmp_name(stuName);
-			emp.setEmp_sex(sex);
-			if (StringUtil.isNotEmpty(gradeId)) {
-				emp.setPs_id(gradeId);
-			}
-		}
+        request.setCharacterEncoding("utf-8");
+        String stuNo = request.getParameter("EMP_NO");
+        String stuName = request.getParameter("EMP_NAME");
+        String sex = request.getParameter("EMP_SEX");
+        String bbirthday = request.getParameter("bbirthday");
+        String ebirthday = request.getParameter("ebirthday");
+        String gradeId = request.getParameter("PS_TYPE");
+        // String emp_phone = request.getParameter("EMP_Phone");
+        // String emp_address = request.getParameter("EMP_Address");
 
-		String page = request.getParameter("page");// È¡µÃÇëÇóµÄ²ÎÊı
-		String rows = request.getParameter("rows");
-		PageBean pageBean = new PageBean(Integer.parseInt(page),
-				Integer.parseInt(rows));
-		Connection con = null;
-		try {
-			con = DbUtils.getConnection();
-			JSONObject result = new JSONObject();
-			JSONArray jsonArray = JsonUtil.formatRsToJsonArray(EmployeeDao
-					.EmployeetList(con, pageBean, emp, bbirthday, ebirthday));// È¡µÃjsonÊı¾İ
-			int total = EmployeeDao.EmployeeCount(con, emp, bbirthday,
-					ebirthday);// ×Ü¼ÇÂ¼Êı
-			result.put("rows", jsonArray);// ·â×°Êı¾İ
-			result.put("total", total);
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		} finally {
-			try {
-				DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-			} catch (Exception e) {
-				Log4jHelper.exception(e);
-			}
-		}
+        Employee emp = new Employee();
+        if (gradeId != null)
+        {
+            emp.setEmp_no(stuNo);
+            emp.setEmp_name(stuName);
+            emp.setEmp_sex(sex);
+            if (StringUtil.isNotEmpty(gradeId))
+            {
+                emp.setPs_id(gradeId);
+            }
+        }
 
-	}
+        String page = request.getParameter("page");// å–å¾—è¯·æ±‚çš„å‚æ•°
+        String rows = request.getParameter("rows");
+        PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
+        Connection con = null;
+        try
+        {
+            con = DbUtils.getConnection();
+            JSONObject result = new JSONObject();
+            JSONArray jsonArray = JsonUtil.formatRsToJsonArray(
+                EmployeeDao.EmployeetList(con, pageBean, emp, bbirthday, ebirthday));// å–å¾—jsonæ•°æ®
+            int total = EmployeeDao.EmployeeCount(con, emp, bbirthday, ebirthday);// æ€»è®°å½•æ•°
+            result.put("rows", jsonArray);// å°è£…æ•°æ®
+            result.put("total", total);
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
+                Log4jHelper.exception(e);
+            }
+        }
+
+    }
 }

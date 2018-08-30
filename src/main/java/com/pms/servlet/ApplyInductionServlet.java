@@ -1,5 +1,6 @@
 package com.pms.servlet;
 
+
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -23,499 +24,577 @@ import com.pms.util.Log4jHelper;
 import com.pms.util.ResponseUtil;
 import com.pms.util.StringUtil;
 
+
 /**
- * 
- * @author Taowd
- * ¹¦        ÄÜ£º¸ÚÎ»ÉêÇëµÄ´¦Àí¿ØÖÆÆ÷£¬±¨´íÖ°Î»ÉêÇë£¬ĞŞ¸Ä£¬É¾³ı£¬Ìá½»£¬ÉóÅúµÈ²Ù×÷
- * ±àĞ´Ê±¼ä£º2017-5-7-ÏÂÎç2:34:57
+ * @author Taowd åŠŸ èƒ½ï¼šå²—ä½ç”³è¯·çš„å¤„ç†æ§åˆ¶å™¨ï¼ŒæŠ¥é”™èŒä½ç”³è¯·ï¼Œä¿®æ”¹ï¼Œåˆ é™¤ï¼Œæäº¤ï¼Œå®¡æ‰¹ç­‰æ“ä½œ ç¼–å†™æ—¶é—´ï¼š2017-5-7-ä¸‹åˆ2:34:57
  */
-public class ApplyInductionServlet extends BaseServlet {
+public class ApplyInductionServlet extends BaseServlet
+{
 
-	private static final long serialVersionUID = 1L;
-	InductionInfoDao inductionDao = new InductionInfoDao();
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º²éÑ¯¹ÜÀíÔ±ĞÅÏ¢-Ö»²éÑ¯ÒÑ¾­Ìá½»µÄĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç7:09:49
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void AdminApproveInfoList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+    InductionInfoDao inductionDao = new InductionInfoDao();
 
-		request.setCharacterEncoding("utf-8");
-		String page = request.getParameter("page");// È¡µÃÇëÇóµÄ²ÎÊı
-		String rows = request.getParameter("rows");
-		String startDate = request.getParameter("startDate");
-		String endDate = request.getParameter("endDate");
-		String EMP_NO = request.getParameter("EMP_NO");
-		String approveState = request.getParameter("approveState");
-		String IND_STATE = request.getParameter("IND_STATE");
-		String POS_NAME = request.getParameter("POS_NAME");
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæŸ¥è¯¢ç®¡ç†å‘˜ä¿¡æ¯-åªæŸ¥è¯¢å·²ç»æäº¤çš„ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ7:09:49
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void AdminApproveInfoList(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
 
-		InductionInfoBean inductionBean = new InductionInfoBean();
+        request.setCharacterEncoding("utf-8");
+        String page = request.getParameter("page");// å–å¾—è¯·æ±‚çš„å‚æ•°
+        String rows = request.getParameter("rows");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        String EMP_NO = request.getParameter("EMP_NO");
+        String approveState = request.getParameter("approveState");
+        String IND_STATE = request.getParameter("IND_STATE");
+        String POS_NAME = request.getParameter("POS_NAME");
 
-		inductionBean.setEmp_No(EMP_NO);
-		inductionBean.setExt1(approveState);
-		inductionBean.setInd_State(IND_STATE);
-		inductionBean.setPos_Name(POS_NAME);
+        InductionInfoBean inductionBean = new InductionInfoBean();
 
-		// ¹ÜÀíÔ±¼ÓÔØÊı¾İÊ±½«
-		inductionBean.setExt1(approveState);
-		PageBean pageBean = new PageBean(Integer.parseInt(page),
-				Integer.parseInt(rows));
-		Connection con = null;
-		try {
-			con = DbUtils.getConnection();
-			JSONObject result = new JSONObject();
-			JSONArray jsonArray = JsonUtil.formatRsToJsonArray(InductionInfoDao
-					.AdminInductionInfoList(con, pageBean, inductionBean,
-							startDate, endDate));// È¡µÃjsonÊı¾İ
-			int total = InductionInfoDao.InductionInfoCount(con, inductionBean);// ×Ü¼ÇÂ¼Êı
-			result.put("rows", jsonArray);// ·â×°Êı¾İ
-			result.put("total", total);
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		} finally {
-			try {
-				DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-			} catch (Exception e) {
-				Log4jHelper.exception(e);
-			}
-		}
+        inductionBean.setEmp_No(EMP_NO);
+        inductionBean.setExt1(approveState);
+        inductionBean.setInd_State(IND_STATE);
+        inductionBean.setPos_Name(POS_NAME);
 
-	}
+        // ç®¡ç†å‘˜åŠ è½½æ•°æ®æ—¶å°†
+        inductionBean.setExt1(approveState);
+        PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
+        Connection con = null;
+        try
+        {
+            con = DbUtils.getConnection();
+            JSONObject result = new JSONObject();
+            JSONArray jsonArray = JsonUtil.formatRsToJsonArray(
+                InductionInfoDao.AdminInductionInfoList(con, pageBean, inductionBean, startDate,
+                    endDate));// å–å¾—jsonæ•°æ®
+            int total = InductionInfoDao.InductionInfoCount(con, inductionBean);// æ€»è®°å½•æ•°
+            result.put("rows", jsonArray);// å°è£…æ•°æ®
+            result.put("total", total);
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
+                Log4jHelper.exception(e);
+            }
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¸öÈË»ñÈ¡ĞÅÏ¢ÁĞ±í
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç7:02:23
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void UserApproveInfoList(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+    }
 
-		request.setCharacterEncoding("utf-8");
-		String page = request.getParameter("page");// È¡µÃÇëÇóµÄ²ÎÊı
-		String rows = request.getParameter("rows");
-		String startDate = request.getParameter("startDate");
-		String endDate = request.getParameter("endDate");
-		String EMP_NO = request.getParameter("EMP_NO");
-		String approveState = request.getParameter("approveState");
-		String IND_STATE = request.getParameter("IND_STATE");
-		String POS_NAME = request.getParameter("POS_NAME");
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šä¸ªäººè·å–ä¿¡æ¯åˆ—è¡¨ å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ7:02:23
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void UserApproveInfoList(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
 
-		HttpSession session = request.getSession();
+        request.setCharacterEncoding("utf-8");
+        String page = request.getParameter("page");// å–å¾—è¯·æ±‚çš„å‚æ•°
+        String rows = request.getParameter("rows");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        String EMP_NO = request.getParameter("EMP_NO");
+        String approveState = request.getParameter("approveState");
+        String IND_STATE = request.getParameter("IND_STATE");
+        String POS_NAME = request.getParameter("POS_NAME");
 
-		InductionInfoBean inductionBean = new InductionInfoBean();
+        HttpSession session = request.getSession();
 
-		inductionBean.setEmp_No(EMP_NO);
-		inductionBean.setExt1(approveState);
-		inductionBean.setInd_State(IND_STATE);
-		inductionBean.setPos_Name(POS_NAME);
+        InductionInfoBean inductionBean = new InductionInfoBean();
 
-		Employee userInfo = (Employee) session.getAttribute("currentUser");
+        inductionBean.setEmp_No(EMP_NO);
+        inductionBean.setExt1(approveState);
+        inductionBean.setInd_State(IND_STATE);
+        inductionBean.setPos_Name(POS_NAME);
 
-		inductionBean.setEmp_No(userInfo.getEmp_no());
-		PageBean pageBean = new PageBean(Integer.parseInt(page),
-				Integer.parseInt(rows));
-		Connection con = null;
-		try {
-			con = DbUtils.getConnection();
-			JSONObject result = new JSONObject();
-			JSONArray jsonArray = JsonUtil.formatRsToJsonArray(InductionInfoDao
-					.InductionInfoList(con, pageBean, inductionBean, startDate,
-							endDate));// È¡µÃjsonÊı¾İ
-			int total = InductionInfoDao.InductionInfoCount(con, inductionBean);// ×Ü¼ÇÂ¼Êı
-			result.put("rows", jsonArray);// ·â×°Êı¾İ
-			result.put("total", total);
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		} finally {
-			try {
-				DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-			} catch (Exception e) {
-				Log4jHelper.exception(e);
-			}
-		}
+        Employee userInfo = (Employee)session.getAttribute("currentUser");
 
-	}
+        inductionBean.setEmp_No(userInfo.getEmp_no());
+        PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
+        Connection con = null;
+        try
+        {
+            con = DbUtils.getConnection();
+            JSONObject result = new JSONObject();
+            JSONArray jsonArray = JsonUtil.formatRsToJsonArray(InductionInfoDao.InductionInfoList(
+                con, pageBean, inductionBean, startDate, endDate));// å–å¾—jsonæ•°æ®
+            int total = InductionInfoDao.InductionInfoCount(con, inductionBean);// æ€»è®°å½•æ•°
+            result.put("rows", jsonArray);// å°è£…æ•°æ®
+            result.put("total", total);
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
+                Log4jHelper.exception(e);
+            }
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÆÕÍ¨ÓÃ»§Ìá½»ÉêÇëĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç2:38:35
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void UserApprove(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		Log4jHelper.info("ÆÕÍ¨ÓÃ»§Ìá½»ÉêÇëĞÅÏ¢");
-		request.setCharacterEncoding("utf-8");
-		InductionInfoBean induction = new InductionInfoBean();
-		String delIds = request.getParameter("delIds");// È¡µÃÉ¾³ıµÄid×Ö·û´®¼¯ºÏ
-		try {
-			String[] str = delIds.split(",");
-			JSONObject result = new JSONObject();
-			int intData = str.length;
-			for (int i = 0; i < str.length; i++) {
-				// Îªtrue¿ÉÉ¾³ı
-				boolean f = InductionInfoDao.CheckApproveState(str[i]);
-				if (!f) {
-					result.put("success", false);
-					result.put("errorIndex", i);
-					result.put("errorMsg", "¸ÃÉêÇëÒÑÌá½»,²»ÄÜÖØ¸´Ìá½»");
-					intData--;
-				} else {
-					induction.setInd_Id(str[i]);
-					// 00-ÒÑÌá½»
-					induction.setExt1("00");
-					int delNums = InductionInfoDao
-							.ApplyInductionApprove(induction);// ·µ»ØÅúÁ¿É¾³ıµÄÊıÁ¿
-					if (delNums > 0) {
-						result.put("success", true);
-						result.put("delNums", intData);
-					} else {
-						result.put("success", false);
-						result.put("errorMsg", "Ìá½»Ê§°Ü");
-						intData--;
-					}
-				}
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
+    }
 
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæ™®é€šç”¨æˆ·æäº¤ç”³è¯·ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ2:38:35
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void UserApprove(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("æ™®é€šç”¨æˆ·æäº¤ç”³è¯·ä¿¡æ¯");
+        request.setCharacterEncoding("utf-8");
+        InductionInfoBean induction = new InductionInfoBean();
+        String delIds = request.getParameter("delIds");// å–å¾—åˆ é™¤çš„idå­—ç¬¦ä¸²é›†åˆ
+        try
+        {
+            String[] str = delIds.split(",");
+            JSONObject result = new JSONObject();
+            int intData = str.length;
+            for (int i = 0; i < str.length; i++ )
+            {
+                // ä¸ºtrueå¯åˆ é™¤
+                boolean f = InductionInfoDao.CheckApproveState(str[i]);
+                if (!f)
+                {
+                    result.put("success", false);
+                    result.put("errorIndex", i);
+                    result.put("errorMsg", "è¯¥ç”³è¯·å·²æäº¤,ä¸èƒ½é‡å¤æäº¤");
+                    intData-- ;
+                }
+                else
+                {
+                    induction.setInd_Id(str[i]);
+                    // 00-å·²æäº¤
+                    induction.setExt1("00");
+                    int delNums = InductionInfoDao.ApplyInductionApprove(induction);// è¿”å›æ‰¹é‡åˆ é™¤çš„æ•°é‡
+                    if (delNums > 0)
+                    {
+                        result.put("success", true);
+                        result.put("delNums", intData);
+                    }
+                    else
+                    {
+                        result.put("success", false);
+                        result.put("errorMsg", "æäº¤å¤±è´¥");
+                        intData-- ;
+                    }
+                }
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
 
-	}
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÉ¾³ı¸öÈËµÄÉêÇëĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç3:46:49
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void DeleteUserApplyInduction(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		Log4jHelper.info("***************½øÈëÉ¾³ı¿ØÖÆÆ÷***********************");
-		request.setCharacterEncoding("utf-8");
-		String delIds = request.getParameter("delIds");// È¡µÃÉ¾³ıµÄid×Ö·û´®¼¯ºÏ
-		try {
+    }
 
-			String[] str = delIds.split(",");
-			JSONObject result = new JSONObject();
-			for (int i = 0; i < str.length; i++) {
-				// Îªtrue¿ÉÉ¾³ı
-				boolean f = InductionInfoDao.CheckApproveState(str[i]);
-				if (!f) {
-					result.put("success", false);
-					result.put("errorIndex", i);
-					result.put("errorMsg", "ÉêÇëÒÑÌá½»,²»ÄÜÉ¾³ı");
-					ResponseUtil.write(response, result);
-					return;
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šåˆ é™¤ä¸ªäººçš„ç”³è¯·ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ3:46:49
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void DeleteUserApplyInduction(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("***************è¿›å…¥åˆ é™¤æ§åˆ¶å™¨***********************");
+        request.setCharacterEncoding("utf-8");
+        String delIds = request.getParameter("delIds");// å–å¾—åˆ é™¤çš„idå­—ç¬¦ä¸²é›†åˆ
+        try
+        {
 
-				}
-			}
-			int delNums = InductionInfoDao.InductionDelete(StringUtil
-					.FormatDeleteDelIds(delIds));// ·µ»ØÅúÁ¿É¾³ıµÄÊıÁ¿
-			if (delNums > 0) {
-				result.put("success", true);
-				result.put("delNums", delNums);
-			} else {
-				result.put("success", false);
-				result.put("errorMsg", "É¾³ıÊ§°Ü");
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            String[] str = delIds.split(",");
+            JSONObject result = new JSONObject();
+            for (int i = 0; i < str.length; i++ )
+            {
+                // ä¸ºtrueå¯åˆ é™¤
+                boolean f = InductionInfoDao.CheckApproveState(str[i]);
+                if (!f)
+                {
+                    result.put("success", false);
+                    result.put("errorIndex", i);
+                    result.put("errorMsg", "ç”³è¯·å·²æäº¤,ä¸èƒ½åˆ é™¤");
+                    ResponseUtil.write(response, result);
+                    return;
 
-	}
+                }
+            }
+            int delNums = InductionInfoDao.InductionDelete(StringUtil.FormatDeleteDelIds(delIds));// è¿”å›æ‰¹é‡åˆ é™¤çš„æ•°é‡
+            if (delNums > 0)
+            {
+                result.put("success", true);
+                result.put("delNums", delNums);
+            }
+            else
+            {
+                result.put("success", false);
+                result.put("errorMsg", "åˆ é™¤å¤±è´¥");
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¹ÜÀíÔ±É¾³ıÉêÇëĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç4:04:02
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void DeleteAdminApplyInduction(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		String delIds = request.getParameter("delIds");// È¡µÃÉ¾³ıµÄid×Ö·û´®¼¯ºÏ
-		try {
-			JSONObject result = new JSONObject();
-			int delNums = InductionInfoDao.InductionDelete(StringUtil
-					.FormatDeleteDelIds(delIds));// ·µ»ØÅúÁ¿É¾³ıµÄÊıÁ¿
-			if (delNums > 0) {
-				result.put("success", true);
-				result.put("delNums", delNums);
-			} else {
-				result.put("success", false);
-				result.put("errorMsg", "É¾³ıÊ§°Ü");
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¸öÈËÖ°Î»ĞÅÏ¢ĞÂÔö--¼´Ôö¼ÓÈëÖ°ÉêÇë
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç5:17:19
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void AddUserApplyInduction(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		Log4jHelper.info("¸öÈËÖ°Î»ÉêÇëĞÅÏ¢µÄĞÂÔöÂß¼­");
-		// DEP_ID
-		request.setCharacterEncoding("utf-8");
-		String pos_Id = request.getParameter("POS_ID");
-		String ind_ID = request.getParameter("IND_ID");
-		String applyStyle = request.getParameter("EXT3");
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šç®¡ç†å‘˜åˆ é™¤ç”³è¯·ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ4:04:02
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void DeleteAdminApplyInduction(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        request.setCharacterEncoding("utf-8");
+        String delIds = request.getParameter("delIds");// å–å¾—åˆ é™¤çš„idå­—ç¬¦ä¸²é›†åˆ
+        try
+        {
+            JSONObject result = new JSONObject();
+            int delNums = InductionInfoDao.InductionDelete(StringUtil.FormatDeleteDelIds(delIds));// è¿”å›æ‰¹é‡åˆ é™¤çš„æ•°é‡
+            if (delNums > 0)
+            {
+                result.put("success", true);
+                result.put("delNums", delNums);
+            }
+            else
+            {
+                result.put("success", false);
+                result.put("errorMsg", "åˆ é™¤å¤±è´¥");
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
-		InductionInfoBean induction = new InductionInfoBean();
-		induction.setPos_Id(pos_Id);
-		induction.setInd_Id(ind_ID);
-		HttpSession session = request.getSession();
-		Employee userInfo = (Employee) session.getAttribute("currentUser");
-		induction.setEmp_No(userInfo.getEmp_no());
-		// ĞÂÔöÊ±ÉóÅú×´Ì¬Îª£º33-Î´Ìá½»
-		induction.setExt1("33");
-		// ÈëÖ°Àà±ğ£ºIN-ÈëÖ°ÉêÇë
-		if (applyStyle.equals("IN")) {
-			induction.setExt3("IN");
-		} else {
-			induction.setExt3("OUT");
-		}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šä¸ªäººèŒä½ä¿¡æ¯æ–°å¢--å³å¢åŠ å…¥èŒç”³è¯· å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ5:17:19
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void AddUserApplyInduction(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("ä¸ªäººèŒä½ç”³è¯·ä¿¡æ¯çš„æ–°å¢é€»è¾‘");
+        // DEP_ID
+        request.setCharacterEncoding("utf-8");
+        String pos_Id = request.getParameter("POS_ID");
+        String ind_ID = request.getParameter("IND_ID");
+        String applyStyle = request.getParameter("EXT3");
 
-		Log4jHelper.info("ĞÂÔöĞÅÏ¢£º" + induction.toString());
+        InductionInfoBean induction = new InductionInfoBean();
+        induction.setPos_Id(pos_Id);
+        induction.setInd_Id(ind_ID);
+        HttpSession session = request.getSession();
+        Employee userInfo = (Employee)session.getAttribute("currentUser");
+        induction.setEmp_No(userInfo.getEmp_no());
+        // æ–°å¢æ—¶å®¡æ‰¹çŠ¶æ€ä¸ºï¼š33-æœªæäº¤
+        induction.setExt1("33");
+        // å…¥èŒç±»åˆ«ï¼šIN-å…¥èŒç”³è¯·
+        if (applyStyle.equals("IN"))
+        {
+            induction.setExt3("IN");
+        }
+        else
+        {
+            induction.setExt3("OUT");
+        }
 
-		try {
-			int saveNums = 0;
-			boolean isExistenceFlag = false;
-			if (StringUtil.isNotEmpty(induction.getInd_Id())) {
-				// ¼ì²é¸Ã²¿ÃÅÊÇ·ñÒÑ¾­ÉêÇë¹ıÁË£¬Èç¹ûÉêÇë¹ıÁË£¬¾Í²»ÔÊĞíÔÙ´ÎÉêÇë
-				isExistenceFlag = InductionInfoDao.IsExistence(induction);
-			}
+        Log4jHelper.info("æ–°å¢ä¿¡æ¯ï¼š" + induction.toString());
 
-			JSONObject result = new JSONObject();
-			// ¼ì²éĞÂÔöÔ±¹¤ºÅÊÇ·ñÒÑ¾­×¢²á
-			if (isExistenceFlag) {
-				result.put("success", false);
-				result.put("errorMsg", "¸Ã²¿ÃÅ´ËÉêÇëÀà±ğÒÑ¾­ÉêÇë£¬²»ÄÜÖØ¸´ÉêÇë£¡");
-			} else {
-				// ĞÂÔöÔ±¹¤£¬·µ»Ø³É¹¦µÄĞĞÊı
-				saveNums = InductionInfoDao.ApplyInduction(induction);
-				if (saveNums > 0) {
-					result.put("success", true);
-				} else {
-					result.put("success", false);
-					result.put("errorMsg", "ĞÂÔöÉêÇëĞÅÏ¢Ê§°Ü");
-				}
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
+        try
+        {
+            int saveNums = 0;
+            boolean isExistenceFlag = false;
+            if (StringUtil.isNotEmpty(induction.getInd_Id()))
+            {
+                // æ£€æŸ¥è¯¥éƒ¨é—¨æ˜¯å¦å·²ç»ç”³è¯·è¿‡äº†ï¼Œå¦‚æœç”³è¯·è¿‡äº†ï¼Œå°±ä¸å…è®¸å†æ¬¡ç”³è¯·
+                isExistenceFlag = InductionInfoDao.IsExistence(induction);
+            }
 
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		}
+            JSONObject result = new JSONObject();
+            // æ£€æŸ¥æ–°å¢å‘˜å·¥å·æ˜¯å¦å·²ç»æ³¨å†Œ
+            if (isExistenceFlag)
+            {
+                result.put("success", false);
+                result.put("errorMsg", "è¯¥éƒ¨é—¨æ­¤ç”³è¯·ç±»åˆ«å·²ç»ç”³è¯·ï¼Œä¸èƒ½é‡å¤ç”³è¯·ï¼");
+            }
+            else
+            {
+                // æ–°å¢å‘˜å·¥ï¼Œè¿”å›æˆåŠŸçš„è¡Œæ•°
+                saveNums = InductionInfoDao.ApplyInduction(induction);
+                if (saveNums > 0)
+                {
+                    result.put("success", true);
+                }
+                else
+                {
+                    result.put("success", false);
+                    result.put("errorMsg", "æ–°å¢ç”³è¯·ä¿¡æ¯å¤±è´¥");
+                }
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
 
-	}
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¸üĞÂÓÃ»§µÄÉêÇëĞÅÏ¢-Ö¸Î´Ìá½»Ç°¿É½øĞĞĞŞ¸Ä
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç4:51:40
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void UpdateUserApplyApprove(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		Log4jHelper.info("¸öÈËÖ°Î»ÉêÇëĞÅÏ¢µÄĞŞ¸ÄÂß¼­");
-		// DEP_ID
-		request.setCharacterEncoding("utf-8");
-		String pos_Id = request.getParameter("POS_ID");
-		String ind_ID = request.getParameter("IND_ID");
-		String applyStyle = request.getParameter("EXT3");
+    }
 
-		InductionInfoBean induction = new InductionInfoBean();
-		induction.setPos_Id(pos_Id);
-		induction.setInd_Id(ind_ID);
-		HttpSession session = request.getSession();
-		Employee userInfo = (Employee) session.getAttribute("currentUser");
-		induction.setEmp_No(userInfo.getEmp_no());
-		// ĞÂÔöÊ±ÉóÅú×´Ì¬Îª£º33-Î´Ìá½»
-		induction.setExt1("33");
-		// ÈëÖ°Àà±ğ£ºIN-ÈëÖ°ÉêÇë
-		if (applyStyle.equals("IN")) {
-			induction.setExt3("IN");
-		} else {
-			induction.setExt3("OUT");
-		}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæ›´æ–°ç”¨æˆ·çš„ç”³è¯·ä¿¡æ¯-æŒ‡æœªæäº¤å‰å¯è¿›è¡Œä¿®æ”¹ å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ4:51:40
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void UpdateUserApplyApprove(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("ä¸ªäººèŒä½ç”³è¯·ä¿¡æ¯çš„ä¿®æ”¹é€»è¾‘");
+        // DEP_ID
+        request.setCharacterEncoding("utf-8");
+        String pos_Id = request.getParameter("POS_ID");
+        String ind_ID = request.getParameter("IND_ID");
+        String applyStyle = request.getParameter("EXT3");
 
-		Log4jHelper.info("±£´æĞÅÏ¢£º" + induction.toString());
+        InductionInfoBean induction = new InductionInfoBean();
+        induction.setPos_Id(pos_Id);
+        induction.setInd_Id(ind_ID);
+        HttpSession session = request.getSession();
+        Employee userInfo = (Employee)session.getAttribute("currentUser");
+        induction.setEmp_No(userInfo.getEmp_no());
+        // æ–°å¢æ—¶å®¡æ‰¹çŠ¶æ€ä¸ºï¼š33-æœªæäº¤
+        induction.setExt1("33");
+        // å…¥èŒç±»åˆ«ï¼šIN-å…¥èŒç”³è¯·
+        if (applyStyle.equals("IN"))
+        {
+            induction.setExt3("IN");
+        }
+        else
+        {
+            induction.setExt3("OUT");
+        }
 
-		try {
+        Log4jHelper.info("ä¿å­˜ä¿¡æ¯ï¼š" + induction.toString());
 
-			int saveNums = 0;
-			// ¼ì²é¸Ã²¿ÃÅÊÇ·ñÒÑ¾­ÉêÇë¹ıÁË£¬Èç¹ûÉêÇë¹ıÁË£¬¾Í²»ÔÊĞíÔÙ´ÎÉêÇë
-			boolean isExistenceFlag = InductionInfoDao.IsExistence(induction);
-			JSONObject result = new JSONObject();
-			// ¼ì²éÉêÇë×´Ì¬ÊÇ·ñ¿ÉĞŞ¸Ä£º¼´ext1=="33"??
-			if (!InductionInfoDao.CheckApproveState(induction.getInd_Id())) {
-				result.put("success", false);
-				result.put("errorMsg", "¸ÃÉêÇëÒÑ¾­Ìá½»£¬²»ÄÜĞŞ¸Ä£¡");
+        try
+        {
 
-			} else {
-				if (isExistenceFlag) {
-					result.put("success", false);
-					result.put("errorMsg", "¸Ã²¿ÃÅ´ËÉêÇëÀà±ğÒÑ¾­ÉêÇë£¬²»ÄÜÖØ¸´ÉêÇë£¡");
+            int saveNums = 0;
+            // æ£€æŸ¥è¯¥éƒ¨é—¨æ˜¯å¦å·²ç»ç”³è¯·è¿‡äº†ï¼Œå¦‚æœç”³è¯·è¿‡äº†ï¼Œå°±ä¸å…è®¸å†æ¬¡ç”³è¯·
+            boolean isExistenceFlag = InductionInfoDao.IsExistence(induction);
+            JSONObject result = new JSONObject();
+            // æ£€æŸ¥ç”³è¯·çŠ¶æ€æ˜¯å¦å¯ä¿®æ”¹ï¼šå³ext1=="33"??
+            if (!InductionInfoDao.CheckApproveState(induction.getInd_Id()))
+            {
+                result.put("success", false);
+                result.put("errorMsg", "è¯¥ç”³è¯·å·²ç»æäº¤ï¼Œä¸èƒ½ä¿®æ”¹ï¼");
 
-				} else {
-					// Èç¹ûÊÇĞŞ¸ÄµÄ»°£¬·µ»ØĞŞ¸Ä³É¹¦µÄĞĞÊı
-					saveNums = InductionInfoDao.ApplyInductionModify(induction);
-					if (saveNums > 0) {
-						result.put("success", true);
-					} else {
-						result.put("success", false);
-						result.put("errorMsg", "ÉêÇëĞÅÏ¢ĞŞ¸ÄÊ§°Ü£¡");
-					}
-				}
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
+            }
+            else
+            {
+                if (isExistenceFlag)
+                {
+                    result.put("success", false);
+                    result.put("errorMsg", "è¯¥éƒ¨é—¨æ­¤ç”³è¯·ç±»åˆ«å·²ç»ç”³è¯·ï¼Œä¸èƒ½é‡å¤ç”³è¯·ï¼");
 
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		}
+                }
+                else
+                {
+                    // å¦‚æœæ˜¯ä¿®æ”¹çš„è¯ï¼Œè¿”å›ä¿®æ”¹æˆåŠŸçš„è¡Œæ•°
+                    saveNums = InductionInfoDao.ApplyInductionModify(induction);
+                    if (saveNums > 0)
+                    {
+                        result.put("success", true);
+                    }
+                    else
+                    {
+                        result.put("success", false);
+                        result.put("errorMsg", "ç”³è¯·ä¿¡æ¯ä¿®æ”¹å¤±è´¥ï¼");
+                    }
+                }
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
 
-	}
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¹ÜÀíÔ±ĞŞ¸ÄÉóÅúĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç4:39:24
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void AdminUpdateApplyApprove(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		Log4jHelper.info("¹ÜÀíÔ±ĞŞ¸ÄÉóÅúĞÅÏ¢");
-		request.setCharacterEncoding("utf-8");
-		InductionInfoBean induction = new InductionInfoBean();
-		String delIds = request.getParameter("delIds");
-		String approvalComments = request.getParameter("EXT1");
+    }
 
-		try {
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šç®¡ç†å‘˜ä¿®æ”¹å®¡æ‰¹ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ4:39:24
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void AdminUpdateApplyApprove(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("ç®¡ç†å‘˜ä¿®æ”¹å®¡æ‰¹ä¿¡æ¯");
+        request.setCharacterEncoding("utf-8");
+        InductionInfoBean induction = new InductionInfoBean();
+        String delIds = request.getParameter("delIds");
+        String approvalComments = request.getParameter("EXT1");
 
-			String[] str = delIds.split(",");
-			JSONObject result = new JSONObject();
-			for (int i = 0; i < str.length; i++) {
+        try
+        {
 
-				induction.setInd_Id(str[i]);
-				induction.setExt1(approvalComments);
-				induction.setExt2(DateUtil.getCurrentDateStr());
-				// ĞŞ¸ÄÊ± ²»ĞèÒª¼ì²é ÊÇ·ñ¿ÉÒÔ½øĞĞÉóÅú²Ù×÷
-				// ¹ÜÀíÔ±½øĞĞÉóÅúÉêÇë
-				int delNums = InductionInfoDao.ApplyInductionApprove(induction);
-				if (delNums > 0) {
-					result.put("success", true);
-					result.put("delNums", delNums);
-				} else {
-					result.put("success", false);
-					result.put("errorMsg", "Ìá½»Ê§°Ü");
-				}
+            String[] str = delIds.split(",");
+            JSONObject result = new JSONObject();
+            for (int i = 0; i < str.length; i++ )
+            {
 
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+                induction.setInd_Id(str[i]);
+                induction.setExt1(approvalComments);
+                induction.setExt2(DateUtil.getCurrentDateStr());
+                // ä¿®æ”¹æ—¶ ä¸éœ€è¦æ£€æŸ¥ æ˜¯å¦å¯ä»¥è¿›è¡Œå®¡æ‰¹æ“ä½œ
+                // ç®¡ç†å‘˜è¿›è¡Œå®¡æ‰¹ç”³è¯·
+                int delNums = InductionInfoDao.ApplyInductionApprove(induction);
+                if (delNums > 0)
+                {
+                    result.put("success", true);
+                    result.put("delNums", delNums);
+                }
+                else
+                {
+                    result.put("success", false);
+                    result.put("errorMsg", "æäº¤å¤±è´¥");
+                }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¹ÜÀíÔ±ÉóÅúÉêÇë
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-7-ÏÂÎç3:05:43
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void AdminApplyApprove(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 
-		request.setCharacterEncoding("utf-8");
-		InductionInfoBean induction = new InductionInfoBean();
-		String delIds = request.getParameter("delIds");
-		String approvalComments = request.getParameter("EXT1");
-		// Èç¹ûÊÇĞŞ¸ÄÔò»á½ÓÊÕµ½ update ĞÂÔö²»»á½ÓÊÕµ½ÈÎºÎ×Ö·û´®
-		String saveFlag = request.getParameter("saveFlag");
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šç®¡ç†å‘˜å®¡æ‰¹ç”³è¯· å¼€å‘æ—¥æœŸï¼š2017-5-7-ä¸‹åˆ3:05:43
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void AdminApplyApprove(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
 
-		try {
+        request.setCharacterEncoding("utf-8");
+        InductionInfoBean induction = new InductionInfoBean();
+        String delIds = request.getParameter("delIds");
+        String approvalComments = request.getParameter("EXT1");
+        // å¦‚æœæ˜¯ä¿®æ”¹åˆ™ä¼šæ¥æ”¶åˆ° update æ–°å¢ä¸ä¼šæ¥æ”¶åˆ°ä»»ä½•å­—ç¬¦ä¸²
+        String saveFlag = request.getParameter("saveFlag");
 
-			String[] str = delIds.split(",");
-			JSONObject result = new JSONObject();
-			for (int i = 0; i < str.length; i++) {
-				// Îªtrue¿É½øĞĞÉóÅú²Ù×÷
-				boolean f = InductionInfoDao.IsApproveState(str[i]);
-				if (!f && !"update".equals(saveFlag)) {
-					result.put("success", false);
-					result.put("errorIndex", i);
-					result.put("errorMsg", "¸ÃÉêÇëÒÑÉóÅú,²»ÄÜÖØ¸´ÉóÅú");
-				} else {
-					induction.setInd_Id(str[i]);
-					induction.setExt1(approvalComments);
-					induction.setExt2(DateUtil.getCurrentDateStr());
-					// ¹ÜÀíÔ±½øĞĞÉóÅúÉêÇë
-					int delNums = InductionInfoDao
-							.ApplyInductionApprove(induction);
-					if (delNums > 0) {
-						result.put("success", true);
-						result.put("delNums", delNums);
-					} else {
-						result.put("success", false);
-						result.put("errorMsg", "Ìá½»Ê§°Ü");
-					}
-				}
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        try
+        {
 
-	}
+            String[] str = delIds.split(",");
+            JSONObject result = new JSONObject();
+            for (int i = 0; i < str.length; i++ )
+            {
+                // ä¸ºtrueå¯è¿›è¡Œå®¡æ‰¹æ“ä½œ
+                boolean f = InductionInfoDao.IsApproveState(str[i]);
+                if (!f && !"update".equals(saveFlag))
+                {
+                    result.put("success", false);
+                    result.put("errorIndex", i);
+                    result.put("errorMsg", "è¯¥ç”³è¯·å·²å®¡æ‰¹,ä¸èƒ½é‡å¤å®¡æ‰¹");
+                }
+                else
+                {
+                    induction.setInd_Id(str[i]);
+                    induction.setExt1(approvalComments);
+                    induction.setExt2(DateUtil.getCurrentDateStr());
+                    // ç®¡ç†å‘˜è¿›è¡Œå®¡æ‰¹ç”³è¯·
+                    int delNums = InductionInfoDao.ApplyInductionApprove(induction);
+                    if (delNums > 0)
+                    {
+                        result.put("success", true);
+                        result.put("delNums", delNums);
+                    }
+                    else
+                    {
+                        result.put("success", false);
+                        result.put("errorMsg", "æäº¤å¤±è´¥");
+                    }
+                }
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+    }
 
 }

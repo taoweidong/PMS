@@ -1,5 +1,6 @@
 package com.pms.servlet;
 
+
 import com.pms.dao.PositionsInfoDao;
 import com.pms.model.PageBean;
 import com.pms.model.PositionsInfoBean;
@@ -13,23 +14,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 
-public class PositionsServlet extends BaseServlet {
+
+public class PositionsServlet extends BaseServlet
+{
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£ºĞÂÔö¸ÚÎ»ĞÅÏ¢ĞÅÏ¢
-     * ¿ª·¢ÈÕÆÚ£º2017-5-9-ÏÂÎç1:15:27
+     * Author:Taowd åŠŸèƒ½ï¼šæ–°å¢å²—ä½ä¿¡æ¯ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-9-ä¸‹åˆ1:15:27
      *
      * @param request
      * @param response
      * @throws ServletException
      * @throws IOException
      */
-    public void AddPositions(HttpServletRequest request,
-                             HttpServletResponse response) throws ServletException, IOException {
-        Log4jHelper.info("ĞÂÔö¸ÚÎ»ĞÅÏ¢ĞÅÏ¢");
+    public void AddPositions(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("æ–°å¢å²—ä½ä¿¡æ¯ä¿¡æ¯");
 
         request.setCharacterEncoding("utf-8");
         String pos_Id = request.getParameter("POS_ID");
@@ -43,37 +46,50 @@ public class PositionsServlet extends BaseServlet {
         // String ext2 = request.getParameter("Ext2");
         // String ext3 = request.getParameter("Ext3");
 
-        PositionsInfoBean pib = new PositionsInfoBean(pos_Id, dep_Id, pos_Name,
-                pos_Content, Double.parseDouble(pos_Salary),
-                Double.parseDouble(pos_Allowance),
-                Double.parseDouble(pos_Perquisites), ext1, null, null);
+        PositionsInfoBean pib = new PositionsInfoBean(pos_Id, dep_Id, pos_Name, pos_Content,
+            Double.parseDouble(pos_Salary), Double.parseDouble(pos_Allowance),
+            Double.parseDouble(pos_Perquisites), ext1, null, null);
 
         Connection con = null;
-        try {
+        try
+        {
             con = DbUtils.getConnection();
             int saveNums = 0;
             JSONObject result = new JSONObject();
-            // ¼ì²éĞÂÔö¸ÚÎ»ÊÇ·ñÒÑ¾­´æÔÚ
-            if (PositionsInfoDao.IsExistence(con, pos_Id)) {
+            // æ£€æŸ¥æ–°å¢å²—ä½æ˜¯å¦å·²ç»å­˜åœ¨
+            if (PositionsInfoDao.IsExistence(con, pos_Id))
+            {
                 result.put("success", false);
-                result.put("errorMsg", "¸ÚÎ»ºÅÒÑ´æÔÚ£¡");
-            } else {
-                // ĞÂÔö¸ÚÎ»£¬·µ»Ø³É¹¦µÄĞĞÊı
+                result.put("errorMsg", "å²—ä½å·å·²å­˜åœ¨ï¼");
+            }
+            else
+            {
+                // æ–°å¢å²—ä½ï¼Œè¿”å›æˆåŠŸçš„è¡Œæ•°
                 saveNums = PositionsInfoDao.PositionsInfoAdd(con, pib);
-                if (saveNums > 0) {
+                if (saveNums > 0)
+                {
                     result.put("success", true);
-                } else {
+                }
+                else
+                {
                     result.put("success", false);
-                    result.put("errorMsg", "ĞÂÔö¸ÚÎ»ĞÅÏ¢Ê§°Ü");
+                    result.put("errorMsg", "æ–°å¢å²—ä½ä¿¡æ¯å¤±è´¥");
                 }
             }
-            ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-        } catch (Exception e) {
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
             Log4jHelper.exception(e);
-        } finally {
-            try {
-                DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-            } catch (Exception e) {
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
                 Log4jHelper.exception(e);
             }
         }
@@ -81,52 +97,65 @@ public class PositionsServlet extends BaseServlet {
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£ºÉ¾³ı¸ÚÎ»ĞÅÏ¢ĞÅÏ¢
-     * ¿ª·¢ÈÕÆÚ£º2017-5-9-ÏÂÎç1:17:09
+     * Author:Taowd åŠŸèƒ½ï¼šåˆ é™¤å²—ä½ä¿¡æ¯ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-9-ä¸‹åˆ1:17:09
      *
      * @param request
      * @param response
      * @throws ServletException
      * @throws IOException
      */
-    public void DeletePositions(HttpServletRequest request,
-                                HttpServletResponse response) throws ServletException, IOException {
-        Log4jHelper.info("É¾³ı¸ÚÎ»ĞÅÏ¢ĞÅÏ¢");
+    public void DeletePositions(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("åˆ é™¤å²—ä½ä¿¡æ¯ä¿¡æ¯");
 
-        String delIds = request.getParameter("delIds");// È¡µÃÉ¾³ıµÄid×Ö·û´®¼¯ºÏ
+        String delIds = request.getParameter("delIds");// å–å¾—åˆ é™¤çš„idå­—ç¬¦ä¸²é›†åˆ
 
         Connection con = null;
-        try {
+        try
+        {
             con = DbUtils.getConnection();
             String[] str = delIds.split(",");
             JSONObject result = new JSONObject();
-            for (int i = 0; i < str.length; i++) {
+            for (int i = 0; i < str.length; i++ )
+            {
                 boolean f = PositionsInfoDao.getEmpByPosId(con, str[i]);
-                if (f) {
+                if (f)
+                {
                     result.put("success", false);
                     result.put("errorIndex", i);
-                    result.put("errorMsg", "¸ÚÎ»ÏÂÓĞÖ°¹¤,²»ÄÜÉ¾³ı");
+                    result.put("errorMsg", "å²—ä½ä¸‹æœ‰èŒå·¥,ä¸èƒ½åˆ é™¤");
                     ResponseUtil.write(response, result);
                     return;
                 }
             }
             int delNums = PositionsInfoDao.PositionsInfoDelete(con,
-                    StringUtil.FormatDeleteDelIds(delIds));// ·µ»ØÅúÁ¿É¾³ıµÄÊıÁ¿
-            if (delNums > 0) {
+                StringUtil.FormatDeleteDelIds(delIds));// è¿”å›æ‰¹é‡åˆ é™¤çš„æ•°é‡
+            if (delNums > 0)
+            {
                 result.put("success", true);
                 result.put("delNums", delNums);
-            } else {
-                result.put("success", false);
-                result.put("errorMsg", "É¾³ıÊ§°Ü");
             }
-            ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-        } catch (Exception e) {
+            else
+            {
+                result.put("success", false);
+                result.put("errorMsg", "åˆ é™¤å¤±è´¥");
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
             Log4jHelper.exception(e);
-        } finally {
-            try {
-                DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-            } catch (Exception e) {
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
                 Log4jHelper.exception(e);
             }
         }
@@ -134,18 +163,18 @@ public class PositionsServlet extends BaseServlet {
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£ºĞŞ¸Ä¸ÚÎ»ĞÅÏ¢ĞÅÏ¢
-     * ¿ª·¢ÈÕÆÚ£º2017-5-9-ÏÂÎç1:17:38
+     * Author:Taowd åŠŸèƒ½ï¼šä¿®æ”¹å²—ä½ä¿¡æ¯ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-9-ä¸‹åˆ1:17:38
      *
      * @param request
      * @param response
      * @throws ServletException
      * @throws IOException
      */
-    public void UpdatePositions(HttpServletRequest request,
-                                HttpServletResponse response) throws ServletException, IOException {
-        Log4jHelper.info("ĞŞ¸Ä¸ÚÎ»ĞÅÏ¢ĞÅÏ¢");
+    public void UpdatePositions(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("ä¿®æ”¹å²—ä½ä¿¡æ¯ä¿¡æ¯");
 
         request.setCharacterEncoding("utf-8");
         String pos_Id = request.getParameter("POS_ID");
@@ -159,31 +188,41 @@ public class PositionsServlet extends BaseServlet {
         // String ext2 = request.getParameter("Ext2");
         // String ext3 = request.getParameter("Ext3");
 
-        PositionsInfoBean pib = new PositionsInfoBean(pos_Id, dep_Id, pos_Name,
-                pos_Content, Double.parseDouble(pos_Salary),
-                Double.parseDouble(pos_Allowance),
-                Double.parseDouble(pos_Perquisites), ext1, null, null);
+        PositionsInfoBean pib = new PositionsInfoBean(pos_Id, dep_Id, pos_Name, pos_Content,
+            Double.parseDouble(pos_Salary), Double.parseDouble(pos_Allowance),
+            Double.parseDouble(pos_Perquisites), ext1, null, null);
 
         Connection con = null;
-        try {
+        try
+        {
             con = DbUtils.getConnection();
             int saveNums = 0;
             JSONObject result = new JSONObject();
-            // Èç¹ûÊÇĞŞ¸ÄµÄ»°£¬·µ»ØĞŞ¸Ä³É¹¦µÄĞĞÊı
+            // å¦‚æœæ˜¯ä¿®æ”¹çš„è¯ï¼Œè¿”å›ä¿®æ”¹æˆåŠŸçš„è¡Œæ•°
             saveNums = PositionsInfoDao.PositionsInfoModify(con, pib);
-            if (saveNums > 0) {
+            if (saveNums > 0)
+            {
                 result.put("success", true);
-            } else {
-                result.put("success", false);
-                result.put("errorMsg", "ĞŞ¸Ä¸ÚÎ»ĞÅÏ¢Ê§°Ü£¡");
             }
-            ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-        } catch (Exception e) {
+            else
+            {
+                result.put("success", false);
+                result.put("errorMsg", "ä¿®æ”¹å²—ä½ä¿¡æ¯å¤±è´¥ï¼");
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
             Log4jHelper.exception(e);
-        } finally {
-            try {
-                DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-            } catch (Exception e) {
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
                 Log4jHelper.exception(e);
             }
         }
@@ -191,21 +230,21 @@ public class PositionsServlet extends BaseServlet {
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º²éÑ¯¸ÚÎ»ĞÅÏ¢ĞÅÏ¢ÁĞ±í
-     * ¿ª·¢ÈÕÆÚ£º2017-5-9-ÏÂÎç1:18:49
+     * Author:Taowd åŠŸèƒ½ï¼šæŸ¥è¯¢å²—ä½ä¿¡æ¯ä¿¡æ¯åˆ—è¡¨ å¼€å‘æ—¥æœŸï¼š2017-5-9-ä¸‹åˆ1:18:49
      *
      * @param request
      * @param response
      * @throws ServletException
      * @throws IOException
      */
-    public void PositionsListInfo(HttpServletRequest request,
-                                  HttpServletResponse response) throws ServletException, IOException {
-        Log4jHelper.info("²éÑ¯¸ÚÎ»ĞÅÏ¢ĞÅÏ¢ÁĞ±í");
+    public void PositionsListInfo(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("æŸ¥è¯¢å²—ä½ä¿¡æ¯ä¿¡æ¯åˆ—è¡¨");
 
         request.setCharacterEncoding("utf-8");
-        String page = request.getParameter("page");// È¡µÃÇëÇóµÄ²ÎÊı
+        String page = request.getParameter("page");// å–å¾—è¯·æ±‚çš„å‚æ•°
         String rows = request.getParameter("rows");
         String pos_Id = request.getParameter("POS_ID");
         String pos_Name = request.getParameter("POS_NAME");
@@ -216,24 +255,31 @@ public class PositionsServlet extends BaseServlet {
         grade.setPos_Name(pos_Name);
         grade.setDep_Id(DEP_ID);
 
-        PageBean pageBean = new PageBean(Integer.parseInt(page),
-                Integer.parseInt(rows));
+        PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
         Connection con = null;
-        try {
+        try
+        {
             con = DbUtils.getConnection();
             JSONObject result = new JSONObject();
-            JSONArray jsonArray = JsonUtil.formatRsToJsonArray(PositionsInfoDao
-                    .PositionsInfoList(con, pageBean, grade));// È¡µÃjsonÊı¾İ
-            int total = PositionsInfoDao.PositionsInfoCount(con, grade);// ×Ü¼ÇÂ¼Êı
-            result.put("rows", jsonArray);// ·â×°Êı¾İ
+            JSONArray jsonArray = JsonUtil.formatRsToJsonArray(
+                PositionsInfoDao.PositionsInfoList(con, pageBean, grade));// å–å¾—jsonæ•°æ®
+            int total = PositionsInfoDao.PositionsInfoCount(con, grade);// æ€»è®°å½•æ•°
+            result.put("rows", jsonArray);// å°è£…æ•°æ®
             result.put("total", total);
-            ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-        } catch (Exception e) {
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
             Log4jHelper.exception(e);
-        } finally {
-            try {
-                DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-            } catch (Exception e) {
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
                 Log4jHelper.exception(e);
             }
         }
@@ -241,36 +287,44 @@ public class PositionsServlet extends BaseServlet {
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º²éÑ¯¸ÚÎ»ĞÅÏ¢ÏÂÀ­¿òĞÅÏ¢
-     * ¿ª·¢ÈÕÆÚ£º2017-5-9-ÏÂÎç1:19:22
+     * Author:Taowd åŠŸèƒ½ï¼šæŸ¥è¯¢å²—ä½ä¿¡æ¯ä¸‹æ‹‰æ¡†ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-9-ä¸‹åˆ1:19:22
      *
      * @param request
      * @param response
      * @throws ServletException
      * @throws IOException
      */
-    public void PositionsComboboxInfo(HttpServletRequest request,
-                                      HttpServletResponse response) throws ServletException, IOException {
-        Log4jHelper.info("²éÑ¯¸ÚÎ»ĞÅÏ¢ÏÂÀ­¿òĞÅÏ¢");
+    public void PositionsComboboxInfo(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("æŸ¥è¯¢å²—ä½ä¿¡æ¯ä¸‹æ‹‰æ¡†ä¿¡æ¯");
         Connection con = null;
-        try {
+        try
+        {
             con = DbUtils.getConnection();
             JSONArray jsonArray = new JSONArray();
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("POS_ID", "");
-            jsonObject.put("POS_NAME", "ÇëÑ¡Ôñ...");
+            jsonObject.put("POS_NAME", "è¯·é€‰æ‹©...");
             jsonArray.add(jsonObject);
-            // ¼ÓÈëÕû¸ö¼¯ºÏ
-            jsonArray.addAll(JsonUtil.formatRsToJsonArray(PositionsInfoDao
-                    .PositionsInfoList(con, null, new PositionsInfoBean())));// È¡µÃjsonÊı¾İ
-            ResponseUtil.write(response, jsonArray);// ·¢ËÍµ½¿Í»§¶Ë
-        } catch (Exception e) {
+            // åŠ å…¥æ•´ä¸ªé›†åˆ
+            jsonArray.addAll(JsonUtil.formatRsToJsonArray(
+                PositionsInfoDao.PositionsInfoList(con, null, new PositionsInfoBean())));// å–å¾—jsonæ•°æ®
+            ResponseUtil.write(response, jsonArray);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
             Log4jHelper.exception(e);
-        } finally {
-            try {
-                DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-            } catch (Exception e) {
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
                 Log4jHelper.exception(e);
             }
         }

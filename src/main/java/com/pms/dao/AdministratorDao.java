@@ -1,168 +1,188 @@
 package com.pms.dao;
 
-import com.pms.model.Administrator;
-import com.pms.model.PageBean;
-import com.pms.util.DateUtil;
-import com.pms.util.DbUtils;
-import com.pms.util.Log4jHelper;
-import com.pms.util.StringUtil;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import org.apache.commons.dbutils.QueryRunner;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
+import com.pms.model.Administrator;
+import com.pms.model.PageBean;
+import com.pms.util.DateUtil;
+import com.pms.util.DbUtils;
+import com.pms.util.Log4jHelper;
+import com.pms.util.StringUtil;
+
 
 /**
+ * ç®¡ç†å‘˜å¤„ç†ç±».
+ * 
  * @author Taowd
- * ¹¦        ÄÜ£º¹ÜÀíÔ±´¦ÀíÀà
- * ±àĞ´Ê±¼ä£º2017-4-25-ÏÂÎç2:35:08
+ * @version 2018å¹´8æœˆ28æ—¥
+ * @see AdministratorDao
+ * @since
  */
-public class AdministratorDao {
+public class AdministratorDao
+{
 
     /**
-     * ¹¦ÄÜ£º¹ÜÀíÔ±µÇÂ¼ÑéÖ¤
-     *
-     * @param con
-     * @param user
-     * @return
+     * åŠŸèƒ½ï¼šç®¡ç†å‘˜ç™»å½•éªŒè¯.
+     * 
+     * @param admin
+     *            asd
+     * @return å®ä½“
      * @throws Exception
+     *             å¼‚å¸¸ä¿¡æ¯
+     * @see
      */
-    public Administrator login(Administrator admin) throws Exception {
+    public Administrator login(Administrator admin)
+        throws Exception
+    {
 
-        // ´´½¨QueryRunner£¬ĞèÒªÌá¹©Êı¾İ¿âÁ¬½Ó³Ø¶ÔÏó
+        // åˆ›å»ºQueryRunnerï¼Œéœ€è¦æä¾›æ•°æ®åº“è¿æ¥æ± å¯¹è±¡
         QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
-        // ¸ø³ösqlÄ£°å
-        String sql = "SELECT * from pms.t_administrator WHERE t_administrator.ADMIN_NO = ? and t_administrator.ADMIN_PWD =? and t_administrator.Ext3=? ";
-        // ¸ø³ö²ÎÊı
+        // ç»™å‡ºsqlæ¨¡æ¿
+        String sql = "SELECT * from pms.t_administrator WHERE"
+                     + " t_administrator.ADMIN_NO = ? and t_administrator.ADMIN_PWD =? and t_administrator.Ext3=? ";
+        // ç»™å‡ºå‚æ•°
         Object[] params = {admin.getAdmin_no(), admin.getAdmin_pwd(), admin.getExt3()};
-        // Ö´ĞĞSqlÓï¾ä»ñÈ¡·µ»ØÖµ
+        // æ‰§è¡ŒSqlè¯­å¥è·å–è¿”å›å€¼
         return queryRun.query(sql, new BeanHandler<Administrator>(Administrator.class), params);
 
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º»ñÈ¡¹ÜÀíÔ±ĞÅÏ¢
-     * ¿ª·¢ÈÕÆÚ£º2017-4-11-ÏÂÎç9:54:43
-     *
-     * @param con
-     * @param pageBean
-     * @param adminInfo
-     * @return
-     * @throws SQLException
+     * è·å–ç®¡ç†å‘˜ä¿¡æ¯.
      */
-    public ResultSet GetAdminInfo(Connection con, PageBean pageBean, Administrator adminInfo) throws SQLException {
-        Log4jHelper.info("²éÑ¯²ÎÊı£º" + adminInfo.toString());
+    public ResultSet getAdminInfo(Connection con, PageBean pageBean, Administrator adminInfo)
+        throws SQLException
+    {
+        Log4jHelper.info("æŸ¥è¯¢å‚æ•°ï¼š" + adminInfo.toString());
         StringBuffer sb = new StringBuffer(
-                "SELECT ADMIN_ID,ADMIN_NO, ADMIN_PWD,ADMIN_NAME,ADMIN_PHONE,Ext1 ,Ext2,Ext3 as roleCode,(case WHEN Ext3='admin'then '¹ÜÀíÔ±' WHEN Ext3='superAdmin'then '³¬¼¶¹ÜÀíÔ±' END ) as roleName from pms.t_administrator  ");
-        if (adminInfo != null && StringUtil.isNotEmpty(adminInfo.getAdmin_no())) {
+            "SELECT ADMIN_ID,ADMIN_NO, ADMIN_PWD,ADMIN_NAME,ADMIN_PHONE,Ext1 ,Ext2,Ext3 as roleCode,(case WHEN Ext3='admin'then 'ç®¡ç†å‘˜' WHEN Ext3='superAdmin'then 'è¶…çº§ç®¡ç†å‘˜' END ) as roleName from pms.t_administrator  ");
+        if (adminInfo != null && StringUtil.isNotEmpty(adminInfo.getAdmin_no()))
+        {
             sb.append(" and t_administrator.ADMIN_NO like '%" + adminInfo.getAdmin_no() + "%'");
         }
-        if (adminInfo != null && StringUtil.isNotEmpty(adminInfo.getAdmin_name())) {
-            sb.append(" and t_administrator.ADMIN_NAME like '%" + adminInfo.getAdmin_name() + "%'");
+        if (adminInfo != null && StringUtil.isNotEmpty(adminInfo.getAdmin_name()))
+        {
+            sb.append(
+                " and t_administrator.ADMIN_NAME like '%" + adminInfo.getAdmin_name() + "%'");
         }
-        if (adminInfo != null && StringUtil.isNotEmpty(adminInfo.getAdmin_phone())) {
-            sb.append(" and t_administrator.ADMIN_PHONE like '%" + adminInfo.getAdmin_phone() + "%'");
+        if (adminInfo != null && StringUtil.isNotEmpty(adminInfo.getAdmin_phone()))
+        {
+            sb.append(
+                " and t_administrator.ADMIN_PHONE like '%" + adminInfo.getAdmin_phone() + "%'");
         }
         PreparedStatement pstmt = con.prepareStatement(sb.toString().replaceFirst("and", "where"));
-        Log4jHelper.info("»ñÈ¡¹ÜÀíÔ±ĞÅÏ¢£º" + pstmt.toString());
+        Log4jHelper.info("è·å–ç®¡ç†å‘˜ä¿¡æ¯ï¼š" + pstmt.toString());
         return pstmt.executeQuery();
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º»ñÈ¡¹ÜÀíÔ±ÊıÁ¿
-     * ¿ª·¢ÈÕÆÚ£º2017-4-11-ÏÂÎç9:55:02
+     * Author:Taowd åŠŸèƒ½ï¼šè·å–ç®¡ç†å‘˜æ•°é‡ å¼€å‘æ—¥æœŸï¼š2017-4-11-ä¸‹åˆ9:55:02
      *
      * @param con
      * @param adminInfo
      * @return
      * @throws SQLException
      */
-    public int GetAdminCount(Administrator adminInfo) throws SQLException {
-        // ´´½¨QueryRunner£¬ĞèÒªÌá¹©Êı¾İ¿âÁ¬½Ó³Ø¶ÔÏó
+    public int getAdminCount(Administrator adminInfo)
+        throws SQLException
+    {
+        // åˆ›å»ºQueryRunnerï¼Œéœ€è¦æä¾›æ•°æ®åº“è¿æ¥æ± å¯¹è±¡
         QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
         StringBuffer sql = new StringBuffer("SELECT count(*) as total from pms.t_administrator  ");
-        if (adminInfo != null && StringUtil.isNotEmpty(adminInfo.getAdmin_no())) {
+        if (adminInfo != null && StringUtil.isNotEmpty(adminInfo.getAdmin_no()))
+        {
             sql.append(" and t_administrator.ADMIN_NO like '%" + adminInfo.getAdmin_no() + "%'");
         }
-        if (adminInfo != null && StringUtil.isNotEmpty(adminInfo.getAdmin_name())) {
-            sql.append(" and t_administrator.ADMIN_NAME like '%" + adminInfo.getAdmin_name() + "%'");
+        if (adminInfo != null && StringUtil.isNotEmpty(adminInfo.getAdmin_name()))
+        {
+            sql.append(
+                " and t_administrator.ADMIN_NAME like '%" + adminInfo.getAdmin_name() + "%'");
         }
-        if (adminInfo != null && StringUtil.isNotEmpty(adminInfo.getAdmin_phone())) {
-            sql.append(" and t_administrator.ADMIN_PHONE like '%" + adminInfo.getAdmin_phone() + "%'");
+        if (adminInfo != null && StringUtil.isNotEmpty(adminInfo.getAdmin_phone()))
+        {
+            sql.append(
+                " and t_administrator.ADMIN_PHONE like '%" + adminInfo.getAdmin_phone() + "%'");
         }
-        // ²éÑ¯-·µ»Øµ¥ĞĞµ¥ÁĞ½á¹û
+        // æŸ¥è¯¢-è¿”å›å•è¡Œå•åˆ—ç»“æœ
         @SuppressWarnings({"unchecked", "rawtypes"})
-        Long number = (Long) queryRun.query(sql.toString().replaceFirst("and", "where"), new ScalarHandler());
+        Long number = (Long)queryRun.query(sql.toString().replaceFirst("and", "where"),
+            new ScalarHandler());
         return number.intValue();
 
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£ºĞŞ¸Ä¹ÜÀíÔ±ĞÅÏ¢
-     * ¿ª·¢ÈÕÆÚ£º2017-4-12-ÏÂÎç1:58:39
+     * Author:Taowd åŠŸèƒ½ï¼šä¿®æ”¹ç®¡ç†å‘˜ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-12-ä¸‹åˆ1:58:39
      *
      * @param con
      * @param adminInfo
      * @return
      * @throws Exception
      */
-    public int AdminModify(Administrator adminInfo) throws Exception {
+    public int adminModify(Administrator adminInfo)
+        throws Exception
+    {
 
-        if (adminInfo != null && StringUtil.isNotEmpty(adminInfo.getAdmin_pwd())) {
+        if (adminInfo != null && StringUtil.isNotEmpty(adminInfo.getAdmin_pwd()))
+        {
             QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
             String sql = "UPDATE pms.t_administrator SET t_administrator.ADMIN_NO =?,ADMIN_PWD =?, t_administrator.ADMIN_NAME=? , t_administrator.ADMIN_PHONE=? , t_administrator.Ext1 = ? , t_administrator.Ext2=?  WHERE t_administrator.ADMIN_ID=? ";
-            Object[] params = {adminInfo.getAdmin_no(), adminInfo.getAdmin_pwd(), adminInfo.getAdmin_name(),
-                    adminInfo.getAdmin_phone(), adminInfo.getExt1(), DateUtil.getCurrentDateStr(),
-                    adminInfo.getAdmin_id()};
+            Object[] params = {adminInfo.getAdmin_no(), adminInfo.getAdmin_pwd(),
+                adminInfo.getAdmin_name(), adminInfo.getAdmin_phone(), adminInfo.getExt1(),
+                DateUtil.getCurrentDateStr(), adminInfo.getAdmin_id()};
             return queryRun.update(sql, params);
-        } else {
+        }
+        else
+        {
 
             QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
             String sql = "UPDATE pms.t_administrator SET t_administrator.ADMIN_NO =?, t_administrator.ADMIN_NAME=? , t_administrator.ADMIN_PHONE=? , t_administrator.Ext1 = ? , t_administrator.Ext2=?  WHERE t_administrator.ADMIN_ID=? ";
-            Object[] params = {adminInfo.getAdmin_no(), adminInfo.getAdmin_name(), adminInfo.getAdmin_phone(),
-                    adminInfo.getExt1(), DateUtil.getCurrentDateStr(), adminInfo.getAdmin_id()};
+            Object[] params = {adminInfo.getAdmin_no(), adminInfo.getAdmin_name(),
+                adminInfo.getAdmin_phone(), adminInfo.getExt1(), DateUtil.getCurrentDateStr(),
+                adminInfo.getAdmin_id()};
 
             return queryRun.update(sql, params);
         }
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º¹ÜÀíÔ±ĞŞ¸Ä¸öÈËĞÅÏ¢£¬²»ÄÜÔÚ´ËĞŞ¸ÄÃÜÂë
-     * ¿ª·¢ÈÕÆÚ£º2017-4-27-ÏÂÎç2:20:33
+     * Author:Taowd åŠŸèƒ½ï¼šç®¡ç†å‘˜ä¿®æ”¹ä¸ªäººä¿¡æ¯ï¼Œä¸èƒ½åœ¨æ­¤ä¿®æ”¹å¯†ç  å¼€å‘æ—¥æœŸï¼š2017-4-27-ä¸‹åˆ2:20:33
      *
      * @param con
      * @param adminInfo
      * @return
      * @throws Exception
      */
-    public int AdminPersionModify(Administrator adminInfo) throws Exception {
+    public int adminPersionModify(Administrator adminInfo)
+        throws Exception
+    {
         QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
         String sql = "UPDATE pms.t_administrator SET t_administrator.ADMIN_NO =?, t_administrator.ADMIN_NAME=? , t_administrator.ADMIN_PHONE=? , t_administrator.Ext1 = ? , t_administrator.Ext2=?  WHERE t_administrator.ADMIN_ID=? ";
-        Object[] params = {adminInfo.getAdmin_no(), adminInfo.getAdmin_name(), adminInfo.getAdmin_phone(),
-                adminInfo.getExt1(), DateUtil.getCurrentDateStr(), adminInfo.getAdmin_id()};
+        Object[] params = {adminInfo.getAdmin_no(), adminInfo.getAdmin_name(),
+            adminInfo.getAdmin_phone(), adminInfo.getExt1(), DateUtil.getCurrentDateStr(),
+            adminInfo.getAdmin_id()};
 
         return queryRun.update(sql, params);
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º¹ÜÀíÔ±ĞŞ¸ÄÃÜÂë
-     * ¿ª·¢ÈÕÆÚ£º2017-4-19-ÏÂÎç1:43:04
+     * Author:Taowd åŠŸèƒ½ï¼šç®¡ç†å‘˜ä¿®æ”¹å¯†ç  å¼€å‘æ—¥æœŸï¼š2017-4-19-ä¸‹åˆ1:43:04
      *
      * @param con
      * @param adminInfo
      * @return
      * @throws Exception
      */
-    public int AdminModifyPasswd(Administrator adminInfo) throws Exception {
+    public int adminModifyPasswd(Administrator adminInfo)
+        throws Exception
+    {
         QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
         String sql = "UPDATE pms.t_administrator SET t_administrator.ADMIN_PWD =? WHERE t_administrator.ADMIN_ID=? ";
         Object[] params = {adminInfo.getAdmin_pwd(), adminInfo.getAdmin_id()};
@@ -170,82 +190,93 @@ public class AdministratorDao {
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º¼ì²é¹ÜÀíÔ±admin_noÊÇ·ñÒÑ¾­´æÔÚ
-     * ¿ª·¢ÈÕÆÚ£º2017-4-18-ÏÂÎç12:59:55
+     * Author:Taowd åŠŸèƒ½ï¼šæ£€æŸ¥ç®¡ç†å‘˜admin_noæ˜¯å¦å·²ç»å­˜åœ¨ å¼€å‘æ—¥æœŸï¼š2017-4-18-ä¸‹åˆ12:59:55
      *
      * @param con
      * @param aDMIN_NO
      * @return
      * @throws SQLException
      */
-    public boolean IsExistence(String admin_no) throws SQLException {
+    public boolean isExistence(String admin_no)
+        throws SQLException
+    {
         QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
         String sql = "SELECT * FROM pms.t_administrator WHERE admin_no =? ";
         Object[] params = {admin_no};
-        // ²éÑ¯-·µ»Ø½á¹ûÎªJavaBean¶ÔÏó£¬²éÑ¯²»µ½Ê±·µ»ØÎªnull
-        Administrator admin = queryRun.query(sql, new BeanHandler<Administrator>(Administrator.class), params);
-        if (admin != null) {
+        // æŸ¥è¯¢-è¿”å›ç»“æœä¸ºJavaBeanå¯¹è±¡ï¼ŒæŸ¥è¯¢ä¸åˆ°æ—¶è¿”å›ä¸ºnull
+        Administrator admin = queryRun.query(sql,
+            new BeanHandler<Administrator>(Administrator.class), params);
+        if (admin != null)
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£ºÔö¼Ó¹ÜÀíÔ±
-     * ¿ª·¢ÈÕÆÚ£º2017-4-18-ÏÂÎç1:04:06
+     * Author:Taowd åŠŸèƒ½ï¼šå¢åŠ ç®¡ç†å‘˜ å¼€å‘æ—¥æœŸï¼š2017-4-18-ä¸‹åˆ1:04:06
      *
      * @param con
      * @param adminBean
      * @return
      * @throws Exception
      */
-    public int AdminAdd(Administrator adminBean) throws Exception {
+    public int adminAdd(Administrator adminBean)
+        throws Exception
+    {
 
         QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
         String sql = "INSERT INTO pms.t_administrator VALUES(?,?,?,?,?,?,?,?) ";
         Object[] params = {DateUtil.formatDate(new Date(), "yyyyMMdd") + adminBean.getAdmin_no(),
-                adminBean.getAdmin_no(), adminBean.getAdmin_pwd(), adminBean.getAdmin_name(),
-                adminBean.getAdmin_phone(), adminBean.getExt1(), DateUtil.getCurrentDateStr(), "admin"};
+            adminBean.getAdmin_no(), adminBean.getAdmin_pwd(), adminBean.getAdmin_name(),
+            adminBean.getAdmin_phone(), adminBean.getExt1(), DateUtil.getCurrentDateStr(),
+            "admin"};
         return queryRun.update(sql, params);
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£ºÉ¾³ı¹ÜÀíÔ±ĞÅÏ¢
-     * ¿ª·¢ÈÕÆÚ£º2017-4-19-ÏÂÎç1:20:28
+     * Author:Taowd åŠŸèƒ½ï¼šåˆ é™¤ç®¡ç†å‘˜ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-19-ä¸‹åˆ1:20:28
      *
      * @param con
      * @param delIds
      * @return
      * @throws SQLException
      */
-    public int AdminInfoDelete(String delIds) throws SQLException {
+    public int adminInfoDelete(String delIds)
+        throws SQLException
+    {
         int SussessFlag = 0;
         QueryRunner qr = new QueryRunner(DbUtils.getDataSource());
         String sql = "SELECT count(*) FROM pms.t_notice WHERE NOT_AUTHOR = ? ";
         Object[] params = {delIds};
         @SuppressWarnings({"unchecked", "rawtypes"})
-        Long countNum = (Long) qr.query(sql, new ScalarHandler(), params);
+        Long countNum = (Long)qr.query(sql, new ScalarHandler(), params);
 
-        if (countNum.intValue() > 0) {
-            // ÏÈÉ¾³ı¸Ã¹ÜÀíÔ±Ôö¼ÓµÄ¹«¸æĞÅÏ¢
+        if (countNum.intValue() > 0)
+        {
+            // å…ˆåˆ é™¤è¯¥ç®¡ç†å‘˜å¢åŠ çš„å…¬å‘Šä¿¡æ¯
             QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
             String sql1 = "DELETE FROM pms.t_notice WHERE t_notice.NOT_AUTHOR IN (" + delIds + ")";
 
             SussessFlag = queryRun.update(sql1);
-            if (SussessFlag > 0) {
-                // É¾³ı¹ÜÀíÔ±
-                String sql2 = "DELETE FROM pms.t_administrator WHERE t_administrator.ADMIN_ID IN (" + delIds + ")";
+            if (SussessFlag > 0)
+            {
+                // åˆ é™¤ç®¡ç†å‘˜
+                String sql2 = "DELETE FROM pms.t_administrator WHERE t_administrator.ADMIN_ID IN ("
+                              + delIds + ")";
                 SussessFlag = queryRun.update(sql2);
             }
 
-        } else {
-            // É¾³ı¹ÜÀíÔ±
+        }
+        else
+        {
+            // åˆ é™¤ç®¡ç†å‘˜
             QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
-            String sql4 = "DELETE FROM pms.t_administrator WHERE t_administrator.ADMIN_ID IN (" + delIds + ")";
+            String sql4 = "DELETE FROM pms.t_administrator WHERE t_administrator.ADMIN_ID IN ("
+                          + delIds + ")";
             SussessFlag = queryRun.update(sql4);
         }
 
@@ -253,18 +284,21 @@ public class AdministratorDao {
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£ºÉèÖÃ³¬¼¶¹ÜÀíÔ±
-     * ¿ª·¢ÈÕÆÚ£º2017-4-24-ÏÂÎç8:02:31
-     *
+     * Author:Taowd åŠŸèƒ½ï¼šè®¾ç½®è¶…çº§ç®¡ç†å‘˜ å¼€å‘æ—¥æœŸï¼š2017-4-24-ä¸‹åˆ8:02:31 å•Šä¸‰å¤§å¤§.
+     * <p>
+     * å¤§å¸ˆå¯¹è¯æ¡†æ•¬çˆ±çš„
+     * </p>
+     * 
      * @param con
      * @param string
      * @return
      * @throws SQLException
      * @throws Exception
      */
-    public int SetSuperAdmin(String delIds) throws SQLException {
-        // É¾³ı¹ÜÀíÔ±
+    public int setSuperAdmin(String delIds)
+        throws SQLException
+    {
+        // åˆ é™¤ç®¡ç†å‘˜
         QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
         String sql = "UPDATE pms.t_administrator SET t_administrator.Ext3 = 'superAdmin' WHERE t_administrator.ADMIN_ID=? ";
         Object[] params = {delIds};
@@ -272,16 +306,16 @@ public class AdministratorDao {
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£ºÈ¡Ïû³¬¼¶¹ÜÀíÔ±µÄÉèÖÃ
-     * ¿ª·¢ÈÕÆÚ£º2017-4-25-ÏÂÎç12:43:50
+     * Author:Taowd åŠŸèƒ½ï¼šå–æ¶ˆè¶…çº§ç®¡ç†å‘˜çš„è®¾ç½® å¼€å‘æ—¥æœŸï¼š2017-4-25-ä¸‹åˆ12:43:50
      *
      * @param string
      * @return
      * @throws SQLException
      */
-    public int SetCancelSuperAdmin(String delIds) throws SQLException {
-        // É¾³ı¹ÜÀíÔ±
+    public int setCancelSuperAdmin(String delIds)
+        throws SQLException
+    {
+        // åˆ é™¤ç®¡ç†å‘˜
         QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
         String sql = "UPDATE pms.t_administrator SET t_administrator.Ext3 = 'admin' WHERE t_administrator.ADMIN_ID=? ";
         Object[] params = {delIds};
@@ -290,23 +324,27 @@ public class AdministratorDao {
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º¼ì²éÊÇ·ñÎª³¬¼¶¹ÜÀíÔ±
-     * ¿ª·¢ÈÕÆÚ£º2017-4-25-ÏÂÎç1:55:16
+     * Author:Taowd åŠŸèƒ½ï¼šæ£€æŸ¥æ˜¯å¦ä¸ºè¶…çº§ç®¡ç†å‘˜ å¼€å‘æ—¥æœŸï¼š2017-4-25-ä¸‹åˆ1:55:16
      *
      * @param string
-     * @return true ÊÇ³¬¼¶¹ÜÀíÔ±
+     * @return true æ˜¯è¶…çº§ç®¡ç†å‘˜
      * @throws SQLException
      */
-    public boolean IsSuperAdmin(String delIds) throws SQLException {
-        // É¾³ı¹ÜÀíÔ±
+    public boolean isSuperAdmin(String delIds)
+        throws SQLException
+    {
+        // åˆ é™¤ç®¡ç†å‘˜
         QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
         String sql = "SELECT * FROM pms.t_administrator WHERE t_administrator.Ext3='superAdmin' and t_administrator.ADMIN_ID=? ";
         Object[] params = {delIds};
-        Administrator admin = queryRun.query(sql, new BeanHandler<Administrator>(Administrator.class), params);
-        if (admin != null) {
+        Administrator admin = queryRun.query(sql,
+            new BeanHandler<Administrator>(Administrator.class), params);
+        if (admin != null)
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
 

@@ -1,5 +1,6 @@
 package com.pms.servlet;
 
+
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -20,259 +21,313 @@ import com.pms.util.Log4jHelper;
 import com.pms.util.ResponseUtil;
 import com.pms.util.StringUtil;
 
-public class PoliticalStatusServlet extends BaseServlet {
 
-	private static final long serialVersionUID = 1L;
+public class PoliticalStatusServlet extends BaseServlet
+{
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºĞÂÔöÕşÖÎÃæÃ²ĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-9-ÏÂÎç1:15:27
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void AddPoliticalStatus(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		Log4jHelper.info("ĞÂÔöÕşÖÎÃæÃ²ĞÅÏ¢");
-		request.setCharacterEncoding("utf-8");
-		String ps_Type = request.getParameter("PS_TYPE");
-		String ps_Name = request.getParameter("PS_Name");
-		String ext1 = request.getParameter("ext1");
-		String ext2 = request.getParameter("Ext2");
-		String ext3 = request.getParameter("ext3");
+    private static final long serialVersionUID = 1L;
 
-		PoliticalStatusBean psb = new PoliticalStatusBean(ps_Type, ps_Name,
-				ext1, ext2, ext3);
-		Log4jHelper.info("±£´æĞÅÏ¢£º" + psb.toString());
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæ–°å¢æ”¿æ²»é¢è²Œä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-9-ä¸‹åˆ1:15:27
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void AddPoliticalStatus(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("æ–°å¢æ”¿æ²»é¢è²Œä¿¡æ¯");
+        request.setCharacterEncoding("utf-8");
+        String ps_Type = request.getParameter("PS_TYPE");
+        String ps_Name = request.getParameter("PS_Name");
+        String ext1 = request.getParameter("ext1");
+        String ext2 = request.getParameter("Ext2");
+        String ext3 = request.getParameter("ext3");
 
-		Connection con = null;
-		try {
-			con = DbUtils.getConnection();
-			int saveNums = 0;
-			JSONObject result = new JSONObject();
-			// ¼ì²éĞÂÔöÔ±¹¤ºÅÊÇ·ñÒÑ¾­×¢²á
-			if (PoliticalStatusDao.IsExistence(con, ps_Type)) {
-				result.put("success", false);
-				result.put("errorMsg", "¸ÃÀàĞÍÒÑ´æÔÚ£¡");
-			} else {
-				// ĞÂÔöÔ±¹¤£¬·µ»Ø³É¹¦µÄĞĞÊı
-				saveNums = PoliticalStatusDao.PoliticalStatusAdd(con, psb);
-				if (saveNums > 0) {
-					result.put("success", true);
-				} else {
-					result.put("success", false);
-					result.put("errorMsg", "ĞÂÔöÕşÖÎÃæÃ²ĞÅÏ¢Ê§°Ü");
-				}
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		} finally {
-			try {
-				DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-			} catch (Exception e) {
-				Log4jHelper.exception(e);
-			}
-		}
+        PoliticalStatusBean psb = new PoliticalStatusBean(ps_Type, ps_Name, ext1, ext2, ext3);
+        Log4jHelper.info("ä¿å­˜ä¿¡æ¯ï¼š" + psb.toString());
 
-	}
+        Connection con = null;
+        try
+        {
+            con = DbUtils.getConnection();
+            int saveNums = 0;
+            JSONObject result = new JSONObject();
+            // æ£€æŸ¥æ–°å¢å‘˜å·¥å·æ˜¯å¦å·²ç»æ³¨å†Œ
+            if (PoliticalStatusDao.IsExistence(con, ps_Type))
+            {
+                result.put("success", false);
+                result.put("errorMsg", "è¯¥ç±»å‹å·²å­˜åœ¨ï¼");
+            }
+            else
+            {
+                // æ–°å¢å‘˜å·¥ï¼Œè¿”å›æˆåŠŸçš„è¡Œæ•°
+                saveNums = PoliticalStatusDao.PoliticalStatusAdd(con, psb);
+                if (saveNums > 0)
+                {
+                    result.put("success", true);
+                }
+                else
+                {
+                    result.put("success", false);
+                    result.put("errorMsg", "æ–°å¢æ”¿æ²»é¢è²Œä¿¡æ¯å¤±è´¥");
+                }
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
+                Log4jHelper.exception(e);
+            }
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÉ¾³ıÕşÖÎÃæÃ²ĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-9-ÏÂÎç1:17:09
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void DeletePoliticalStatus(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		Log4jHelper.info("É¾³ıÕşÖÎÃæÃ²ĞÅÏ¢");
+    }
 
-		request.setCharacterEncoding("utf-8");
-		String delIds = request.getParameter("delIds");// È¡µÃÉ¾³ıµÄid×Ö·û´®¼¯ºÏ
-		Connection con = null;
-		try {
-			con = DbUtils.getConnection();
-			String[] str = delIds.split(",");
-			JSONObject result = new JSONObject();
-			for (int i = 0; i < str.length; i++) {
-				boolean f = PoliticalStatusDao.getEmpByPsType(con, str[i]);
-				if (f) {
-					result.put("success", false);
-					result.put("errorIndex", i);
-					result.put("errorMsg", "¸Ã½ÇÉ«ÏÂÓĞÖ°¹¤,²»ÄÜÉ¾³ı");
-					ResponseUtil.write(response, result);
-					return;
-				}
-			}
-			int delNums = PoliticalStatusDao.PoliticalStatusDelete(con,
-					StringUtil.FormatDeleteDelIds(delIds));// ·µ»ØÅúÁ¿É¾³ıµÄÊıÁ¿
-			if (delNums > 0) {
-				result.put("success", true);
-				result.put("delNums", delNums);
-			} else {
-				result.put("success", false);
-				result.put("errorMsg", "É¾³ıÊ§°Ü");
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		} finally {
-			try {
-				DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-			} catch (Exception e) {
-				Log4jHelper.exception(e);
-			}
-		}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šåˆ é™¤æ”¿æ²»é¢è²Œä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-9-ä¸‹åˆ1:17:09
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void DeletePoliticalStatus(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("åˆ é™¤æ”¿æ²»é¢è²Œä¿¡æ¯");
 
-	}
+        request.setCharacterEncoding("utf-8");
+        String delIds = request.getParameter("delIds");// å–å¾—åˆ é™¤çš„idå­—ç¬¦ä¸²é›†åˆ
+        Connection con = null;
+        try
+        {
+            con = DbUtils.getConnection();
+            String[] str = delIds.split(",");
+            JSONObject result = new JSONObject();
+            for (int i = 0; i < str.length; i++ )
+            {
+                boolean f = PoliticalStatusDao.getEmpByPsType(con, str[i]);
+                if (f)
+                {
+                    result.put("success", false);
+                    result.put("errorIndex", i);
+                    result.put("errorMsg", "è¯¥è§’è‰²ä¸‹æœ‰èŒå·¥,ä¸èƒ½åˆ é™¤");
+                    ResponseUtil.write(response, result);
+                    return;
+                }
+            }
+            int delNums = PoliticalStatusDao.PoliticalStatusDelete(con,
+                StringUtil.FormatDeleteDelIds(delIds));// è¿”å›æ‰¹é‡åˆ é™¤çš„æ•°é‡
+            if (delNums > 0)
+            {
+                result.put("success", true);
+                result.put("delNums", delNums);
+            }
+            else
+            {
+                result.put("success", false);
+                result.put("errorMsg", "åˆ é™¤å¤±è´¥");
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
+                Log4jHelper.exception(e);
+            }
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºĞŞ¸ÄÕşÖÎÃæÃ²ĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-9-ÏÂÎç1:17:38
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void UpdatePoliticalStatus(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		Log4jHelper.info("ĞŞ¸ÄÕşÖÎÃæÃ²ĞÅÏ¢");
+    }
 
-		request.setCharacterEncoding("utf-8");
-		String ps_Type = request.getParameter("PS_TYPE");
-		String ps_Name = request.getParameter("PS_Name");
-		String ext1 = request.getParameter("ext1");
-		String ext2 = request.getParameter("Ext2");
-		String ext3 = request.getParameter("ext3");
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šä¿®æ”¹æ”¿æ²»é¢è²Œä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-9-ä¸‹åˆ1:17:38
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void UpdatePoliticalStatus(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("ä¿®æ”¹æ”¿æ²»é¢è²Œä¿¡æ¯");
 
-		PoliticalStatusBean psb = new PoliticalStatusBean(ps_Type, ps_Name,
-				ext1, ext2, ext3);
-		Log4jHelper.info("ĞŞ¸ÄĞÅÏ¢£º" + psb.toString());
+        request.setCharacterEncoding("utf-8");
+        String ps_Type = request.getParameter("PS_TYPE");
+        String ps_Name = request.getParameter("PS_Name");
+        String ext1 = request.getParameter("ext1");
+        String ext2 = request.getParameter("Ext2");
+        String ext3 = request.getParameter("ext3");
 
-		Connection con = null;
-		try {
-			con = DbUtils.getConnection();
-			int saveNums = 0;
-			JSONObject result = new JSONObject();
-			// Èç¹ûÊÇĞŞ¸ÄµÄ»°£¬·µ»ØĞŞ¸Ä³É¹¦µÄĞĞÊı
-			saveNums = PoliticalStatusDao.PoliticalStatusModify(con, psb);
-			if (saveNums > 0) {
-				result.put("success", true);
-			} else {
-				result.put("success", false);
-				result.put("errorMsg", "ĞŞ¸ÄÕşÖÎÃæÃ²ĞÅÏ¢Ê§°Ü£¡");
-			}
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		} finally {
-			try {
-				DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-			} catch (Exception e) {
-				Log4jHelper.exception(e);
-			}
-		}
+        PoliticalStatusBean psb = new PoliticalStatusBean(ps_Type, ps_Name, ext1, ext2, ext3);
+        Log4jHelper.info("ä¿®æ”¹ä¿¡æ¯ï¼š" + psb.toString());
 
-	}
+        Connection con = null;
+        try
+        {
+            con = DbUtils.getConnection();
+            int saveNums = 0;
+            JSONObject result = new JSONObject();
+            // å¦‚æœæ˜¯ä¿®æ”¹çš„è¯ï¼Œè¿”å›ä¿®æ”¹æˆåŠŸçš„è¡Œæ•°
+            saveNums = PoliticalStatusDao.PoliticalStatusModify(con, psb);
+            if (saveNums > 0)
+            {
+                result.put("success", true);
+            }
+            else
+            {
+                result.put("success", false);
+                result.put("errorMsg", "ä¿®æ”¹æ”¿æ²»é¢è²Œä¿¡æ¯å¤±è´¥ï¼");
+            }
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
+                Log4jHelper.exception(e);
+            }
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º²éÑ¯ÕşÖÎÃæÃ²ĞÅÏ¢ÁĞ±í
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-9-ÏÂÎç1:18:49
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void PoliticalStatusListInfo(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		Log4jHelper.info("²éÑ¯ÕşÖÎÃæÃ²ĞÅÏ¢ÁĞ±í");
-		String page = request.getParameter("page");// È¡µÃÇëÇóµÄ²ÎÊı
-		String rows = request.getParameter("rows");
-		String PS_Name = request.getParameter("PS_Name");
-		String PS_TYPE = request.getParameter("PS_TYPE");
-		String Ext1 = request.getParameter("Ext1");
-		String Ext2 = request.getParameter("Ext2");
-		String Ext3 = request.getParameter("Ext3");
-		if (PS_Name == null) {
-			PS_Name = "";
-		}
-		PoliticalStatusBean grade = new PoliticalStatusBean();
-		grade.setPs_name(PS_Name);
-		grade.setPs_type(PS_TYPE);
-		grade.setExt1(Ext1);
-		grade.setExt2(Ext2);
-		grade.setExt3(Ext3);
-		PageBean pageBean = new PageBean(Integer.parseInt(page),
-				Integer.parseInt(rows));
-		Connection con = null;
-		try {
-			con = DbUtils.getConnection();
-			JSONObject result = new JSONObject();
-			JSONArray jsonArray = JsonUtil
-					.formatRsToJsonArray(PoliticalStatusDao
-							.politicalStatusList(con, pageBean, grade));// È¡µÃjsonÊı¾İ
-			int total = PoliticalStatusDao.PoliticalStatusCount(con, grade);// ×Ü¼ÇÂ¼Êı
-			result.put("rows", jsonArray);// ·â×°Êı¾İ
-			result.put("total", total);
-			ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		} finally {
-			try {
-				DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-			} catch (Exception e) {
-				Log4jHelper.exception(e);
-			}
-		}
+    }
 
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæŸ¥è¯¢æ”¿æ²»é¢è²Œä¿¡æ¯åˆ—è¡¨ å¼€å‘æ—¥æœŸï¼š2017-5-9-ä¸‹åˆ1:18:49
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void PoliticalStatusListInfo(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("æŸ¥è¯¢æ”¿æ²»é¢è²Œä¿¡æ¯åˆ—è¡¨");
+        String page = request.getParameter("page");// å–å¾—è¯·æ±‚çš„å‚æ•°
+        String rows = request.getParameter("rows");
+        String PS_Name = request.getParameter("PS_Name");
+        String PS_TYPE = request.getParameter("PS_TYPE");
+        String Ext1 = request.getParameter("Ext1");
+        String Ext2 = request.getParameter("Ext2");
+        String Ext3 = request.getParameter("Ext3");
+        if (PS_Name == null)
+        {
+            PS_Name = "";
+        }
+        PoliticalStatusBean grade = new PoliticalStatusBean();
+        grade.setPs_name(PS_Name);
+        grade.setPs_type(PS_TYPE);
+        grade.setExt1(Ext1);
+        grade.setExt2(Ext2);
+        grade.setExt3(Ext3);
+        PageBean pageBean = new PageBean(Integer.parseInt(page), Integer.parseInt(rows));
+        Connection con = null;
+        try
+        {
+            con = DbUtils.getConnection();
+            JSONObject result = new JSONObject();
+            JSONArray jsonArray = JsonUtil.formatRsToJsonArray(
+                PoliticalStatusDao.politicalStatusList(con, pageBean, grade));// å–å¾—jsonæ•°æ®
+            int total = PoliticalStatusDao.PoliticalStatusCount(con, grade);// æ€»è®°å½•æ•°
+            result.put("rows", jsonArray);// å°è£…æ•°æ®
+            result.put("total", total);
+            ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
+                Log4jHelper.exception(e);
+            }
+        }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º²éÑ¯ÕşÖÎÃæÃ²ÏÂÀ­¿òĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-9-ÏÂÎç1:19:22
-	 * @param request
-	 * @param response
-	 * @throws ServletException
-	 * @throws IOException
-	 */
-	public void PoliticalStatusComboboxInfo(HttpServletRequest request,
-			HttpServletResponse response) throws ServletException, IOException {
-		Log4jHelper.info("²éÑ¯ÕşÖÎÃæÃ²ÏÂÀ­¿òĞÅÏ¢");
+    }
 
-		Connection con = null;
-		try {
-			con = DbUtils.getConnection();
-			JSONArray jsonArray = new JSONArray();
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("PS_TYPE", "");
-			jsonObject.put("PS_Name", "ÇëÑ¡Ôñ...");
-			jsonArray.add(jsonObject);
-			// ¼ÓÈëÕû¸ö¼¯ºÏ
-			jsonArray.addAll(JsonUtil.formatRsToJsonArray(PoliticalStatusDao
-					.politicalStatusList(con, null, null)));// È¡µÃjsonÊı¾İ
-			ResponseUtil.write(response, jsonArray);// ·¢ËÍµ½¿Í»§¶Ë
-		} catch (Exception e) {
-			Log4jHelper.exception(e);
-		} finally {
-			try {
-				DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-			} catch (Exception e) {
-				Log4jHelper.exception(e);
-			}
-		}
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæŸ¥è¯¢æ”¿æ²»é¢è²Œä¸‹æ‹‰æ¡†ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-5-9-ä¸‹åˆ1:19:22
+     * 
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void PoliticalStatusComboboxInfo(HttpServletRequest request,
+                                            HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("æŸ¥è¯¢æ”¿æ²»é¢è²Œä¸‹æ‹‰æ¡†ä¿¡æ¯");
+
+        Connection con = null;
+        try
+        {
+            con = DbUtils.getConnection();
+            JSONArray jsonArray = new JSONArray();
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("PS_TYPE", "");
+            jsonObject.put("PS_Name", "è¯·é€‰æ‹©...");
+            jsonArray.add(jsonObject);
+            // åŠ å…¥æ•´ä¸ªé›†åˆ
+            jsonArray.addAll(JsonUtil.formatRsToJsonArray(
+                PoliticalStatusDao.politicalStatusList(con, null, null)));// å–å¾—jsonæ•°æ®
+            ResponseUtil.write(response, jsonArray);// å‘é€åˆ°å®¢æˆ·ç«¯
+        }
+        catch (Exception e)
+        {
+            Log4jHelper.exception(e);
+        }
+        finally
+        {
+            try
+            {
+                DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+            }
+            catch (Exception e)
+            {
+                Log4jHelper.exception(e);
+            }
+        }
+    }
 
 }

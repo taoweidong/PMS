@@ -1,5 +1,6 @@
 package com.pms.dao;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,192 +12,207 @@ import com.pms.util.DateUtil;
 import com.pms.util.Log4jHelper;
 import com.pms.util.StringUtil;
 
+
 /**
- * 
- * @author Taowd
- * ¹¦        ÄÜ£º¸ÚÎ»ĞÅÏ¢´¦ÀíÀà
- * ±àĞ´Ê±¼ä£º2017-4-8-ÉÏÎç10:41:38
+ * @author Taowd åŠŸ èƒ½ï¼šå²—ä½ä¿¡æ¯å¤„ç†ç±» ç¼–å†™æ—¶é—´ï¼š2017-4-8-ä¸Šåˆ10:41:38
  */
-public class PositionsInfoDao {
+public class PositionsInfoDao
+{
 
-	/**
-	 * ¹¦ÄÜ£º¸ÚÎ»ĞÅÏ¢²éÑ¯ÁĞ±í
-	 * @param con
-	 * @param pageBean
-	 * @param grade
-	 * @return
-	 * @throws Exception
-	 */
-	public static ResultSet PositionsInfoList(Connection con,
-			PageBean pageBean, PositionsInfoBean grade) throws Exception {
-		Log4jHelper.info("²éÑ¯Êı¾İ£º" + grade.toString());
-		StringBuffer sb = new StringBuffer(
-				"SELECT pi.POS_ID,pi.POS_NAME,dep.DEP_ID,DEP_NAME,dep.DEP_LEADER,pi.POS_CONTENT,pi.POS_SALARY,pi.POS_ALLOWANCE,pi.POS_PERQUISITES,pi.EXT1,pi.EXT2,pi.EXT3 FROM pms.t_positionsinfo pi,pms.t_department dep WHERE pi.DEP_ID = dep.DEP_ID ");
-		if (grade != null && StringUtil.isNotEmpty(grade.getPos_Name())) {
-			sb.append("and pi.POS_NAME like '%" + grade.getPos_Name() + "%'");
-		}
-		if (grade != null && StringUtil.isNotEmpty(grade.getDep_Id())) {
-			sb.append("and dep.DEP_ID like '%" + grade.getDep_Id() + "%'");
-		}
-		if (pageBean != null) {
-			sb.append(" limit " + pageBean.getStart() + ","
-					+ pageBean.getRows());
-		}
-		PreparedStatement pstmt = con.prepareStatement(sb.toString());
+    /**
+     * åŠŸèƒ½ï¼šå²—ä½ä¿¡æ¯æŸ¥è¯¢åˆ—è¡¨
+     * 
+     * @param con
+     * @param pageBean
+     * @param grade
+     * @return
+     * @throws Exception
+     */
+    public static ResultSet PositionsInfoList(Connection con, PageBean pageBean,
+                                              PositionsInfoBean grade)
+        throws Exception
+    {
+        Log4jHelper.info("æŸ¥è¯¢æ•°æ®ï¼š" + grade.toString());
+        StringBuffer sb = new StringBuffer(
+            "SELECT pi.POS_ID,pi.POS_NAME,dep.DEP_ID,DEP_NAME,dep.DEP_LEADER,pi.POS_CONTENT,pi.POS_SALARY,pi.POS_ALLOWANCE,pi.POS_PERQUISITES,pi.EXT1,pi.EXT2,pi.EXT3 FROM pms.t_positionsinfo pi,pms.t_department dep WHERE pi.DEP_ID = dep.DEP_ID ");
+        if (grade != null && StringUtil.isNotEmpty(grade.getPos_Name()))
+        {
+            sb.append("and pi.POS_NAME like '%" + grade.getPos_Name() + "%'");
+        }
+        if (grade != null && StringUtil.isNotEmpty(grade.getDep_Id()))
+        {
+            sb.append("and dep.DEP_ID like '%" + grade.getDep_Id() + "%'");
+        }
+        if (pageBean != null)
+        {
+            sb.append(" limit " + pageBean.getStart() + "," + pageBean.getRows());
+        }
+        PreparedStatement pstmt = con.prepareStatement(sb.toString());
 
-		Log4jHelper.info("²éÑ¯¸ÚÎ»ĞÅÏ¢ÁĞ±í" + pstmt.toString());
-		return pstmt.executeQuery();
-	}
+        Log4jHelper.info("æŸ¥è¯¢å²—ä½ä¿¡æ¯åˆ—è¡¨" + pstmt.toString());
+        return pstmt.executeQuery();
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÈ¡µÃ×Ü¼ÇÂ¼Êı
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-8-ÉÏÎç10:43:52
-	 * @param con
-	 * @param grade
-	 * @return
-	 * @throws Exception
-	 */
-	public static int PositionsInfoCount(Connection con, PositionsInfoBean grade)
-			throws Exception {
-		StringBuffer sb = new StringBuffer(
-				"SELECT count(*) as total FROM pms.t_positionsinfo pi,pms.t_department dep WHERE pi.DEP_ID = dep.DEP_ID");
-		if (StringUtil.isNotEmpty(grade.getPos_Name())) {
-			sb.append(" and pi.POS_NAME like '%" + grade.getPos_Name() + "%'");
-		}
-		PreparedStatement pstmt = con.prepareStatement(sb.toString());
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šå–å¾—æ€»è®°å½•æ•° å¼€å‘æ—¥æœŸï¼š2017-4-8-ä¸Šåˆ10:43:52
+     * 
+     * @param con
+     * @param grade
+     * @return
+     * @throws Exception
+     */
+    public static int PositionsInfoCount(Connection con, PositionsInfoBean grade)
+        throws Exception
+    {
+        StringBuffer sb = new StringBuffer(
+            "SELECT count(*) as total FROM pms.t_positionsinfo pi,pms.t_department dep WHERE pi.DEP_ID = dep.DEP_ID");
+        if (StringUtil.isNotEmpty(grade.getPos_Name()))
+        {
+            sb.append(" and pi.POS_NAME like '%" + grade.getPos_Name() + "%'");
+        }
+        PreparedStatement pstmt = con.prepareStatement(sb.toString());
 
-		Log4jHelper.info("²éÑ¯¸ÚÎ»ĞÅÏ¢ÁĞ±í£¬»ñÈ¡×Ü¼ÇÂ¼£º" + pstmt.toString());
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			return rs.getInt("total");
-		} else {
-			return 0;
-		}
-	}
+        Log4jHelper.info("æŸ¥è¯¢å²—ä½ä¿¡æ¯åˆ—è¡¨ï¼Œè·å–æ€»è®°å½•ï¼š" + pstmt.toString());
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next())
+        {
+            return rs.getInt("total");
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÉ¾³ı¸ÚÎ»ĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-8-ÉÏÎç10:44:22
-	 * @param con
-	 * @param delIds
-	 * @return
-	 * @throws Exception
-	 */
-	public static int PositionsInfoDelete(Connection con, String delIds)
-			throws Exception {
-		String sql = "delete from pms.t_positionsinfo where t_positionsinfo.POS_ID in("
-				+ delIds + ")";
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šåˆ é™¤å²—ä½ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-8-ä¸Šåˆ10:44:22
+     * 
+     * @param con
+     * @param delIds
+     * @return
+     * @throws Exception
+     */
+    public static int PositionsInfoDelete(Connection con, String delIds)
+        throws Exception
+    {
+        String sql = "delete from pms.t_positionsinfo where t_positionsinfo.POS_ID in(" + delIds
+                     + ")";
 
-		Log4jHelper.info("É¾³ı¸ÚÎ»ĞÅÏ¢" + sql);
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		return pstmt.executeUpdate();
-	}
+        Log4jHelper.info("åˆ é™¤å²—ä½ä¿¡æ¯" + sql);
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        return pstmt.executeUpdate();
+    }
 
-	/**
-	 * ¹¦ÄÜ£º²éÑ¯¸Ã¸ÚÎ»µÄµÄÔ±¹¤ĞÅÏ¢
-	 * @param con
-	 * @param gradeId
-	 * @return
-	 * @throws Exception
-	 */
-	public static boolean getEmpByPosId(Connection con, String pos_Id)
-			throws Exception {
-		Log4jHelper.info("´ı¼ì²éµÄ¸ÚÎ»±àºÅ£º" + pos_Id);
-		String sql = "SELECT * FROM pms.t_inductioninfo WHERE t_inductioninfo.POS_ID=?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, pos_Id);
-		Log4jHelper.info("¼ì²é¸ÚÎ»ÏÂÊÇ·ñÓĞÔ±¹¤ĞÅÏ¢£º" + pstmt.toString());
-		ResultSet rs = pstmt.executeQuery();
+    /**
+     * åŠŸèƒ½ï¼šæŸ¥è¯¢è¯¥å²—ä½çš„çš„å‘˜å·¥ä¿¡æ¯
+     * 
+     * @param con
+     * @param gradeId
+     * @return
+     * @throws Exception
+     */
+    public static boolean getEmpByPosId(Connection con, String pos_Id)
+        throws Exception
+    {
+        Log4jHelper.info("å¾…æ£€æŸ¥çš„å²—ä½ç¼–å·ï¼š" + pos_Id);
+        String sql = "SELECT * FROM pms.t_inductioninfo WHERE t_inductioninfo.POS_ID=?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, pos_Id);
+        Log4jHelper.info("æ£€æŸ¥å²—ä½ä¸‹æ˜¯å¦æœ‰å‘˜å·¥ä¿¡æ¯ï¼š" + pstmt.toString());
+        ResultSet rs = pstmt.executeQuery();
 
-		if (rs.next()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+        if (rs.next())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÔö¼Ó¸ÚÎ»ĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-8-ÉÏÎç10:44:39
-	 * @param con
-	 * @param grade
-	 * @return
-	 * @throws Exception
-	 */
-	public static int PositionsInfoAdd(Connection con, PositionsInfoBean grade)
-			throws Exception {
-		String sql = "INSERT INTO pms.t_positionsinfo VALUES(?,?,?,?,?,?,?,?,?,?)";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, grade.getPos_Id());
-		pstmt.setString(2, grade.getDep_Id());
-		pstmt.setString(3, grade.getPos_Name());
-		pstmt.setString(4, grade.getPos_Content());
-		pstmt.setDouble(5, grade.getPos_Salary());
-		pstmt.setDouble(6, grade.getPos_Allowance());
-		pstmt.setDouble(7, grade.getPos_Perquisites());
-		pstmt.setString(8, grade.getExt1());
-		pstmt.setString(9, DateUtil.getCurrentDateStr());
-		pstmt.setString(10, grade.getExt3());
-		Log4jHelper.info("ĞÂÔö¸ÚÎ»ĞÅÏ¢£º" + pstmt.toString());
-		return pstmt.executeUpdate();
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šå¢åŠ å²—ä½ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-8-ä¸Šåˆ10:44:39
+     * 
+     * @param con
+     * @param grade
+     * @return
+     * @throws Exception
+     */
+    public static int PositionsInfoAdd(Connection con, PositionsInfoBean grade)
+        throws Exception
+    {
+        String sql = "INSERT INTO pms.t_positionsinfo VALUES(?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, grade.getPos_Id());
+        pstmt.setString(2, grade.getDep_Id());
+        pstmt.setString(3, grade.getPos_Name());
+        pstmt.setString(4, grade.getPos_Content());
+        pstmt.setDouble(5, grade.getPos_Salary());
+        pstmt.setDouble(6, grade.getPos_Allowance());
+        pstmt.setDouble(7, grade.getPos_Perquisites());
+        pstmt.setString(8, grade.getExt1());
+        pstmt.setString(9, DateUtil.getCurrentDateStr());
+        pstmt.setString(10, grade.getExt3());
+        Log4jHelper.info("æ–°å¢å²—ä½ä¿¡æ¯ï¼š" + pstmt.toString());
+        return pstmt.executeUpdate();
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºĞŞ¸Ä¸ÚÎ»ĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-8-ÉÏÎç10:54:27
-	 * @param con
-	 * @param grade
-	 * @return
-	 * @throws Exception
-	 */
-	public static int PositionsInfoModify(Connection con,
-			PositionsInfoBean grade) throws Exception {
-		String sql = "UPDATE pms.t_positionsinfo SET t_positionsinfo.DEP_ID=?,t_positionsinfo.POS_NAME=?,t_positionsinfo.POS_CONTENT=?,t_positionsinfo.POS_SALARY=?,t_positionsinfo.POS_ALLOWANCE=?,t_positionsinfo.POS_PERQUISITES=?,t_positionsinfo.EXT1=?,t_positionsinfo.EXT2=?,t_positionsinfo.EXT3=? WHERE t_positionsinfo.POS_ID=?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(10, grade.getPos_Id());
-		pstmt.setString(1, grade.getDep_Id());
-		pstmt.setString(2, grade.getPos_Name());
-		pstmt.setString(3, grade.getPos_Content());
-		pstmt.setDouble(4, grade.getPos_Salary());
-		pstmt.setDouble(5, grade.getPos_Allowance());
-		pstmt.setDouble(6, grade.getPos_Perquisites());
-		pstmt.setString(7, grade.getExt1());
-		pstmt.setString(8, DateUtil.getCurrentDateStr());
-		pstmt.setString(9, grade.getExt3());
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šä¿®æ”¹å²—ä½ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-8-ä¸Šåˆ10:54:27
+     * 
+     * @param con
+     * @param grade
+     * @return
+     * @throws Exception
+     */
+    public static int PositionsInfoModify(Connection con, PositionsInfoBean grade)
+        throws Exception
+    {
+        String sql = "UPDATE pms.t_positionsinfo SET t_positionsinfo.DEP_ID=?,t_positionsinfo.POS_NAME=?,t_positionsinfo.POS_CONTENT=?,t_positionsinfo.POS_SALARY=?,t_positionsinfo.POS_ALLOWANCE=?,t_positionsinfo.POS_PERQUISITES=?,t_positionsinfo.EXT1=?,t_positionsinfo.EXT2=?,t_positionsinfo.EXT3=? WHERE t_positionsinfo.POS_ID=?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(10, grade.getPos_Id());
+        pstmt.setString(1, grade.getDep_Id());
+        pstmt.setString(2, grade.getPos_Name());
+        pstmt.setString(3, grade.getPos_Content());
+        pstmt.setDouble(4, grade.getPos_Salary());
+        pstmt.setDouble(5, grade.getPos_Allowance());
+        pstmt.setDouble(6, grade.getPos_Perquisites());
+        pstmt.setString(7, grade.getExt1());
+        pstmt.setString(8, DateUtil.getCurrentDateStr());
+        pstmt.setString(9, grade.getExt3());
 
-		Log4jHelper.info("ĞŞ¸Ä¸ÚÎ»ĞÅÏ¢£º" + pstmt.toString());
-		return pstmt.executeUpdate();
-	}
+        Log4jHelper.info("ä¿®æ”¹å²—ä½ä¿¡æ¯ï¼š" + pstmt.toString());
+        return pstmt.executeUpdate();
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¼ì²é¸ÚÎ»ÊÇ·ñ´æÔÚ
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-9-ÏÂÎç12:04:22
-	 * @param con
-	 * @param pos_Id
-	 * @return
-	 * @throws SQLException 
-	 */
-	public static boolean IsExistence(Connection con, String pos_Id)
-			throws SQLException {
-		String sql = "SELECT * FROM pms.t_positionsinfo WHERE t_positionsinfo.POS_ID = ? ";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, pos_Id);
-		Log4jHelper.info("¼ì²é¸ÚÎ»ÊÇ·ñ´æÔÚ£º" + pstmt.toString());
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæ£€æŸ¥å²—ä½æ˜¯å¦å­˜åœ¨ å¼€å‘æ—¥æœŸï¼š2017-4-9-ä¸‹åˆ12:04:22
+     * 
+     * @param con
+     * @param pos_Id
+     * @return
+     * @throws SQLException
+     */
+    public static boolean IsExistence(Connection con, String pos_Id)
+        throws SQLException
+    {
+        String sql = "SELECT * FROM pms.t_positionsinfo WHERE t_positionsinfo.POS_ID = ? ";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, pos_Id);
+        Log4jHelper.info("æ£€æŸ¥å²—ä½æ˜¯å¦å­˜åœ¨ï¼š" + pstmt.toString());
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /** Prevent instantiation */
+    private PositionsInfoDao()
+    {}
 }

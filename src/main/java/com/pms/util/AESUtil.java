@@ -1,5 +1,6 @@
 package com.pms.util;
 
+
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -12,151 +13,179 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+
 /**
- * 
- * @author Taowd
- * ¹¦        ÄÜ£ºAES¼ÓÃÜ  ¶Ô³Æ¼ÓÃÜ
- * ±àĞ´Ê±¼ä£º2017-4-27-ÏÂÎç8:57:52
+ * @author Taowd åŠŸ èƒ½ï¼šAESåŠ å¯† å¯¹ç§°åŠ å¯† ç¼–å†™æ—¶é—´ï¼š2017-4-27-ä¸‹åˆ8:57:52
  */
-public class AESUtil {
-	/**
-	 * ¶Ô³Æ¼ÓÃÜÃØÔ¿£º¹Ì¶¨Öµ
-	 */
-	public static final String SKA = "mqqian0528";
+public class AESUtil
+{
+    /**
+     * å¯¹ç§°åŠ å¯†ç§˜é’¥ï¼šå›ºå®šå€¼
+     */
+    public static final String SKA = "mqqian0528";
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¼ÓÃÜ
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-27-ÏÂÎç8:59:39
-	 * @param content ĞèÒª¼ÓÃÜµÄÄÚÈİ
-	 * @param password ¼ÓÃÜÃÜÂë
-	 * @return
-	 */
-	public static byte[] encrypt(String content) {
-		try {
-			KeyGenerator kgen = KeyGenerator.getInstance("AES");
-			kgen.init(128, new SecureRandom(SKA.getBytes()));
-			SecretKey secretKey = kgen.generateKey();
-			byte[] enCodeFormat = secretKey.getEncoded();
-			SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
-			Cipher cipher = Cipher.getInstance("AES");// ´´½¨ÃÜÂëÆ÷
-			byte[] byteContent = content.getBytes("utf-8");
-			cipher.init(Cipher.ENCRYPT_MODE, key);// ³õÊ¼»¯
-			byte[] result = cipher.doFinal(byteContent);
-			return result; // ¼ÓÃÜ
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šåŠ å¯† å¼€å‘æ—¥æœŸï¼š2017-4-27-ä¸‹åˆ8:59:39
+     * 
+     * @param content
+     *            éœ€è¦åŠ å¯†çš„å†…å®¹
+     * @param password
+     *            åŠ å¯†å¯†ç 
+     * @return
+     */
+    public static byte[] encrypt(String content)
+    {
+        try
+        {
+            KeyGenerator kgen = KeyGenerator.getInstance("AES");
+            kgen.init(128, new SecureRandom(SKA.getBytes()));
+            SecretKey secretKey = kgen.generateKey();
+            byte[] enCodeFormat = secretKey.getEncoded();
+            SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
+            Cipher cipher = Cipher.getInstance("AES");// åˆ›å»ºå¯†ç å™¨
+            byte[] byteContent = content.getBytes("utf-8");
+            cipher.init(Cipher.ENCRYPT_MODE, key);// åˆå§‹åŒ–
+            byte[] result = cipher.doFinal(byteContent);
+            return result; // åŠ å¯†
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        catch (NoSuchPaddingException e)
+        {
+            e.printStackTrace();
+        }
+        catch (InvalidKeyException e)
+        {
+            e.printStackTrace();
+        }
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IllegalBlockSizeException e)
+        {
+            e.printStackTrace();
+        }
+        catch (BadPaddingException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º½âÃÜ
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-27-ÏÂÎç9:00:11
-	 * @param content  ´ı½âÃÜÄÚÈİ
-	 * @param password   ½âÃÜÃÜÔ¿
-	 * @return
-	 */
-	public static byte[] decrypt(byte[] content) {
-		try {
-			KeyGenerator kgen = KeyGenerator.getInstance("AES");
-			kgen.init(128, new SecureRandom(SKA.getBytes()));
-			SecretKey secretKey = kgen.generateKey();
-			byte[] enCodeFormat = secretKey.getEncoded();
-			SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
-			Cipher cipher = Cipher.getInstance("AES");// ´´½¨ÃÜÂëÆ÷
-			cipher.init(Cipher.DECRYPT_MODE, key);// ³õÊ¼»¯
-			byte[] result = cipher.doFinal(content);
-			return result; // ¼ÓÃÜ
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè§£å¯† å¼€å‘æ—¥æœŸï¼š2017-4-27-ä¸‹åˆ9:00:11
+     * 
+     * @param content
+     *            å¾…è§£å¯†å†…å®¹
+     * @param password
+     *            è§£å¯†å¯†é’¥
+     * @return
+     */
+    public static byte[] decrypt(byte[] content)
+    {
+        try
+        {
+            KeyGenerator kgen = KeyGenerator.getInstance("AES");
+            kgen.init(128, new SecureRandom(SKA.getBytes()));
+            SecretKey secretKey = kgen.generateKey();
+            byte[] enCodeFormat = secretKey.getEncoded();
+            SecretKeySpec key = new SecretKeySpec(enCodeFormat, "AES");
+            Cipher cipher = Cipher.getInstance("AES");// åˆ›å»ºå¯†ç å™¨
+            cipher.init(Cipher.DECRYPT_MODE, key);// åˆå§‹åŒ–
+            byte[] result = cipher.doFinal(content);
+            return result; // åŠ å¯†
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        catch (NoSuchPaddingException e)
+        {
+            e.printStackTrace();
+        }
+        catch (InvalidKeyException e)
+        {
+            e.printStackTrace();
+        }
+        catch (IllegalBlockSizeException e)
+        {
+            e.printStackTrace();
+        }
+        catch (BadPaddingException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¼ÓÃÜÖ®ºóµÄÃÜÎÄ×ª³É×Ö·û´®£¬±ãÓÚÊı¾İ¿â´æ´¢£º½«¶ş½øÖÆ×ª»»³É16½øÖÆ´æ´¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-27-ÏÂÎç9:03:04
-	 * @param buf
-	 * @return
-	 */
-	public static String parseByte2HexStr(byte buf[]) {
-		StringBuffer sb = new StringBuffer();
-		for (int i = 0; i < buf.length; i++) {
-			String hex = Integer.toHexString(buf[i] & 0xFF);
-			if (hex.length() == 1) {
-				hex = '0' + hex;
-			}
-			sb.append(hex.toUpperCase());
-		}
-		return sb.toString();
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šåŠ å¯†ä¹‹åçš„å¯†æ–‡è½¬æˆå­—ç¬¦ä¸²ï¼Œä¾¿äºæ•°æ®åº“å­˜å‚¨ï¼šå°†äºŒè¿›åˆ¶è½¬æ¢æˆ16è¿›åˆ¶å­˜å‚¨ å¼€å‘æ—¥æœŸï¼š2017-4-27-ä¸‹åˆ9:03:04
+     * 
+     * @param buf
+     * @return
+     */
+    public static String parseByte2HexStr(byte buf[])
+    {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < buf.length; i++ )
+        {
+            String hex = Integer.toHexString(buf[i] & 0xFF);
+            if (hex.length() == 1)
+            {
+                hex = '0' + hex;
+            }
+            sb.append(hex.toUpperCase());
+        }
+        return sb.toString();
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º½«Êı¾İ´®×ªÎª¶ÔÓ¦µÄ¶ş½øÖÆÃÜÎÄ£º ½«16½øÖÆ×ª»»Îª¶ş½øÖÆ
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-27-ÏÂÎç9:03:54
-	 * @param hexStr
-	 * @return
-	 */
-	public static byte[] parseHexStr2Byte(String hexStr) {
-		if (hexStr.length() < 1)
-			return null;
-		byte[] result = new byte[hexStr.length() / 2];
-		for (int i = 0; i < hexStr.length() / 2; i++) {
-			int high = Integer.parseInt(hexStr.substring(i * 2, i * 2 + 1), 16);
-			int low = Integer.parseInt(hexStr.substring(i * 2 + 1, i * 2 + 2),
-					16);
-			result[i] = (byte) (high * 16 + low);
-		}
-		return result;
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šå°†æ•°æ®ä¸²è½¬ä¸ºå¯¹åº”çš„äºŒè¿›åˆ¶å¯†æ–‡ï¼š å°†16è¿›åˆ¶è½¬æ¢ä¸ºäºŒè¿›åˆ¶ å¼€å‘æ—¥æœŸï¼š2017-4-27-ä¸‹åˆ9:03:54
+     * 
+     * @param hexStr
+     * @return
+     */
+    public static byte[] parseHexStr2Byte(String hexStr)
+    {
+        if (hexStr.length() < 1) return null;
+        byte[] result = new byte[hexStr.length() / 2];
+        for (int i = 0; i < hexStr.length() / 2; i++ )
+        {
+            int high = Integer.parseInt(hexStr.substring(i * 2, i * 2 + 1), 16);
+            int low = Integer.parseInt(hexStr.substring(i * 2 + 1, i * 2 + 2), 16);
+            result[i] = (byte)(high * 16 + low);
+        }
+        return result;
+    }
 
-	public static void main(String[] args) {
-		// AES²âÊÔ
-		/*
-		 * String content = "asdhkjadhkjahdkjahdjsakhdkjahdjk"; String password
-		 * = "12345678"; // ¼ÓÃÜ System.out.println("¼ÓÃÜÇ°£º" + content); byte[]
-		 * encryptResult = encrypt(content, password); System.out.println("ÃÜÎÄ£º"
-		 * + encryptResult.toString());
-		 * System.out.println(encryptResult.toString().getBytes()); // ½âÃÜ byte[]
-		 * decryptResult = decrypt(encryptResult, password);
-		 * System.out.println("½âÃÜºó£º" + new String(decryptResult));
-		 */
+    public static void main(String[] args)
+    {
+        // AESæµ‹è¯•
+        /*
+         * String content = "asdhkjadhkjahdkjahdjsakhdkjahdjk"; String password = "12345678"; // åŠ å¯†
+         * System.out.println("åŠ å¯†å‰ï¼š" + content); byte[] encryptResult = encrypt(content, password);
+         * System.out.println("å¯†æ–‡ï¼š" + encryptResult.toString());
+         * System.out.println(encryptResult.toString().getBytes()); // è§£å¯† byte[] decryptResult =
+         * decrypt(encryptResult, password); System.out.println("è§£å¯†åï¼š" + new
+         * String(decryptResult));
+         */
 
-		// AES ¼ÓÃÜ²âÊÔ2  21232f297a57a5a743894a0e4a801fc3  21232f297a57a5a743894a0e4a801fc3
-		String content = "admin";
-		// ¼ÓÃÜ
-		System.out.println("¼ÓÃÜÇ°£º" + content);
-		byte[] encryptResult = encrypt(content);
-		String encryptResultStr = parseByte2HexStr(encryptResult);
-		System.out.println("¼ÓÃÜºó£º" + encryptResultStr);
-		// ½âÃÜ
-		byte[] decryptResult = decrypt(parseHexStr2Byte(encryptResultStr));
-		System.out.println("½âÃÜºó£º" + new String(decryptResult));
-	}
+        // AES åŠ å¯†æµ‹è¯•2  21232f297a57a5a743894a0e4a801fc3  21232f297a57a5a743894a0e4a801fc3
+        String content = "admin";
+        // åŠ å¯†
+        System.out.println("åŠ å¯†å‰ï¼š" + content);
+        byte[] encryptResult = encrypt(content);
+        String encryptResultStr = parseByte2HexStr(encryptResult);
+        System.out.println("åŠ å¯†åï¼š" + encryptResultStr);
+        // è§£å¯†
+        byte[] decryptResult = decrypt(parseHexStr2Byte(encryptResultStr));
+        System.out.println("è§£å¯†åï¼š" + new String(decryptResult));
+    }
+
+    /** Prevent instantiation */
+    private AESUtil()
+    {}
 }

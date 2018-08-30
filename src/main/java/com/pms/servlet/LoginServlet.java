@@ -1,5 +1,6 @@
 package com.pms.servlet;
 
+
 import com.pms.dao.AdministratorDao;
 import com.pms.dao.EmployeeDao;
 import com.pms.model.Administrator;
@@ -17,39 +18,46 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Connection;
 
+
 /**
- * @author ÌÕÎ°¶«
- * TODO£ºµÇÂ¼µÄÒµÎñ´¦ÀíÂß¼­
- * ±àĞ´Ê±¼ä£ºÏÂÎç10:00:40
+ * @author é™¶ä¼Ÿä¸œ TODOï¼šç™»å½•çš„ä¸šåŠ¡å¤„ç†é€»è¾‘ ç¼–å†™æ—¶é—´ï¼šä¸‹åˆ10:00:40
  */
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet
+{
     private static final long serialVersionUID = 1L;
+
     AdministratorDao adminDao = new AdministratorDao();
+
     EmployeeDao EmpDao = new EmployeeDao();
 
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
         this.doPost(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request,
-                          HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
         String empNO = request.getParameter("userName");
         String password = request.getParameter("password");
-        // ½ÇÉ«
+        // è§’è‰²
         String role = request.getParameter("role");
-        Log4jHelper.info("--µÇÂ¼ÓÃ»§Îª£º" + empNO + "--½ÇÉ«£º" + role);
+        Log4jHelper.info("--ç™»å½•ç”¨æˆ·ä¸ºï¼š" + empNO + "--è§’è‰²ï¼š" + role);
 
-        // ¸ù¾İ½ÇÉ«²»Í¬½øĞĞĞ£Ñé
-        // Èç¹ûÊÇÆÕÍ¨ÓÃ»§
-        if ("user".equals(role)) {
+        // æ ¹æ®è§’è‰²ä¸åŒè¿›è¡Œæ ¡éªŒ
+        // å¦‚æœæ˜¯æ™®é€šç”¨æˆ·
+        if ("user".equals(role))
+        {
 
-            if (StringUtil.isEmpty(empNO) || StringUtil.isEmpty(password)) {
-                request.setAttribute("error", "ÓÃ»§Ãû»òÃÜÂëÎª¿Õ");
-                request.getRequestDispatcher("index.jsp").forward(request,
-                        response);
+            if (StringUtil.isEmpty(empNO) || StringUtil.isEmpty(password))
+            {
+                request.setAttribute("error", "ç”¨æˆ·åæˆ–å¯†ç ä¸ºç©º");
+                request.getRequestDispatcher("index.jsp").forward(request, response);
                 return;
             }
 
@@ -57,82 +65,103 @@ public class LoginServlet extends HttpServlet {
             emp.setEmp_no(empNO);
             emp.setEmp_pwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(password)));
             Connection conn = null;
-            try {
+            try
+            {
                 conn = DbUtils.getConnection();
-                // ¼ì²éÃÜÂë
+                // æ£€æŸ¥å¯†ç 
                 Employee currentUser = EmpDao.CheckPwd(conn, emp);
-                if (currentUser == null) {
-                    request.setAttribute("error", "ÓÃ»§Ãû»òÃÜÂë´íÎó");
-                    request.getRequestDispatcher("index.jsp").forward(request,
-                            response);
-                } else {
-                    // ÑéÖ¤³É¹¦Ö®ºó£¬µÇÂ¼Ö÷Ò³ÃæÖ®ºó´«¹ıÈ¥µÄÖµ
+                if (currentUser == null)
+                {
+                    request.setAttribute("error", "ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯");
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                }
+                else
+                {
+                    // éªŒè¯æˆåŠŸä¹‹åï¼Œç™»å½•ä¸»é¡µé¢ä¹‹åä¼ è¿‡å»çš„å€¼
                     request.setAttribute("userName", empNO);
                     request.setAttribute("password", password);
                     HttpSession session = request.getSession();
-                    // µ±Ç°µÇÂ¼ÓÃ»§µÄĞÅÏ¢´æ·ÅÔÚSessionÖĞ
+                    // å½“å‰ç™»å½•ç”¨æˆ·çš„ä¿¡æ¯å­˜æ”¾åœ¨Sessionä¸­
                     session.setAttribute("currentUser", currentUser);
-                    // µÇÂ¼ÓÃ»§µÄ½ÇÉ«
+                    // ç™»å½•ç”¨æˆ·çš„è§’è‰²
                     session.setAttribute("userRole", role);
-                    // ³É¹¦Ö®ºó ÖÆ¶¨·µ»ØÒ³Ãæ
+                    // æˆåŠŸä¹‹å åˆ¶å®šè¿”å›é¡µé¢
                     response.sendRedirect("main.jsp");
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
-            } finally {
-                try {
+            }
+            finally
+            {
+                try
+                {
                     DbUtils.CloseConn(conn);
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     e.printStackTrace();
                 }
             }
 
-        } else if ("admin".equals(role) || "superAdmin".equals(role))// ¹ÜÀíÔ±µÇÂ¼ superAdmin
+        }
+        else if ("admin".equals(role) || "superAdmin".equals(role))// ç®¡ç†å‘˜ç™»å½• superAdmin
         {
-            if (StringUtil.isEmpty(empNO) || StringUtil.isEmpty(password)) {
-                request.setAttribute("error", "ÓÃ»§Ãû»òÃÜÂëÎª¿Õ");
-                request.getRequestDispatcher("index.jsp").forward(request,
-                        response);
+            if (StringUtil.isEmpty(empNO) || StringUtil.isEmpty(password))
+            {
+                request.setAttribute("error", "ç”¨æˆ·åæˆ–å¯†ç ä¸ºç©º");
+                request.getRequestDispatcher("index.jsp").forward(request, response);
                 return;
             }
 
             Administrator user = new Administrator(null, empNO,
-                    AESUtil.parseByte2HexStr(AESUtil.encrypt(password)), null,
-                    null, null, null, role);
+                AESUtil.parseByte2HexStr(AESUtil.encrypt(password)), null, null, null, null, role);
             Connection conn = null;
-            try {
+            try
+            {
                 conn = DbUtils.getConnection();
                 Administrator currentUser = adminDao.login(user);
-                if (currentUser == null) {
-                    System.out.println("¹ÜÀíÔ±ÓÃ»§ÑéÖ¤£ºÓÃ»§Ãû»òÃÜÂë´íÎó");
-                    request.setAttribute("error", "ÓÃ»§Ãû»òÃÜÂë´íÎó");
-                    request.getRequestDispatcher("index.jsp").forward(request,
-                            response);
-                } else {
-                    // ÉèÖÃ·µ»ØÒ³ÃæµÄÖµ
+                if (currentUser == null)
+                {
+                    System.out.println("ç®¡ç†å‘˜ç”¨æˆ·éªŒè¯ï¼šç”¨æˆ·åæˆ–å¯†ç é”™è¯¯");
+                    request.setAttribute("error", "ç”¨æˆ·åæˆ–å¯†ç é”™è¯¯");
+                    request.getRequestDispatcher("index.jsp").forward(request, response);
+                }
+                else
+                {
+                    // è®¾ç½®è¿”å›é¡µé¢çš„å€¼
                     request.setAttribute("userName", empNO);
                     request.setAttribute("password", password);
                     HttpSession session = request.getSession();
                     session.setAttribute("currentUser", currentUser);
                     session.setAttribute("userRole", role);
-                    // ³É¹¦Ö®ºó ÖÆ¶¨·µ»ØÒ³Ãæ
+                    // æˆåŠŸä¹‹å åˆ¶å®šè¿”å›é¡µé¢
                     response.sendRedirect("main.jsp");
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 e.printStackTrace();
-            } finally {
-                try {
+            }
+            finally
+            {
+                try
+                {
                     DbUtils.CloseConn(conn);
-                } catch (Exception e) {
+                }
+                catch (Exception e)
+                {
                     e.printStackTrace();
                 }
             }
 
-        } else {
-            System.out.println("¹ÜÀíÔ±ÓÃ»§ÑéÖ¤£º½ÇÉ«²»´æÔÚ");
-            request.setAttribute("error", "½ÇÉ«²»´æÔÚ");
-            request.getRequestDispatcher("index.jsp").forward(request,
-                    response);
+        }
+        else
+        {
+            System.out.println("ç®¡ç†å‘˜ç”¨æˆ·éªŒè¯ï¼šè§’è‰²ä¸å­˜åœ¨");
+            request.setAttribute("error", "è§’è‰²ä¸å­˜åœ¨");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
         }
 
     }

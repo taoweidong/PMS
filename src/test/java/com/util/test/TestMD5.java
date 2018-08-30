@@ -1,22 +1,25 @@
 package com.util.test;
 
+
 import org.junit.Test;
 
 import com.pms.util.MD5Utils;
 
-public class TestMD5 {
 
-	/**
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-25-ÏÂÎç7:37:07
-	 * @param args
-	 */
-	@Test
-	public void testMD5() {
-		System.out.println(MD5Utils.getStringMD5("admin"));
+public class TestMD5
+{
 
-		System.out.println(MD5Utils.hash("1214210135"));
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼š å¼€å‘æ—¥æœŸï¼š2017-4-25-ä¸‹åˆ7:37:07
+     * 
+     * @param args
+     */
+    @Test
+    public void testMD5()
+    {
+        System.out.println(MD5Utils.getStringMD5("admin"));
+
+        System.out.println(MD5Utils.hash("1214210135"));
+    }
 
 }

@@ -1,39 +1,49 @@
 package com.pms.model;
 
-public class PageBean {
+public class PageBean
+{
 
-    private int page; // �ڼ�ҳ
-    private int rows; // ÿҳ��¼��
+    private int page; // 第几页
+
+    private int rows; // 每页记录数
+
     @SuppressWarnings("unused")
-    private int start; // ��ʼҳ
+    private int start; // 起始页
 
-    public PageBean(int page, int rows) {
+    public PageBean(int page, int rows)
+    {
         super();
         this.page = page;
         this.rows = rows;
     }
 
-    public int getPage() {
+    public int getPage()
+    {
         return page;
     }
 
-    public void setPage(int page) {
+    public void setPage(int page)
+    {
         this.page = page;
     }
 
-    public int getRows() {
+    public int getRows()
+    {
         return rows;
     }
 
-    public void setRows(int rows) {
+    public void setRows(int rows)
+    {
         this.rows = rows;
     }
 
-    public int getStart() {
+    public int getStart()
+    {
         return (page - 1) * rows;
     }
 
-    public void setStart(int st) {
+    public void setStart(int st)
+    {
         this.start = st;
     }
 

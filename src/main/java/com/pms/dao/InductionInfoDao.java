@@ -1,5 +1,6 @@
 package com.pms.dao;
 
+
 import com.pms.model.InductionInfoBean;
 import com.pms.model.PageBean;
 import com.pms.util.DateUtil;
@@ -15,16 +16,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
 /**
- * @author Taowd
- * ¹¦        ÄÜ£ºÈëÖ°ĞÅÏ¢
- * ±àĞ´Ê±¼ä£º2017-4-11-ÏÂÎç8:38:05
+ * @author Taowd åŠŸ èƒ½ï¼šå…¥èŒä¿¡æ¯ ç¼–å†™æ—¶é—´ï¼š2017-4-11-ä¸‹åˆ8:38:05
  */
-public class InductionInfoDao {
+public class InductionInfoDao
+{
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º²éÑ¯ËùÓĞÔ±¹¤µÄÈëÖ°ĞÅÏ¢--¹ÜÀíÔ±È¨ÏŞ²Å¿ÉÒÔ--¼´ÈëÖ°ÉóÅúÊ±µÄ½çÃæ
-     * ¿ª·¢ÈÕÆÚ£º2017-4-11-ÏÂÎç8:39:05
+     * Author:Taowd åŠŸèƒ½ï¼šæŸ¥è¯¢æ‰€æœ‰å‘˜å·¥çš„å…¥èŒä¿¡æ¯--ç®¡ç†å‘˜æƒé™æ‰å¯ä»¥--å³å…¥èŒå®¡æ‰¹æ—¶çš„ç•Œé¢ å¼€å‘æ—¥æœŸï¼š2017-4-11-ä¸‹åˆ8:39:05
      *
      * @param con
      * @param pageBean
@@ -32,54 +31,60 @@ public class InductionInfoDao {
      * @return
      * @throws Exception
      */
-    public static ResultSet InductionInfoList(Connection con,
-                                              PageBean pageBean, InductionInfoBean demp, String startDate,
-                                              String endDate) throws Exception {
+    public static ResultSet InductionInfoList(Connection con, PageBean pageBean,
+                                              InductionInfoBean demp, String startDate,
+                                              String endDate)
+        throws Exception
+    {
         StringBuffer sb = new StringBuffer(
-                "SELECT ii.IND_ID,emp.EMP_NO,emp.EMP_NAME,pos.POS_ID,pos.POS_NAME,ii.IND_DATE,ii.IND_STATE AS stateCode,(case WHEN ii.IND_STATE='1'then 'ÈëÖ°' WHEN ii.IND_STATE='0'then 'ÀëÖ°' END ) as stateName ,ii.IND_ENDDATE,ii.IND_Reasons,ii.EXT1 as approveState,(case WHEN ii.EXT1='11'then 'ÒÑÉóÅúÍ¨¹ı' WHEN ii.EXT1='00'then 'ÉêÇëÖĞ'  WHEN ii.EXT1='22'then 'ÉóÅúÎ´Í¨¹ı' WHEN ii.EXT1='33'then 'Î´Ìá½»' END ) as approveName ,ii.EXT2,ii.EXT3,(case WHEN ii.EXT3='IN'then 'ÈëÖ°ÉêÇë' WHEN ii.EXT3='OUT'then 'ÀëÖ°ÉêÇë' END ) as typeName  FROM pms.t_inductioninfo ii,pms.t_employee emp,pms.t_positionsinfo pos WHERE ii.EMP_NO=emp.EMP_NO and ii.POS_ID=pos.POS_ID ");
-        if (demp != null && StringUtil.isNotEmpty(demp.getInd_Id())) {
+            "SELECT ii.IND_ID,emp.EMP_NO,emp.EMP_NAME,pos.POS_ID,pos.POS_NAME,ii.IND_DATE,ii.IND_STATE AS stateCode,(case WHEN ii.IND_STATE='1'then 'å…¥èŒ' WHEN ii.IND_STATE='0'then 'ç¦»èŒ' END ) as stateName ,ii.IND_ENDDATE,ii.IND_Reasons,ii.EXT1 as approveState,(case WHEN ii.EXT1='11'then 'å·²å®¡æ‰¹é€šè¿‡' WHEN ii.EXT1='00'then 'ç”³è¯·ä¸­'  WHEN ii.EXT1='22'then 'å®¡æ‰¹æœªé€šè¿‡' WHEN ii.EXT1='33'then 'æœªæäº¤' END ) as approveName ,ii.EXT2,ii.EXT3,(case WHEN ii.EXT3='IN'then 'å…¥èŒç”³è¯·' WHEN ii.EXT3='OUT'then 'ç¦»èŒç”³è¯·' END ) as typeName  FROM pms.t_inductioninfo ii,pms.t_employee emp,pms.t_positionsinfo pos WHERE ii.EMP_NO=emp.EMP_NO and ii.POS_ID=pos.POS_ID ");
+        if (demp != null && StringUtil.isNotEmpty(demp.getInd_Id()))
+        {
             sb.append(" and ii.IND_ID like '%" + demp.getInd_Id() + "%'");
         }
-        // Ô±¹¤ºÅ
-        if (demp != null && StringUtil.isNotEmpty(demp.getEmp_No())) {
+        // å‘˜å·¥å·
+        if (demp != null && StringUtil.isNotEmpty(demp.getEmp_No()))
+        {
             sb.append(" and emp.EMP_NO like '%" + demp.getEmp_No() + "%'");
         }
-        // ÉóÅú×´Ì¬
-        if (demp != null && StringUtil.isNotEmpty(demp.getExt1())) {
+        // å®¡æ‰¹çŠ¶æ€
+        if (demp != null && StringUtil.isNotEmpty(demp.getExt1()))
+        {
             sb.append(" and ii.EXT1 like '%" + demp.getExt1() + "%'");
         }
-        // ÔÚÖ°×´Ì¬
-        if (demp != null && StringUtil.isNotEmpty(demp.getInd_State())) {
+        // åœ¨èŒçŠ¶æ€
+        if (demp != null && StringUtil.isNotEmpty(demp.getInd_State()))
+        {
             sb.append(" and ii.IND_STATE like '%" + demp.getInd_State() + "%'");
         }
-        // ¸ÚÎ»±àºÅ
-        if (demp != null && StringUtil.isNotEmpty(demp.getPos_Name())) {
+        // å²—ä½ç¼–å·
+        if (demp != null && StringUtil.isNotEmpty(demp.getPos_Name()))
+        {
             sb.append(" and pos.POS_NAME like '%" + demp.getPos_Name() + "%'");
         }
-        // ÉêÇëÈÕÆÚ
-        if (StringUtil.isNotEmpty(startDate)) {
-            sb.append(" and TO_DAYS(ii.IND_DATE) >= TO_DAYS('" + startDate
-                    + "')");
+        // ç”³è¯·æ—¥æœŸ
+        if (StringUtil.isNotEmpty(startDate))
+        {
+            sb.append(" and TO_DAYS(ii.IND_DATE) >= TO_DAYS('" + startDate + "')");
         }
-        if (StringUtil.isNotEmpty(endDate)) {
+        if (StringUtil.isNotEmpty(endDate))
+        {
             sb.append(" and TO_DAYS(ii.IND_DATE) <= TO_DAYS('" + endDate + "')");
         }
 
-        if (pageBean != null) {
-            sb.append(" limit " + pageBean.getStart() + ","
-                    + pageBean.getRows());
+        if (pageBean != null)
+        {
+            sb.append(" limit " + pageBean.getStart() + "," + pageBean.getRows());
         }
 
         PreparedStatement pstmt = con.prepareStatement(sb.toString());
 
-        Log4jHelper.info("²éÑ¯Ô±¹¤µÄÈëÖ°ĞÅÏ¢£º" + pstmt.toString());
+        Log4jHelper.info("æŸ¥è¯¢å‘˜å·¥çš„å…¥èŒä¿¡æ¯ï¼š" + pstmt.toString());
         return pstmt.executeQuery();
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º¸öÈËÉêÇëÖ°Î»µ÷ÓÃµÄ·½·¨
-     * ¿ª·¢ÈÕÆÚ£º2017-4-13-ÏÂÎç9:05:21
+     * Author:Taowd åŠŸèƒ½ï¼šä¸ªäººç”³è¯·èŒä½è°ƒç”¨çš„æ–¹æ³• å¼€å‘æ—¥æœŸï¼š2017-4-13-ä¸‹åˆ9:05:21
      *
      * @param con
      * @param induction
@@ -87,96 +92,94 @@ public class InductionInfoDao {
      * @throws Exception
      */
     public static int ApplyInduction(InductionInfoBean induction)
-            throws Exception {
-        // Ö°Î»ÉêÇë:
-        // Éú³ÉÈ«¿âÎ¨Ò»µÄUUID upper(replace(uuid(),'-',''))
-        // ´´½¨QueryRunner£¬ĞèÒªÌá¹©Êı¾İ¿âÁ¬½Ó³Ø¶ÔÏó
+        throws Exception
+    {
+        // èŒä½ç”³è¯·:
+        // ç”Ÿæˆå…¨åº“å”¯ä¸€çš„UUID upper(replace(uuid(),'-',''))
+        // åˆ›å»ºQueryRunnerï¼Œéœ€è¦æä¾›æ•°æ®åº“è¿æ¥æ± å¯¹è±¡
         QueryRunner qr = new QueryRunner(DbUtils.getDataSource());
-        // ¸ø³ösqlÄ£°å
+        // ç»™å‡ºsqlæ¨¡æ¿
         String sql = "INSERT INTO t_inductioninfo() VALUES(upper(replace(uuid(),'-','')),?,?,?,?,?,?,?,?,?) ";
-        // ¸ø³ö²ÎÊı
-        Object[] par = {induction.getEmp_No(), induction.getPos_Id(),
-                DateUtil.getCurrentDateStr(), induction.getInd_State(),
-                induction.getInd_Enddate(), induction.getInd_Reasons(),
-                induction.getExt1(), induction.getExt2(), induction.getExt3()};
-        // Ö´ĞĞSqlÓï¾ä»ñÈ¡·µ»ØÖµ
+        // ç»™å‡ºå‚æ•°
+        Object[] par = {induction.getEmp_No(), induction.getPos_Id(), DateUtil.getCurrentDateStr(),
+            induction.getInd_State(), induction.getInd_Enddate(), induction.getInd_Reasons(),
+            induction.getExt1(), induction.getExt2(), induction.getExt3()};
+        // æ‰§è¡ŒSqlè¯­å¥è·å–è¿”å›å€¼
         return qr.update(sql, par);
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º»ñÈ¡ĞÅÏ¢×ÜÊı
-     * ¿ª·¢ÈÕÆÚ£º2017-4-13-ÉÏÎç8:18:42
+     * Author:Taowd åŠŸèƒ½ï¼šè·å–ä¿¡æ¯æ€»æ•° å¼€å‘æ—¥æœŸï¼š2017-4-13-ä¸Šåˆ8:18:42
      *
      * @param con
      * @param inductionBean
      * @return
      * @throws SQLException
      */
-    public static int InductionInfoCount(Connection con,
-                                         InductionInfoBean inductionBean) throws SQLException {
-        Log4jHelper.info("²ÎÊı£ºInductionInfoBean" + inductionBean.toString());
+    public static int InductionInfoCount(Connection con, InductionInfoBean inductionBean)
+        throws SQLException
+    {
+        Log4jHelper.info("å‚æ•°ï¼šInductionInfoBean" + inductionBean.toString());
         StringBuffer sb = new StringBuffer(
-                "SELECT count(*) as total FROM t_inductioninfo ii,t_employee emp,t_positionsinfo pos WHERE ii.EMP_NO=emp.EMP_NO and ii.POS_ID=pos.POS_ID ");
-        if (inductionBean != null
-                && StringUtil.isNotEmpty(inductionBean.getInd_Id())) {
-            sb.append(" and ii.IND_ID like '%" + inductionBean.getInd_Id()
-                    + "%'");
+            "SELECT count(*) as total FROM t_inductioninfo ii,t_employee emp,t_positionsinfo pos WHERE ii.EMP_NO=emp.EMP_NO and ii.POS_ID=pos.POS_ID ");
+        if (inductionBean != null && StringUtil.isNotEmpty(inductionBean.getInd_Id()))
+        {
+            sb.append(" and ii.IND_ID like '%" + inductionBean.getInd_Id() + "%'");
         }
-        if (inductionBean != null
-                && StringUtil.isNotEmpty(inductionBean.getEmp_No())) {
-            sb.append(" and emp.EMP_NO like '%" + inductionBean.getEmp_No()
-                    + "%'");
+        if (inductionBean != null && StringUtil.isNotEmpty(inductionBean.getEmp_No()))
+        {
+            sb.append(" and emp.EMP_NO like '%" + inductionBean.getEmp_No() + "%'");
         }
-        if (inductionBean != null
-                && StringUtil.isNotEmpty(inductionBean.getPos_Id())) {
-            sb.append(" and pos.POS_ID like '%" + inductionBean.getPos_Id()
-                    + "%'");
+        if (inductionBean != null && StringUtil.isNotEmpty(inductionBean.getPos_Id()))
+        {
+            sb.append(" and pos.POS_ID like '%" + inductionBean.getPos_Id() + "%'");
         }
         Log4jHelper.info(sb.toString());
         PreparedStatement pstmt = con.prepareStatement(sb.toString());
         ResultSet rs = pstmt.executeQuery();
-        if (rs.next()) {
+        if (rs.next())
+        {
             return rs.getInt("total");
-        } else {
+        }
+        else
+        {
             return 0;
         }
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º¼ì²é¸Ã²¿ÃÅÊÇ·ñÒÑ¾­ÉêÇë¹ıÁË£¬Èç¹ûÉêÇë¹ıÁË£¬¾Í²»ÔÊĞíÔÙ´ÎÉêÇë
-     * ¿ª·¢ÈÕÆÚ£º2017-4-14-ÏÂÎç1:18:28
+     * Author:Taowd åŠŸèƒ½ï¼šæ£€æŸ¥è¯¥éƒ¨é—¨æ˜¯å¦å·²ç»ç”³è¯·è¿‡äº†ï¼Œå¦‚æœç”³è¯·è¿‡äº†ï¼Œå°±ä¸å…è®¸å†æ¬¡ç”³è¯· å¼€å‘æ—¥æœŸï¼š2017-4-14-ä¸‹åˆ1:18:28
      *
      * @param con
      * @param pos_Id
-     * @return true-ÒÑ¾­ÉêÇë¹ıÁË  false-Ã»ÓĞÉêÇë¹ı
+     * @return true-å·²ç»ç”³è¯·è¿‡äº† false-æ²¡æœ‰ç”³è¯·è¿‡
      * @throws SQLException
      */
     public static boolean IsExistence(InductionInfoBean inductionBean)
-            throws SQLException {
-        // ´´½¨QueryRunner£¬ĞèÒªÌá¹©Êı¾İ¿âÁ¬½Ó³Ø¶ÔÏó
+        throws SQLException
+    {
+        // åˆ›å»ºQueryRunnerï¼Œéœ€è¦æä¾›æ•°æ®åº“è¿æ¥æ± å¯¹è±¡
         QueryRunner qr = new QueryRunner(DbUtils.getDataSource());
-        // ¸ø³ösqlÄ£°å
+        // ç»™å‡ºsqlæ¨¡æ¿
         String sql = "SELECT * FROM t_inductioninfo WHERE t_inductioninfo.EMP_NO=? AND t_inductioninfo.POS_ID=? AND t_inductioninfo.EXT3=?";
-        // ¸ø³ö²ÎÊı
+        // ç»™å‡ºå‚æ•°
         Object[] par = {inductionBean.getEmp_No(), inductionBean.getPos_Id(),
-                inductionBean.getExt3()};
-        // Ö´ĞĞSqlÓï¾ä»ñÈ¡·µ»ØÖµ
+            inductionBean.getExt3()};
+        // æ‰§è¡ŒSqlè¯­å¥è·å–è¿”å›å€¼
         InductionInfoBean admin = qr.query(sql,
-                new BeanHandler<InductionInfoBean>(InductionInfoBean.class),
-                par);
-        if (admin != null) {
+            new BeanHandler<InductionInfoBean>(InductionInfoBean.class), par);
+        if (admin != null)
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£ºĞŞ¸ÄÒÑ¾­ÉêÇë£¬µ«ÊÇÃ»ÓĞÌá½»µÄĞÅÏ¢
-     * ¿ª·¢ÈÕÆÚ£º2017-4-14-ÏÂÎç1:23:49
+     * Author:Taowd åŠŸèƒ½ï¼šä¿®æ”¹å·²ç»ç”³è¯·ï¼Œä½†æ˜¯æ²¡æœ‰æäº¤çš„ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-14-ä¸‹åˆ1:23:49
      *
      * @param con
      * @param induction
@@ -184,21 +187,20 @@ public class InductionInfoDao {
      * @throws SQLException
      */
     public static int ApplyInductionModify(InductionInfoBean induction)
-            throws SQLException {
-        // ´´½¨QueryRunner£¬ĞèÒªÌá¹©Êı¾İ¿âÁ¬½Ó³Ø¶ÔÏó
+        throws SQLException
+    {
+        // åˆ›å»ºQueryRunnerï¼Œéœ€è¦æä¾›æ•°æ®åº“è¿æ¥æ± å¯¹è±¡
         QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
-        // ¸ø³ösqlÄ£°å
+        // ç»™å‡ºsqlæ¨¡æ¿
         String sql = "UPDATE t_inductioninfo SET t_inductioninfo.POS_ID=?  WHERE t_inductioninfo.IND_ID=? ";
-        // ¸ø³ö²ÎÊı
+        // ç»™å‡ºå‚æ•°
         Object[] params = {induction.getPos_Id(), induction.getInd_Id()};
-        // Ö´ĞĞSqlÓï¾ä»ñÈ¡·µ»ØÖµ
+        // æ‰§è¡ŒSqlè¯­å¥è·å–è¿”å›å€¼
         return queryRun.update(sql, params);
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£ºÌá½»ÉêÇëµÄÂß¼­
-     * ¿ª·¢ÈÕÆÚ£º2017-4-14-ÏÂÎç8:25:31
+     * Author:Taowd åŠŸèƒ½ï¼šæäº¤ç”³è¯·çš„é€»è¾‘ å¼€å‘æ—¥æœŸï¼š2017-4-14-ä¸‹åˆ8:25:31
      *
      * @param con
      * @param induction
@@ -206,54 +208,58 @@ public class InductionInfoDao {
      * @throws SQLException
      */
     public static int ApplyInductionApprove(InductionInfoBean induction)
-            throws SQLException {
-        Log4jHelper.info("´ıÉóÅúĞÅÏ¢£º" + induction.toString());
+        throws SQLException
+    {
+        Log4jHelper.info("å¾…å®¡æ‰¹ä¿¡æ¯ï¼š" + induction.toString());
 
-        // ´´½¨QueryRunner£¬ĞèÒªÌá¹©Êı¾İ¿âÁ¬½Ó³Ø¶ÔÏó
+        // åˆ›å»ºQueryRunnerï¼Œéœ€è¦æä¾›æ•°æ®åº“è¿æ¥æ± å¯¹è±¡
         QueryRunner qr = new QueryRunner(DbUtils.getDataSource());
-        // ¸ø³ösqlÄ£°å
+        // ç»™å‡ºsqlæ¨¡æ¿
         String sql1 = "select EXT3 from t_inductioninfo where ind_id =? ";
-        // ¸ø³ö²ÎÊı
+        // ç»™å‡ºå‚æ•°
         Object[] par = {induction.getInd_Id()};
-        // Ö´ĞĞSqlÓï¾ä»ñÈ¡·µ»ØÖµ
+        // æ‰§è¡ŒSqlè¯­å¥è·å–è¿”å›å€¼
         InductionInfoBean admin = qr.query(sql1,
-                new BeanHandler<InductionInfoBean>(InductionInfoBean.class),
-                par);
-        if (admin != null) {
-            if ("11".equals(induction.getExt1()))// ÉóÅúÈëÖ°Í¨¹ı
+            new BeanHandler<InductionInfoBean>(InductionInfoBean.class), par);
+        if (admin != null)
+        {
+            if ("11".equals(induction.getExt1()))// å®¡æ‰¹å…¥èŒé€šè¿‡
             {
-                if (!StringUtils.isEmpty(admin.getExt3())
-                        && "IN".equals(admin.getExt3())) {
-                    // ÈëÖ°
+                if (!StringUtils.isEmpty(admin.getExt3()) && "IN".equals(admin.getExt3()))
+                {
+                    // å…¥èŒ
                     induction.setInd_State("1");
-                } else {
-                    // ÀëÖ°
+                }
+                else
+                {
+                    // ç¦»èŒ
                     induction.setInd_State("0");
                 }
-            } else if ("22".equals(induction.getExt1()))// ÉóÅú²»Í¨¹ı
+            }
+            else if ("22".equals(induction.getExt1()))// å®¡æ‰¹ä¸é€šè¿‡
             {
                 induction.setInd_State("");
             }
 
-            // ´´½¨QueryRunner£¬ĞèÒªÌá¹©Êı¾İ¿âÁ¬½Ó³Ø¶ÔÏó
+            // åˆ›å»ºQueryRunnerï¼Œéœ€è¦æä¾›æ•°æ®åº“è¿æ¥æ± å¯¹è±¡
             QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
-            // ¸ø³ösqlÄ£°å
+            // ç»™å‡ºsqlæ¨¡æ¿
             String sql = "UPDATE t_inductioninfo SET t_inductioninfo.EXT1=?,t_inductioninfo.EXT2=?,t_inductioninfo.IND_STATE=? WHERE t_inductioninfo.IND_ID=? ";
-            // ¸ø³ö²ÎÊı
-            Object[] params = {induction.getExt1(), induction.getExt2(),
-                    induction.getInd_State(), induction.getInd_Id()};
-            // Ö´ĞĞSqlÓï¾ä»ñÈ¡·µ»ØÖµ
+            // ç»™å‡ºå‚æ•°
+            Object[] params = {induction.getExt1(), induction.getExt2(), induction.getInd_State(),
+                induction.getInd_Id()};
+            // æ‰§è¡ŒSqlè¯­å¥è·å–è¿”å›å€¼
             return queryRun.update(sql, params);
-        } else {
+        }
+        else
+        {
             return 0;
         }
 
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º¼ì²éÉêÇë×´Ì¬ÊÇ·ñ¿ÉĞŞ¸Ä£º¼´ext1=="33"??
-     * ¿ª·¢ÈÕÆÚ£º2017-4-14-ÏÂÎç1:58:58
+     * Author:Taowd åŠŸèƒ½ï¼šæ£€æŸ¥ç”³è¯·çŠ¶æ€æ˜¯å¦å¯ä¿®æ”¹ï¼šå³ext1=="33"?? å¼€å‘æ—¥æœŸï¼š2017-4-14-ä¸‹åˆ1:58:58
      *
      * @param con
      * @param induction
@@ -261,99 +267,105 @@ public class InductionInfoDao {
      * @throws SQLException
      */
     public boolean CheckApproveState(Connection con, InductionInfoBean induction)
-            throws SQLException {
+        throws SQLException
+    {
         String sql = "SELECT * FROM t_inductioninfo WHERE t_inductioninfo.IND_ID=? and t_inductioninfo.EXT1 ='33' ";
         PreparedStatement pstmt = con.prepareStatement(sql);
         pstmt.setString(1, induction.getInd_Id());
-        Log4jHelper.info("¼ì²é²¿ÃÅÊÇ·ñÒÑ¾­Ìá½»£º" + pstmt.toString());
+        Log4jHelper.info("æ£€æŸ¥éƒ¨é—¨æ˜¯å¦å·²ç»æäº¤ï¼š" + pstmt.toString());
         ResultSet rs = pstmt.executeQuery();
-        if (rs.next()) {
+        if (rs.next())
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º¼ì²éµ±Ç°×´Ì¬
-     * ¿ª·¢ÈÕÆÚ£º2017-4-14-ÏÂÎç2:29:09
+     * Author:Taowd åŠŸèƒ½ï¼šæ£€æŸ¥å½“å‰çŠ¶æ€ å¼€å‘æ—¥æœŸï¼š2017-4-14-ä¸‹åˆ2:29:09
      *
      * @param con
      * @param string
      * @return
      * @throws SQLException
      */
-    public static boolean CheckApproveState(String IND_ID) throws SQLException {
-        // ´´½¨QueryRunner£¬ĞèÒªÌá¹©Êı¾İ¿âÁ¬½Ó³Ø¶ÔÏó
+    public static boolean CheckApproveState(String IND_ID)
+        throws SQLException
+    {
+        // åˆ›å»ºQueryRunnerï¼Œéœ€è¦æä¾›æ•°æ®åº“è¿æ¥æ± å¯¹è±¡
         QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
-        // ¸ø³ösqlÄ£°å
+        // ç»™å‡ºsqlæ¨¡æ¿
         String sql = "SELECT * FROM t_inductioninfo WHERE t_inductioninfo.IND_ID=? and t_inductioninfo.EXT1 ='33' ";
-        // ¸ø³ö²ÎÊı
+        // ç»™å‡ºå‚æ•°
         Object[] params = {IND_ID};
-        // Ö´ĞĞSqlÓï¾ä»ñÈ¡·µ»ØÖµ
+        // æ‰§è¡ŒSqlè¯­å¥è·å–è¿”å›å€¼
         InductionInfoBean admin = queryRun.query(sql,
-                new BeanHandler<InductionInfoBean>(InductionInfoBean.class),
-                params);
-        if (admin != null) {
+            new BeanHandler<InductionInfoBean>(InductionInfoBean.class), params);
+        if (admin != null)
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£ºÉ¾³ıÉêÇë
-     * ¿ª·¢ÈÕÆÚ£º2017-4-14-ÏÂÎç2:31:26
+     * Author:Taowd åŠŸèƒ½ï¼šåˆ é™¤ç”³è¯· å¼€å‘æ—¥æœŸï¼š2017-4-14-ä¸‹åˆ2:31:26
      *
      * @param con
      * @param delIds
      * @return
      * @throws SQLException
      */
-    public static int InductionDelete(String delIds) throws SQLException {
-        // ´´½¨QueryRunner£¬ĞèÒªÌá¹©Êı¾İ¿âÁ¬½Ó³Ø¶ÔÏó
+    public static int InductionDelete(String delIds)
+        throws SQLException
+    {
+        // åˆ›å»ºQueryRunnerï¼Œéœ€è¦æä¾›æ•°æ®åº“è¿æ¥æ± å¯¹è±¡
         QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
-        // ¸ø³ösqlÄ£°å
-        String sql = "delete from t_inductioninfo where t_inductioninfo.IND_ID in ( "
-                + delIds + ")";
-        // Ö´ĞĞSqlÓï¾ä»ñÈ¡·µ»ØÖµ
+        // ç»™å‡ºsqlæ¨¡æ¿
+        String sql = "delete from t_inductioninfo where t_inductioninfo.IND_ID in ( " + delIds
+                     + ")";
+        // æ‰§è¡ŒSqlè¯­å¥è·å–è¿”å›å€¼
         return queryRun.update(sql);
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º¼ì²éÊÇ·ñÎª¿ÉÉóÅú×´Ì¬--¼´ext1=="00"
-     * ¿ª·¢ÈÕÆÚ£º2017-4-17-ÏÂÎç1:05:04
+     * Author:Taowd åŠŸèƒ½ï¼šæ£€æŸ¥æ˜¯å¦ä¸ºå¯å®¡æ‰¹çŠ¶æ€--å³ext1=="00" å¼€å‘æ—¥æœŸï¼š2017-4-17-ä¸‹åˆ1:05:04
      *
      * @param con
      * @param string
      * @return
      * @throws SQLException
      */
-    public static boolean IsApproveState(String IND_ID) throws SQLException {
-        // ´´½¨QueryRunner£¬ĞèÒªÌá¹©Êı¾İ¿âÁ¬½Ó³Ø¶ÔÏó
+    public static boolean IsApproveState(String IND_ID)
+        throws SQLException
+    {
+        // åˆ›å»ºQueryRunnerï¼Œéœ€è¦æä¾›æ•°æ®åº“è¿æ¥æ± å¯¹è±¡
         QueryRunner queryRun = new QueryRunner(DbUtils.getDataSource());
-        // ¸ø³ösqlÄ£°å
+        // ç»™å‡ºsqlæ¨¡æ¿
         String sql = "SELECT * FROM t_inductioninfo WHERE t_inductioninfo.IND_ID=? and t_inductioninfo.EXT1 ='00' ";
-        // ¸ø³ö²ÎÊı
+        // ç»™å‡ºå‚æ•°
         Object[] params = {IND_ID};
-        // Ö´ĞĞSqlÓï¾ä»ñÈ¡·µ»ØÖµ
+        // æ‰§è¡ŒSqlè¯­å¥è·å–è¿”å›å€¼
         InductionInfoBean admin = queryRun.query(sql,
-                new BeanHandler<InductionInfoBean>(InductionInfoBean.class),
-                params);
-        if (admin != null) {
+            new BeanHandler<InductionInfoBean>(InductionInfoBean.class), params);
+        if (admin != null)
+        {
             return true;
-        } else {
+        }
+        else
+        {
             return false;
         }
     }
 
     /**
-     * Author:Taowd
-     * ¹¦ÄÜ£º¹ÜÀíÔ±²éÑ¯ÉêÇëĞÅÏ¢--ÌØÊâ´¦Àí£¬ÅÅ³ıÎ´Ìá½»µÄÉêÇë
-     * ¿ª·¢ÈÕÆÚ£º2017-4-17-ÏÂÎç1:36:37
+     * Author:Taowd åŠŸèƒ½ï¼šç®¡ç†å‘˜æŸ¥è¯¢ç”³è¯·ä¿¡æ¯--ç‰¹æ®Šå¤„ç†ï¼Œæ’é™¤æœªæäº¤çš„ç”³è¯· å¼€å‘æ—¥æœŸï¼š2017-4-17-ä¸‹åˆ1:36:37
      *
      * @param con
      * @param pageBean
@@ -363,48 +375,56 @@ public class InductionInfoDao {
      * @return
      * @throws SQLException
      */
-    public static ResultSet AdminInductionInfoList(Connection con,
-                                                   PageBean pageBean, InductionInfoBean demp, String startDate,
-                                                   String endDate) throws SQLException {
-        Log4jHelper.info("²éÑ¯²ÎÊı£º" + demp.toString());
+    public static ResultSet AdminInductionInfoList(Connection con, PageBean pageBean,
+                                                   InductionInfoBean demp, String startDate,
+                                                   String endDate)
+        throws SQLException
+    {
+        Log4jHelper.info("æŸ¥è¯¢å‚æ•°ï¼š" + demp.toString());
         StringBuffer sb = new StringBuffer(
-                "SELECT ii.IND_ID,emp.EMP_NO,emp.EMP_NAME,pos.POS_ID,pos.POS_NAME,ii.IND_DATE,ii.IND_STATE AS stateCode,(case WHEN ii.IND_STATE='1'then 'ÈëÖ°' WHEN ii.IND_STATE='0'then 'ÀëÖ°' END ) as stateName ,ii.IND_ENDDATE,ii.IND_Reasons,ii.EXT1 as approveState,(case WHEN ii.EXT1='11'then 'ÒÑÉóÅúÍ¨¹ı' WHEN ii.EXT1='00'then 'ÉêÇëÖĞ'  WHEN ii.EXT1='22'then 'ÉóÅúÎ´Í¨¹ı' WHEN ii.EXT1='33'then 'Î´Ìá½»' END ) as approveName ,ii.EXT2,ii.EXT3,(case WHEN ii.EXT3='IN'then 'ÈëÖ°ÉêÇë' WHEN ii.EXT3='OUT'then 'ÀëÖ°ÉêÇë' END ) as typeName  FROM t_inductioninfo ii,t_employee emp,t_positionsinfo pos WHERE ii.EMP_NO=emp.EMP_NO and ii.POS_ID=pos.POS_ID AND ii.EXT1!='33' ");
-        if (demp != null && StringUtil.isNotEmpty(demp.getInd_Id())) {
+            "SELECT ii.IND_ID,emp.EMP_NO,emp.EMP_NAME,pos.POS_ID,pos.POS_NAME,ii.IND_DATE,ii.IND_STATE AS stateCode,(case WHEN ii.IND_STATE='1'then 'å…¥èŒ' WHEN ii.IND_STATE='0'then 'ç¦»èŒ' END ) as stateName ,ii.IND_ENDDATE,ii.IND_Reasons,ii.EXT1 as approveState,(case WHEN ii.EXT1='11'then 'å·²å®¡æ‰¹é€šè¿‡' WHEN ii.EXT1='00'then 'ç”³è¯·ä¸­'  WHEN ii.EXT1='22'then 'å®¡æ‰¹æœªé€šè¿‡' WHEN ii.EXT1='33'then 'æœªæäº¤' END ) as approveName ,ii.EXT2,ii.EXT3,(case WHEN ii.EXT3='IN'then 'å…¥èŒç”³è¯·' WHEN ii.EXT3='OUT'then 'ç¦»èŒç”³è¯·' END ) as typeName  FROM t_inductioninfo ii,t_employee emp,t_positionsinfo pos WHERE ii.EMP_NO=emp.EMP_NO and ii.POS_ID=pos.POS_ID AND ii.EXT1!='33' ");
+        if (demp != null && StringUtil.isNotEmpty(demp.getInd_Id()))
+        {
             sb.append(" and ii.IND_ID like '%" + demp.getInd_Id() + "%'");
         }
-        // Ô±¹¤ºÅ
-        if (demp != null && StringUtil.isNotEmpty(demp.getEmp_No())) {
+        // å‘˜å·¥å·
+        if (demp != null && StringUtil.isNotEmpty(demp.getEmp_No()))
+        {
             sb.append(" and emp.EMP_NO like '%" + demp.getEmp_No() + "%'");
         }
-        // ÉóÅú×´Ì¬
-        if (demp != null && StringUtil.isNotEmpty(demp.getExt1())) {
+        // å®¡æ‰¹çŠ¶æ€
+        if (demp != null && StringUtil.isNotEmpty(demp.getExt1()))
+        {
             sb.append(" and ii.EXT1 like '%" + demp.getExt1() + "%'");
         }
-        // ÔÚÖ°×´Ì¬
-        if (demp != null && StringUtil.isNotEmpty(demp.getInd_State())) {
+        // åœ¨èŒçŠ¶æ€
+        if (demp != null && StringUtil.isNotEmpty(demp.getInd_State()))
+        {
             sb.append(" and ii.IND_STATE like '%" + demp.getInd_State() + "%'");
         }
-        // ¸ÚÎ»±àºÅ
-        if (demp != null && StringUtil.isNotEmpty(demp.getPos_Name())) {
+        // å²—ä½ç¼–å·
+        if (demp != null && StringUtil.isNotEmpty(demp.getPos_Name()))
+        {
             sb.append(" and pos.POS_NAME like '%" + demp.getPos_Name() + "%'");
         }
-        // ÉêÇëÈÕÆÚ
-        if (StringUtil.isNotEmpty(startDate)) {
-            sb.append(" and TO_DAYS(ii.IND_DATE) >= TO_DAYS('" + startDate
-                    + "')");
+        // ç”³è¯·æ—¥æœŸ
+        if (StringUtil.isNotEmpty(startDate))
+        {
+            sb.append(" and TO_DAYS(ii.IND_DATE) >= TO_DAYS('" + startDate + "')");
         }
-        if (StringUtil.isNotEmpty(endDate)) {
+        if (StringUtil.isNotEmpty(endDate))
+        {
             sb.append(" and TO_DAYS(ii.IND_DATE) <= TO_DAYS('" + endDate + "')");
         }
 
-        if (pageBean != null) {
-            sb.append(" limit " + pageBean.getStart() + ","
-                    + pageBean.getRows());
+        if (pageBean != null)
+        {
+            sb.append(" limit " + pageBean.getStart() + "," + pageBean.getRows());
         }
 
         PreparedStatement pstmt = con.prepareStatement(sb.toString());
 
-        Log4jHelper.info("²éÑ¯Ô±¹¤µÄÈëÖ°ĞÅÏ¢£º" + pstmt.toString());
+        Log4jHelper.info("æŸ¥è¯¢å‘˜å·¥çš„å…¥èŒä¿¡æ¯ï¼š" + pstmt.toString());
         return pstmt.executeQuery();
     }
 

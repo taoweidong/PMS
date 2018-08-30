@@ -1,56 +1,65 @@
 package com.pms.model;
 
 /**
- * 
- * @author ÌÕÎ°¶«
- * TODO£º²¿ÃÅÊµÌå
- * ±àĞ´Ê±¼ä£º2017-4-8-ÉÏÎç10:04:44
+ * @author é™¶ä¼Ÿä¸œ TODOï¼šéƒ¨é—¨å®ä½“ ç¼–å†™æ—¶é—´ï¼š2017-4-8-ä¸Šåˆ10:04:44
  */
-public class DepartmentBean {
+public class DepartmentBean
+{
 
-	private String dep_Id;
-	private String dep_Name;
-	private String dep_Leader;
+    private String dep_Id;
 
-	@Override
-	public String toString() {
-		return "²¿ÃÅÊµÌå [dep_Id=" + dep_Id + ", dep_Name=" + dep_Name
-				+ ", dep_Leader=" + dep_Leader + "]";
-	}
+    private String dep_Name;
 
-	public DepartmentBean() {
-		super();
-	}
+    private String dep_Leader;
 
-	public DepartmentBean(String dep_Id, String dep_Name, String dep_Leader) {
-		super();
-		this.dep_Id = dep_Id;
-		this.dep_Name = dep_Name;
-		this.dep_Leader = dep_Leader;
-	}
+    @Override
+    public String toString()
+    {
+        return "éƒ¨é—¨å®ä½“ [dep_Id=" + dep_Id + ", dep_Name=" + dep_Name + ", dep_Leader=" + dep_Leader
+               + "]";
+    }
 
-	public String getDep_Id() {
-		return dep_Id;
-	}
+    public DepartmentBean()
+    {
+        super();
+    }
 
-	public void setDep_Id(String dep_Id) {
-		this.dep_Id = dep_Id;
-	}
+    public DepartmentBean(String dep_Id, String dep_Name, String dep_Leader)
+    {
+        super();
+        this.dep_Id = dep_Id;
+        this.dep_Name = dep_Name;
+        this.dep_Leader = dep_Leader;
+    }
 
-	public String getDep_Name() {
-		return dep_Name;
-	}
+    public String getDep_Id()
+    {
+        return dep_Id;
+    }
 
-	public void setDep_Name(String dep_Name) {
-		this.dep_Name = dep_Name;
-	}
+    public void setDep_Id(String dep_Id)
+    {
+        this.dep_Id = dep_Id;
+    }
 
-	public String getDep_Leader() {
-		return dep_Leader;
-	}
+    public String getDep_Name()
+    {
+        return dep_Name;
+    }
 
-	public void setDep_Leader(String dep_Leader) {
-		this.dep_Leader = dep_Leader;
-	}
+    public void setDep_Name(String dep_Name)
+    {
+        this.dep_Name = dep_Name;
+    }
+
+    public String getDep_Leader()
+    {
+        return dep_Leader;
+    }
+
+    public void setDep_Leader(String dep_Leader)
+    {
+        this.dep_Leader = dep_Leader;
+    }
 
 }

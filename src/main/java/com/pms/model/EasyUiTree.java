@@ -1,78 +1,101 @@
 package com.pms.model;
 
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public class EasyUiTree implements Serializable {
+
+public class EasyUiTree implements Serializable
+{
 
     private static final long serialVersionUID = 1L;
 
     private String id;
+
     private String text;
+
     private String state;
+
     private String checked;
+
     private Map<String, String> attribates;
+
     private List<EasyUiTree> children;
 
-    public EasyUiTree() {
+    public EasyUiTree()
+    {
         super();
     }
 
-    public String getId() {
+    public String getId()
+    {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(String id)
+    {
         this.id = id;
     }
 
-    public String getText() {
+    public String getText()
+    {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(String text)
+    {
         this.text = text;
     }
 
-    public String getState() {
+    public String getState()
+    {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(String state)
+    {
         this.state = state;
     }
 
-    public String getChecked() {
+    public String getChecked()
+    {
         return checked;
     }
 
-    public void setChecked(String checked) {
+    public void setChecked(String checked)
+    {
         this.checked = checked;
     }
 
-    public Map<String, String> getAttribates() {
+    public Map<String, String> getAttribates()
+    {
         return attribates;
     }
 
-    public void setAttribates(Map<String, String> attribates) {
+    public void setAttribates(Map<String, String> attribates)
+    {
         this.attribates = attribates;
     }
 
-    public List<EasyUiTree> getChildren() {
+    public List<EasyUiTree> getChildren()
+    {
         return children;
     }
 
-    public void setChildren(List<EasyUiTree> children) {
+    public void setChildren(List<EasyUiTree> children)
+    {
         this.children = children;
     }
 
-    public static long getSerialversionuid() {
+    public static long getSerialversionuid()
+    {
         return serialVersionUID;
     }
 
     public EasyUiTree(String id, String text, String state, String checked,
-                      Map<String, String> attribates, List<EasyUiTree> children) {
+                      Map<String, String> attribates, List<EasyUiTree> children)
+    {
         super();
         this.id = id;
         this.text = text;

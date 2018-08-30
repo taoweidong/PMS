@@ -1,210 +1,218 @@
 package com.pms.dao;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import com.pms.model.DepartmentBean;
 import com.pms.model.PageBean;
 import com.pms.util.Log4jHelper;
 import com.pms.util.StringUtil;
 
+
 /**
+ * éƒ¨é—¨è¡¨
  * 
- * @author ÌÕÎ°¶«
- * ¹¦ÄÜ£º²¿ÃÅ±í²Ù×÷Àà
- * ±àĞ´Ê±¼ä£ºÏÂÎç8:11:16
+ * @author Taowd
+ * @version 2018å¹´8æœˆ30æ—¥
+ * @see DepartmentDao
  */
-public class DepartmentDao {
+public class DepartmentDao
+{
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º²éÑ¯²¿ÃÅĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-8-ÏÂÎç5:46:53
-	 * @param con
-	 * @param pageBean
-	 * @param demp
-	 * @return
-	 * @throws Exception
-	 */
-	public static ResultSet DepartmentList(Connection con, PageBean pageBean,
-			DepartmentBean demp) throws Exception {
-		StringBuffer sb = new StringBuffer(
-				"SELECT dep.DEP_ID,dep.DEP_NAME,DEP_LEADER,emp.EMP_NAME,emp.EMP_Phone FROM pms.t_department dep LEFT JOIN pms.t_employee emp ON dep.DEP_LEADER = emp.EMP_NO ");
-		if (demp != null && StringUtil.isNotEmpty(demp.getDep_Id())) {
-			sb.append(" and dep.DEP_ID like '%" + demp.getDep_Id() + "%'");
-		}
-		if (demp != null && StringUtil.isNotEmpty(demp.getDep_Name())) {
-			sb.append(" and dep.DEP_NAME like '%" + demp.getDep_Name() + "%'");
-		}
-		if (demp != null && StringUtil.isNotEmpty(demp.getDep_Leader())) {
-			sb.append(" and emp.EMP_NAME like '%" + demp.getDep_Leader() + "%'");
-		}
-		if (pageBean != null) {
-			sb.append(" limit " + pageBean.getStart() + ","
-					+ pageBean.getRows());
-		}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæŸ¥è¯¢éƒ¨é—¨ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-8-ä¸‹åˆ5:46:53
+     * 
+     * @param con
+     * @param pageBean
+     * @param demp
+     * @return
+     * @throws Exception
+     */
+    public static ResultSet departmentList(Connection con, PageBean pageBean, DepartmentBean demp)
+        throws Exception
+    {
+        StringBuffer sb = new StringBuffer(
+            "SELECT dep.DEP_ID,dep.DEP_NAME,DEP_LEADER,emp.EMP_NAME,emp.EMP_Phone FROM pms.t_department dep LEFT JOIN pms.t_employee emp ON dep.DEP_LEADER = emp.EMP_NO ");
+        if (demp != null && StringUtil.isNotEmpty(demp.getDep_Id()))
+        {
+            sb.append(" and dep.DEP_ID like '%" + demp.getDep_Id() + "%'");
+        }
+        if (demp != null && StringUtil.isNotEmpty(demp.getDep_Name()))
+        {
+            sb.append(" and dep.DEP_NAME like '%" + demp.getDep_Name() + "%'");
+        }
+        if (demp != null && StringUtil.isNotEmpty(demp.getDep_Leader()))
+        {
+            sb.append(" and emp.EMP_NAME like '%" + demp.getDep_Leader() + "%'");
+        }
+        if (pageBean != null)
+        {
+            sb.append(" limit " + pageBean.getStart() + "," + pageBean.getRows());
+        }
 
-		PreparedStatement pstmt = con.prepareStatement(sb.toString()
-				.replaceFirst("and", "where"));
+        PreparedStatement pstmt = con.prepareStatement(sb.toString().replaceFirst("and", "where"));
 
-		Log4jHelper.info("²éÑ¯²¿ÃÅĞÅÏ¢£º" + pstmt.toString());
-		return pstmt.executeQuery();
-	}
+        Log4jHelper.info("æŸ¥è¯¢éƒ¨é—¨ä¿¡æ¯ï¼š" + pstmt.toString());
+        return pstmt.executeQuery();
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º²éÑ¯²¿ÃÅĞÅÏ¢×Ü¼ÇÂ¼
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-8-ÏÂÎç5:47:07
-	 * @param con
-	 * @param demp
-	 * @return
-	 * @throws Exception
-	 */
-	public static int DepartmentCount(Connection con, DepartmentBean demp)
-			throws Exception {
-		StringBuffer sb = new StringBuffer(
-				"select count(*) as total from pms.t_department ");
-		if (demp != null && StringUtil.isNotEmpty(demp.getDep_Id())) {
-			sb.append(" and t_department.DEP_ID like '%" + demp.getDep_Id()
-					+ "%'");
-		}
-		if (demp != null && StringUtil.isNotEmpty(demp.getDep_Name())) {
-			sb.append(" and t_department.DEP_NAME like '%" + demp.getDep_Name()
-					+ "%'");
-		}
-		if (demp != null && StringUtil.isNotEmpty(demp.getDep_Leader())) {
-			sb.append(" and t_department.DEP_LEADER like '%"
-					+ demp.getDep_Leader() + "%'");
-		}
-		PreparedStatement pstmt = con.prepareStatement(sb.toString()
-				.replaceFirst("and", "where"));
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæŸ¥è¯¢éƒ¨é—¨ä¿¡æ¯æ€»è®°å½• å¼€å‘æ—¥æœŸï¼š2017-4-8-ä¸‹åˆ5:47:07
+     * 
+     * @param con
+     * @param demp
+     * @return
+     * @throws Exception
+     */
+    public static int departmentCount(Connection con, DepartmentBean demp)
+        throws Exception
+    {
+        StringBuffer sb = new StringBuffer("select count(*) as total from pms.t_department ");
+        if (demp != null && StringUtil.isNotEmpty(demp.getDep_Id()))
+        {
+            sb.append(" and t_department.DEP_ID like '%" + demp.getDep_Id() + "%'");
+        }
+        if (demp != null && StringUtil.isNotEmpty(demp.getDep_Name()))
+        {
+            sb.append(" and t_department.DEP_NAME like '%" + demp.getDep_Name() + "%'");
+        }
+        if (demp != null && StringUtil.isNotEmpty(demp.getDep_Leader()))
+        {
+            sb.append(" and t_department.DEP_LEADER like '%" + demp.getDep_Leader() + "%'");
+        }
+        PreparedStatement pstmt = con.prepareStatement(sb.toString().replaceFirst("and", "where"));
 
-		Log4jHelper.info("»ñÈ¡×Ü¼ÇÂ¼Êı£º" + pstmt.toString());
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			return rs.getInt("total");
-		} else {
-			return 0;
-		}
-	}
+        Log4jHelper.info("è·å–æ€»è®°å½•æ•°ï¼š" + pstmt.toString());
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next())
+        {
+            return rs.getInt("total");
+        }
+        else
+        {
+            return 0;
+        }
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÉ¾³ı²¿ÃÅĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-10-ÏÂÎç8:19:25
-	 * @param con
-	 * @param delIds
-	 * @return
-	 * @throws SQLException 
-	 */
-	public static int DepartmentDelete(Connection con, String delIds)
-			throws SQLException {
-		String sql = "DELETE FROM pms.t_department WHERE t_department.DEP_ID IN("
-				+ delIds + ")";
-		PreparedStatement pstmt = con.prepareStatement(sql);
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šåˆ é™¤éƒ¨é—¨ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-10-ä¸‹åˆ8:19:25
+     * 
+     * @param con
+     * @param delIds
+     * @return
+     * @throws SQLException
+     */
+    public static int departmentDelete(Connection con, String delIds)
+        throws SQLException
+    {
+        String sql = "DELETE FROM pms.t_department WHERE t_department.DEP_ID IN(" + delIds + ")";
+        PreparedStatement pstmt = con.prepareStatement(sql);
 
-		Log4jHelper.info("É¾³ı²¿ÃÅĞÅÏ¢£º" + pstmt.toString());
-		return pstmt.executeUpdate();
-	}
+        Log4jHelper.info("åˆ é™¤éƒ¨é—¨ä¿¡æ¯ï¼š" + pstmt.toString());
+        return pstmt.executeUpdate();
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º²¿ÃÅÊÇ·ñÒÑ¾­´æÔÚ
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-10-ÏÂÎç9:16:43
-	 * @param con
-	 * @param ps_Type
-	 * @return
-	 * @throws SQLException
-	 */
-	public static boolean IsExistence(Connection con, String ps_Type)
-			throws SQLException {
-		String sql = "SELECT * FROM pms.t_department WHERE t_department.DEP_ID=?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, ps_Type);
-		Log4jHelper.info("¼ì²é²¿ÃÅÊÇ·ñÒÑ¾­´æÔÚ£º" + pstmt.toString());
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šéƒ¨é—¨æ˜¯å¦å·²ç»å­˜åœ¨ å¼€å‘æ—¥æœŸï¼š2017-4-10-ä¸‹åˆ9:16:43
+     * 
+     * @param con
+     * @param ps_Type
+     * @return
+     * @throws SQLException
+     */
+    public static boolean isExistence(Connection con, String ps_Type)
+        throws SQLException
+    {
+        String sql = "SELECT * FROM pms.t_department WHERE t_department.DEP_ID=?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, ps_Type);
+        Log4jHelper.info("æ£€æŸ¥éƒ¨é—¨æ˜¯å¦å·²ç»å­˜åœ¨ï¼š" + pstmt.toString());
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºĞŞ¸Ä²¿ÃÅĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-10-ÏÂÎç9:17:39
-	 * @param con
-	 * @param db
-	 * @return
-	 * @throws SQLException 
-	 */
-	public static int DepartmentModify(Connection con, DepartmentBean db)
-			throws SQLException {
-		String sql = "UPDATE pms.t_department SET t_department.DEP_NAME=?,t_department.DEP_LEADER=? WHERE t_department.DEP_ID=?";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, db.getDep_Name());
-		pstmt.setString(2, db.getDep_Leader());
-		// ĞŞ¸ÄÌõ¼ş
-		pstmt.setString(3, db.getDep_Id());
-		// ´òÓ¡Ö´ĞĞµÄSqlÓï¾ä
-		Log4jHelper.info("ĞŞ¸ÄµÄSqlÓï¾ä£º" + pstmt.toString());
-		return pstmt.executeUpdate();
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šä¿®æ”¹éƒ¨é—¨ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-10-ä¸‹åˆ9:17:39
+     * 
+     * @param con
+     * @param db
+     * @return
+     * @throws SQLException
+     */
+    public static int departmentModify(Connection con, DepartmentBean db)
+        throws SQLException
+    {
+        String sql = "UPDATE pms.t_department SET t_department.DEP_NAME=?,t_department.DEP_LEADER=? WHERE t_department.DEP_ID=?";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, db.getDep_Name());
+        pstmt.setString(2, db.getDep_Leader());
+        // ä¿®æ”¹æ¡ä»¶
+        pstmt.setString(3, db.getDep_Id());
+        // æ‰“å°æ‰§è¡Œçš„Sqlè¯­å¥
+        Log4jHelper.info("ä¿®æ”¹çš„Sqlè¯­å¥ï¼š" + pstmt.toString());
+        return pstmt.executeUpdate();
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºĞÂÔö²¿ÃÅĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-10-ÏÂÎç9:21:16
-	 * @param con
-	 * @param db
-	 * @return
-	 * @throws SQLException 
-	 */
-	public static int DepartmentAdd(Connection con, DepartmentBean db)
-			throws SQLException {
-		String sql = "INSERT INTO pms.t_department() VALUES(?,?,?)";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(2, db.getDep_Name());
-		pstmt.setString(3, db.getDep_Leader());
-		// ĞŞ¸ÄÌõ¼ş
-		pstmt.setString(1, db.getDep_Id());
-		Log4jHelper.info("Ô±¹¤×¢²á£º" + pstmt.toString());
-		return pstmt.executeUpdate();
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæ–°å¢éƒ¨é—¨ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-10-ä¸‹åˆ9:21:16
+     * 
+     * @param con
+     * @param db
+     * @return
+     * @throws SQLException
+     */
+    public static int departmentAdd(Connection con, DepartmentBean db)
+        throws SQLException
+    {
+        String sql = "INSERT INTO pms.t_department() VALUES(?,?,?)";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(2, db.getDep_Name());
+        pstmt.setString(3, db.getDep_Leader());
+        // ä¿®æ”¹æ¡ä»¶
+        pstmt.setString(1, db.getDep_Id());
+        Log4jHelper.info("å‘˜å·¥æ³¨å†Œï¼š" + pstmt.toString());
+        return pstmt.executeUpdate();
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º²é¿´¸Ã²¿ÃÅÊÇ·ñÓĞ¸ÚÎ»ĞÅÏ¢
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-19-ÏÂÎç9:04:59
-	 * @param con
-	 * @param string
-	 * @return
-	 * @throws SQLException 
-	 */
-	public static boolean getPosInfoByDepId(Connection con, String DepId)
-			throws SQLException {
-		Log4jHelper.info("¸Ã²¿ÃÅÊÇ·ñÓĞ¸ÚÎ»ĞÅÏ¢£º" + DepId);
-		String sql = "SELECT * FROM pms.t_positionsinfo WHERE t_positionsinfo.DEP_ID=? ";
-		PreparedStatement pstmt = con.prepareStatement(sql);
-		pstmt.setString(1, DepId);
-		Log4jHelper.info("¸Ã²¿ÃÅÊÇ·ñÓĞ¸ÚÎ»ĞÅÏ¢£º" + pstmt.toString());
-		ResultSet rs = pstmt.executeQuery();
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæŸ¥çœ‹è¯¥éƒ¨é—¨æ˜¯å¦æœ‰å²—ä½ä¿¡æ¯ å¼€å‘æ—¥æœŸï¼š2017-4-19-ä¸‹åˆ9:04:59
+     * 
+     * @param con
+     * @param string
+     * @return
+     * @throws SQLException
+     */
+    public static boolean getPosInfoByDepId(Connection con, String DepId)
+        throws SQLException
+    {
+        Log4jHelper.info("è¯¥éƒ¨é—¨æ˜¯å¦æœ‰å²—ä½ä¿¡æ¯ï¼š" + DepId);
+        String sql = "SELECT * FROM pms.t_positionsinfo WHERE t_positionsinfo.DEP_ID=? ";
+        PreparedStatement pstmt = con.prepareStatement(sql);
+        pstmt.setString(1, DepId);
+        Log4jHelper.info("è¯¥éƒ¨é—¨æ˜¯å¦æœ‰å²—ä½ä¿¡æ¯ï¼š" + pstmt.toString());
+        ResultSet rs = pstmt.executeQuery();
 
-		if (rs.next()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+        if (rs.next())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /** Prevent instantiation */
+    private DepartmentDao()
+    {}
 
 }

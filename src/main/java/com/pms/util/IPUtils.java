@@ -1,104 +1,125 @@
 package com.pms.util;
 
+
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+
 /**
- * 
- * @author Taowd
- * ¹¦        ÄÜ£º»ñÈ¡IP¹¤¾ßÀà
- * ±àĞ´Ê±¼ä£º2017-5-5-ÏÂÎç2:26:12
+ * @author Taowd åŠŸ èƒ½ï¼šè·å–IPå·¥å…·ç±» ç¼–å†™æ—¶é—´ï¼š2017-5-5-ä¸‹åˆ2:26:12
  */
-public class IPUtils {
+public class IPUtils
+{
 
-	private static String LOCAL_IP_STAR_STR = "192.168.";
+    private static String LOCAL_IP_STAR_STR = "192.168.";
 
-	static {
-		String ip = null;
-		String hostName = null;
-		try {
-			hostName = InetAddress.getLocalHost().getHostName();
-			InetAddress ipAddr[] = InetAddress.getAllByName(hostName);
-			for (int i = 0; i < ipAddr.length; i++) {
-				ip = ipAddr[i].getHostAddress();
-				if (ip.startsWith(LOCAL_IP_STAR_STR)) {
-					break;
-				}
-			}
-			if (ip == null) {
-				ip = ipAddr[0].getHostAddress();
-			}
+    static
+    {
+        String ip = null;
+        String hostName = null;
+        try
+        {
+            hostName = InetAddress.getLocalHost().getHostName();
+            InetAddress ipAddr[] = InetAddress.getAllByName(hostName);
+            for (int i = 0; i < ipAddr.length; i++ )
+            {
+                ip = ipAddr[i].getHostAddress();
+                if (ip.startsWith(LOCAL_IP_STAR_STR))
+                {
+                    break;
+                }
+            }
+            if (ip == null)
+            {
+                ip = ipAddr[0].getHostAddress();
+            }
 
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
+        }
+        catch (UnknownHostException e)
+        {
+            e.printStackTrace();
+        }
 
-		LOCAL_IP = ip;
-		HOST_NAME = hostName;
+        LOCAL_IP = ip;
+        HOST_NAME = hostName;
 
-	}
+    }
 
-	/**
-	 * ÏµÍ³µÄ±¾µØIPµØÖ·
-	 */
-	public static final String LOCAL_IP;
+    /**
+     * ç³»ç»Ÿçš„æœ¬åœ°IPåœ°å€
+     */
+    public static final String LOCAL_IP;
 
-	/**
-	 * ÏµÍ³µÄ±¾µØ·şÎñÆ÷Ãû
-	 */
-	public static final String HOST_NAME;
+    /**
+     * ç³»ç»Ÿçš„æœ¬åœ°æœåŠ¡å™¨å
+     */
+    public static final String HOST_NAME;
 
-	/**
-	 * <p>
-	 * »ñÈ¡¿Í»§¶ËµÄIPµØÖ·µÄ·½·¨ÊÇ£ºrequest.getRemoteAddr()£¬ÕâÖÖ·½·¨ÔÚ´ó²¿·ÖÇé¿öÏÂ¶¼ÊÇÓĞĞ§µÄ¡£
-	 * µ«ÊÇÔÚÍ¨¹ıÁËApache,SquidµÈ·´Ïò´úÀíÈí¼ş¾Í²»ÄÜ»ñÈ¡µ½¿Í»§¶ËµÄÕæÊµIPµØÖ·ÁË£¬Èç¹ûÍ¨¹ıÁË¶à¼¶·´Ïò´úÀíµÄ»°£¬
-	 * X-Forwarded-ForµÄÖµ²¢²»Ö¹Ò»¸ö£¬¶øÊÇÒ»´®IPÖµ£¬ ¾¿¾¹ÄÄ¸ö²ÅÊÇÕæÕıµÄÓÃ»§¶ËµÄÕæÊµIPÄØ£¿
-	 * ´ğ°¸ÊÇÈ¡X-Forwarded-ForÖĞµÚÒ»¸ö·ÇunknownµÄÓĞĞ§IP×Ö·û´®¡£
-	 * ÀıÈç£ºX-Forwarded-For£º192.168.1.110, 192.168.1.120,
-	 * 192.168.1.130, 192.168.1.100 ÓÃ»§ÕæÊµIPÎª£º 192.168.1.110
-	 * </p>
-	 *
-	 * @param request
-	 * @return
-	 */
-	public static String getIpAddr(HttpServletRequest request) {
-		String ip = request.getHeader("x-forwarded-for");
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("WL-Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("HTTP_CLIENT_IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-		}
+    /**
+     * <p>
+     * è·å–å®¢æˆ·ç«¯çš„IPåœ°å€çš„æ–¹æ³•æ˜¯ï¼šrequest.getRemoteAddr()ï¼Œè¿™ç§æ–¹æ³•åœ¨å¤§éƒ¨åˆ†æƒ…å†µä¸‹éƒ½æ˜¯æœ‰æ•ˆçš„ã€‚
+     * ä½†æ˜¯åœ¨é€šè¿‡äº†Apache,Squidç­‰åå‘ä»£ç†è½¯ä»¶å°±ä¸èƒ½è·å–åˆ°å®¢æˆ·ç«¯çš„çœŸå®IPåœ°å€äº†ï¼Œå¦‚æœé€šè¿‡äº†å¤šçº§åå‘ä»£ç†çš„è¯ï¼Œ X-Forwarded-Forçš„å€¼å¹¶ä¸æ­¢ä¸€ä¸ªï¼Œè€Œæ˜¯ä¸€ä¸²IPå€¼ï¼Œ
+     * ç©¶ç«Ÿå“ªä¸ªæ‰æ˜¯çœŸæ­£çš„ç”¨æˆ·ç«¯çš„çœŸå®IPå‘¢ï¼Ÿ ç­”æ¡ˆæ˜¯å–X-Forwarded-Forä¸­ç¬¬ä¸€ä¸ªéunknownçš„æœ‰æ•ˆIPå­—ç¬¦ä¸²ã€‚
+     * ä¾‹å¦‚ï¼šX-Forwarded-Forï¼š192.168.1.110, 192.168.1.120, 192.168.1.130, 192.168.1.100 ç”¨æˆ·çœŸå®IPä¸ºï¼š
+     * 192.168.1.110
+     * </p>
+     *
+     * @param request
+     * @return
+     */
+    public static String getIpAddr(HttpServletRequest request)
+    {
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
+        {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
+        {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
+        {
+            ip = request.getHeader("HTTP_CLIENT_IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
+        {
+            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+        }
 
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getRemoteAddr();
-			if (ip.equals("127.0.0.1")) {
-				/** ¸ù¾İÍø¿¨È¡±¾»úÅäÖÃµÄIP */
-				InetAddress inet = null;
-				try {
-					inet = InetAddress.getLocalHost();
-					ip = inet.getHostAddress();
-				} catch (UnknownHostException e) {
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
+        {
+            ip = request.getRemoteAddr();
+            if (ip.equals("127.0.0.1"))
+            {
+                /** æ ¹æ®ç½‘å¡å–æœ¬æœºé…ç½®çš„IP */
+                InetAddress inet = null;
+                try
+                {
+                    inet = InetAddress.getLocalHost();
+                    ip = inet.getHostAddress();
+                }
+                catch (UnknownHostException e)
+                {
 
-				}
-			}
-		}
-		/**
-		 * ¶ÔÓÚÍ¨¹ı¶à¸ö´úÀíµÄÇé¿ö£¬ µÚÒ»¸öIPÎª¿Í»§¶ËÕæÊµIP,¶à¸öIP°´ÕÕ','·Ö¸î "***.***.***.***".length() =
-		 * 15
-		 */
-		if (ip != null && ip.length() > 15) {
-			if (ip.indexOf(",") > 0) {
-				ip = ip.substring(0, ip.indexOf(","));
-			}
-		}
-		return ip;
-	}
+                }
+            }
+        }
+        /**
+         * å¯¹äºé€šè¿‡å¤šä¸ªä»£ç†çš„æƒ…å†µï¼Œ ç¬¬ä¸€ä¸ªIPä¸ºå®¢æˆ·ç«¯çœŸå®IP,å¤šä¸ªIPæŒ‰ç…§','åˆ†å‰² "***.***.***.***".length() = 15
+         */
+        if (ip != null && ip.length() > 15)
+        {
+            if (ip.indexOf(",") > 0)
+            {
+                ip = ip.substring(0, ip.indexOf(","));
+            }
+        }
+        return ip;
+    }
+
+    /** Prevent instantiation */
+    private IPUtils()
+    {}
 }

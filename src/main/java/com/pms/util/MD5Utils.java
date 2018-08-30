@@ -1,5 +1,6 @@
 package com.pms.util;
 
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,125 +10,145 @@ import java.security.NoSuchAlgorithmException;
 
 import org.apache.commons.lang.StringUtils;
 
+
 /**
- * 
- * @author Taowd
- * ¹¦        ÄÜ£ºmd5¹¤¾ßÀà
- * ±àĞ´Ê±¼ä£º2017-5-5-ÏÂÎç2:26:29
+ * @author Taowd åŠŸ èƒ½ï¼šmd5å·¥å…·ç±» ç¼–å†™æ—¶é—´ï¼š2017-5-5-ä¸‹åˆ2:26:29
  */
-public class MD5Utils {
-	/**
-	 * Ä¬ÈÏµÄÃÜÂë×Ö·û´®×éºÏ£¬ÓÃÀ´½«×Ö½Ú×ª»»³É 16 ½øÖÆ±íÊ¾µÄ×Ö·û,ApacheĞ£ÑéÏÂÔØµÄÎÄ¼şµÄÕıÈ·ĞÔÓÃµÄ¾ÍÊÇÄ¬ÈÏµÄÕâ¸ö×éºÏ
-	 */
-	protected static char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6',
-			'7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-	protected static MessageDigest messagedigest = null;
-	static {
-		try {
-			messagedigest = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-	}
+public class MD5Utils
+{
+    /**
+     * é»˜è®¤çš„å¯†ç å­—ç¬¦ä¸²ç»„åˆï¼Œç”¨æ¥å°†å­—èŠ‚è½¬æ¢æˆ 16 è¿›åˆ¶è¡¨ç¤ºçš„å­—ç¬¦,Apacheæ ¡éªŒä¸‹è½½çš„æ–‡ä»¶çš„æ­£ç¡®æ€§ç”¨çš„å°±æ˜¯é»˜è®¤çš„è¿™ä¸ªç»„åˆ
+     */
+    protected static char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a',
+        'b', 'c', 'd', 'e', 'f'};
 
-	private static String bufferToHex(byte bytes[]) {
-		return bufferToHex(bytes, 0, bytes.length);
-	}
+    protected static MessageDigest messagedigest = null;
+    static
+    {
+        try
+        {
+            messagedigest = MessageDigest.getInstance("MD5");
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
-	private static String bufferToHex(byte bytes[], int m, int n) {
-		StringBuffer stringbuffer = new StringBuffer(2 * n);
-		int k = m + n;
-		for (int l = m; l < k; l++) {
-			appendHexPair(bytes[l], stringbuffer);
-		}
-		return stringbuffer.toString();
-	}
+    private static String bufferToHex(byte bytes[])
+    {
+        return bufferToHex(bytes, 0, bytes.length);
+    }
 
-	private static void appendHexPair(byte bt, StringBuffer stringbuffer) {
-		char c0 = hexDigits[(bt & 0xf0) >> 4];// È¡×Ö½ÚÖĞ¸ß 4 Î»µÄÊı×Ö×ª»»
-		// ÎªÂß¼­ÓÒÒÆ£¬½«·ûºÅÎ»Ò»ÆğÓÒÒÆ,´Ë´¦Î´·¢ÏÖÁ½ÖÖ·ûºÅÓĞºÎ²»Í¬
-		char c1 = hexDigits[bt & 0xf];// È¡×Ö½ÚÖĞµÍ 4 Î»µÄÊı×Ö×ª»»
-		stringbuffer.append(c0);
-		stringbuffer.append(c1);
-	}
+    private static String bufferToHex(byte bytes[], int m, int n)
+    {
+        StringBuffer stringbuffer = new StringBuffer(2 * n);
+        int k = m + n;
+        for (int l = m; l < k; l++ )
+        {
+            appendHexPair(bytes[l], stringbuffer);
+        }
+        return stringbuffer.toString();
+    }
 
-	private static final String toHex(byte hash[]) {
-		if (hash == null) {
-			return null;
-		}
-		StringBuffer buf = new StringBuffer(hash.length * 2);
-		int i;
+    private static void appendHexPair(byte bt, StringBuffer stringbuffer)
+    {
+        char c0 = hexDigits[(bt & 0xf0) >> 4];// å–å­—èŠ‚ä¸­é«˜ 4 ä½çš„æ•°å­—è½¬æ¢
+        // ä¸ºé€»è¾‘å³ç§»ï¼Œå°†ç¬¦å·ä½ä¸€èµ·å³ç§»,æ­¤å¤„æœªå‘ç°ä¸¤ç§ç¬¦å·æœ‰ä½•ä¸åŒ
+        char c1 = hexDigits[bt & 0xf];// å–å­—èŠ‚ä¸­ä½ 4 ä½çš„æ•°å­—è½¬æ¢
+        stringbuffer.append(c0);
+        stringbuffer.append(c1);
+    }
 
-		for (i = 0; i < hash.length; i++) {
-			if ((hash[i] & 0xff) < 0x10) {
-				buf.append("0");
-			}
-			buf.append(Long.toString(hash[i] & 0xff, 16));
-		}
-		return buf.toString();
-	}
+    private static final String toHex(byte hash[])
+    {
+        if (hash == null)
+        {
+            return null;
+        }
+        StringBuffer buf = new StringBuffer(hash.length * 2);
+        int i;
 
-	/**
-	 * »ñÈ¡ÎÄ¼şMD5Öµ
-	 * @param file
-	 * @return
-	 * @throws IOException
-	 */
-	public static String getFileMD5String(File file) throws IOException {
-		InputStream fis;
-		fis = new FileInputStream(file);
-		byte[] buffer = new byte[1024];
-		int numRead = 0;
-		while ((numRead = fis.read(buffer)) > 0) {
-			messagedigest.update(buffer, 0, numRead);
-		}
-		fis.close();
-		return bufferToHex(messagedigest.digest());
-	}
+        for (i = 0; i < hash.length; i++ )
+        {
+            if ((hash[i] & 0xff) < 0x10)
+            {
+                buf.append("0");
+            }
+            buf.append(Long.toString(hash[i] & 0xff, 16));
+        }
+        return buf.toString();
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º»ñÈ¡×Ö·û´®µÄHashÖµ
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-25-ÏÂÎç7:39:08
-	 * @param s
-	 * @return
-	 */
-	public static String hash(String s) {
-		try {
-			return new String(toHex(getStringMD5(s).getBytes("UTF-8"))
-					.getBytes("UTF-8"), "UTF-8");
-		} catch (Exception e) {
-			return s;
-		}
-	}
+    /**
+     * è·å–æ–‡ä»¶MD5å€¼
+     * 
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    public static String getFileMD5String(File file)
+        throws IOException
+    {
+        InputStream fis;
+        fis = new FileInputStream(file);
+        byte[] buffer = new byte[1024];
+        int numRead = 0;
+        while ((numRead = fis.read(buffer)) > 0)
+        {
+            messagedigest.update(buffer, 0, numRead);
+        }
+        fis.close();
+        return bufferToHex(messagedigest.digest());
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º»ñÈ¡×Ö·û´®µÄMD5¼ÓÃÜÖµ£¬32Î»Ğ¡Ğ´
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-2-ÏÂÎç5:34:24
-	 * @param str
-	 * @return
-	 */
-	public static String getStringMD5(String str) {
-		if (StringUtils.isEmpty(str)) {
-			return "";
-		}
-		byte[] buffer = str.getBytes();
-		messagedigest.update(buffer);
-		return bufferToHex(messagedigest.digest());
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè·å–å­—ç¬¦ä¸²çš„Hashå€¼ å¼€å‘æ—¥æœŸï¼š2017-4-25-ä¸‹åˆ7:39:08
+     * 
+     * @param s
+     * @return
+     */
+    public static String hash(String s)
+    {
+        try
+        {
+            return new String(toHex(getStringMD5(s).getBytes("UTF-8")).getBytes("UTF-8"), "UTF-8");
+        }
+        catch (Exception e)
+        {
+            return s;
+        }
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¼ÓÃÜ²âÊÔ
-	 * ¿ª·¢ÈÕÆÚ£º2017-5-2-ÏÂÎç5:36:55
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		System.out.println(MD5Utils.getStringMD5("admin"));// 21232f297a57a5a743894a0e4a801fc3
-		System.out.println(MD5Utils.hash("123456"));// 21232f297a57a5a743894a0e4a801fc3
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šè·å–å­—ç¬¦ä¸²çš„MD5åŠ å¯†å€¼ï¼Œ32ä½å°å†™ å¼€å‘æ—¥æœŸï¼š2017-5-2-ä¸‹åˆ5:34:24
+     * 
+     * @param str
+     * @return
+     */
+    public static String getStringMD5(String str)
+    {
+        if (StringUtils.isEmpty(str))
+        {
+            return "";
+        }
+        byte[] buffer = str.getBytes();
+        messagedigest.update(buffer);
+        return bufferToHex(messagedigest.digest());
+    }
+
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šåŠ å¯†æµ‹è¯• å¼€å‘æ—¥æœŸï¼š2017-5-2-ä¸‹åˆ5:36:55
+     * 
+     * @param args
+     */
+    public static void main(String[] args)
+    {
+        System.out.println(MD5Utils.getStringMD5("admin"));// 21232f297a57a5a743894a0e4a801fc3
+        System.out.println(MD5Utils.hash("123456"));// 21232f297a57a5a743894a0e4a801fc3
+    }
+
+    /** Prevent instantiation */
+    private MD5Utils()
+    {}
 }

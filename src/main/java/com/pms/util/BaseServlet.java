@@ -1,5 +1,6 @@
 package com.pms.util;
 
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -7,68 +8,81 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+
 /**
- * @author Taowd
- * ¹¦        ÄÜ£ºServletµÄÒ»¸ö´¦Àí»ùÀà
- * ±àĞ´Ê±¼ä£º2017-5-3-ÏÂÎç2:05:21
+ * @author Taowd åŠŸ èƒ½ï¼šServletçš„ä¸€ä¸ªå¤„ç†åŸºç±» ç¼–å†™æ—¶é—´ï¼š2017-5-3-ä¸‹åˆ2:05:21
  */
-public abstract class BaseServlet extends HttpServlet {
+public abstract class BaseServlet extends HttpServlet
+{
     private static final long serialVersionUID = 1L;
 
     @Override
-    protected void service(HttpServletRequest request,
-                           HttpServletResponse response) throws ServletException, IOException {
+    protected void service(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
         request.setCharacterEncoding("utf-8");
         /**
-         * 1¡¢»ñÈ¡²ÎÊı£¬ÓÃÓÚÊ¶±ğÓÃ»§ÏëÇëÇóÄÇ¸ö·½·¨£¿
-         * 2¡¢È»ºóÅĞ¶ÏÄÇ¸ö·½·¨Ê¹ÎÒÃÇÏëµ÷ÓÃµÄ£¬µ÷ÓÃ½øĞĞ´¦Àí
+         * 1ã€è·å–å‚æ•°ï¼Œç”¨äºè¯†åˆ«ç”¨æˆ·æƒ³è¯·æ±‚é‚£ä¸ªæ–¹æ³•ï¼Ÿ 2ã€ç„¶ååˆ¤æ–­é‚£ä¸ªæ–¹æ³•ä½¿æˆ‘ä»¬æƒ³è°ƒç”¨çš„ï¼Œè°ƒç”¨è¿›è¡Œå¤„ç†
          */
         String methodName = request.getParameter("method");
-        if (methodName == null || methodName.trim().isEmpty()) {
-            throw new RuntimeException("ÄãÃ»ÓĞ´«µİmethod²ÎÊı£¡ÎŞ·¨È·¶¨ÄúÏëÒªµ÷ÓÃµÄ·½·¨£¡");
+        if (methodName == null || methodName.trim().isEmpty())
+        {
+            throw new RuntimeException("ä½ æ²¡æœ‰ä¼ é€’methodå‚æ•°ï¼æ— æ³•ç¡®å®šæ‚¨æƒ³è¦è°ƒç”¨çš„æ–¹æ³•ï¼");
         }
 
         /**
-         * µÃµ½·½·¨Ãû£¬ÊÇ·ñÍ¨¹ı·´Éäµ÷ÓÃ·½·¨
+         * å¾—åˆ°æ–¹æ³•åï¼Œæ˜¯å¦é€šè¿‡åå°„è°ƒç”¨æ–¹æ³•
          */
         Class<? extends BaseServlet> c = this.getClass();
         Method method = null;
-        try {
-            method = c.getMethod(methodName, HttpServletRequest.class,
-                    HttpServletResponse.class);
-        } catch (Exception e) {
-            throw new RuntimeException("ÄãÒªµ÷ÓÃµÄ·½·¨:" + methodName + ":²»´æÔÚ");
+        try
+        {
+            method = c.getMethod(methodName, HttpServletRequest.class, HttpServletResponse.class);
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException("ä½ è¦è°ƒç”¨çš„æ–¹æ³•:" + methodName + ":ä¸å­˜åœ¨");
         }
 
-        try {
-            Log4jHelper
-                    .info("½øÈëµ÷¶ÈServlet´¦ÀíÀà£¬´¦Àí³É¹¦£¬ÓÉ£º[" + methodName + "]·½·¨½øĞĞÖ´ĞĞ");
-            // ½øĞĞ·´Éäµ÷ÓÃ
-            String result = (String) method.invoke(this, request, response);
+        try
+        {
+            Log4jHelper.info("è¿›å…¥è°ƒåº¦Servletå¤„ç†ç±»ï¼Œå¤„ç†æˆåŠŸï¼Œç”±ï¼š[" + methodName + "]æ–¹æ³•è¿›è¡Œæ‰§è¡Œ");
+            // è¿›è¡Œåå°„è°ƒç”¨
+            String result = (String)method.invoke(this, request, response);
 
-            if (result == null || result.trim().isEmpty()) {
+            if (result == null || result.trim().isEmpty())
+            {
                 return;
             }
 
-            if (result.contains(":")) {
+            if (result.contains(":"))
+            {
                 int index = result.indexOf(":");
-                String s = result.substring(0, index);// È¡³öÃ°ºÅÇ°×º
-                String path = result.substring(index + 1);// È¡³öÃ°ºÅºó×º
-                if ("r".equals(s)) {
+                String s = result.substring(0, index);// å–å‡ºå†’å·å‰ç¼€
+                String path = result.substring(index + 1);// å–å‡ºå†’å·åç¼€
+                if ("r".equals(s))
+                {
                     response.sendRedirect(request.getContextPath() + path);
-                } else if ("f".equals(s)) {
-                    request.getRequestDispatcher(path).forward(request,
-                            response);
-                } else {
-                    throw new RuntimeException("Ôİ²»Ö§³Ö");
+                }
+                else if ("f".equals(s))
+                {
+                    request.getRequestDispatcher(path).forward(request, response);
+                }
+                else
+                {
+                    throw new RuntimeException("æš‚ä¸æ”¯æŒ");
                 }
 
-            } else// Ã»ÓĞÃ°ºÅ£¬Ä¬ÈÏ×ª·¢
+            }
+            else// æ²¡æœ‰å†’å·ï¼Œé»˜è®¤è½¬å‘
             {
                 request.getRequestDispatcher(result).forward(request, response);
             }
-        } catch (Exception e) {
-            System.out.println("ÄãÒªµ÷ÓÃµÄ·½·¨:" + methodName + ":ÄÚ²¿Òì³£");
+        }
+        catch (Exception e)
+        {
+            System.out.println("ä½ è¦è°ƒç”¨çš„æ–¹æ³•:" + methodName + ":å†…éƒ¨å¼‚å¸¸");
             throw new RuntimeException(e);
         }
 

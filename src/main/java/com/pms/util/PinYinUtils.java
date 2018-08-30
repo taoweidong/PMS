@@ -1,5 +1,6 @@
 package com.pms.util;
 
+
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
@@ -7,112 +8,140 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
+
 /**
- * 
- * @author Taowd
- * ¹¦        ÄÜ£ºÆ´Òô¹¤¾ßÀà
- * ±àĞ´Ê±¼ä£º2017-4-22-ÏÂÎç12:08:24
+ * @author Taowd åŠŸ èƒ½ï¼šæ‹¼éŸ³å·¥å…·ç±» ç¼–å†™æ—¶é—´ï¼š2017-4-22-ä¸‹åˆ12:08:24
  */
-public class PinYinUtils {
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º½«×Ö·û´®ÖĞµÄÖĞÎÄ×ª»¯ÎªÆ´Òô,ÆäËû×Ö·û²»±ä
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-22-ÏÂÎç12:08:37
-	 * @param inputString  ´ı×ªµÄ×Ö·û×ª
-	 * @return
-	 */
-	public static String getPingYin(String inputString) {
-		HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
-		format.setCaseType(HanyuPinyinCaseType.LOWERCASE);
-		format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
-		format.setVCharType(HanyuPinyinVCharType.WITH_V);
+public class PinYinUtils
+{
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šå°†å­—ç¬¦ä¸²ä¸­çš„ä¸­æ–‡è½¬åŒ–ä¸ºæ‹¼éŸ³,å…¶ä»–å­—ç¬¦ä¸å˜ å¼€å‘æ—¥æœŸï¼š2017-4-22-ä¸‹åˆ12:08:37
+     * 
+     * @param inputString
+     *            å¾…è½¬çš„å­—ç¬¦è½¬
+     * @return
+     */
+    public static String getPingYin(String inputString)
+    {
+        HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
+        format.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+        format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+        format.setVCharType(HanyuPinyinVCharType.WITH_V);
 
-		char[] input = inputString.trim().toCharArray();
-		String output = "";
+        char[] input = inputString.trim().toCharArray();
+        String output = "";
 
-		try {
-			for (int i = 0; i < input.length; i++) {
-				if (Character.toString(input[i]).matches("[\\u4E00-\\u9FA5]+")) {
-					String[] temp = PinyinHelper.toHanyuPinyinStringArray(input[i], format);
-					output += temp[0];
-				} else
-					output += Character.toString(input[i]);
-			}
-		} catch (BadHanyuPinyinOutputFormatCombination e) {
-			e.printStackTrace();
-		}
-		return output;
-	}
+        try
+        {
+            for (int i = 0; i < input.length; i++ )
+            {
+                if (Character.toString(input[i]).matches("[\\u4E00-\\u9FA5]+"))
+                {
+                    String[] temp = PinyinHelper.toHanyuPinyinStringArray(input[i], format);
+                    output += temp[0];
+                }
+                else
+                    output += Character.toString(input[i]);
+            }
+        }
+        catch (BadHanyuPinyinOutputFormatCombination e)
+        {
+            e.printStackTrace();
+        }
+        return output;
+    }
 
-	/**
-	 * »ñÈ¡ºº×Ö´®Æ´ÒôÊ××ÖÄ¸£¬Ó¢ÎÄ×Ö·û²»±ä
-	 * 
-	 * @param chinese
-	 *            ºº×Ö´®
-	 * @return ººÓïÆ´ÒôÊ××ÖÄ¸
-	 */
-	public static String getFirstSpell(String chinese) {
-		StringBuffer pybf = new StringBuffer();
-		char[] arr = chinese.toCharArray();
-		HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
-		defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
-		defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
-		for (int i = 0; i < arr.length; i++) {
-			if (arr[i] > 128) {
-				try {
-					String[] temp = PinyinHelper.toHanyuPinyinStringArray(arr[i], defaultFormat);
-					if (temp != null) {
-						pybf.append(temp[0].charAt(0));
-					}
-				} catch (BadHanyuPinyinOutputFormatCombination e) {
-					e.printStackTrace();
-				}
-			} else {
-				pybf.append(arr[i]);
-			}
-		}
-		return pybf.toString().replaceAll("\\W", "").trim();
-	}
+    /**
+     * è·å–æ±‰å­—ä¸²æ‹¼éŸ³é¦–å­—æ¯ï¼Œè‹±æ–‡å­—ç¬¦ä¸å˜
+     * 
+     * @param chinese
+     *            æ±‰å­—ä¸²
+     * @return æ±‰è¯­æ‹¼éŸ³é¦–å­—æ¯
+     */
+    public static String getFirstSpell(String chinese)
+    {
+        StringBuffer pybf = new StringBuffer();
+        char[] arr = chinese.toCharArray();
+        HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
+        defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+        defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+        for (int i = 0; i < arr.length; i++ )
+        {
+            if (arr[i] > 128)
+            {
+                try
+                {
+                    String[] temp = PinyinHelper.toHanyuPinyinStringArray(arr[i], defaultFormat);
+                    if (temp != null)
+                    {
+                        pybf.append(temp[0].charAt(0));
+                    }
+                }
+                catch (BadHanyuPinyinOutputFormatCombination e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                pybf.append(arr[i]);
+            }
+        }
+        return pybf.toString().replaceAll("\\W", "").trim();
+    }
 
-	/**
-	 * »ñÈ¡ºº×Ö´®Æ´Òô£¬Ó¢ÎÄ×Ö·û²»±ä
-	 * 
-	 * @param chinese
-	 *            ºº×Ö´®
-	 * @return ººÓïÆ´Òô
-	 */
-	public static String getFullSpell(String chinese) {
-		StringBuffer pybf = new StringBuffer();
-		char[] arr = chinese.toCharArray();
-		HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
-		defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
-		defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
-		for (int i = 0; i < arr.length; i++) {
-			if (arr[i] > 128) {
-				try {
-					String[] ca = PinyinHelper.toHanyuPinyinStringArray(arr[i], defaultFormat);
-					String temp = ca == null ? "" : ca[0];
-					if (temp != null) {
-						pybf.append(temp);
-					}
-				} catch (BadHanyuPinyinOutputFormatCombination e) {
-					e.printStackTrace();
-				}
-			} else {
-				pybf.append(arr[i]);
-			}
-		}
-		return pybf.toString();
-	}
+    /**
+     * è·å–æ±‰å­—ä¸²æ‹¼éŸ³ï¼Œè‹±æ–‡å­—ç¬¦ä¸å˜
+     * 
+     * @param chinese
+     *            æ±‰å­—ä¸²
+     * @return æ±‰è¯­æ‹¼éŸ³
+     */
+    public static String getFullSpell(String chinese)
+    {
+        StringBuffer pybf = new StringBuffer();
+        char[] arr = chinese.toCharArray();
+        HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
+        defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+        defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+        for (int i = 0; i < arr.length; i++ )
+        {
+            if (arr[i] > 128)
+            {
+                try
+                {
+                    String[] ca = PinyinHelper.toHanyuPinyinStringArray(arr[i], defaultFormat);
+                    String temp = ca == null ? "" : ca[0];
+                    if (temp != null)
+                    {
+                        pybf.append(temp);
+                    }
+                }
+                catch (BadHanyuPinyinOutputFormatCombination e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            else
+            {
+                pybf.append(arr[i]);
+            }
+        }
+        return pybf.toString();
+    }
 
-	public static void main(String[] args) {
-		String a = getFullSpell("ÌìÂíÔ°Çø£±¶°");
-		String b = getPingYin("ÕÅÈı");
-		String c = getFullSpell("ÕÅÈı");
+    public static void main(String[] args)
+    {
+        String a = getFullSpell("å¤©é©¬å›­åŒºï¼‘æ ‹");
+        String b = getPingYin("å¼ ä¸‰");
+        String c = getFullSpell("å¼ ä¸‰");
 
-		System.out.println(a);
-		System.out.println(b);
-		System.out.println(c);
-	}
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
+    }
+
+    /** Prevent instantiation */
+    private PinYinUtils()
+    {}
 }

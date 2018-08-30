@@ -1,66 +1,82 @@
 package com.pms.util;
 
+
 import java.util.UUID;
 
+
 /**
- * 
- * @author Taowd
- * ¹¦        ÄÜ£ºString¹¤¾ßÀà
- * ±àĞ´Ê±¼ä£º2017-5-5-ÏÂÎç2:26:44
+ * @author Taowd åŠŸ èƒ½ï¼šStringå·¥å…·ç±» ç¼–å†™æ—¶é—´ï¼š2017-5-5-ä¸‹åˆ2:26:44
  */
-public class StringUtil {
-	/**
-	 * ¹¦ÄÜ£ºÅĞ¶Ï×Ö·û´®strÊÇ·ñÎª¿Õ»òÕßnull
-	 * @param str
-	 * @return
-	 */
-	public static boolean isEmpty(String str) {
-		if ("".equals(str) || str == null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+public class StringUtil
+{
+    /**
+     * åŠŸèƒ½ï¼šåˆ¤æ–­å­—ç¬¦ä¸²stræ˜¯å¦ä¸ºç©ºæˆ–è€…null
+     * 
+     * @param str
+     * @return
+     */
+    public static boolean isEmpty(String str)
+    {
+        if ("".equals(str) || str == null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	public static boolean isNotEmpty(String str) {
-		if (!"".equals(str) && str != null) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+    public static boolean isNotEmpty(String str)
+    {
+        if (!"".equals(str) && str != null)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£ºÉú³ÉÒ»¸öUUID
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-19-ÏÂÎç8:20:01
-	 * @return
-	 * @throws Exception 
-	 */
-	public static String GetUUID() throws Exception {
-		return UUID.randomUUID().toString().replace("-", "");
-	}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šç”Ÿæˆä¸€ä¸ªUUID å¼€å‘æ—¥æœŸï¼š2017-4-19-ä¸‹åˆ8:20:01
+     * 
+     * @return
+     * @throws Exception
+     */
+    public static String GetUUID()
+        throws Exception
+    {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
 
-	/**
-	 * 
-	 * Author:Taowd
-	 * ¹¦ÄÜ£º¸ñÊ½»¯É¾³ıÊı¾İ delIds
-	 * ¿ª·¢ÈÕÆÚ£º2017-4-19-ÏÂÎç8:56:09
-	 * @param delIds
-	 * @return
-	 */
-	public static String FormatDeleteDelIds(String delIds) {
-		String[] str = delIds.split(",");
-		String deleteStr = "";
-		for (int i = 0; i < str.length; i++) {
-			if (i == str.length - 1) {
-				deleteStr += "'" + str[i] + "'";
-			} else {
-				deleteStr += "'" + str[i] + "',";
-			}
-		}
+    /**
+     * Author:Taowd åŠŸèƒ½ï¼šæ ¼å¼åŒ–åˆ é™¤æ•°æ® delIds å¼€å‘æ—¥æœŸï¼š2017-4-19-ä¸‹åˆ8:56:09
+     * 
+     * @param delIds
+     * @return
+     */
+    public static String FormatDeleteDelIds(String delIds)
+    {
+        String[] str = delIds.split(",");
+        String deleteStr = "";
+        for (int i = 0; i < str.length; i++ )
+        {
+            if (i == str.length - 1)
+            {
+                deleteStr += "'" + str[i] + "'";
+            }
+            else
+            {
+                deleteStr += "'" + str[i] + "',";
+            }
+        }
 
-		return deleteStr;
-	}
+        return deleteStr;
+    }
+
+    /** Prevent instantiation */
+    private StringUtil()
+    {}
 }

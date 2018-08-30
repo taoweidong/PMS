@@ -1,5 +1,6 @@
 package com.pms.servlet;
 
+
 import java.io.IOException;
 import java.sql.Connection;
 
@@ -20,91 +21,116 @@ import com.pms.util.DbUtils;
 import com.pms.util.Log4jHelper;
 import com.pms.util.ResponseUtil;
 
+
 /**
- * 
- * @author Taowd
- * ¹¦        ÄÜ£ºĞŞ¸ÄÓÃ»§µÄÃÜÂëµÄÂß¼­
- * ±àĞ´Ê±¼ä£º2017-4-12-ÏÂÎç1:38:24
+ * @author Taowd åŠŸ èƒ½ï¼šä¿®æ”¹ç”¨æˆ·çš„å¯†ç çš„é€»è¾‘ ç¼–å†™æ—¶é—´ï¼š2017-4-12-ä¸‹åˆ1:38:24
  */
-public class PasswordModifyServlet extends HttpServlet {
+public class PasswordModifyServlet extends HttpServlet
+{
 
-	private static final long serialVersionUID = 1L;
-	EmployeeDao empDao = new EmployeeDao();
-	AdministratorDao adminDao = new AdministratorDao();
+    private static final long serialVersionUID = 1L;
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+    EmployeeDao empDao = new EmployeeDao();
 
-		this.doPost(request, response);
-	}
+    AdministratorDao adminDao = new AdministratorDao();
 
-	public void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		Log4jHelper.info("--------------------ĞŞ¸ÄÃÜÂë¿ØÖÆÆ÷-----------------------");
-		String passwd = request.getParameter("newPassword");
-		HttpSession session = request.getSession();
-		String ro = (String) session.getAttribute("userRole");
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
 
-		int saveNums = 0;
-		if ("user".equals(ro))// ÆÕÍ¨ÓÃ»§ĞŞ¸ÄÃÜÂë
-		{
-			Employee userInfo = (Employee) session.getAttribute("currentUser");
-			userInfo.setEmp_pwd(AESUtil.parseByte2HexStr(AESUtil
-					.encrypt(passwd)));
+        this.doPost(request, response);
+    }
 
-			Connection con = null;
-			JSONObject result = new JSONObject();
-			try {
-				con = DbUtils.getConnection();
-				saveNums = EmployeeDao.EmployeeModify(con, userInfo);
-				if (saveNums > 0) {
-					result.put("success", true);
-				} else {
-					result.put("success", false);
-					result.put("errorMsg", "ĞŞ¸ÄÃÜÂëÊ§°Ü£¡");
-				}
-				ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException,
+        IOException
+    {
+        Log4jHelper.info("--------------------ä¿®æ”¹å¯†ç æ§åˆ¶å™¨-----------------------");
+        String passwd = request.getParameter("newPassword");
+        HttpSession session = request.getSession();
+        String ro = (String)session.getAttribute("userRole");
 
-			}
-			Log4jHelper.info("ÆÕÍ¨ÓÃ»§ĞÅÏ¢£º" + userInfo.toString());
+        int saveNums = 0;
+        if ("user".equals(ro))// æ™®é€šç”¨æˆ·ä¿®æ”¹å¯†ç 
+        {
+            Employee userInfo = (Employee)session.getAttribute("currentUser");
+            userInfo.setEmp_pwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(passwd)));
 
-		} else // ¹ÜÀíÔ±ĞŞ¸ÄÃÜÂëÂß¼­
-		{
-			Administrator adminInfo = (Administrator) session
-					.getAttribute("currentUser");
-			adminInfo.setAdmin_pwd(AESUtil.parseByte2HexStr(AESUtil
-					.encrypt(passwd)));
-			Connection con = null;
-			JSONObject result = new JSONObject();
-			try {
-				con = DbUtils.getConnection();
-				saveNums = adminDao.AdminModifyPasswd(adminInfo);
-				if (saveNums > 0) {
-					result.put("success", true);
-				} else {
-					result.put("success", false);
-					result.put("errorMsg", "ĞŞ¸ÄÃÜÂëÊ§°Ü£¡");
-				}
-				ResponseUtil.write(response, result);// ·¢ËÍµ½¿Í»§¶Ë
+            Connection con = null;
+            JSONObject result = new JSONObject();
+            try
+            {
+                con = DbUtils.getConnection();
+                saveNums = EmployeeDao.EmployeeModify(con, userInfo);
+                if (saveNums > 0)
+                {
+                    result.put("success", true);
+                }
+                else
+                {
+                    result.put("success", false);
+                    result.put("errorMsg", "ä¿®æ”¹å¯†ç å¤±è´¥ï¼");
+                }
+                ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                try
+                {
+                    DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
 
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					DbUtils.CloseConn(con);// ¹Ø±ÕÁ¬½Ó
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-			Log4jHelper.info("¹ÜÀíÔ±ÓÃ»§ĞÅÏ¢£º" + adminInfo.toString());
-		}
-	}
+            }
+            Log4jHelper.info("æ™®é€šç”¨æˆ·ä¿¡æ¯ï¼š" + userInfo.toString());
+
+        }
+        else // ç®¡ç†å‘˜ä¿®æ”¹å¯†ç é€»è¾‘
+        {
+            Administrator adminInfo = (Administrator)session.getAttribute("currentUser");
+            adminInfo.setAdmin_pwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(passwd)));
+            Connection con = null;
+            JSONObject result = new JSONObject();
+            try
+            {
+                con = DbUtils.getConnection();
+                saveNums = adminDao.adminModifyPasswd(adminInfo);
+                if (saveNums > 0)
+                {
+                    result.put("success", true);
+                }
+                else
+                {
+                    result.put("success", false);
+                    result.put("errorMsg", "ä¿®æ”¹å¯†ç å¤±è´¥ï¼");
+                }
+                ResponseUtil.write(response, result);// å‘é€åˆ°å®¢æˆ·ç«¯
+
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            finally
+            {
+                try
+                {
+                    DbUtils.CloseConn(con);// å…³é—­è¿æ¥
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }
+            Log4jHelper.info("ç®¡ç†å‘˜ç”¨æˆ·ä¿¡æ¯ï¼š" + adminInfo.toString());
+        }
+    }
 }
