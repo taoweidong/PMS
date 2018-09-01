@@ -1,8 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
 
@@ -61,7 +60,7 @@
 			return;
 		}
 		var strIds = [];
-		for ( var i = 0; i < selectedRows.length; i++) {
+		for (var i = 0; i < selectedRows.length; i++) {
 			strIds.push(selectedRows[i].EMP_NO);
 		}
 		var ids = strIds.join(",");

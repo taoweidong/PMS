@@ -2,8 +2,7 @@
 	import="java.util.*,java.lang.*,com.pms.model.*;" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 			+ path + "/";
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -21,13 +20,11 @@
 	String ro = (String) session.getAttribute("userRole");
 
 	if ("user".equals(ro)) {
-		Employee userInfo = (Employee) session
-				.getAttribute("currentUser");
+		Employee userInfo = (Employee) session.getAttribute("currentUser");
 		pwd = userInfo.getEmp_pwd();
 
 	} else if ("admin".equals(ro)) {
-		Administrator adminInfo = (Administrator) session
-				.getAttribute("currentUser");
+		Administrator adminInfo = (Administrator) session.getAttribute("currentUser");
 		pwd = adminInfo.getAdmin_pwd();
 
 	}
@@ -88,7 +85,7 @@
 			return;
 		}
 		var strIds = [];
-		for ( var i = 0; i < selectedRows.length; i++) {
+		for (var i = 0; i < selectedRows.length; i++) {
 			strIds.push(selectedRows[i].EMP_NO);
 		}
 		var ids = strIds.join(",");

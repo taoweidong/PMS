@@ -27,3 +27,11 @@
  - 引入Mybatis框架
  - 引入SpringMVC框架
  
+# 注意事项
+> 不对应可能会报 *Unable to compile class for JSP* 的错误
+
+- jdk:jdk1.8.0
+- tomcat: apache-tomcat-6.0.35
+- STS: Version: 3.9.5.RELEASE
+- maven:apache-maven-3.5.0
+ 
