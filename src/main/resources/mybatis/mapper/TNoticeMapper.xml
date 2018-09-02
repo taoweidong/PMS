@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pms.mapper.TNoticeMapper" >
+  <resultMap id="BaseResultMap" type="com.pms.entity.TNotice" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="NOT_ID" property="notId" jdbcType="VARCHAR" />
+    <result column="NOT_TITLE" property="notTitle" jdbcType="VARCHAR" />
+    <result column="NOT_CONTENT" property="notContent" jdbcType="VARCHAR" />
+    <result column="NOT_DATE" property="notDate" jdbcType="VARCHAR" />
+    <result column="NOT_AUTHOR" property="notAuthor" jdbcType="VARCHAR" />
+    <result column="EXT1" property="ext1" jdbcType="VARCHAR" />
+    <result column="EXT2" property="ext2" jdbcType="VARCHAR" />
+    <result column="EXT3" property="ext3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    NOT_ID, NOT_TITLE, NOT_CONTENT, NOT_DATE, NOT_AUTHOR, EXT1, EXT2, EXT3
+  </sql>
+</mapper>

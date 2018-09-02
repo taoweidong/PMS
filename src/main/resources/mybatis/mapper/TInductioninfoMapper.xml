@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pms.mapper.TInductioninfoMapper" >
+  <resultMap id="BaseResultMap" type="com.pms.entity.TInductioninfo" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="IND_ID" property="indId" jdbcType="VARCHAR" />
+    <result column="EMP_NO" property="empNo" jdbcType="VARCHAR" />
+    <result column="POS_ID" property="posId" jdbcType="VARCHAR" />
+    <result column="IND_DATE" property="indDate" jdbcType="VARCHAR" />
+    <result column="IND_STATE" property="indState" jdbcType="VARCHAR" />
+    <result column="IND_ENDDATE" property="indEnddate" jdbcType="VARCHAR" />
+    <result column="EXT1" property="ext1" jdbcType="VARCHAR" />
+    <result column="EXT2" property="ext2" jdbcType="VARCHAR" />
+    <result column="EXT3" property="ext3" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pms.entity.TInductioninfo" extends="BaseResultMap" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="IND_Reasons" property="indReasons" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    IND_ID, EMP_NO, POS_ID, IND_DATE, IND_STATE, IND_ENDDATE, EXT1, EXT2, EXT3
+  </sql>
+  <sql id="Blob_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    IND_Reasons
+  </sql>
+</mapper>

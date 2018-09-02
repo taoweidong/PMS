@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pms.mapper.TEmployeeMapper" >
+  <resultMap id="BaseResultMap" type="com.pms.entity.TEmployee" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="EMP_NO" property="empNo" jdbcType="VARCHAR" />
+    <result column="EMP_PWD" property="empPwd" jdbcType="VARCHAR" />
+    <result column="EMP_NAME" property="empName" jdbcType="VARCHAR" />
+    <result column="EMP_SEX" property="empSex" jdbcType="VARCHAR" />
+    <result column="EMP_Birthday" property="empBirthday" jdbcType="DATE" />
+    <result column="PS_ID" property="psId" jdbcType="VARCHAR" />
+    <result column="EMP_Phone" property="empPhone" jdbcType="VARCHAR" />
+    <result column="EMP_Address" property="empAddress" jdbcType="VARCHAR" />
+    <result column="ext1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext3" property="ext3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    EMP_NO, EMP_PWD, EMP_NAME, EMP_SEX, EMP_Birthday, PS_ID, EMP_Phone, EMP_Address, 
+    ext1, ext2, ext3
+  </sql>
+</mapper>

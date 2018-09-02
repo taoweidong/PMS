@@ -20,13 +20,28 @@
 ### 引入项目管理功能
  1. 引入Maven框架进行项目管理
  2. 使用PMS.war包部署，可直接运行本项目2.0版本，数据库将连接远程Mysql数据库
- 
- 
- # V3.0版本计划
+
+
+
+# V3.0版本计划
+
  - 引入Spring框架，使用JdbcTemplate操作数据库，完善日志处理
+   - 修改Web.xml配置文件，增加Spring的相关配置
  - 引入Mybatis框架
  - 引入SpringMVC框架
- 
+
+
+
+# 2018年9月2日
+
+- 增加Eclipse中Java的style文件，分别是：
+  - checkstye静态检查配置文件： checkstyle.xml
+  - java格式化文件模板： codeformat.xml
+  - java代码注释模板： codetemplates.xml
+- 整合SSM框架，测试页面导航已完成
+
+
+
 # 注意事项
 > 不对应可能会报 *Unable to compile class for JSP* 的错误
 
@@ -34,4 +49,4 @@
 - tomcat: apache-tomcat-6.0.35
 - STS: Version: 3.9.5.RELEASE
 - maven:apache-maven-3.5.0
- 
+

@@ -4,6 +4,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 
@@ -14,6 +18,9 @@ import java.lang.reflect.Method;
  * @see BaseServlet
  */
 public abstract class BaseServlet extends HttpServlet {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(JsonUtil.class);
+
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -40,7 +47,7 @@ public abstract class BaseServlet extends HttpServlet {
 		}
 
 		try {
-			Log4jHelper.info("进入调度Servlet处理类，处理成功，由：[" + methodName + "]方法进行执行");
+			LOGGER.info("进入调度Servlet处理类，处理成功，由：[" + methodName + "]方法进行执行");
 			// 进行反射调用
 			String result = (String) method.invoke(this, request, response);
 

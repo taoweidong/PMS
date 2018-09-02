@@ -6,6 +6,9 @@ import java.sql.ResultSetMetaData;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -17,6 +20,8 @@ import com.google.common.collect.Maps;
  * @see JsonUtil
  */
 public class JsonUtil {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(JsonUtil.class);
 
 	/**
 	 * 功能：数据集封装在json数组中
@@ -46,7 +51,7 @@ public class JsonUtil {
 			array.add(mapOfColValues);// json数组添加json对象
 		}
 
-		Log4jHelper.info("返回页面的JSON数据格式：" + JSON.toJSONString(array));
+		LOGGER.info("返回页面的JSON数据格式：" + JSON.toJSONString(array));
 
 		return array;
 	}
