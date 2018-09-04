@@ -1,26 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
-%>
+<%@ include file="/WEB-INF/public/commons.jspf"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>岗位信息管理</title>
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.3.4/themes/default/easyui.css" />
-<link rel="stylesheet" type="text/css" href="css/wu.css" />
-<link rel="stylesheet" type="text/css" href="css/icon.css" />
-<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
-<script type="text/javascript"
-	src="jquery-easyui-1.3.4/jquery.easyui.min.js"></script>
-<script type="text/javascript"
-	src="jquery-easyui-1.3.4/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="js/PositionsManage.js"></script>
+
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit:true">
@@ -28,8 +13,7 @@
 		<div id="wu-toolbar-2">
 			<%
 				if ("admin".equals((String) session.getAttribute("userRole"))
-						|| "superAdmin".equals((String) session
-								.getAttribute("userRole"))) {
+						|| "superAdmin".equals((String) session.getAttribute("userRole"))) {
 			%>
 			<div class="wu-toolbar-button">
 				<a href="javascript:openPositionsAddDialog()"
@@ -65,8 +49,7 @@
 				<tr>
 					<%
 						if ("admin".equals((String) session.getAttribute("userRole"))
-								|| "superAdmin".equals((String) session
-										.getAttribute("userRole"))) {
+								|| "superAdmin".equals((String) session.getAttribute("userRole"))) {
 					%>
 					<th field="cb" checkbox="true"></th>
 					<%

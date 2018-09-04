@@ -1,32 +1,12 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":"
-			+ request.getServerPort() + path + "/";
-%>
+<%@ include file="/WEB-INF/public/commons.jspf"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
 
 <title>公告管理</title>
-<%
-	if (session.getAttribute("currentUser") == null) {
-		response.sendRedirect("index.jsp");
-		return;
-	}
-%>
-<!-- 引用CSS样式文件和 javaScript文件 -->
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.3.4/themes/default/easyui.css" />
-<link rel="stylesheet" type="text/css" href="css/wu.css" />
-<link rel="stylesheet" type="text/css" href="css/icon.css" />
-<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
-<script type="text/javascript"
-	src="jquery-easyui-1.3.4/jquery.easyui.min.js"></script>
-<script type="text/javascript"
-	src="jquery-easyui-1.3.4/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="js/PoliticalStatusManager.js"></script>
+
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit:true">

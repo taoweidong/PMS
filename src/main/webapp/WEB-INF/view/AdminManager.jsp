@@ -1,43 +1,12 @@
 <%@ page language="java" import="com.pms.entity.*" pageEncoding="UTF-8"%>
-<%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":"
-			+ request.getServerPort() + path + "/";
-%>
+<%@ include file="/WEB-INF/public/commons.jspf"%>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<base href="<%=basePath%>">
+
 
 <title>管理员管理</title>
-
-<%
-	if (session.getAttribute("currentUser") == null) {
-		response.sendRedirect("index.jsp");
-		return;
-	}
-
-	String pwd = "";
-	String ro = (String) session.getAttribute("userRole");
-	TAdministrator adminInfo = new TAdministrator();
-	if ("admin".equals(ro) || "superAdmin".equals(ro)) {
-		adminInfo = (TAdministrator) session.getAttribute("currentUser");
-		pwd = adminInfo.getAdminName();
-
-	}
-%>
-<!-- 引用CSS样式文件和 javaScript文件 -->
-<link rel="stylesheet" type="text/css"
-	href="jquery-easyui-1.3.4/themes/default/easyui.css" />
-<link rel="stylesheet" type="text/css" href="css/wu.css" />
-<link rel="stylesheet" type="text/css" href="css/icon.css" />
-<script type="text/javascript" src="js/jquery-1.8.0.min.js"></script>
-<script type="text/javascript"
-	src="jquery-easyui-1.3.4/jquery.easyui.min.js"></script>
-<script type="text/javascript"
-	src="jquery-easyui-1.3.4/locale/easyui-lang-zh_CN.js"></script>
-<script type="text/javascript" src="js/AdminManager.js"></script>
 
 </head>
 

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <!DOCTYPE html PUBLIC "-//W3C//Dtd HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -120,8 +121,7 @@
 </script>
 </head>
 <body>
-	<form id="loginId" method="post" name="loginName"
-		action="${pageContext.request.contextPath}/login">
+	<form id="loginId" method="post" name="loginName" action="login">
 		<div></div>
 		<table style="margin: auto; width: 100%; height: 100%" border=0
 			cellSpacing=0 cellPadding=0>
