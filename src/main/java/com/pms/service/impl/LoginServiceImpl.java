@@ -4,15 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.pms.entity.TAdministrator;
-import com.pms.mapper.TAdministratorMapper;
+import com.pms.entity.Administrator;
+import com.pms.mapper.AdministratorMapper;
 import com.pms.service.LoginService;
 
 @Service
 public class LoginServiceImpl implements LoginService {
 
 	@Autowired
-	private TAdministratorMapper administratorMapper;
+	private AdministratorMapper administratorMapper;
 
 	/**
 	 * 登录功能
@@ -20,11 +20,11 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public boolean login(String userName, String password, String role) {
 
-		TAdministrator record = new TAdministrator();
-		record.setAdminNo(userName);
-		record.setAdminPwd(password);
+		Administrator record = new Administrator();
+		record.setNo(userName);
+		record.setPwd(password);
 
-		TAdministrator result = administratorMapper.selectOne(record);
+		Administrator result = administratorMapper.selectOne(record);
 
 		System.out.println(JSON.toJSONString(result));
 

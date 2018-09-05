@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import com.alibaba.fastjson.JSON;
-import com.pms.entity.TAdministrator;
+import com.pms.entity.Administrator;
 
 /**
  * 通过JdbcTemplate实现查询操作
@@ -55,22 +55,22 @@ public class JdbcTemplateDemo {
 	public void testQuery() {
 		// sql语句
 		String sql = "select * from t_administrator";
-		List<TAdministrator> users = jdbcTemplate.query(sql, new AdministratorMapper());
+		List<Administrator> users = jdbcTemplate.query(sql, new AdministratorMapper());
 
-		for (TAdministrator u : users) {
+		for (Administrator u : users) {
 			System.out.println(JSON.toJSONString(u));
 		}
 	}
 
 }
 
-class AdministratorMapper implements RowMapper<TAdministrator> {
+class AdministratorMapper implements RowMapper<Administrator> {
 
 	@Override
-	public TAdministrator mapRow(ResultSet resultSet, int rowNum) throws SQLException {
-		TAdministrator user = new TAdministrator();
-		user.setAdminId(resultSet.getString(1));
-		user.setAdminName(resultSet.getString(2));
+	public Administrator mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+		Administrator user = new Administrator();
+		user.setId(resultSet.getString(1));
+		user.setName(resultSet.getString(2));
 
 		return user;
 	}

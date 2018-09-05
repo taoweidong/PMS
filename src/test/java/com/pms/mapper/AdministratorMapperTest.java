@@ -10,14 +10,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.alibaba.fastjson.JSON;
-import com.pms.entity.TAdministrator;
+import com.pms.entity.Administrator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring/applicationContext.xml")
-public class TAdministratorMapperTest {
+public class AdministratorMapperTest {
 
 	@Autowired
-	public TAdministratorMapper tAdministratorMapper;
+	public AdministratorMapper administratorMapper;
 
 	/**
 	 * 测试查询功能.
@@ -25,7 +25,7 @@ public class TAdministratorMapperTest {
 	@Test
 	public void testQuery() {
 
-		List<TAdministrator> result = tAdministratorMapper.selectAll();
+		List<Administrator> result = administratorMapper.selectAll();
 
 		System.out.println(JSON.toJSONString(result));
 	}
@@ -35,13 +35,13 @@ public class TAdministratorMapperTest {
 
 		final String id = UUID.randomUUID().toString();
 
-		TAdministrator admin = new TAdministrator();
-		admin.setAdminName("testMybatisAdd");
-		admin.setAdminId(id);
+		Administrator admin = new Administrator();
+		admin.setName("testMybatisAdd");
+		admin.setId(id);
 
-		tAdministratorMapper.insert(admin);
+		administratorMapper.insert(admin);
 
-		System.out.println(JSON.toJSONString(tAdministratorMapper.selectByPrimaryKey(id)));
+		System.out.println(JSON.toJSONString(administratorMapper.selectByPrimaryKey(id)));
 	}
 
 }

@@ -30,6 +30,44 @@
  - 引入Mybatis框架
  - 引入SpringMVC框架
 
+# 2018年9月1日
+- 使用Mybatis代码生成器生成Model实体类
+-命令：`mybatis-generator:generate`
+
+```xml
+<!--閫氱敤mapper -->
+<dependency>
+	<groupId>tk.mybatis</groupId>
+	<artifactId>mapper</artifactId>
+	<version>${mybatis.mapper}</version>
+</dependency>
+
+<!--閫氱敤mapper鎻掍欢 -->
+<plugin>
+	<groupId>org.mybatis.generator</groupId>
+	<artifactId>mybatis-generator-maven-plugin</artifactId>
+	<version>1.3.2</version>
+	<configuration>
+		<configurationFile>../PMS/src/main/resources/ModelGenerator.xml</configurationFile>
+		<overwrite>true</overwrite>
+		<verbose>true</verbose>
+	</configuration>
+	<dependencies>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.39</version>
+		</dependency>
+		<dependency>
+			<groupId>tk.mybatis</groupId>
+			<artifactId>mapper</artifactId>
+			<version>3.3.9</version>
+		</dependency>
+	</dependencies>
+</plugin>
+
+```
+
 
 
 # 2018年9月2日
@@ -39,6 +77,8 @@
   - java格式化文件模板： codeformat.xml
   - java代码注释模板： codetemplates.xml
 - 整合SSM框架，测试页面导航已完成
+
+
 
 
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pms.mapper.PositionsinfoMapper">
+	<resultMap id="BaseResultMap"
+		type="com.pms.entity.Positionsinfo">
+		<!-- WARNING - @mbg.generated -->
+		<id column="POS_ID" property="id" jdbcType="VARCHAR" />
+		<result column="DEP_ID" property="depId" jdbcType="VARCHAR" />
+		<result column="POS_NAME" property="name" jdbcType="VARCHAR" />
+		<result column="POS_SALARY" property="salary"
+			jdbcType="DECIMAL" />
+		<result column="POS_ALLOWANCE" property="allowance"
+			jdbcType="DECIMAL" />
+		<result column="POS_PERQUISITES" property="perquisites"
+			jdbcType="DECIMAL" />
+		<result column="EXT1" property="ext1" jdbcType="VARCHAR" />
+		<result column="EXT2" property="ext2" jdbcType="VARCHAR" />
+		<result column="EXT3" property="ext3" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs"
+		type="com.pms.entity.Positionsinfo" extends="BaseResultMap">
+		<!-- WARNING - @mbg.generated -->
+		<result column="POS_CONTENT" property="content"
+			jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		<!-- WARNING - @mbg.generated -->
+		POS_ID, DEP_ID, POS_NAME, POS_SALARY, POS_ALLOWANCE, POS_PERQUISITES,
+		EXT1, EXT2,
+		EXT3
+	</sql>
+	<sql id="Blob_Column_List">
+		<!-- WARNING - @mbg.generated -->
+		POS_CONTENT
+	</sql>
+</mapper>

@@ -109,7 +109,7 @@
 
 	</div>
 	<div region="south" style="height: 25px;" align="center">
-		版权所有 <a href="#">信息工程学院</a>
+		版权所有 <a href="#">XXXXXXXXX</a>
 	</div>
 
 	<div id="dlg" class="easyui-dialog"

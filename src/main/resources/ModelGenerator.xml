@@ -10,7 +10,7 @@
 		location="E:\RepMaven\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar" />
 
 	<context id="default" targetRuntime="MyBatis3">
-
+		<!-- 插件定义，此处定义的为通用mapper的插件 -->
 		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
 			<property name="mappers"
 				value="tk.mybatis.mapper.common.Mapper" />
@@ -18,29 +18,85 @@
 			<property name="caseSensitive" value="true" />
 		</plugin>
 
+		<!-- 注释配置 -->
+		<commentGenerator>
+			<!-- 阻止生成注释，默认为false -->
+			<property name="ssuppressDate" value="true" />
+		</commentGenerator>
 
+		<!-- 数据库连接配置 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
 			connectionURL="jdbc:mysql://localhost:3306/pms" userId="root"
 			password="root">
 		</jdbcConnection>
 
-		<!--只生成Java model -->
+		<!--生成java实体类 -->
 		<javaModelGenerator targetPackage="com.pms.entity"
 			targetProject="E:\GitHub\PMS\src\main\java" />
-
+		<!-- 生成Mapper.xml文件 -->
 		<sqlMapGenerator targetPackage="mybatis.mapper"
 			targetProject="E:\GitHub\PMS\src\main\resources" />
-
+		<!-- 生成Mapper接口文件 -->
 		<javaClientGenerator
 			targetPackage="com.pms.mapper"
 			targetProject="E:\GitHub\PMS\src\main\java" type="XMLMAPPER" />
 
-		<table tableName="%" enableCountByExample="false"
+		<table tableName="t_administrator" enableCountByExample="false"
+			domainObjectName="Administrator" enableDeleteByExample="false"
+			enableSelectByExample="false" enableUpdateByExample="false">
+			<generatedKey column="ADMIN_ID" sqlStatement="Mysql"
+				identity="true" />
+			<columnRenamingRule searchString="^ADMIN"
+				replaceString="" />
+		</table>
+		<table tableName="t_department" enableCountByExample="false"
+			domainObjectName="Department" enableDeleteByExample="false"
+			enableSelectByExample="false" enableUpdateByExample="false">
+			<generatedKey column="DEP_ID" sqlStatement="Mysql"
+				identity="true" />
+			<columnRenamingRule searchString="^DEP"
+				replaceString="" />
+		</table>
+		<table tableName="t_employee" enableCountByExample="false"
+			domainObjectName="Employee" enableDeleteByExample="false"
+			enableSelectByExample="false" enableUpdateByExample="false">
+			<generatedKey column="EMP_NO" sqlStatement="Mysql"
+				identity="true" />
+			<columnRenamingRule searchString="^EMP"
+				replaceString="" />
+		</table>
+		<table tableName="t_inductioninfo" enableCountByExample="false"
+			domainObjectName="Inductioninfo" enableDeleteByExample="false"
+			enableSelectByExample="false" enableUpdateByExample="false">
+			<generatedKey column="IND_ID" sqlStatement="Mysql"
+				identity="true" />
+			<columnRenamingRule searchString="^IND"
+				replaceString="" />
+		</table>
+		<table tableName="t_notice" enableCountByExample="false"
+			domainObjectName="Notice" enableDeleteByExample="false"
+			enableSelectByExample="false" enableUpdateByExample="false">
+			<generatedKey column="NOT_ID" sqlStatement="Mysql"
+				identity="true" />
+			<columnRenamingRule searchString="^NOT"
+				replaceString="" />
+		</table>
+		<table tableName="t_politicalstatus"
+			enableCountByExample="false" domainObjectName="Politicalstatus"
 			enableDeleteByExample="false" enableSelectByExample="false"
 			enableUpdateByExample="false">
-			<generatedKey column="book_id" sqlStatement="Mysql"
+			<generatedKey column="PS_TYPE" sqlStatement="Mysql"
 				identity="true" />
+			<columnRenamingRule searchString="^PS"
+				replaceString="" />
 		</table>
-
+		<table tableName="t_positionsinfo" enableCountByExample="false"
+			domainObjectName="Positionsinfo" enableDeleteByExample="false"
+			enableSelectByExample="false" enableUpdateByExample="false">
+			<generatedKey column="POS_ID" sqlStatement="Mysql"
+				identity="true" />
+			<columnRenamingRule searchString="^POS"
+				replaceString="" />
+		</table>
 	</context>
 </generatorConfiguration>
