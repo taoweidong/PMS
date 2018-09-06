@@ -7,5 +7,5 @@ public interface PersionInfoManageService {
 	 * 管理员个人信息查询.
 	 * @return
 	 */
-	Map<String, Object> queryPersionInfo(int pageNum, int pageSize);
+	Map<String, Object> queryPersionInfo(final int pageNum, final int pageSize);
 }

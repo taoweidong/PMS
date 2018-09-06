@@ -33,7 +33,7 @@ public class EasyUiTree implements Serializable
         return id;
     }
 
-    public void setId(String id)
+    public void setId(final String id)
     {
         this.id = id;
     }
@@ -43,7 +43,7 @@ public class EasyUiTree implements Serializable
         return text;
     }
 
-    public void setText(String text)
+    public void setText(final String text)
     {
         this.text = text;
     }
@@ -53,7 +53,7 @@ public class EasyUiTree implements Serializable
         return state;
     }
 
-    public void setState(String state)
+    public void setState(final String state)
     {
         this.state = state;
     }
@@ -63,7 +63,7 @@ public class EasyUiTree implements Serializable
         return checked;
     }
 
-    public void setChecked(String checked)
+    public void setChecked(final String checked)
     {
         this.checked = checked;
     }
@@ -73,7 +73,7 @@ public class EasyUiTree implements Serializable
         return attribates;
     }
 
-    public void setAttribates(Map<String, String> attribates)
+    public void setAttribates(final Map<String, String> attribates)
     {
         this.attribates = attribates;
     }
@@ -83,7 +83,7 @@ public class EasyUiTree implements Serializable
         return children;
     }
 
-    public void setChildren(List<EasyUiTree> children)
+    public void setChildren(final List<EasyUiTree> children)
     {
         this.children = children;
     }
@@ -93,8 +93,8 @@ public class EasyUiTree implements Serializable
         return serialVersionUID;
     }
 
-    public EasyUiTree(String id, String text, String state, String checked,
-                      Map<String, String> attribates, List<EasyUiTree> children)
+    public EasyUiTree(final String id, final String text, final String state, final String checked,
+                      final Map<String, String> attribates, final List<EasyUiTree> children)
     {
         super();
         this.id = id;

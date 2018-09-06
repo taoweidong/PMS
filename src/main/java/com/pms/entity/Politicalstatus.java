@@ -50,7 +50,7 @@ public class Politicalstatus {
      *
      * @param type 政治面貌ID
      */
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
     }
 
@@ -68,7 +68,7 @@ public class Politicalstatus {
      *
      * @param name 政治面貌名称
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -86,7 +86,7 @@ public class Politicalstatus {
      *
      * @param ext1 更新时间
      */
-    public void setExt1(String ext1) {
+    public void setExt1(final String ext1) {
         this.ext1 = ext1;
     }
 
@@ -104,7 +104,7 @@ public class Politicalstatus {
      *
      * @param ext2 备注
      */
-    public void setExt2(String ext2) {
+    public void setExt2(final String ext2) {
         this.ext2 = ext2;
     }
 
@@ -122,7 +122,7 @@ public class Politicalstatus {
      *
      * @param ext3 暂未使用
      */
-    public void setExt3(String ext3) {
+    public void setExt3(final String ext3) {
         this.ext3 = ext3;
     }
 }

@@ -81,7 +81,7 @@ public class Positionsinfo {
      *
      * @param id 唯一标识
      */
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -99,7 +99,7 @@ public class Positionsinfo {
      *
      * @param depId 部门ID
      */
-    public void setDepId(String depId) {
+    public void setDepId(final String depId) {
         this.depId = depId;
     }
 
@@ -117,7 +117,7 @@ public class Positionsinfo {
      *
      * @param name 岗位名称
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -135,7 +135,7 @@ public class Positionsinfo {
      *
      * @param salary 岗位基本工资
      */
-    public void setSalary(BigDecimal salary) {
+    public void setSalary(final BigDecimal salary) {
         this.salary = salary;
     }
 
@@ -153,7 +153,7 @@ public class Positionsinfo {
      *
      * @param allowance 岗位津贴
      */
-    public void setAllowance(BigDecimal allowance) {
+    public void setAllowance(final BigDecimal allowance) {
         this.allowance = allowance;
     }
 
@@ -171,7 +171,7 @@ public class Positionsinfo {
      *
      * @param perquisites 特殊津贴
      */
-    public void setPerquisites(BigDecimal perquisites) {
+    public void setPerquisites(final BigDecimal perquisites) {
         this.perquisites = perquisites;
     }
 
@@ -189,7 +189,7 @@ public class Positionsinfo {
      *
      * @param ext1 备注
      */
-    public void setExt1(String ext1) {
+    public void setExt1(final String ext1) {
         this.ext1 = ext1;
     }
 
@@ -207,7 +207,7 @@ public class Positionsinfo {
      *
      * @param ext2 更新时间
      */
-    public void setExt2(String ext2) {
+    public void setExt2(final String ext2) {
         this.ext2 = ext2;
     }
 
@@ -225,7 +225,7 @@ public class Positionsinfo {
      *
      * @param ext3 暂未使用
      */
-    public void setExt3(String ext3) {
+    public void setExt3(final String ext3) {
         this.ext3 = ext3;
     }
 
@@ -243,7 +243,7 @@ public class Positionsinfo {
      *
      * @param content 岗位职责
      */
-    public void setContent(String content) {
+    public void setContent(final String content) {
         this.content = content;
     }
 }

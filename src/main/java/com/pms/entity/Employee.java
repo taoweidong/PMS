@@ -84,7 +84,7 @@ public class Employee {
      *
      * @param no 登录账号
      */
-    public void setNo(String no) {
+    public void setNo(final String no) {
         this.no = no;
     }
 
@@ -102,7 +102,7 @@ public class Employee {
      *
      * @param pwd 密码，采用ASE加密
      */
-    public void setPwd(String pwd) {
+    public void setPwd(final String pwd) {
         this.pwd = pwd;
     }
 
@@ -120,7 +120,7 @@ public class Employee {
      *
      * @param name 员工姓名
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -138,7 +138,7 @@ public class Employee {
      *
      * @param sex 性别：M-男;F-女
      */
-    public void setSex(String sex) {
+    public void setSex(final String sex) {
         this.sex = sex;
     }
 
@@ -156,7 +156,7 @@ public class Employee {
      *
      * @param birthday 生日
      */
-    public void setBirthday(Date birthday) {
+    public void setBirthday(final Date birthday) {
         this.birthday = birthday;
     }
 
@@ -174,7 +174,7 @@ public class Employee {
      *
      * @param psId 政治面貌
      */
-    public void setPsId(String psId) {
+    public void setPsId(final String psId) {
         this.psId = psId;
     }
 
@@ -192,7 +192,7 @@ public class Employee {
      *
      * @param phone 电话
      */
-    public void setPhone(String phone) {
+    public void setPhone(final String phone) {
         this.phone = phone;
     }
 
@@ -210,7 +210,7 @@ public class Employee {
      *
      * @param address 联系地址
      */
-    public void setAddress(String address) {
+    public void setAddress(final String address) {
         this.address = address;
     }
 
@@ -228,7 +228,7 @@ public class Employee {
      *
      * @param ext1 备注
      */
-    public void setExt1(String ext1) {
+    public void setExt1(final String ext1) {
         this.ext1 = ext1;
     }
 
@@ -246,7 +246,7 @@ public class Employee {
      *
      * @param ext2 更新时间
      */
-    public void setExt2(String ext2) {
+    public void setExt2(final String ext2) {
         this.ext2 = ext2;
     }
 
@@ -264,7 +264,7 @@ public class Employee {
      *
      * @param ext3 暂未使用
      */
-    public void setExt3(String ext3) {
+    public void setExt3(final String ext3) {
         this.ext3 = ext3;
     }
 }

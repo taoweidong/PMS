@@ -80,7 +80,7 @@ public class Inductioninfo {
      *
      * @param id 唯一标识
      */
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -98,7 +98,7 @@ public class Inductioninfo {
      *
      * @param empNo 员工工号
      */
-    public void setEmpNo(String empNo) {
+    public void setEmpNo(final String empNo) {
         this.empNo = empNo;
     }
 
@@ -116,7 +116,7 @@ public class Inductioninfo {
      *
      * @param posId 职位ID
      */
-    public void setPosId(String posId) {
+    public void setPosId(final String posId) {
         this.posId = posId;
     }
 
@@ -134,7 +134,7 @@ public class Inductioninfo {
      *
      * @param date 申请时间
      */
-    public void setDate(String date) {
+    public void setDate(final String date) {
         this.date = date;
     }
 
@@ -152,7 +152,7 @@ public class Inductioninfo {
      *
      * @param state 状态：0--在职；1--解聘
      */
-    public void setState(String state) {
+    public void setState(final String state) {
         this.state = state;
     }
 
@@ -170,7 +170,7 @@ public class Inductioninfo {
      *
      * @param enddate 离职时间
      */
-    public void setEnddate(String enddate) {
+    public void setEnddate(final String enddate) {
         this.enddate = enddate;
     }
 
@@ -188,7 +188,7 @@ public class Inductioninfo {
      *
      * @param ext1 申请状态：00 申请中;11 已审批通过;22 审批未通过;33 未提交【员工已增加但是未提交】可删除
      */
-    public void setExt1(String ext1) {
+    public void setExt1(final String ext1) {
         this.ext1 = ext1;
     }
 
@@ -206,7 +206,7 @@ public class Inductioninfo {
      *
      * @param ext2 审批日期
      */
-    public void setExt2(String ext2) {
+    public void setExt2(final String ext2) {
         this.ext2 = ext2;
     }
 
@@ -224,7 +224,7 @@ public class Inductioninfo {
      *
      * @param ext3 申请类型  IN 入职申请  OUT 离职申请
      */
-    public void setExt3(String ext3) {
+    public void setExt3(final String ext3) {
         this.ext3 = ext3;
     }
 
@@ -242,7 +242,7 @@ public class Inductioninfo {
      *
      * @param reasons 离职原因
      */
-    public void setReasons(String reasons) {
+    public void setReasons(final String reasons) {
         this.reasons = reasons;
     }
 }

@@ -9,5 +9,5 @@ public interface LoginService {
 	 * @param role
 	 * @return
 	 */
-	boolean login(String userName, String password, String role);
+	boolean login(final String userName, final String password, final String role);
 }

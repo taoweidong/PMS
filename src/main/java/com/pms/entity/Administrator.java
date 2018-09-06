@@ -68,7 +68,7 @@ public class Administrator {
      *
      * @param id 唯一标识
      */
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -86,7 +86,7 @@ public class Administrator {
      *
      * @param no 登录账号
      */
-    public void setNo(String no) {
+    public void setNo(final String no) {
         this.no = no;
     }
 
@@ -104,7 +104,7 @@ public class Administrator {
      *
      * @param pwd 密码，采用ASE加密
      */
-    public void setPwd(String pwd) {
+    public void setPwd(final String pwd) {
         this.pwd = pwd;
     }
 
@@ -122,7 +122,7 @@ public class Administrator {
      *
      * @param name 管理员姓名
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -140,7 +140,7 @@ public class Administrator {
      *
      * @param phone 电话
      */
-    public void setPhone(String phone) {
+    public void setPhone(final String phone) {
         this.phone = phone;
     }
 
@@ -158,7 +158,7 @@ public class Administrator {
      *
      * @param ext1 备注
      */
-    public void setExt1(String ext1) {
+    public void setExt1(final String ext1) {
         this.ext1 = ext1;
     }
 
@@ -176,7 +176,7 @@ public class Administrator {
      *
      * @param ext2 更新时间
      */
-    public void setExt2(String ext2) {
+    public void setExt2(final String ext2) {
         this.ext2 = ext2;
     }
 
@@ -194,7 +194,7 @@ public class Administrator {
      *
      * @param ext3 admin 普通管理员;superAdmin 超级管理员;
      */
-    public void setExt3(String ext3) {
+    public void setExt3(final String ext3) {
         this.ext3 = ext3;
     }
 }

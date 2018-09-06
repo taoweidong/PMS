@@ -10,7 +10,7 @@ public class PageBean
     @SuppressWarnings("unused")
     private int start; // 起始页
 
-    public PageBean(int page, int rows)
+    public PageBean(final int page, final int rows)
     {
         super();
         this.page = page;
@@ -22,7 +22,7 @@ public class PageBean
         return page;
     }
 
-    public void setPage(int page)
+    public void setPage(final int page)
     {
         this.page = page;
     }
@@ -32,7 +32,7 @@ public class PageBean
         return rows;
     }
 
-    public void setRows(int rows)
+    public void setRows(final int rows)
     {
         this.rows = rows;
     }
@@ -42,7 +42,7 @@ public class PageBean
         return (page - 1) * rows;
     }
 
-    public void setStart(int st)
+    public void setStart(final int st)
     {
         this.start = st;
     }

@@ -48,9 +48,9 @@ public class IndexController {
 	 * @return
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(@RequestParam(name = "userName") String userName,
-			@RequestParam(name = "password") String password,
-			@RequestParam(name = "role") String role) {
+	public String login(final @RequestParam(name = "userName") String userName,
+			final @RequestParam(name = "password") String password,
+			final @RequestParam(name = "role") String role) {
 		// 检查用户信息
 
 		System.out.println("登录功能访问userName------->" + userName);
@@ -63,7 +63,7 @@ public class IndexController {
 	}
 
 	@RequestMapping("/main")
-	public String hello2(Model model, HttpServletRequest request) {
+	public String hello2(final Model model, final HttpServletRequest request) {
 
 		// HttpSession session = request.getSession();
 		model.addAttribute("user", "诸葛小坏");

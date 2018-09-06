@@ -38,7 +38,7 @@ public class Department {
      *
      * @param id 唯一标识
      */
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -56,7 +56,7 @@ public class Department {
      *
      * @param name 部门名称
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -74,7 +74,7 @@ public class Department {
      *
      * @param leader 部门领导
      */
-    public void setLeader(String leader) {
+    public void setLeader(final String leader) {
         this.leader = leader;
     }
 }

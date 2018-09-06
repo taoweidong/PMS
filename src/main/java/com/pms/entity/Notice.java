@@ -68,7 +68,7 @@ public class Notice {
      *
      * @param id 唯一标识
      */
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -86,7 +86,7 @@ public class Notice {
      *
      * @param title 标题
      */
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
@@ -104,7 +104,7 @@ public class Notice {
      *
      * @param content 公告内容
      */
-    public void setContent(String content) {
+    public void setContent(final String content) {
         this.content = content;
     }
 
@@ -122,7 +122,7 @@ public class Notice {
      *
      * @param date 添加时间
      */
-    public void setDate(String date) {
+    public void setDate(final String date) {
         this.date = date;
     }
 
@@ -140,7 +140,7 @@ public class Notice {
      *
      * @param author 作者
      */
-    public void setAuthor(String author) {
+    public void setAuthor(final String author) {
         this.author = author;
     }
 
@@ -158,7 +158,7 @@ public class Notice {
      *
      * @param ext1 暂未使用
      */
-    public void setExt1(String ext1) {
+    public void setExt1(final String ext1) {
         this.ext1 = ext1;
     }
 
@@ -176,7 +176,7 @@ public class Notice {
      *
      * @param ext2 暂未使用
      */
-    public void setExt2(String ext2) {
+    public void setExt2(final String ext2) {
         this.ext2 = ext2;
     }
 
@@ -194,7 +194,7 @@ public class Notice {
      *
      * @param ext3 暂未使用
      */
-    public void setExt3(String ext3) {
+    public void setExt3(final String ext3) {
         this.ext3 = ext3;
     }
 }
