@@ -177,10 +177,8 @@
 
 </head>
 <body style="margin: 5px;">
-	<%
-		if ("user".equals((String) session.getAttribute("userRole"))) {
-	%>
-	<table id="dg" title="职工信息" class="easyui-datagrid" fitColumns="true"
+
+	<!-- 	<table id="dg" title="职工信息" class="easyui-datagrid" fitColumns="true"
 		pagination="true" fit="true" pageSize="20" rownumbers="true"
 		url="PersionInfo" toolbar="#tb">
 		<thead>
@@ -199,32 +197,27 @@
 				<th field="ext2" width="150" align="center">更新日期</th>
 			</tr>
 		</thead>
-	</table>
-	<%
-		} else {
-	%>
+	</table> -->
+
 	<table id="dg" title="个人信息" class="easyui-datagrid" fitColumns="true"
 		pagination="true" fit="true" pageSize="20" rownumbers="true"
 		url="PersionInfo" toolbar="#tb">
 		<thead>
 			<tr>
 				<th field="cb" checkbox="true"></th>
-				<th field="ADMIN_ID" width="80" hidden="true" align="center">ID</th>
-				<th field="ADMIN_NO" width="90" align="center">登录账号</th>
-				<th field="ADMIN_PWD" hidden="true" width="50" align="center">密码</th>
-				<th field="ADMIN_NAME" width="80" align="center">姓名</th>
-				<th field="ADMIN_PHONE" width="100" align="center">电话</th>
-				<th field="Ext1" width="80" align="center">备注</th>
-				<th field="Ext2" width="100" align="center">更新日期</th>
-				<th field="Ext3" width="150" hidden="true" align="center">备注</th>
+				<th field="id" width="80" hidden="true" align="center">ID</th>
+				<th field="no" width="90" align="center">登录账号</th>
+				<th field="pwd" hidden="true" width="50" align="center">密码</th>
+				<th field="name" width="80" align="center">姓名</th>
+				<th field="phone" width="100" align="center">电话</th>
+				<th field="ext1" width="80" align="center">备注</th>
+				<th field="ext2" width="100" align="center">更新日期</th>
+				<th field="ext3" width="150" hidden="true" align="center">备注</th>
 
 			</tr>
 		</thead>
 	</table>
 
-	<%
-		}
-	%>
 	<div id="tb">
 		<div>
 			<a href="javascript:openStudentModifyDialog()"

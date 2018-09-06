@@ -18,7 +18,7 @@
 		</div>
 		<div
 			style="font-size: 20px; color: #8B8B8B; font-family: '楷体'; padding-top: 50px">
-			<font size="3"> <strong>当前用户：</strong>【XXXXX】--<strong>角色</strong>【RRRRRRR】
+			<font size="3"> <strong>当前用户：</strong>【${user}】--<strong>角色</strong>【${role}】
 			</font>
 		</div>
 	</div>

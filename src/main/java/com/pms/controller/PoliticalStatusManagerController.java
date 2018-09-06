@@ -14,8 +14,8 @@ public class PoliticalStatusManagerController {
 
 	@RequestMapping("/politicalStatusManager")
 	public String index() {
-
 		LOGGER.debug("访问主页:PoliticalStatusManager");
+
 		return "PoliticalStatusManager";
 	}
 }

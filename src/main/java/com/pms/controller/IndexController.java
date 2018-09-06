@@ -1,9 +1,12 @@
 package com.pms.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,6 +59,15 @@ public class IndexController {
 
 		loginService.login(userName, password, role);
 
+		return "redirect:main";
+	}
+
+	@RequestMapping("/main")
+	public String hello2(Model model, HttpServletRequest request) {
+
+		// HttpSession session = request.getSession();
+		model.addAttribute("user", "诸葛小坏");
+		model.addAttribute("role", "管理员");
 		return "main";
 	}
 

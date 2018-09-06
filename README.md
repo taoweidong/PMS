@@ -35,14 +35,14 @@
 -命令：`mybatis-generator:generate`
 
 ```xml
-<!--閫氱敤mapper -->
+<!--通用mapper -->
 <dependency>
 	<groupId>tk.mybatis</groupId>
 	<artifactId>mapper</artifactId>
 	<version>${mybatis.mapper}</version>
 </dependency>
 
-<!--閫氱敤mapper鎻掍欢 -->
+<!--Mybatis-generater插件 -->
 <plugin>
 	<groupId>org.mybatis.generator</groupId>
 	<artifactId>mybatis-generator-maven-plugin</artifactId>
