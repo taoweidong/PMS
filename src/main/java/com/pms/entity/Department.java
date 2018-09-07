@@ -1,6 +1,10 @@
 package com.pms.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "t_department")
 public class Department {
@@ -77,4 +81,8 @@ public class Department {
     public void setLeader(final String leader) {
         this.leader = leader;
     }
+
+	/** Default constructor */
+	public Department() {
+	}
 }

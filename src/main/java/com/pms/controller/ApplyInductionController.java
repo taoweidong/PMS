@@ -18,4 +18,8 @@ public class ApplyInductionController {
 		LOGGER.debug("访问主页:ApplyInduction");
 		return "ApplyInduction";
 	}
+
+	/** Default constructor */
+	public ApplyInductionController() {
+	}
 }

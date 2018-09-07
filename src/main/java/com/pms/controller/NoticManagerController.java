@@ -20,4 +20,8 @@ public class NoticManagerController {
 		LOGGER.debug("访问主页");
 		return "NoticManager";
 	}
+
+	/** Default constructor */
+	public NoticManagerController() {
+	}
 }

@@ -1,7 +1,12 @@
 package com.pms.entity;
 
 import java.math.BigDecimal;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "t_positionsinfo")
 public class Positionsinfo {
@@ -246,4 +251,8 @@ public class Positionsinfo {
     public void setContent(final String content) {
         this.content = content;
     }
+
+	/** Default constructor */
+	public Positionsinfo() {
+	}
 }

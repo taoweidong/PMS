@@ -54,4 +54,8 @@ public class PersionInfoManageController {
 		return result;
 
 	}
+
+	/** Default constructor */
+	public PersionInfoManageController() {
+	}
 }

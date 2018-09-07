@@ -1,6 +1,10 @@
 package com.pms.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "t_inductioninfo")
 public class Inductioninfo {
@@ -245,4 +249,8 @@ public class Inductioninfo {
     public void setReasons(final String reasons) {
         this.reasons = reasons;
     }
+
+	/** Default constructor */
+	public Inductioninfo() {
+	}
 }

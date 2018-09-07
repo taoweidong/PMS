@@ -67,6 +67,13 @@
 	<!--<bean class="cn.edu.aust.interceptor.LoginIntercepTor"/> -->
 	<!--</mvc:interceptor> -->
 	<!--</mvc:interceptors> -->
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.pms.Interceptor.PermissionInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 	<!--拦截器结束 -->
 
 

@@ -48,4 +48,8 @@ public class PersionInfoManageServiceImpl implements PersionInfoManageService {
 		return result;
 	}
 
+	/** Default constructor */
+	public PersionInfoManageServiceImpl() {
+	}
+
 }

@@ -18,4 +18,8 @@ public class EmployeeManageController {
 		LOGGER.debug("访问主页:EmployeeManage");
 		return "EmployeeManage";
 	}
+
+	/** Default constructor */
+	public EmployeeManageController() {
+	}
 }

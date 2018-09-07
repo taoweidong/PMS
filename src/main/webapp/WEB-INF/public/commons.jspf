@@ -16,6 +16,11 @@
 	src="${pageContext.request.contextPath}/jquery-easyui-1.3.4/jquery.easyui.min.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/jquery-easyui-1.3.4/locale/easyui-lang-zh_CN.js"></script>
-
+<%-- <script type="text/javascript">
+	if ($.trim("${sessionScope.user}") == "") {
+		//top.location.href = "/login";
+		response.sendRedirect("/login");
+	}
+</script> --%>
 
 

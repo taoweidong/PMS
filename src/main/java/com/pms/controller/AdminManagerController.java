@@ -17,4 +17,8 @@ public class AdminManagerController {
 		return "AdminManager";
 	}
 
+	/** Default constructor */
+	public AdminManagerController() {
+	}
+
 }

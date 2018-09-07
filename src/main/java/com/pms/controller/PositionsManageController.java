@@ -18,4 +18,8 @@ public class PositionsManageController {
 		LOGGER.debug("访问主页:PositionsManage");
 		return "PositionsManage";
 	}
+
+	/** Default constructor */
+	public PositionsManageController() {
+	}
 }

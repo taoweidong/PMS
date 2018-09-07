@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -59,10 +60,8 @@ public class AESUtil {
 
 	/**
 	 * Author:Taowd 功能：解密 开发日期：2017-4-27-下午9:00:11
-	 * @param content
-	 *                     待解密内容
-	 * @param password
-	 *                     解密密钥
+	 * @param content  待解密内容
+	 * @param password 解密密钥
 	 * @return
 	 */
 	public static byte[] decrypt(byte[] content) {
@@ -91,7 +90,7 @@ public class AESUtil {
 	}
 
 	/**
-	 * Author:Taowd 功能：加密之后的密文转成字符串，便于数据库存储：将二进制转换成16进制存储 开发日期：2017-4-27-下午9:03:04
+	 * 加密之后的密文转成字符串，便于数据库存储：将二进制转换成16进制存储.
 	 * @param buf
 	 * @return
 	 */
@@ -127,10 +126,11 @@ public class AESUtil {
 	public static void main(String[] args) {
 		// AES测试
 		/*
-		 * String content = "asdhkjadhkjahdkjahdjsakhdkjahdjk"; String password = "12345678"; // 加密 System.out.println("加密前：" +
-		 * content); byte[] encryptResult = encrypt(content, password); System.out.println("密文：" + encryptResult.toString());
-		 * System.out.println(encryptResult.toString().getBytes()); // 解密 byte[] decryptResult = decrypt(encryptResult,
-		 * password); System.out.println("解密后：" + new String(decryptResult));
+		 * String content = "asdhkjadhkjahdkjahdjsakhdkjahdjk"; String password = "12345678"; // 加密
+		 * System.out.println("加密前：" + content); byte[] encryptResult = encrypt(content, password);
+		 * System.out.println("密文：" + encryptResult.toString());
+		 * System.out.println(encryptResult.toString().getBytes()); // 解密 byte[] decryptResult =
+		 * decrypt(encryptResult, password); System.out.println("解密后：" + new String(decryptResult));
 		 */
 
 		// AES 加密测试2 21232f297a57a5a743894a0e4a801fc3 21232f297a57a5a743894a0e4a801fc3

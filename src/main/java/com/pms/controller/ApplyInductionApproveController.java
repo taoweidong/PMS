@@ -18,4 +18,8 @@ public class ApplyInductionApproveController {
 		LOGGER.debug("访问主页:ApplyInductionApprove");
 		return "ApplyInductionApprove";
 	}
+
+	/** Default constructor */
+	public ApplyInductionApproveController() {
+	}
 }

@@ -1,6 +1,10 @@
 package com.pms.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "t_politicalstatus")
 public class Politicalstatus {
@@ -125,4 +129,8 @@ public class Politicalstatus {
     public void setExt3(final String ext3) {
         this.ext3 = ext3;
     }
+
+	/** Default constructor */
+	public Politicalstatus() {
+	}
 }

@@ -18,4 +18,8 @@ public class PoliticalStatusManagerController {
 
 		return "PoliticalStatusManager";
 	}
+
+	/** Default constructor */
+	public PoliticalStatusManagerController() {
+	}
 }

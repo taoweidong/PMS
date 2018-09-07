@@ -18,4 +18,8 @@ public class DepartmentManageController {
 		LOGGER.debug("访问主页:DepartmentManage");
 		return "DepartmentManage";
 	}
+
+	/** Default constructor */
+	public DepartmentManageController() {
+	}
 }

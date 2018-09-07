@@ -25,7 +25,11 @@ public class AdministratorMapperTest {
 	@Test
 	public void testQuery() {
 
-		List<Administrator> result = administratorMapper.selectAll();
+		Administrator record = new Administrator();
+		record.setNo("admin");
+		record.setPwd("A9CBADCCCEAC5887D2518403369CD9AD");
+
+		List<Administrator> result = administratorMapper.select(record);
 
 		System.out.println(JSON.toJSONString(result));
 	}
