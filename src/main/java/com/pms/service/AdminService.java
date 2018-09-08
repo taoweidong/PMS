@@ -1,5 +1,7 @@
 package com.pms.service;
 
+import java.util.Map;
+
 import com.pms.entity.Administrator;
 
 public interface AdminService {
@@ -12,4 +14,6 @@ public interface AdminService {
 	 * @return
 	 */
 	Administrator checkAdmin(final String userName, final String password, final String role);
+
+	Map<String, Object> queryAdmin(Integer page, Integer rows);
 }

@@ -44,26 +44,15 @@
 		<!-- End of toolbar -->
 		<table id="wu-datagrid-2" class="easyui-datagrid"
 			toolbar="#wu-toolbar-2" fitColumns="true" pagination="true"
-			fit="true" rownumbers="true"
-			url="DepartmentServlet?method=DepartmentListInfo">
+			fit="true" rownumbers="true" url="queryDepartment">
 			<thead>
 				<tr>
-					<%
-						if ("admin".equals((String) session.getAttribute("userRole"))
-								|| "superAdmin".equals((String) session.getAttribute("userRole"))) {
-					%>
 					<th field="cb" checkbox="true"></th>
-					<%
-						}
-					%>
-
-					<th field="DEP_ID" width="80" align="center">ID</th>
-					<th field="DEP_NAME" width="90" align="center">部门名称</th>
-					<th field="DEP_LEADER" hidden="true" width=" width="
-						50" align="center">领导工号</th>
+					<th field="id" width="80" align="center">ID</th>
+					<th field="name" width="90" align="center">部门名称</th>
+					<th field="leader" width=" width=" 50" align="center">领导工号</th>
 					<th field="EMP_NAME" width="50" align="center">领导工号</th>
 					<th field="EMP_Phone" width="50" align="center">领导电话</th>
-
 				</tr>
 			</thead>
 		</table>

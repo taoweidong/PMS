@@ -12,31 +12,37 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.pms.service.ApplyInductionService;
+import com.pms.service.EmployeeService;
 
 @Controller
-public class ApplyInductionController {
+public class EmployeeController {
 	/**
 	 * 日志工具
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
 	@Autowired
-	private ApplyInductionService applyInductionService;
+	private EmployeeService employeeService;
 
-	@RequestMapping("/applyInduction")
+	@RequestMapping("/employeeManage")
 	public String index() {
 
-		LOGGER.debug("访问主页:ApplyInduction");
-		return "ApplyInduction";
+		LOGGER.debug("访问主页:EmployeeManage");
+		return "EmployeeManage";
 	}
 
+	/**
+	 * 查询用户信息 方法功能.
+	 * @param page
+	 * @param rows
+	 * @return
+	 */
 	@ResponseBody
-	@RequestMapping(value = "/queryApplyInduction", method = RequestMethod.POST)
-	public Map<String, Object> queryApplyInduction(@RequestParam("page") Integer page,
+	@RequestMapping(value = "/queryEmployee", method = RequestMethod.POST)
+	public Map<String, Object> queryPersionInfo(@RequestParam("page") Integer page,
 			@RequestParam("rows") Integer rows) {
 		System.out.println("rows:" + rows + "   page:" + page);
-		Map<String, Object> result = applyInductionService.queryApplyInduction(page, rows);
+		Map<String, Object> result = employeeService.queryEmployee(page, rows);
 
 		System.out.println(JSON.toJSONString(result));
 
@@ -45,6 +51,6 @@ public class ApplyInductionController {
 	}
 
 	/** Default constructor */
-	public ApplyInductionController() {
+	public EmployeeController() {
 	}
 }

@@ -143,20 +143,18 @@
 </head>
 <body>
 	<table id="dg" class="easyui-datagrid" fitColumns="true"
-		pagination="true" fit="true" pageSize="20" rownumbers="true"
-		url="EmployeeServlet?method=EmployeeListInfo" toolbar="#tb">
+		pagination="true" fit="true" pageSize="10" rownumbers="true"
+		url="queryEmployee" toolbar="#tb">
 		<thead>
 			<tr>
 				<th field="cb" checkbox="true"></th>
-				<th field="EMP_NO" width="80" align="center">工号</th>
-				<th field="EMP_NAME" width="90" align="center">姓名</th>
-				<th field="EMP_SEX" hidden="true" width="50" align="center">EMP_SEX</th>
-				<th field="sexName" width="50" align="center">性别</th>
-				<th field="EMP_Birthday" width="80" align="center">出生日期</th>
-				<th field="PS_TYPE" width="100" hidden="true" align="center">岗位ID</th>
-				<th field="PS_Name" width="80" align="center">政治面貌</th>
-				<th field="EMP_Phone" width="100" align="center">电话</th>
-				<th field="EMP_Address" width="150" align="center">地址</th>
+				<th field="no" width="80" align="center">工号</th>
+				<th field="name" width="90" align="center">姓名</th>
+				<th field="sex" width="50" align="center">性别</th>
+				<th field="birthday" width="80" align="center">出生日期</th>
+				<th field="psId" width="80" align="center">政治面貌</th>
+				<th field="phone" width="100" align="center">电话</th>
+				<th field="address" width="150" align="center">地址</th>
 				<th field="ext1" width="150" align="center">备注</th>
 				<th field="ext2" width="150" align="center">更新日期</th>
 

@@ -2,7 +2,7 @@ package com.pms.service;
 
 import java.util.Map;
 
-public interface PersionInfoManageService {
+public interface PersionInfoService {
 	/**
 	 * 管理员个人信息查询.
 	 * @return

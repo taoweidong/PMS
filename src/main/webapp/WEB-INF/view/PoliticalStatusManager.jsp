@@ -33,15 +33,14 @@
 		<!-- End of toolbar -->
 		<table id="wu-datagrid-2" class="easyui-datagrid"
 			toolbar="#wu-toolbar-2" fitColumns="true" pagination="true"
-			fit="true" rownumbers="true"
-			url="PoliticalStatusServlet?method=PoliticalStatusListInfo">
+			fit="true" rownumbers="true" url="queryPoliticalStatus">
 			<thead>
 				<tr>
 					<th field="cb" checkbox="true"></th>
-					<th field="PS_TYPE" width="80" align="center">类型标志</th>
-					<th field="PS_Name" width="90" align="center">类型名称</th>
-					<th field="Ext1" width="50" align="center">更新日期</th>
-					<th field="Ext2" width="80" align="center">备注</th>
+					<th field="type" width="80" align="center">类型标志</th>
+					<th field="name" width="90" align="center">类型名称</th>
+					<th field="ext1" width="50" align="center">更新日期</th>
+					<th field="ext2" width="80" align="center">备注</th>
 					<th field="Ext3" width="100" hidden="true" align="center">备注3</th>
 				</tr>
 			</thead>

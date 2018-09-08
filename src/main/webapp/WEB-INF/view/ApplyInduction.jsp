@@ -48,24 +48,23 @@
 		<!-- End of toolbar -->
 		<table id="wu-datagrid-2" class="easyui-datagrid"
 			toolbar="#wu-toolbar-2" fitColumns="true" pagination="true"
-			fit="true" rownumbers="true"
-			url="ApplyInductionServlet?method=UserApproveInfoList">
+			fit="true" rownumbers="true" url="queryApplyInduction">
 			<thead>
 				<tr>
 					<th field="cb" checkbox="true"></th>
-					<th field="IND_ID" hidden="true" width="80" align="center">ID</th>
-					<th field="EMP_NO" width="90" align="center">员工工号</th>
+					<th field="id" hidden="true" width="80" align="center">ID</th>
+					<th field="empNo" width="90" align="center">员工工号</th>
 					<th field="EMP_NAME" width="50" align="center">员工姓名</th>
-					<th field="POS_ID" hidden="true" width="80" align="center">岗位编号</th>
+					<th field="posId" hidden="true" width="80" align="center">岗位编号</th>
 					<th field="POS_NAME" width="100" align="center">岗位名称</th>
 					<th field="IND_DATE" width="100" align="center">申请日期</th>
 					<th field="IND_STATE" hidden="true" width="100" align="center">申请状态</th>
 					<th field="typeName" width="100" align="center">申请类别</th>
-					<th field="EXT3" width="100" hidden="true" align="center">申请类别code</th>
-					<th field="stateName" width="100" align="center">状态</th>
-					<th field="EXT1" width="100" hidden="true" align="center">审批状态</th>
+					<th field="ext3" width="100" hidden="true" align="center">申请类别code</th>
+					<th field="state" width="100" align="center">状态</th>
+					<th field="ext1" width="100" hidden="true" align="center">审批状态</th>
 					<th field="approveName" width="100" align="center">审批状态</th>
-					<th field="EXT2" width="100" align="center">审批日期</th>
+					<th field="ext2" width="100" align="center">审批日期</th>
 
 
 				</tr>

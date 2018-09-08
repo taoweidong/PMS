@@ -46,8 +46,7 @@
 		<!-- End of toolbar -->
 		<table id="wu-datagrid-2" class="easyui-datagrid"
 			toolbar="#wu-toolbar-2" fitColumns="true" pagination="true"
-			fit="true" rownumbers="true"
-			url="NoticeServlet?method=NoticeListInfo">
+			fit="true" rownumbers="true" url="queryNotice">
 			<thead>
 				<tr>
 					<%
@@ -58,11 +57,11 @@
 					<%
 						}
 					%>
-					<th field="NOT_ID" width="80" align="center">ID</th>
-					<th field="NOT_TITLE" width="90" align="center">标题</th>
-					<th field="NOT_CONTENT" width="100" align="center">内容</th>
-					<th field="NOT_DATE" width="80" align="center">更新日期</th>
-					<th field="ADMIN_ID" width="100" hidden="true" align="center">发布人ID</th>
+					<th field="id" width="80" align="center">ID</th>
+					<th field="title" width="90" align="center">标题</th>
+					<th field="content" width="100" align="center">内容</th>
+					<th field="date" width="80" align="center">更新日期</th>
+					<th field="author" width="100" hidden="true" align="center">发布人ID</th>
 					<th field="ADMIN_NAME" width="100" align="center">发布人</th>
 					<th field="EXT1" width="100" hidden="true" align="center">备注</th>
 					<th field="EXT2" width="100" hidden="true" align="center">备注3</th>

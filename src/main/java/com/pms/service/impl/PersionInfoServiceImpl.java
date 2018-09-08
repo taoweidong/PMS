@@ -14,16 +14,16 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.pms.entity.Administrator;
 import com.pms.mapper.AdministratorMapper;
-import com.pms.service.PersionInfoManageService;
+import com.pms.service.PersionInfoService;
 
 @Service
-public class PersionInfoManageServiceImpl implements PersionInfoManageService {
+public class PersionInfoServiceImpl implements PersionInfoService {
 
 	/**
 	 * 日志工具.
 	 */
 	private static final Logger LOGGER = LoggerFactory
-			.getLogger(PersionInfoManageServiceImpl.class);
+			.getLogger(PersionInfoServiceImpl.class);
 
 	/**
 	 * 管理员mapper.
@@ -49,7 +49,7 @@ public class PersionInfoManageServiceImpl implements PersionInfoManageService {
 	}
 
 	/** Default constructor */
-	public PersionInfoManageServiceImpl() {
+	public PersionInfoServiceImpl() {
 	}
 
 }

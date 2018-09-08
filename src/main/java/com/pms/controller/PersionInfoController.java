@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.pms.service.PersionInfoManageService;
+import com.pms.service.PersionInfoService;
 
 @Controller
-public class PersionInfoManageController {
+public class PersionInfoController {
 	/**
 	 * 日志工具
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
 	@Autowired
-	private PersionInfoManageService persionInfoManageService;
+	private PersionInfoService persionInfoManageService;
 
 	/**
 	 * 个人信息管理.
@@ -56,6 +56,6 @@ public class PersionInfoManageController {
 	}
 
 	/** Default constructor */
-	public PersionInfoManageController() {
+	public PersionInfoController() {
 	}
 }

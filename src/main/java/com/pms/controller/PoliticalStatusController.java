@@ -12,31 +12,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.pms.service.ApplyInductionService;
+import com.pms.service.PoliticalStatusService;
 
 @Controller
-public class ApplyInductionController {
+public class PoliticalStatusController {
 	/**
 	 * 日志工具
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
 	@Autowired
-	private ApplyInductionService applyInductionService;
+	private PoliticalStatusService politicalStatusService;
 
-	@RequestMapping("/applyInduction")
+	@RequestMapping("/politicalStatusManager")
 	public String index() {
+		LOGGER.debug("访问主页:PoliticalStatusManager");
 
-		LOGGER.debug("访问主页:ApplyInduction");
-		return "ApplyInduction";
+		return "PoliticalStatusManager";
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/queryApplyInduction", method = RequestMethod.POST)
-	public Map<String, Object> queryApplyInduction(@RequestParam("page") Integer page,
+	@RequestMapping(value = "/queryPoliticalStatus", method = RequestMethod.POST)
+	public Map<String, Object> queryPoliticalStatus(@RequestParam("page") Integer page,
 			@RequestParam("rows") Integer rows) {
+
 		System.out.println("rows:" + rows + "   page:" + page);
-		Map<String, Object> result = applyInductionService.queryApplyInduction(page, rows);
+		Map<String, Object> result = politicalStatusService.queryPoliticalStatus(page, rows);
 
 		System.out.println(JSON.toJSONString(result));
 
@@ -45,6 +46,6 @@ public class ApplyInductionController {
 	}
 
 	/** Default constructor */
-	public ApplyInductionController() {
+	public PoliticalStatusController() {
 	}
 }

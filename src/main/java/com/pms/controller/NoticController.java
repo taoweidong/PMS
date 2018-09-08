@@ -12,31 +12,34 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.pms.service.ApplyInductionService;
+import com.pms.service.NoticService;
 
 @Controller
-public class ApplyInductionController {
+public class NoticController {
+
 	/**
 	 * 日志工具
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
 	@Autowired
-	private ApplyInductionService applyInductionService;
+	private NoticService noticService;
 
-	@RequestMapping("/applyInduction")
-	public String index() {
-
-		LOGGER.debug("访问主页:ApplyInduction");
-		return "ApplyInduction";
+	@RequestMapping("/noticManager")
+	public String noticManager() {
+		// 如果你的spring mvc配置文件中配置了跳转后缀则不需要加.jsp后缀
+		// 即直接return "demo/pagefile";
+		LOGGER.debug("访问主页");
+		return "NoticManager";
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/queryApplyInduction", method = RequestMethod.POST)
-	public Map<String, Object> queryApplyInduction(@RequestParam("page") Integer page,
+	@RequestMapping(value = "/queryNotice", method = RequestMethod.POST)
+	public Map<String, Object> queryPersionInfo(@RequestParam("page") Integer page,
 			@RequestParam("rows") Integer rows) {
+
 		System.out.println("rows:" + rows + "   page:" + page);
-		Map<String, Object> result = applyInductionService.queryApplyInduction(page, rows);
+		Map<String, Object> result = noticService.queryNoticInfo(page, rows);
 
 		System.out.println(JSON.toJSONString(result));
 
@@ -45,6 +48,6 @@ public class ApplyInductionController {
 	}
 
 	/** Default constructor */
-	public ApplyInductionController() {
+	public NoticController() {
 	}
 }

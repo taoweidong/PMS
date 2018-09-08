@@ -12,31 +12,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.pms.service.ApplyInductionService;
+import com.pms.service.PositionsService;
 
 @Controller
-public class ApplyInductionController {
+public class PositionsController {
 	/**
 	 * 日志工具
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
 
 	@Autowired
-	private ApplyInductionService applyInductionService;
+	private PositionsService positionsService;
 
-	@RequestMapping("/applyInduction")
+	@RequestMapping("/positionsManage")
 	public String index() {
 
-		LOGGER.debug("访问主页:ApplyInduction");
-		return "ApplyInduction";
+		LOGGER.debug("访问主页:PositionsManage");
+		return "PositionsManage";
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/queryApplyInduction", method = RequestMethod.POST)
-	public Map<String, Object> queryApplyInduction(@RequestParam("page") Integer page,
+	@RequestMapping(value = "/queryPositions", method = RequestMethod.POST)
+	public Map<String, Object> queryPositions(@RequestParam("page") Integer page,
 			@RequestParam("rows") Integer rows) {
 		System.out.println("rows:" + rows + "   page:" + page);
-		Map<String, Object> result = applyInductionService.queryApplyInduction(page, rows);
+		Map<String, Object> result = positionsService.queryPositions(page, rows);
 
 		System.out.println(JSON.toJSONString(result));
 
@@ -44,7 +44,7 @@ public class ApplyInductionController {
 
 	}
 
-	/** Default constructor */
-	public ApplyInductionController() {
+	/** Default constructor queryPositions */
+	public PositionsController() {
 	}
 }

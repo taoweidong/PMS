@@ -43,30 +43,22 @@
 		<!-- End of toolbar -->
 		<table id="wu-datagrid-2" class="easyui-datagrid"
 			toolbar="#wu-toolbar-2" fitColumns="true" pagination="true"
-			fit="true" rownumbers="true"
-			url="PositionsServlet?method=PositionsListInfo">
+			fit="true" rownumbers="true" url="queryPositions">
 			<thead>
 				<tr>
-					<%
-						if ("admin".equals((String) session.getAttribute("userRole"))
-								|| "superAdmin".equals((String) session.getAttribute("userRole"))) {
-					%>
 					<th field="cb" checkbox="true"></th>
-					<%
-						}
-					%>
-					<th field="POS_ID" width="80" align="center">ID</th>
-					<th field="POS_NAME" width="90" align="center">岗位名称</th>
-					<th field="DEP_ID" width="90" hidden="true" align="center">部门编号</th>
+					<th field="id" width="80" align="center">ID</th>
+					<th field="name" width="90" align="center">岗位名称</th>
+					<th field="depId" width="90" hidden="true" align="center">部门编号</th>
 					<th field="DEP_NAME" width="90" align="center">部门名称</th>
 					<th field="DEP_LEADER" width="90" align="center">部门领导</th>
-					<th field="POS_CONTENT" width="90" align="center">岗位职责</th>
-					<th field="POS_SALARY" width="90" align="center">岗位工资</th>
-					<th field="POS_ALLOWANCE" width="90" align="center">岗位津贴</th>
-					<th field="POS_PERQUISITES" width="90" align="center">特殊津贴</th>
-					<th field="EXT1" width="50" align="center">备注</th>
-					<th field="EXT2" width="80" align="center">更新时间</th>
-					<th field="EXT3" width="100" hidden="true" align="center">备注3</th>
+					<th field="content" width="90" align="center">岗位职责</th>
+					<th field="salary" width="90" align="center">岗位工资</th>
+					<th field="allowance" width="90" align="center">岗位津贴</th>
+					<th field="perquisites" width="90" align="center">特殊津贴</th>
+					<th field="ext1" width="50" align="center">备注</th>
+					<th field="ext2" width="80" align="center">更新时间</th>
+					<th field="ext3" width="100" hidden="true" align="center">备注3</th>
 				</tr>
 			</thead>
 		</table>
