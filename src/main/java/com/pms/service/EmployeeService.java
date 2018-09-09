@@ -17,4 +17,6 @@ public interface EmployeeService {
 
 	Map<String, Object> queryEmployee(Integer page, Integer rows);
 
+	Map<String, Object> EmployeeSave(Employee employee);
+
 }

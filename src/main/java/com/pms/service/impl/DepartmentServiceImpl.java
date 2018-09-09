@@ -27,9 +27,10 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	public Map<String, Object> queryDepartment(Integer page, Integer rows) {
 		Map<String, Object> result = Maps.newHashMap();
+		Map<String, Object> paramMap = Maps.newHashMap();
 
 		PageHelper.startPage(page, rows);
-		List<Department> list = departmentMapper.selectAll();
+		List<Department> list = departmentMapper.queryDepartment(paramMap);
 		PageInfo<Department> pageInfo = new PageInfo<Department>(list);
 
 		result.put("total", pageInfo.getTotal());

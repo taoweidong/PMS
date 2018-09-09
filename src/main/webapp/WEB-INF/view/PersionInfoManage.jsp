@@ -163,14 +163,15 @@
 		}
 		//获取选中的员工信息
 		var row = selectedRows[0];
+
 		//打开编辑员工信息的页面 并设置标题
 		$('#dlg').dialog("open").dialog("setTitle", "编辑职工信息");
 		//把选中行的数据加载到弹出的表单信息中  即把修改编辑的数据塞到表单中
 		$('#fm').form('load', row);
 <%if ("user".equals((String) session.getAttribute("userRole"))) {%>
-	url = "EmployeeSave?saveFlag=update&EMP_NO=" + row.EMP_NO;
+	url = "EmployeeSave?no=" + row.id;
 <%} else {%>
-	url = "AdminServlet?method=AdminPersionUpdate&ADMIN_ID=" + row.ADMIN_ID;
+	url = "updateAdmin?id=" + row.id;
 <%}%>
 	}
 </script>
@@ -212,7 +213,7 @@
 				<th field="phone" width="100" align="center">电话</th>
 				<th field="ext1" width="80" align="center">备注</th>
 				<th field="ext2" width="100" align="center">更新日期</th>
-				<th field="ext3" width="150" hidden="true" align="center">备注</th>
+				<th field="ext3" width="150" hidden="true" align="center">预备字段3</th>
 
 			</tr>
 		</thead>
@@ -235,7 +236,7 @@
 			<table>
 				<tr>
 					<td width="80" align="right">姓名：</td>
-					<td><input type="text" name="EMP_NAME" id="EMP_NAME"
+					<td><input type="text" name="name" id="name"
 						class="easyui-validatebox" required="true" /></td>
 				</tr>
 				<tr>
@@ -293,24 +294,23 @@
 				<tr>
 					<td width="100" align="right">登录账号：</td>
 					<td><input style="width: 150px" readonly="readonly"
-						type="text" name="ADMIN_NO" id="ADMIN_NO"
-						class="easyui-validatebox" required="true" /></td>
+						type="text" name="no" id="no" class="easyui-validatebox"
+						required="true" /></td>
 				</tr>
 				<tr>
 					<td width="100" align="right">姓名：</td>
-					<td><input style="width: 150px" type="text" name="ADMIN_NAME"
-						id="ADMIN_NAME" class="easyui-validatebox" required="true" /></td>
+					<td><input style="width: 150px" type="text" name="name"
+						id="name" class="easyui-validatebox" required="true" /></td>
 					<td></td>
 					<td width="100" align="right">电话：</td>
 					<td><input style="width: 150px" maxlength="11" type="text"
-						name="ADMIN_PHONE" id="ADMIN_PHONE" class="easyui-validatebox"
-						required="true" /></td>
+						name="phone" id="phone" class="easyui-validatebox" required="true" /></td>
 				</tr>
 
 				<tr>
 					<td width="100" align="right">备注：</td>
-					<td colspan="4"><textarea rows="4" cols="60" name="Ext1"
-							id="Ext1"></textarea></td>
+					<td colspan="4"><textarea rows="4" cols="60" name="ext1"
+							id="ext1"></textarea></td>
 				</tr>
 
 			</table>

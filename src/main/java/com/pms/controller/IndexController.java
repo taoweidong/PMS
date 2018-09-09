@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pms.entity.Administrator;
+import com.pms.entity.Employee;
 import com.pms.service.AdminService;
+import com.pms.service.EmployeeService;
 import com.pms.util.AESUtil;
 
 /**
@@ -35,9 +37,21 @@ public class IndexController {
 	@Autowired
 	private AdminService adminService;
 
+	@Autowired
+	private EmployeeService employeeService;
+
 	private static final String USER = "user";
 	private static final String ROLE = "role";
 	private static final String ERROR = "error";
+
+	/**
+	 * 用户名
+	 */
+	private String user = "";
+	/**
+	 * 角色
+	 */
+	private String roleFlag = "";
 
 	/**
 	 * 主页导航功能.
@@ -65,6 +79,17 @@ public class IndexController {
 		try {
 			// 检查用户信息
 			if (StringUtils.equals(role, "user")) {
+				Employee employee = employeeService.checkEmployee(userName,
+						AESUtil.parseByte2HexStr(AESUtil.encrypt(password)), role);
+
+				if (employee == null) {// 登录失败
+					LOGGER.error("管理员用户校验失败：user" + userName);
+					model.addAttribute(ERROR, "用户名或密码输入错误!");
+					return "index";
+				} else {
+					user = employee.getName();
+					roleFlag = role;
+				}
 
 			} else if (StringUtils.equals(role, "admin")
 					|| StringUtils.equals(role, "superAdmin")) { // 检查管理员信息
@@ -79,8 +104,8 @@ public class IndexController {
 					model.addAttribute(ERROR, "用户名或密码输入错误!");
 					return "index";
 				} else {
-					model.addAttribute(USER, admin.getName());
-					model.addAttribute(ROLE, role);
+					user = admin.getName();
+					roleFlag = role;
 				}
 			} else {
 				model.addAttribute(ERROR, "角色不存在");
@@ -92,6 +117,10 @@ public class IndexController {
 			model.addAttribute(ERROR, "登录发生异常，请联系管理员!");
 			return "index";
 		}
+
+		// 设置session
+		session.setAttribute("user", userName);
+		session.setAttribute("role", role);
 
 		return "redirect:main";
 	}
@@ -106,8 +135,8 @@ public class IndexController {
 	public String main(final Model model, final HttpServletRequest request) {
 
 		// HttpSession session = request.getSession();
-		// model.addAttribute("user", "诸葛小坏");
-		// model.addAttribute("role", "管理员");
+		model.addAttribute(USER, user);
+		model.addAttribute(ROLE, roleFlag);
 
 		// model.addAttribute("user", admin);
 		return "main";

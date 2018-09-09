@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.pms.mapper.DepartmentMapper" >
-  <resultMap id="BaseResultMap" type="com.pms.entity.Department" >
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="DEP_ID" property="id" jdbcType="VARCHAR" />
-    <result column="DEP_NAME" property="name" jdbcType="VARCHAR" />
-    <result column="DEP_LEADER" property="leader" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    <!--
-      WARNING - @mbg.generated
-    -->
-    DEP_ID, DEP_NAME, DEP_LEADER
-  </sql>
+<mapper namespace="com.pms.mapper.DepartmentMapper">
+	<resultMap id="BaseResultMap"
+		type="com.pms.entity.Department">
+		<!-- WARNING - @mbg.generated -->
+		<id column="DEP_ID" property="id" jdbcType="VARCHAR" />
+		<result column="DEP_NAME" property="name" jdbcType="VARCHAR" />
+		<result column="DEP_LEADER" property="leader"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		<!-- WARNING - @mbg.generated -->
+		DEP_ID, DEP_NAME, DEP_LEADER
+	</sql>
+
+	<select id="queryDepartment" resultMap="BaseResultMap">
+		SELECT DEP_ID,DEP_NAME,(SELECT EMP_NAME FROM t_employee WHERE EMP_NO =
+		DEP_LEADER) AS DEP_LEADER FROM t_department
+	</select>
 </mapper>

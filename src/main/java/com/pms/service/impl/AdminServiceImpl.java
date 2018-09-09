@@ -66,4 +66,27 @@ public class AdminServiceImpl implements AdminService {
 		return result;
 	}
 
+	@Override
+	public Administrator selectAdminById(String id) {
+		return administratorMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public boolean updateAdmin(Administrator admin) {
+		boolean result = false;
+
+		try {
+
+			int returnInt = administratorMapper.updateByPrimaryKey(admin);
+			if (returnInt > 0) {
+				result = true;
+			} else {
+				result = false;
+			}
+		} catch (Exception e) {
+			result = false;
+		}
+		return result;
+	}
+
 }

@@ -62,4 +62,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return result;
 	}
 
+	@Override
+	public Map<String, Object> EmployeeSave(Employee employee) {
+
+		employeeMapper.updateByPrimaryKey(employee);
+
+		return null;
+	}
+
 }
