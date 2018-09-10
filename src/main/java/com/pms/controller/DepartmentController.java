@@ -34,8 +34,9 @@ public class DepartmentController {
 	@ResponseBody
 	@RequestMapping(value = "/queryDepartment", method = RequestMethod.POST)
 	public Map<String, Object> queryDepartment(@RequestParam("page") Integer page,
-			@RequestParam("rows") Integer rows) {
-		System.out.println("rows:" + rows + "   page:" + page);
+			@RequestParam("rows") Integer rows, @RequestParam("DEP_NAME") Integer depName,
+			@RequestParam("DEP_ID") Integer empId, @RequestParam("DEP_LEADER") Integer depNo) {
+
 		Map<String, Object> result = departmentService.queryDepartment(page, rows);
 
 		System.out.println(JSON.toJSONString(result));

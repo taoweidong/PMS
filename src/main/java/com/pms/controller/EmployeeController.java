@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
-import com.pms.entity.Employee;
 import com.pms.service.EmployeeService;
 
 @Controller
@@ -56,7 +55,7 @@ public class EmployeeController {
 	@RequestMapping(value = "/EmployeeSave", method = RequestMethod.POST)
 	public Map<String, Object> employeeSave(@RequestParam("no") String no) {
 
-		Employee employee = new Employee();
+		// Employee employee = new Employee();
 
 		Map<String, Object> result = Maps.newHashMap();
 

@@ -6,6 +6,8 @@
 <head>
 
 <title>部门管理</title>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/DepartmentManage.js"></script>
 
 </head>
 
@@ -13,10 +15,6 @@
 	<div class="easyui-layout" data-options="fit:true">
 		<!-- Begin of toolbar -->
 		<div id="wu-toolbar-2">
-			<%
-				if ("admin".equals((String) session.getAttribute("userRole"))
-						|| "superAdmin".equals((String) session.getAttribute("userRole"))) {
-			%>
 			<div class="wu-toolbar-button">
 				<a href="javascript:openDepartmentAddDialog()"
 					class="easyui-linkbutton" iconCls="icon-add" plain="true">添加</a> <a
@@ -25,10 +23,6 @@
 					href="javascript:deleteDepartment()" class="easyui-linkbutton"
 					iconCls="icon-remove" plain="true">删除</a>
 			</div>
-
-			<%
-				}
-			%>
 			<div class="wu-toolbar-search">
 				<label>部门名ID：</label> <input name="s_DEP_ID" id="s_DEP_ID"
 					class="wu-text" style="width: 100px;"> <label>部门名称：</label>
@@ -48,11 +42,11 @@
 			<thead>
 				<tr>
 					<th field="cb" checkbox="true"></th>
-					<th field="id" width="80" align="center">ID</th>
-					<th field="name" width="90" align="center">部门名称</th>
-					<th field="leader" width=" width=" 50" align="center">领导工号</th>
-					<th field="EMP_NAME" width="50" align="center">领导工号</th>
-					<th field="EMP_Phone" width="50" align="center">领导电话</th>
+					<th field="id" width="80" hidden="true" align="center">ID</th>
+					<th field="name" width="40" align="center">部门名称</th>
+					<th field="leader" width="30" align="center">领导工号</th>
+					<th field="empName" width="50" align="center">领导姓名</th>
+					<th field="empPhone" width="50" align="center">领导电话</th>
 				</tr>
 			</thead>
 		</table>

@@ -179,26 +179,7 @@
 </head>
 <body style="margin: 5px;">
 
-	<!-- 	<table id="dg" title="职工信息" class="easyui-datagrid" fitColumns="true"
-		pagination="true" fit="true" pageSize="20" rownumbers="true"
-		url="PersionInfo" toolbar="#tb">
-		<thead>
-			<tr>
-				<th field="cb" checkbox="true"></th>
-				<th field="EMP_NO" width="80" align="center">工号</th>
-				<th field="EMP_NAME" width="90" align="center">姓名</th>
-				<th field="EMP_SEX" hidden="true" width="50" align="center">EMP_SEX</th>
-				<th field="sexName" width="50" align="center">性别</th>
-				<th field="EMP_Birthday" width="80" align="center">出生日期</th>
-				<th field="PS_TYPE" width="100" hidden="true" align="center">岗位ID</th>
-				<th field="PS_Name" width="80" align="center">政治面貌</th>
-				<th field="EMP_Phone" width="100" align="center">电话</th>
-				<th field="EMP_Address" width="150" align="center">地址</th>
-				<th field="ext1" width="150" align="center">备注</th>
-				<th field="ext2" width="150" align="center">更新日期</th>
-			</tr>
-		</thead>
-	</table> -->
+
 
 	<table id="dg" title="个人信息" class="easyui-datagrid" fitColumns="true"
 		pagination="true" fit="true" pageSize="20" rownumbers="true"
@@ -226,65 +207,6 @@
 		</div>
 
 	</div>
-	<%
-		if ("user".equals((String) session.getAttribute("userRole"))) {
-	%>
-	<div id="dlg" class="easyui-dialog"
-		style="width: 570px; height: 350px; padding: 10px 20px" closed="true"
-		buttons="#dia-buttons">
-		<form id="fm" method="post">
-			<table>
-				<tr>
-					<td width="80" align="right">姓名：</td>
-					<td><input type="text" name="name" id="name"
-						class="easyui-validatebox" required="true" /></td>
-				</tr>
-				<tr>
-					<td width="80" align="right">性别：</td>
-					<td><select class="easyui-combobox" name="EMP_SEX"
-						id="EMP_SEX" editable="false" panelHeight="auto"
-						style="width: 135px;">
-							<option value="">请选择...</option>
-							<option value="M">男</option>
-							<option value="F">女</option>
-					</select></td>
-					<td></td>
-					<td width="80" align="right">出生日期：</td>
-					<td><input class="easyui-datebox" id="EMP_Birthday"
-						name="EMP_Birthday" editable="false" required="true" /></td>
-				</tr>
-				<tr>
-					<td width="80" align="right">政治面貌：</td>
-					<td><input class="easyui-combobox" id="PS_TYPE" name="PS_TYPE"
-						data-options=" panelHeight:'auto',editable:false,valueField:'PS_TYPE',textField:'PS_Name',url:'PoliticalStatusComboList'" />
-					</td>
-					<td></td>
-					<td width="80" align="right">电话：</td>
-					<td><input type="text" name="EMP_Phone" id="EMP_Phone"
-						class="easyui-validatebox" required="true" maxlength="11"
-						validType="phone" /></td>
-				</tr>
-				<tr>
-					<td width="80" align="right">地址：</td>
-					<td colspan="4"><textarea rows="1" cols="60"
-							name="EMP_Address" id="EMP_Address"></textarea></td>
-				</tr>
-				<tr>
-					<td width="80" align="right">备注：</td>
-					<td colspan="4"><textarea rows="7" cols="60" name="ext1"
-							id="ext1"></textarea></td>
-				</tr>
-			</table>
-		</form>
-	</div>
-	<div id="dia-buttons">
-		<a href="javascript:saveStudent()" class="easyui-linkbutton"
-			iconCls="icon-ok">保存</a> <a href="javascript:closeStudentDialog()"
-			class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
-	</div>
-	<%
-		} else {
-	%>
 
 	<div id="dlg" class="easyui-dialog"
 		style="width: 570px; height: 300px; padding: 10px 20px" modal="true"
@@ -321,10 +243,6 @@
 			iconCls="icon-ok">保存</a> <a href="javascript:closeStudentDialog()"
 			class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
-
-	<%
-		}
-	%>
 
 </body>
 

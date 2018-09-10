@@ -3,7 +3,6 @@
 <mapper namespace="com.pms.mapper.DepartmentMapper">
 	<resultMap id="BaseResultMap"
 		type="com.pms.entity.Department">
-		<!-- WARNING - @mbg.generated -->
 		<id column="DEP_ID" property="id" jdbcType="VARCHAR" />
 		<result column="DEP_NAME" property="name" jdbcType="VARCHAR" />
 		<result column="DEP_LEADER" property="leader"
@@ -15,7 +14,10 @@
 	</sql>
 
 	<select id="queryDepartment" resultMap="BaseResultMap">
-		SELECT DEP_ID,DEP_NAME,(SELECT EMP_NAME FROM t_employee WHERE EMP_NO =
-		DEP_LEADER) AS DEP_LEADER FROM t_department
+		SELECT
+		DEP_ID,DEP_NAME,t_employee.EMP_NO AS DEP_LEADER,t_employee.EMP_NAME AS
+		empName ,t_employee.EMP_Phone AS empPhone FROM t_department LEFT JOIN
+		t_employee ON t_department.DEP_LEADER = t_employee.EMP_NO
+
 	</select>
 </mapper>
