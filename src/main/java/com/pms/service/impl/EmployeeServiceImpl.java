@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.pms.entity.Employee;
 import com.pms.mapper.EmployeeMapper;
@@ -68,6 +69,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employeeMapper.updateByPrimaryKey(employee);
 
 		return null;
+	}
+
+	@Override
+	public List<Map<String, Object>> comboEmployee() {
+		List<Map<String, Object>> resultMap = Lists.newArrayList();
+
+		List<Employee> listEmployee = employeeMapper.selectAll();
+		for (Employee item : listEmployee) {
+			Map<String, Object> param = Maps.newHashMap();
+			param.put("EMP_NO", item.getNo());
+			param.put("EMP_NAME", item.getName());
+			resultMap.add(param);
+			param = null;
+		}
+
+		return resultMap;
+
 	}
 
 }

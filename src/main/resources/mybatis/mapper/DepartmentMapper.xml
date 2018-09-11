@@ -15,9 +15,23 @@
 
 	<select id="queryDepartment" resultMap="BaseResultMap">
 		SELECT
-		DEP_ID,DEP_NAME,t_employee.EMP_NO AS DEP_LEADER,t_employee.EMP_NAME AS
-		empName ,t_employee.EMP_Phone AS empPhone FROM t_department LEFT JOIN
-		t_employee ON t_department.DEP_LEADER = t_employee.EMP_NO
+		DEP_ID,DEP_NAME,t_employee.EMP_NO AS
+		DEP_LEADER,t_employee.EMP_NAME AS
+		empName ,t_employee.EMP_Phone AS
+		empPhone FROM t_department LEFT JOIN
+		t_employee ON
+		t_department.DEP_LEADER = t_employee.EMP_NO
+		<where>
+			<if test="empId != null and empId != ''">
+				AND t_department.DEP_ID LIKE '%${empId}%'
+			</if>
+			<if test="depName != null and depName != ''">
+				AND t_department.DEP_NAME LIKE '%${depName}%'
+			</if>
+			<if test="depNo != null and depNo != ''">
+				AND t_department.DEP_ID LIKE '%${depNo}%'
+			</if>
+		</where>
 
 	</select>
 </mapper>

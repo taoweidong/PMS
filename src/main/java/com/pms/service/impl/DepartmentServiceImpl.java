@@ -25,9 +25,11 @@ public class DepartmentServiceImpl implements DepartmentService {
 	private DepartmentMapper departmentMapper;
 
 	@Override
-	public Map<String, Object> queryDepartment(Integer page, Integer rows) {
+	public Map<String, Object> queryDepartment(Integer page, Integer rows,
+			Map<String, Object> paramMap) {
 		Map<String, Object> result = Maps.newHashMap();
-		Map<String, Object> paramMap = Maps.newHashMap();
+
+		System.out.println(JSON.toJSONString(paramMap));
 
 		PageHelper.startPage(page, rows);
 		List<Department> list = departmentMapper.queryDepartment(paramMap);

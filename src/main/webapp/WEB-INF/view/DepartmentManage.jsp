@@ -24,12 +24,17 @@
 					iconCls="icon-remove" plain="true">删除</a>
 			</div>
 			<div class="wu-toolbar-search">
+				
 				<label>部门名ID：</label> <input name="s_DEP_ID" id="s_DEP_ID"
-					class="wu-text" style="width: 100px;"> <label>部门名称：</label>
+					class="wu-text" style="width: 100px;"> 
+				
+				<label>部门名称：</label>
 				<input name="s_DEP_NAME" id="s_DEP_NAME" class="wu-text"
-					style="width: 100px;"> <label>领导姓名：</label> <input
-					class="easyui-combobox" id="s_DEP_LEADER" name="s_DEP_LEADER"
-					data-options="panelHeight:'auto',editable:false,valueField:'EMP_NO',textField:'EMP_NAME',url:'EmployeeServlet?method=ComboListEmployee'" />
+					style="width: 100px;"> 
+				
+				<label>领导姓名：</label> 
+					<input class="easyui-combobox" id="s_DEP_LEADER" name="s_DEP_LEADER"
+					data-options="panelHeight:'auto',editable:false,valueField:'EMP_NO',textField:'EMP_NAME',url:'comboListEmployee'" />
 
 				<a href="javascript:searchDepartment()" class="easyui-linkbutton"
 					iconCls="icon-search">开始检索</a>
@@ -42,7 +47,7 @@
 			<thead>
 				<tr>
 					<th field="cb" checkbox="true"></th>
-					<th field="id" width="80" hidden="true" align="center">ID</th>
+					<th field="id" width="80" align="center">部门ID</th>
 					<th field="name" width="40" align="center">部门名称</th>
 					<th field="leader" width="30" align="center">领导工号</th>
 					<th field="empName" width="50" align="center">领导姓名</th>

@@ -6,7 +6,7 @@ function searchDepartment() {
 	$('#wu-datagrid-2').datagrid('load', {
 		DEP_ID : $('#s_DEP_ID').val(),
 		DEP_NAME : $('#s_DEP_NAME').val(),
-		DEP_LEADER : $('#s_DEP_LEADER').combobox('getText')
+		DEP_LEADER : $('#s_DEP_LEADER').combobox('getValue')
 	});
 }
 function openDepartmentAddDialog() {
@@ -67,7 +67,7 @@ function deleteDepartment() {
 		return;
 	}
 	var strIds = [];
-	for ( var i = 0; i < selectedRows.length; i++) {
+	for (var i = 0; i < selectedRows.length; i++) {
 		strIds.push(selectedRows[i].DEP_ID);
 	}
 	var ids = strIds.join(",");

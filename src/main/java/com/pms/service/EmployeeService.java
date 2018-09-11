@@ -1,5 +1,6 @@
 package com.pms.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.pms.entity.Employee;
@@ -18,5 +19,7 @@ public interface EmployeeService {
 	Map<String, Object> queryEmployee(Integer page, Integer rows);
 
 	Map<String, Object> EmployeeSave(Employee employee);
+
+	List<Map<String, Object>> comboEmployee();
 
 }

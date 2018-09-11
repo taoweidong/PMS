@@ -1,5 +1,6 @@
 package com.pms.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.pms.service.EmployeeService;
 
@@ -48,6 +50,33 @@ public class EmployeeController {
 		System.out.println(JSON.toJSONString(result));
 
 		return result;
+
+	}
+
+	/**
+	 * 下拉框获取用户信息.
+	 * @param page
+	 * @param rows
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/comboListEmployee", method = RequestMethod.POST)
+	public List<Map<String, Object>> comboListEmployee() {
+		List<Map<String, Object>> returnData = Lists.newArrayList();
+
+		Map<String, Object> param = Maps.newHashMap();
+		param.put("EMP_NO", "");
+		param.put("EMP_NAME", "请选择...");
+
+		returnData.add(param);
+
+		List<Map<String, Object>> result = employeeService.comboEmployee();
+
+		returnData.addAll(result);
+
+		System.out.println(JSON.toJSONString(returnData));
+
+		return returnData;
 
 	}
 
