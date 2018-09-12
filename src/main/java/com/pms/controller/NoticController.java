@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 import com.pms.service.NoticService;
 
 @Controller
@@ -45,6 +46,41 @@ public class NoticController {
 
 		return result;
 
+	}
+
+	/**
+	 * 更新公告信息.
+	 * @param page
+	 * @param rows
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/updateNotice", method = RequestMethod.POST)
+	public Map<String, Object> updateNotice(@RequestParam("id") String id,
+			@RequestParam("title") String title, @RequestParam("content") String content) {
+
+		Map<String, Object> result = Maps.newHashMap();
+
+		System.out.println(title + "===" + content);
+		return result;
+	}
+
+	/**
+	 * 添加公告信息.
+	 * @param id
+	 * @param title
+	 * @param content
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/addNotice", method = RequestMethod.POST)
+	public Map<String, Object> addNotice(@RequestParam("title") String title,
+			@RequestParam("content") String content) {
+
+		Map<String, Object> result = Maps.newHashMap();
+
+		System.out.println(title + "===" + content);
+		return result;
 	}
 
 	/** Default constructor */

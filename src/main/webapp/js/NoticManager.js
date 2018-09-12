@@ -22,7 +22,6 @@ function NoticeSave() {
 		success : function(result) {
 			// 把JSON对象转为javascript对象
 			var result = eval('(' + result + ')');
-			console.log("返回的JSON对象" + result);
 			if (result.errorMsg) {
 				$.messager.alert("系统提示", result.errorMsg);
 				return;
@@ -47,7 +46,7 @@ function deleteNotices() {
 		return;
 	}
 	var strIds = [];
-	for ( var i = 0; i < selectedRows.length; i++) {
+	for (var i = 0; i < selectedRows.length; i++) {
 		strIds.push(selectedRows[i].NOT_ID);
 	}
 	var ids = strIds.join(",");
@@ -76,7 +75,7 @@ function deleteNotices() {
 function openNoticesAddDialog() {
 	$('#wu-form-2').form('clear');
 	$('#wu-dialog-2').dialog('open').dialog("setTitle", "添加公告面貌");
-	url = "NoticeServlet?method=AddNotice";
+	url = "addNotice";
 
 }
 /**
@@ -91,7 +90,7 @@ function closeNoticesDialog() {
  * 功能：清空表单
  */
 function resetValue() {
-	$('#PS_TYPE').val("");
+	$('#title').val("");
 	$('#PS_Name').val("");
 	$('#Ext2').val("");
 }
@@ -113,6 +112,6 @@ function openNoticesModifyDialog() {
 	$('#wu-dialog-2').dialog("open").dialog("setTitle", "编辑信息");
 	// 把选中行的数据加载到弹出的表单信息中 即把修改编辑的数据塞到表单中
 	$('#wu-form-2').form('load', row);
-	url = "NoticeServlet?method=UpdateNotice&NOT_ID=" + row.NOT_ID;
+	url = "updateNotice?id=" + row.id;
 
 }

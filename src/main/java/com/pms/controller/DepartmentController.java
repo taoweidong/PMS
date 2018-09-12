@@ -40,11 +40,11 @@ public class DepartmentController {
 			@RequestParam(value = "rows", defaultValue = "1") Integer rows,
 			@RequestParam(value = "DEP_NAME", defaultValue = "") String depName,
 			@RequestParam(value = "DEP_ID", defaultValue = "") String depNo,
-			@RequestParam(value = "DEP_LEADER", defaultValue = "") String empId) {
+			@RequestParam(value = "DEP_LEADER", defaultValue = "") String leader) {
 
 		Map<String, Object> paramMap = Maps.newHashMap();
 		paramMap.put("depName", StringUtils.trimToEmpty(depName));
-		paramMap.put("empId", StringUtils.trimToEmpty(empId));
+		paramMap.put("leader", StringUtils.trimToEmpty(leader));
 		paramMap.put("depNo", StringUtils.trimToEmpty(depNo));
 
 		Map<String, Object> result = departmentService.queryDepartment(page, rows, paramMap);

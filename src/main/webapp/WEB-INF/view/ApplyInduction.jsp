@@ -8,6 +8,9 @@
 
 <title>个人入职申请</title>
 
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/ApplyInduction.js"></script>
+
 </head>
 
 <body>

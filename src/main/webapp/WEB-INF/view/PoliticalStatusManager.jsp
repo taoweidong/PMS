@@ -7,6 +7,9 @@
 
 <title>公告管理</title>
 
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/PoliticalStatusManager.js"></script>
+
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit:true">

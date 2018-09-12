@@ -7,6 +7,8 @@
 
 
 <title>管理员管理</title>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/AdminManager.js"></script>
 
 </head>
 

@@ -7,15 +7,14 @@
 
 <title>公告管理</title>
 
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/NoticManager.js"></script>
+
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit:true">
 		<!-- Begin of toolbar -->
 		<div id="wu-toolbar-2">
-			<%
-				if ("admin".equals((String) session.getAttribute("userRole"))
-						|| "superAdmin".equals((String) session.getAttribute("userRole"))) {
-			%>
 			<div class="wu-toolbar-button">
 				<a href="javascript:openNoticesAddDialog()"
 					class="easyui-linkbutton" iconCls="icon-add" plain="true">添加</a> <a
@@ -24,9 +23,6 @@
 					href="javascript:deleteNotices()" class="easyui-linkbutton"
 					iconCls="icon-remove" plain="true">删除</a>
 			</div>
-			<%
-				}
-			%>
 			<div class="wu-toolbar-search">
 				<label>更新日期：</label> <input class="easyui-datebox" id="startDate"
 					name="startDate" style="width: 100px" size="10" editable="false">
@@ -49,14 +45,7 @@
 			fit="true" rownumbers="true" url="queryNotice">
 			<thead>
 				<tr>
-					<%
-						if ("admin".equals((String) session.getAttribute("userRole"))
-								|| "superAdmin".equals((String) session.getAttribute("userRole"))) {
-					%>
 					<th field="cb" checkbox="true"></th>
-					<%
-						}
-					%>
 					<th field="id" width="80" align="center">ID</th>
 					<th field="title" width="90" align="center">标题</th>
 					<th field="content" width="100" align="center">内容</th>
@@ -78,12 +67,11 @@
 			<table>
 				<tr>
 					<td align="right">标 题:</td>
-					<td><input type="text" name="NOT_TITLE" id="NOT_TITLE"
-						class="wu-text" /></td>
+					<td><input type="text" name="title" id="title" class="wu-text" /></td>
 				</tr>
 				<tr>
 					<td valign="top" align="right">内 容:</td>
-					<td><textarea name="NOT_CONTENT" id="NOT_CONTENT" rows="6"
+					<td><textarea name="content" id="content" rows="6"
 							class="wu-textarea" style="width: 260px"></textarea></td>
 				</tr>
 			</table>

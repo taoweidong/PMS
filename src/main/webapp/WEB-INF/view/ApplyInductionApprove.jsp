@@ -7,6 +7,8 @@
 
 
 <title>入职审批</title>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/ApplyInductionApprove.js"></script>
 
 </head>
 

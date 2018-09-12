@@ -22,8 +22,8 @@
 		t_employee ON
 		t_department.DEP_LEADER = t_employee.EMP_NO
 		<where>
-			<if test="empId != null and empId != ''">
-				AND t_department.DEP_ID LIKE '%${empId}%'
+			<if test="leader != null and leader != ''">
+				AND t_department.DEP_LEADER LIKE '%${leader}%'
 			</if>
 			<if test="depName != null and depName != ''">
 				AND t_department.DEP_NAME LIKE '%${depName}%'

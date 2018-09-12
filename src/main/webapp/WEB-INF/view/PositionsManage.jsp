@@ -6,6 +6,9 @@
 <head>
 <title>岗位信息管理</title>
 
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/js/PositionsManage.js"></script>
+
 </head>
 <body>
 	<div class="easyui-layout" data-options="fit:true">
