@@ -67,12 +67,11 @@
 				<tr>
 					<td width="100" align="right">账号：</td>
 					<td><input style="width: 150px" maxlength="10" type="text"
-						name="ADMIN_NO" id="ADMIN_NO" class="easyui-validatebox"
-						required="true" /></td>
+						name="no" id="no" class="easyui-validatebox" required="true" /></td>
 					<td></td>
 					<td width="100" align="right">姓名：</td>
-					<td><input style="width: 150px" type="text" name="ADMIN_NAME"
-						id="ADMIN_NAME" class="easyui-validatebox" required="true" /></td>
+					<td><input style="width: 150px" type="text" name="name"
+						id="name" class="easyui-validatebox" required="true" /></td>
 				</tr>
 				<tr>
 
@@ -91,14 +90,14 @@
 				<tr>
 					<td width="100" align="right">电话：</td>
 					<td colspan="4"><input style="width: 150px" maxlength="11"
-						type="text" name="ADMIN_PHONE" id="ADMIN_PHONE"
-						class="easyui-validatebox" required="true" /></td>
+						type="text" name="phone" id="phone" class="easyui-validatebox"
+						required="true" /></td>
 				</tr>
 
 				<tr>
 					<td width="100" align="right">备注：</td>
-					<td colspan="4"><textarea rows="4" cols="60" name="Ext1"
-							id="Ext1"></textarea></td>
+					<td colspan="4"><textarea rows="4" cols="60" name="ext1"
+							id="ext1"></textarea></td>
 				</tr>
 
 			</table>

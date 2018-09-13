@@ -3,6 +3,7 @@ package com.pms.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.google.common.collect.Maps;
 import com.pms.entity.Administrator;
 import com.pms.mapper.AdministratorMapper;
 import com.pms.service.AdminService;
+import com.pms.util.StringUtil;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -51,11 +53,11 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public Map<String, Object> queryAdmin(Integer page, Integer rows) {
+	public Map<String, Object> queryAdmin(Integer page, Integer rows, Administrator administrator) {
 		Map<String, Object> result = Maps.newHashMap();
 
 		PageHelper.startPage(page, rows);
-		List<Administrator> list = administratorMapper.selectAll();
+		List<Administrator> list = administratorMapper.select(administrator);
 		PageInfo<Administrator> pageInfo = new PageInfo<Administrator>(list);
 
 		result.put("total", pageInfo.getTotal());
@@ -76,8 +78,14 @@ public class AdminServiceImpl implements AdminService {
 		boolean result = false;
 
 		try {
+			int returnInt = 0;
+			if (StringUtils.isEmpty(admin.getId())) {
+				admin.setId(StringUtil.GetUUID());
+				returnInt = administratorMapper.insert(admin);
+			} else {
+				returnInt = administratorMapper.updateByPrimaryKey(admin);
+			}
 
-			int returnInt = administratorMapper.updateByPrimaryKey(admin);
 			if (returnInt > 0) {
 				result = true;
 			} else {

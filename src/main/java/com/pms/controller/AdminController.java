@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
 import com.pms.entity.Administrator;
 import com.pms.entity.ReturnData;
 import com.pms.service.AdminService;
+import com.pms.util.AESUtil;
 import com.pms.utils.CheckInfo;
 
 /**
@@ -37,15 +37,93 @@ public class AdminController {
 
 	@ResponseBody
 	@RequestMapping(value = "/queryAdmin", method = RequestMethod.POST)
-	public Map<String, Object> queryAdmin(@RequestParam("page") Integer page,
-			@RequestParam("rows") Integer rows) {
-		System.out.println("rows:" + rows + "   page:" + page);
-		Map<String, Object> result = adminService.queryAdmin(page, rows);
+	public Map<String, Object> queryAdmin(
+			@RequestParam(value = "page", defaultValue = "1") Integer page,
+			@RequestParam(value = "rows", defaultValue = "15") Integer rows,
+			@RequestParam(value = "no", defaultValue = "") String no,
+			@RequestParam(value = "name", defaultValue = "") String name,
+			@RequestParam(value = "phone", defaultValue = "") String phone) {
 
-		System.out.println(JSON.toJSONString(result));
+		Administrator administrator = new Administrator();
+		administrator.setNo(StringUtils.trimToNull(no));
+		administrator.setName(StringUtils.trimToNull(name));
+		administrator.setPhone(StringUtils.trimToNull(phone));
 
+		Map<String, Object> result = adminService.queryAdmin(page, rows, administrator);
 		return result;
 
+	}
+
+	/**
+	 * 删除管理员.
+	 * @param ids
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/deleteAdmin", method = RequestMethod.POST)
+	public ReturnData deleteAdmin(@RequestParam("ids") String ids) {
+
+		return ReturnData.success();
+	}
+
+	/**
+	 * 设置超级管理员.
+	 * @param ids
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/setSuperAdmin", method = RequestMethod.POST)
+	public ReturnData setSuperAdmin(@RequestParam("ids") String ids) {
+
+		return ReturnData.success();
+	}
+
+	/**
+	 * 取消超级管理员.
+	 * @param ids
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/cancelSuperAdmin", method = RequestMethod.POST)
+	public ReturnData cancelSuperAdmin(@RequestParam("ids") String ids) {
+
+		return ReturnData.success();
+	}
+
+	/**
+	 * 添加超级管理员.
+	 * @param no
+	 * @param name
+	 * @param newPassword
+	 * @param phone
+	 * @param ext1
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/addAdmin", method = RequestMethod.POST)
+	public ReturnData addAdmin(@RequestParam("no") String no, @RequestParam("name") String name,
+			@RequestParam("newPassword") String newPassword, @RequestParam("phone") String phone,
+			@RequestParam("ext1") String ext1) throws Exception {
+
+		if (!CheckInfo.isMobileNO(StringUtils.trimToEmpty(phone))) {
+			return ReturnData.fail("手机号格式不正确!");
+		}
+
+		Administrator admin = new Administrator();
+		admin.setNo(no);
+		admin.setName(name);
+		admin.setPwd(AESUtil.parseByte2HexStr(AESUtil.parseHexStr2Byte(newPassword)));
+		admin.setPhone(phone);
+		admin.setExt1(ext1);
+		admin.setExt2(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date().getTime()));
+
+		if (adminService.updateAdmin(admin)) {
+			return ReturnData.success();
+
+		} else {
+			return ReturnData.fail("操作失败！");
+		}
 	}
 
 	/**

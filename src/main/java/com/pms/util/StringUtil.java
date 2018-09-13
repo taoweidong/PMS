@@ -10,7 +10,7 @@ import java.util.UUID;
  */
 public class StringUtil {
 	/**
-	 * Author:Taowd 功能：生成一个UUID 开发日期：2017-4-19-下午8:20:01
+	 * 生成一个UUID.
 	 * @return
 	 * @throws Exception
 	 */

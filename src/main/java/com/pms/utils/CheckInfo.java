@@ -2,6 +2,12 @@ package com.pms.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * 检查信息是否满足条件
+ * @author Taowd
+ * @version 2018年9月13日
+ * @see CheckInfo
+ */
 public class CheckInfo {
 
 	public static boolean isMobileNO(String mobiles) {

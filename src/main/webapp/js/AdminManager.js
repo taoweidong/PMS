@@ -14,9 +14,9 @@ var url;
 // 查询方法--easyui封装的方法，从table表中进行筛选数据
 function searchAdminInfo() {
 	$('#dg').datagrid('load', {
-		ADMIN_NO : $('#s_ADMIN_NO').val(),
-		ADMIN_NAME : $('#s_ADMIN_NAME').val(),
-		ADMIN_PHONE : $('#s_ADMIN_PHONE').val(),
+		no : $('#s_ADMIN_NO').val(),
+		name : $('#s_ADMIN_NAME').val(),
+		phone : $('#s_ADMIN_PHONE').val(),
 	});
 }
 
@@ -36,7 +36,7 @@ function deleteAdminInfo() {
 	$.messager.confirm("系统提示",
 			"您确定要删除这<font color=red>" + ids + "</font>条数据吗？", function(r) {
 				if (r) {
-					$.post("AdminServlet?method=AdminDelete", {
+					$.post("deleteAdmin", {
 						delIds : ids
 					}, function(result) {
 						// 此处已经指定以JSON运行响应，无需再进行转换
@@ -68,7 +68,7 @@ function setSuperAdmin() {
 	$.messager.confirm("系统提示", "您确定要将这<font color=red>" + selectedRows.length
 			+ "</font>条数据设置为超级管理员吗？", function(r) {
 		if (r) {
-			$.post("AdminServlet?method=SetSuperAdmin", {
+			$.post("setSuperAdmin", {
 				delIds : ids
 			}, function(result) {
 				// 此处已经指定以JSON运行响应，无需再进行转换
@@ -99,7 +99,7 @@ function cancelSetSuperAdmin() {
 	$.messager.confirm("系统提示", "您确定要将这<font color=red>" + selectedRows.length
 			+ "</font>条数据取消超级管理员设置？", function(r) {
 		if (r) {
-			$.post("AdminServlet?method=SetCancelSuperAdmin", {
+			$.post("cancelSuperAdmin", {
 				delIds : ids
 			}, function(result) {
 				// 此处已经指定以JSON运行响应，无需再进行转换
@@ -117,7 +117,7 @@ function cancelSetSuperAdmin() {
 
 function openAdminAddDialog() {
 	$('#dlg').dialog('open').dialog("setTitle", "添加管理员信息");
-	url = "AdminServlet?method=AdminAdd";
+	url = "addAdmin";
 }
 
 function saveAdmin() {
@@ -144,12 +144,12 @@ function saveAdmin() {
 
 // 清空表单
 function resetValue() {
-	$('#ADMIN_NO').val("");
-	$('#ADMIN_NAME').val("");
+	$('#no').val("");
+	$('#name').val("");
 	$('#newPassword').val("");
 	$('#newPassword2').val("");
-	$('#ADMIN_PHONE').val("");
-	$('#Ext1').val("");
+	$('#phone').val("");
+	$('#ext1').val("");
 
 }
 

@@ -15,7 +15,7 @@ public interface AdminService {
 	 */
 	Administrator checkAdmin(final String userName, final String password, final String role);
 
-	Map<String, Object> queryAdmin(Integer page, Integer rows);
+	Map<String, Object> queryAdmin(Integer page, Integer rows, Administrator administrator);
 
 	Administrator selectAdminById(String id);
 
