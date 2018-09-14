@@ -16,6 +16,7 @@ import com.pms.entity.Administrator;
 import com.pms.entity.ReturnData;
 import com.pms.service.AdminService;
 import com.pms.util.AESUtil;
+import com.pms.util.Constant;
 import com.pms.utils.CheckInfo;
 
 /**
@@ -63,7 +64,9 @@ public class AdminController {
 	@RequestMapping(value = "/deleteAdmin", method = RequestMethod.POST)
 	public ReturnData deleteAdmin(@RequestParam("ids") String ids) {
 
-		return ReturnData.success();
+		ReturnData result = adminService.deleteAdmin(ids);
+
+		return result;
 	}
 
 	/**
@@ -113,17 +116,14 @@ public class AdminController {
 		Administrator admin = new Administrator();
 		admin.setNo(no);
 		admin.setName(name);
-		admin.setPwd(AESUtil.parseByte2HexStr(AESUtil.parseHexStr2Byte(newPassword)));
+		admin.setPwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(newPassword)));
 		admin.setPhone(phone);
 		admin.setExt1(ext1);
 		admin.setExt2(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date().getTime()));
+		admin.setExt3(Constant.GENERAL_MANAGER);
 
-		if (adminService.updateAdmin(admin)) {
-			return ReturnData.success();
-
-		} else {
-			return ReturnData.fail("操作失败！");
-		}
+		ReturnData result = adminService.updateAdmin(admin);
+		return result;
 	}
 
 	/**
@@ -153,12 +153,9 @@ public class AdminController {
 		admin.setExt1(ext1);
 		admin.setExt2(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date().getTime()));
 
-		if (adminService.updateAdmin(admin)) {
-			return ReturnData.success();
+		ReturnData result = adminService.updateAdmin(admin);
+		return result;
 
-		} else {
-			return ReturnData.fail("操作失败！");
-		}
 	}
 
 	/** Default constructor */

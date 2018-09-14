@@ -7,8 +7,7 @@
 
 <title>公告管理</title>
 
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/NoticManager.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/NoticManager.js"></script>
 
 </head>
 <body>
@@ -16,33 +15,19 @@
 		<!-- Begin of toolbar -->
 		<div id="wu-toolbar-2">
 			<div class="wu-toolbar-button">
-				<a href="javascript:openNoticesAddDialog()"
-					class="easyui-linkbutton" iconCls="icon-add" plain="true">添加</a> <a
-					href="javascript:openNoticesModifyDialog()"
-					class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改</a> <a
-					href="javascript:deleteNotices()" class="easyui-linkbutton"
-					iconCls="icon-remove" plain="true">删除</a>
+				<a href="javascript:openNoticesAddDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加</a> <a href="javascript:openNoticesModifyDialog()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改</a> <a href="javascript:deleteNotices()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
 			</div>
 			<div class="wu-toolbar-search">
-				<label>更新日期：</label> <input class="easyui-datebox" id="startDate"
-					name="startDate" style="width: 100px" size="10" editable="false">
-				-> <input class="easyui-datebox" id="endDate" name="endDate"
-					style="width: 100px" size="10" editable="false">
+				<label>更新日期：</label> <input class="easyui-datebox" id="startDate" name="startDate" style="width: 100px" size="10" editable="false"> -> <input class="easyui-datebox" id="endDate" name="endDate" style="width: 100px" size="10" editable="false">
 				<!-- 	<label>添加人：</label>
 				<input class="easyui-combobox" id="DEP_LEADER" name="DEP_LEADER"
 					data-options="panelHeight:'auto',editable:false,valueField:'EMP_NO',textField:'EMP_NAME',url:'EmployeeComboList'" />
  				-->
-				<label>标题：</label> <input id="s_NOT_TITLE" name="s_NOT_TITLE"
-					class="wu-text" style="width: 100px;"> <label>发布人：</label>
-				<input id="s_ADMIN_NAME" name="s_ADMIN_NAME" class="wu-text"
-					style="width: 100px;"> <a href="javascript:searchNotices()"
-					class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
+				<label>标题：</label> <input id="s_NOT_TITLE" name="s_NOT_TITLE" class="wu-text" style="width: 100px;"> <label>发布人：</label> <input id="s_ADMIN_NAME" name="s_ADMIN_NAME" class="wu-text" style="width: 100px;"> <a href="javascript:searchNotices()" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
 			</div>
 		</div>
 		<!-- End of toolbar -->
-		<table id="wu-datagrid-2" class="easyui-datagrid"
-			toolbar="#wu-toolbar-2" fitColumns="true" pagination="true"
-			fit="true" rownumbers="true" url="queryNotice">
+		<table id="wu-datagrid-2" class="easyui-datagrid" toolbar="#wu-toolbar-2" fitColumns="true" pagination="true" fit="true" rownumbers="true" url="queryNotice">
 			<thead>
 				<tr>
 					<th field="cb" checkbox="true"></th>
@@ -60,9 +45,7 @@
 		</table>
 	</div>
 	<!-- Begin of easyui-dialog -->
-	<div id="wu-dialog-2" class="easyui-dialog"
-		data-options="closed:true,iconCls:'icon-save'" modal="true"
-		style="width: 400px; padding: 10px;" buttons="#dia-buttons">
+	<div id="wu-dialog-2" class="easyui-dialog" data-options="closed:true,iconCls:'icon-save'" modal="true" style="width: 400px; padding: 10px;" buttons="#dia-buttons">
 		<form id="wu-form-2" method="post">
 			<table>
 				<tr>
@@ -71,16 +54,13 @@
 				</tr>
 				<tr>
 					<td valign="top" align="right">内 容:</td>
-					<td><textarea name="content" id="content" rows="6"
-							class="wu-textarea" style="width: 260px"></textarea></td>
+					<td><textarea name="content" id="content" rows="6" class="wu-textarea" style="width: 260px"></textarea></td>
 				</tr>
 			</table>
 		</form>
 	</div>
 	<div id="dia-buttons">
-		<a href="javascript:NoticeSave()" class="easyui-linkbutton"
-			iconCls="icon-ok">保存</a> <a href="javascript:closeNoticesDialog()"
-			class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+		<a href="javascript:NoticeSave()" class="easyui-linkbutton" iconCls="icon-ok">保存</a> <a href="javascript:closeNoticesDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.pms.service;
 import java.util.Map;
 
 import com.pms.entity.Administrator;
+import com.pms.entity.ReturnData;
 
 public interface AdminService {
 
@@ -19,5 +20,7 @@ public interface AdminService {
 
 	Administrator selectAdminById(String id);
 
-	boolean updateAdmin(Administrator admin);
+	ReturnData updateAdmin(Administrator admin);
+
+	ReturnData deleteAdmin(String ids);
 }

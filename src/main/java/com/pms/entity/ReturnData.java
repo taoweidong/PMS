@@ -39,6 +39,11 @@ public class ReturnData {
 		return returnData;
 	}
 
+	/**
+	 * 返回错误.
+	 * @param errorMsg
+	 * @return
+	 */
 	public static ReturnData fail(String errorMsg) {
 		ReturnData returnData = new ReturnData();
 		returnData.setSuccess(false);

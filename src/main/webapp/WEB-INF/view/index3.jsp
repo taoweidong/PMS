@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/public/commons.jspf"%>
 <!DOCTYPE html PUBLIC "-//W3C//Dtd HTML 4.01 Transitional//EN">
 <html>
@@ -14,6 +13,7 @@ body {
 </style>
 
 <title>系统登录</title>
+
 </head>
 
 <body style="padding-left: 35%; padding-top: 6%;">
@@ -23,20 +23,16 @@ body {
 				<table cellpadding="5">
 					<tr>
 						<td>用户名：</td>
-						<td><input class="easyui-validatebox" maxlength="15"
-							type="text" name="userName" data-options="required:true"></input></td>
+						<td><input class="easyui-validatebox" maxlength="15" type="text" name="userName" data-options="required:true"></input></td>
 					</tr>
 					<tr>
 						<td>密&nbsp;&nbsp;&nbsp;&nbsp;码:</td>
-						<td><input class="easyui-validatebox" maxlength="12"
-							type="password" name="password" data-options="required:true"></input>
-						</td>
+						<td><input class="easyui-validatebox" maxlength="12" type="password" name="password" data-options="required:true"></input></td>
 					</tr>
 
 					<tr>
 						<td>角&nbsp;&nbsp;&nbsp;&nbsp;色:</td>
-						<td><select class="easyui-combobox" name="role"
-							style="width: 130px;">
+						<td><select class="easyui-combobox" name="role" style="width: 130px;">
 								<option value="user" selected="selected">普通职工</option>
 								<option value="admin">管理员</option>
 								<option value="superAdmin">超级管理员</option>
@@ -46,9 +42,7 @@ body {
 				</table>
 			</form>
 			<div style="text-align: center; padding: 5px">
-				<a href="javascript:void(0)" class="easyui-linkbutton"
-					onclick="submitForm()">Submit</a> <a href="javascript:void(0)"
-					class="easyui-linkbutton" onclick="clearForm()">Clear</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">Submit</a> <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">Clear</a>
 			</div>
 		</div>
 	</div>

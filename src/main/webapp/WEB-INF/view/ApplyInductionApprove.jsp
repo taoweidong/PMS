@@ -7,8 +7,7 @@
 
 
 <title>入职审批</title>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/js/ApplyInductionApprove.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/ApplyInductionApprove.js"></script>
 
 </head>
 
@@ -17,46 +16,25 @@
 		<!-- Begin of toolbar -->
 		<div id="wu-toolbar-2">
 			<div class="wu-toolbar-button">
-				<a href="javascript:openApplyInductionAddDialog()"
-					class="easyui-linkbutton" iconCls="icon-add" plain="true">审批申请</a>
-				<a href="javascript:openApproveInductionModifyDialog()"
-					class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改审批</a>
-				<a href="javascript:deleteInduction()" class="easyui-linkbutton"
-					iconCls="icon-remove" plain="true">删除</a>
+				<a href="javascript:openApplyInductionAddDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">审批申请</a> <a href="javascript:openApproveInductionModifyDialog()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改审批</a> <a href="javascript:deleteInduction()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
 			</div>
 
 			<div class="wu-toolbar-search">
-				<label>申请日期：</label> <input class="easyui-datebox" id="startDate"
-					name="startDate" style="width: 100px" size="10" editable="false">
-				-> <input class="easyui-datebox" id="endDate" name="endDate"
-					style="width: 100px" size="10" editable="false"> <label>工号：</label>
-				<input class="easyui-combobox" id="s_EMP_NO" name="s_EMP_NO"
-					data-options="panelHeight:'auto',editable:false,valueField:'EMP_NO',textField:'EMP_NAME',url:'EmployeeComboList'" />
-				</select> <label>审批状态：</label> <select class="easyui-combobox"
-					style="width: 100px" name="s_approveState" id="s_approveState"
-					editable="false" panelHeight="auto">
+				<label>申请日期：</label> <input class="easyui-datebox" id="startDate" name="startDate" style="width: 100px" size="10" editable="false"> -> <input class="easyui-datebox" id="endDate" name="endDate" style="width: 100px" size="10" editable="false"> <label>工号：</label> <input class="easyui-combobox" id="s_EMP_NO" name="s_EMP_NO" data-options="panelHeight:'auto',editable:false,valueField:'EMP_NO',textField:'EMP_NAME',url:'EmployeeComboList'" /> </select> <label>审批状态：</label> <select class="easyui-combobox" style="width: 100px" name="s_approveState" id="s_approveState" editable="false" panelHeight="auto">
 					<option value="">请选择...</option>
 					<option value="00">申请中</option>
 					<option value="11">审批已通过</option>
 					<option value="22">审批未通过</option>
-				</select> <label>在职状态：</label> <select class="easyui-combobox"
-					style="width: 100px" name="s_IND_STATE" id="s_IND_STATE"
-					editable="false" panelHeight="auto">
+				</select> <label>在职状态：</label> <select class="easyui-combobox" style="width: 100px" name="s_IND_STATE" id="s_IND_STATE" editable="false" panelHeight="auto">
 					<option value="">请选择...</option>
 					<option value="1">入职</option>
 					<option value="0">离职</option>
-				</select> <label>岗位名称：</label> <input id="s_POS_NAME" name="s_POS_NAME"
-					class="wu-text" style="width: 100px;"> <a
-					href="javascript:searchApplyInduction()" class="easyui-linkbutton"
-					iconCls="icon-search">开始检索</a>
+				</select> <label>岗位名称：</label> <input id="s_POS_NAME" name="s_POS_NAME" class="wu-text" style="width: 100px;"> <a href="javascript:searchApplyInduction()" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
 			</div>
 		</div>
 
 		<!-- End of toolbar -->
-		<table id="wu-datagrid-2" class="easyui-datagrid"
-			toolbar="#wu-toolbar-2" fitColumns="true" pagination="true"
-			fit="true" rownumbers="true"
-			url="ApplyInductionServlet?method=AdminApproveInfoList">
+		<table id="wu-datagrid-2" class="easyui-datagrid" toolbar="#wu-toolbar-2" fitColumns="true" pagination="true" fit="true" rownumbers="true" url="ApplyInductionServlet?method=AdminApproveInfoList">
 			<thead>
 				<tr>
 					<th field="cb" checkbox="true"></th>
@@ -81,15 +59,12 @@
 		</table>
 	</div>
 	<!-- Begin of easyui-dialog -->
-	<div id="wu-dialog-2" class="easyui-dialog" modal="true"
-		data-options="closed:true,iconCls:'icon-save'"
-		style="width: 500px; padding: 10px;" buttons="#dia-buttons">
+	<div id="wu-dialog-2" class="easyui-dialog" modal="true" data-options="closed:true,iconCls:'icon-save'" style="width: 500px; padding: 10px;" buttons="#dia-buttons">
 		<form id="wu-form-2" method="post">
 			<table>
 				<tr>
 					<td width="120" align="right">审批操作:</td>
-					<td><select class="easyui-combobox" style="width: 100px"
-						name="EXT1" id="EXT1" editable="false" panelHeight="auto">
+					<td><select class="easyui-combobox" style="width: 100px" name="EXT1" id="EXT1" editable="false" panelHeight="auto">
 							<option value="">请选择...</option>
 							<option value="11">审批通过</option>
 							<option value="22">审批未通过</option>
@@ -100,9 +75,7 @@
 		</form>
 	</div>
 	<div id="dia-buttons">
-		<a href="javascript:ApproveInduction()" class="easyui-linkbutton"
-			iconCls="icon-ok">保存</a> <a href="javascript:closeNoticesDialog()"
-			class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+		<a href="javascript:ApproveInduction()" class="easyui-linkbutton" iconCls="icon-ok">保存</a> <a href="javascript:closeNoticesDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
 </body>
 </html>

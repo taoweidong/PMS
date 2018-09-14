@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.apache.commons.lang3.StringUtils;
+
 @Table(name = "t_administrator")
 public class Administrator {
 	/**
@@ -183,7 +185,14 @@ public class Administrator {
 	 * @param ext3 admin 普通管理员;superAdmin 超级管理员;
 	 */
 	public void setExt3(final String ext3) {
-		this.ext3 = ext3;
+		if (StringUtils.equals(StringUtils.trimToEmpty(ext3), "superAdmin")) {
+			this.ext3 = "超级管理员";
+		} else if (StringUtils.equals(StringUtils.trimToEmpty(ext3), "admin")) {
+			this.ext3 = "普通管理员";
+		} else {
+			this.ext3 = ext3;
+		}
+
 	}
 
 	/** Default constructor */

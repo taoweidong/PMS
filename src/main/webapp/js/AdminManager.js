@@ -29,7 +29,7 @@ function deleteAdminInfo() {
 	}
 	var strIds = [];
 	for (var i = 0; i < selectedRows.length; i++) {
-		strIds.push(selectedRows[i].ADMIN_ID);
+		strIds.push(selectedRows[i].id);
 	}
 	var ids = strIds.join(",");
 	// alert(ids);
@@ -37,12 +37,11 @@ function deleteAdminInfo() {
 			"您确定要删除这<font color=red>" + ids + "</font>条数据吗？", function(r) {
 				if (r) {
 					$.post("deleteAdmin", {
-						delIds : ids
+						ids : ids
 					}, function(result) {
 						// 此处已经指定以JSON运行响应，无需再进行转换
 						if (result.success) {
-							$.messager.alert("系统提示", "您已经成功删除了<font color=red>"
-									+ result.delNums + "</font>条数据！");
+							$.messager.alert("系统提示", "删除成功！");
 							$('#dg').datagrid('reload');
 						} else {
 							$.messager.alert("系统提示", result.errorMsg);
