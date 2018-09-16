@@ -2,6 +2,7 @@ package com.pms.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -78,7 +79,9 @@ public class AdminController {
 	@RequestMapping(value = "/setSuperAdmin", method = RequestMethod.POST)
 	public ReturnData setSuperAdmin(@RequestParam("ids") String ids) {
 
-		return ReturnData.success();
+		ReturnData result = adminService.setSuperAdmin(ids);
+
+		return result;
 	}
 
 	/**
@@ -90,7 +93,9 @@ public class AdminController {
 	@RequestMapping(value = "/cancelSuperAdmin", method = RequestMethod.POST)
 	public ReturnData cancelSuperAdmin(@RequestParam("ids") String ids) {
 
-		return ReturnData.success();
+		ReturnData result = adminService.cancelSuperAdmin(ids);
+
+		return result;
 	}
 
 	/**
@@ -143,6 +148,11 @@ public class AdminController {
 
 		if (!CheckInfo.isMobileNO(StringUtils.trimToEmpty(phone))) {
 			return ReturnData.fail("手机号格式不正确!");
+		}
+
+		List<Administrator> listAdmin = adminService.selectAdminListById(no);
+		if (listAdmin != null && listAdmin.size() > 1) {
+			return ReturnData.fail("该登录账号已存在!");
 		}
 
 		Administrator admin = adminService.selectAdminById(id);

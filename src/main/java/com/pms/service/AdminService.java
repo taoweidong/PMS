@@ -1,5 +1,6 @@
 package com.pms.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.pms.entity.Administrator;
@@ -20,7 +21,23 @@ public interface AdminService {
 
 	Administrator selectAdminById(String id);
 
+	List<Administrator> selectAdminListById(String id);
+
 	ReturnData updateAdmin(Administrator admin);
 
 	ReturnData deleteAdmin(String ids);
+
+	/**
+	 * 设置超级管理员.
+	 * @param ids
+	 * @return
+	 */
+	ReturnData setSuperAdmin(String ids);
+
+	/**
+	 * 取消超级管理员.
+	 * @param ids
+	 * @return
+	 */
+	ReturnData cancelSuperAdmin(String ids);
 }

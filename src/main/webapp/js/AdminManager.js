@@ -60,7 +60,7 @@ function setSuperAdmin() {
 	}
 	var strIds = [];
 	for (var i = 0; i < selectedRows.length; i++) {
-		strIds.push(selectedRows[i].ADMIN_ID);
+		strIds.push(selectedRows[i].id);
 	}
 	var ids = strIds.join(",");
 	// alert(ids);
@@ -68,12 +68,11 @@ function setSuperAdmin() {
 			+ "</font>条数据设置为超级管理员吗？", function(r) {
 		if (r) {
 			$.post("setSuperAdmin", {
-				delIds : ids
+				ids : ids
 			}, function(result) {
 				// 此处已经指定以JSON运行响应，无需再进行转换
 				if (result.success) {
-					$.messager.alert("系统提示", "您已经成功设置了<font color=red>"
-							+ result.delNums + "</font>个管理员为超级管理员！");
+					$.messager.alert("系统提示", "操作成功！");
 					$('#dg').datagrid('reload');
 				} else {
 					$.messager.alert("系统提示", result.errorMsg);
@@ -92,19 +91,18 @@ function cancelSetSuperAdmin() {
 	}
 	var strIds = [];
 	for (var i = 0; i < selectedRows.length; i++) {
-		strIds.push(selectedRows[i].ADMIN_ID);
+		strIds.push(selectedRows[i].id);
 	}
 	var ids = strIds.join(",");
 	$.messager.confirm("系统提示", "您确定要将这<font color=red>" + selectedRows.length
 			+ "</font>条数据取消超级管理员设置？", function(r) {
 		if (r) {
 			$.post("cancelSuperAdmin", {
-				delIds : ids
+				ids : ids
 			}, function(result) {
 				// 此处已经指定以JSON运行响应，无需再进行转换
 				if (result.success) {
-					$.messager.alert("系统提示", "您已经成功取消了<font color=red>"
-							+ result.delNums + "</font>个超级管理员设置！");
+					$.messager.alert("系统提示", "操作成功！");
 					$('#dg').datagrid('reload');
 				} else {
 					$.messager.alert("系统提示", result.errorMsg);

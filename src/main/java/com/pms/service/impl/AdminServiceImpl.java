@@ -18,6 +18,7 @@ import com.pms.entity.Administrator;
 import com.pms.entity.ReturnData;
 import com.pms.mapper.AdministratorMapper;
 import com.pms.service.AdminService;
+import com.pms.util.Constant;
 import com.pms.util.StringUtil;
 
 @Service
@@ -134,6 +135,72 @@ public class AdminServiceImpl implements AdminService {
 			return ReturnData.fail(StringUtils.removeEnd(fail.toString(), ";"));
 		}
 
+	}
+
+	/**
+	 * 设置超级管理员
+	 */
+	@Override
+	public ReturnData setSuperAdmin(String ids) {
+		StringBuffer fail = new StringBuffer();
+
+		List<String> list = Lists.newArrayList(StringUtils.split(ids, ","));
+		for (String id : list) {
+			Administrator admin = new Administrator();
+			admin.setId(id);
+			admin = administratorMapper.selectOne(admin);
+			if (admin == null) {
+				fail.append("[" + id + "]取消失败;");
+				continue;
+			}
+			admin.setExt3(Constant.SUPER_MANAGER);
+			int returnDate = administratorMapper.updateByPrimaryKey(admin);
+			if (returnDate <= 0) {
+				fail.append("[" + id + "]设置发生错误;");
+			}
+		}
+
+		if (StringUtils.isEmpty(fail.toString())) {
+			return ReturnData.success();
+		} else {
+			return ReturnData.fail(StringUtils.removeEnd(fail.toString(), ";"));
+		}
+	}
+
+	@Override
+	public ReturnData cancelSuperAdmin(String ids) {
+		StringBuffer fail = new StringBuffer();
+
+		List<String> list = Lists.newArrayList(StringUtils.split(ids, ","));
+		for (String id : list) {
+			Administrator admin = new Administrator();
+			admin.setId(id);
+			admin = administratorMapper.selectOne(admin);
+			if (admin == null) {
+				fail.append("[" + id + "]取消失败;");
+				continue;
+			}
+			admin.setExt3(Constant.GENERAL_MANAGER);
+			int returnDate = administratorMapper.updateByPrimaryKey(admin);
+			if (returnDate <= 0) {
+				fail.append("[" + id + "]取消失败;");
+			}
+		}
+
+		if (StringUtils.isEmpty(fail.toString())) {
+			return ReturnData.success();
+		} else {
+			return ReturnData.fail(StringUtils.removeEnd(fail.toString(), ";"));
+		}
+	}
+
+	@Override
+	public List<Administrator> selectAdminListById(String id) {
+		Administrator admin = new Administrator();
+		admin.setNo(id);
+		List<Administrator> list = administratorMapper.select(admin);
+
+		return list;
 	}
 
 }
