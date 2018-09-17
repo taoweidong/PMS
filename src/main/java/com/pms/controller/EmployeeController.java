@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.pms.entity.ReturnData;
 import com.pms.service.EmployeeService;
 
 @Controller
@@ -43,8 +44,10 @@ public class EmployeeController {
 	@ResponseBody
 	@RequestMapping(value = "/queryEmployee", method = RequestMethod.POST)
 	public Map<String, Object> queryPersionInfo(@RequestParam("page") Integer page,
-			@RequestParam("rows") Integer rows) {
-		System.out.println("rows:" + rows + "   page:" + page);
+			@RequestParam("rows") Integer rows, @RequestParam("no") String no,
+			@RequestParam("name") String name, @RequestParam("birthday") String birthday,
+			@RequestParam("sex") String sex, @RequestParam("cboPsType") String cboPsType) {
+
 		Map<String, Object> result = employeeService.queryEmployee(page, rows);
 
 		System.out.println(JSON.toJSONString(result));
@@ -91,6 +94,63 @@ public class EmployeeController {
 		System.out.println(JSON.toJSONString(no));
 
 		return result;
+
+	}
+
+	/**
+	 * 删除员工信息.
+	 * @param ids
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/deleteEmployee", method = RequestMethod.POST)
+	public ReturnData deleteEmployee(@RequestParam("ids") String ids) {
+
+		// ReturnData result = new ReturnData();
+
+		return ReturnData.success();
+
+	}
+
+	/**
+	 * 更新信息.
+	 * @param no
+	 * @param name
+	 * @param passwd
+	 * @param sex
+	 * @param birthday
+	 * @param psId
+	 * @param phone
+	 * @param address
+	 * @param ext1
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/updateEmployee", method = RequestMethod.POST)
+	public ReturnData updateEmployee(@RequestParam("no") String no,
+			@RequestParam("name") String name, @RequestParam("passwd") String passwd,
+			@RequestParam("sex") String sex, @RequestParam("birthday") String birthday,
+			@RequestParam("psId") String psId, @RequestParam("phone") String phone,
+			@RequestParam("address") String address, @RequestParam("ext1") String ext1) {
+
+		// ReturnData result = new ReturnData();
+
+		return ReturnData.success();
+
+	}
+
+	/**
+	 * 添加用户信息.
+	 * @param no
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
+	public ReturnData addEmployee(@RequestParam("no") String no) {
+
+		// ReturnData result = new ReturnData();
+
+		return ReturnData.success();
 
 	}
 

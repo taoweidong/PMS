@@ -12,14 +12,14 @@ $.extend($.fn.validatebox.defaults.rules, {
 var url;
 // 查询方法--easyui封装的方法，从table表中进行筛选数据
 function searchStudent() {
-	console.log($('#s_EMP_SEX').combobox('getValue'));
+	// console.log($('#s_EMP_SEX').combobox('getValue'));
 	$('#dg').datagrid('load', {
-		EMP_NO : $('#s_EMP_NO').val(),
-		EMP_NAME : $('#s_EMP_NAME').val(),
-		EMP_SEX : $('#s_EMP_SEX').combobox('getValue'),
-		bbirthday : $('#s_bbirthday').datebox('getValue'),
-		ebirthday : $('#s_ebirthday').datebox('getValue'),
-		PS_TYPE : $('#s_PS_TYPE').combobox('getValue')
+		no : $('#s_EMP_NO').val(),
+		name : $('#s_EMP_NAME').val(),
+		sex : $('#s_EMP_SEX').combobox('getValue'),
+		birthday : $('#s_bbirthday').datebox('getValue'),
+		birthday : $('#s_ebirthday').datebox('getValue'),
+		cboPsType : $('#s_PS_TYPE').combobox('getValue')
 	});
 }
 // 删除员工信息
@@ -31,20 +31,18 @@ function deleteStudent() {
 	}
 	var strIds = [];
 	for (var i = 0; i < selectedRows.length; i++) {
-		strIds.push(selectedRows[i].EMP_NO);
+		strIds.push(selectedRows[i].no);
 	}
 	var ids = strIds.join(",");
-	// alert(ids);
 	$.messager.confirm("系统提示", "您确定要删除这<font color=red>" + selectedRows.length
 			+ "</font>条数据吗？", function(r) {
 		if (r) {
-			$.post("EmployeeServlet?method=DeleteEmployee", {
-				delIds : ids
+			$.post("deleteEmployee", {
+				ids : ids
 			}, function(result) {
 				// 此处已经指定以JSON运行响应，无需再进行转换
 				if (result.success) {
-					$.messager.alert("系统提示", "您已经成功删除了<font color=red>"
-							+ result.delNums + "</font>条数据！");
+					$.messager.alert("系统提示", "操作成功！");
 					$('#dg').datagrid('reload');
 				} else {
 					$.messager.alert("系统提示", result.errorMsg);
@@ -56,18 +54,18 @@ function deleteStudent() {
 
 function openStudentAddDialog() {
 	$('#dlg').dialog('open').dialog("setTitle", "添加职工信息");
-	url = "EmployeeServlet?method=AddEmployee";
+	url = "addEmployee";
 }
 // 保存修改的和新增的员工信息
 function saveStudent() {
 	$('#fm').form("submit", {
 		url : url,
 		onSubmit : function() {
-			if ($('#EMP_SEX').combobox("getValue") == "") {
+			if ($('#sex').combobox("getValue") == "") {
 				$.messager.alert("系统提示", "请选择性别");
 				return false;
 			}
-			if ($('#PS_TYPE').combobox("getValue") == "") {
+			if ($('#psId').combobox("getValue") == "") {
 				$.messager.alert("系统提示", "请选择所属岗位");
 				return false;
 			}
@@ -92,15 +90,15 @@ function saveStudent() {
 
 // 清空表单
 function resetValue() {
-	$('#EMP_NO').val("");
-	$('#EMP_NAME').val("");
+	$('#no').val("");
+	$('#name').val("");
 	$('#passwd').val("");
 	$('#passwd2').val("");
-	$('#EMP_SEX').combobox('setValue', "");
-	$('#EMP_Birthday').datebox('setValue', "");
-	$('#PS_TYPE').combobox('setValue', "");
-	$('#EMP_Phone').val("");
-	$('#EMP_Address').val("");
+	$('#sex').combobox('setValue', "");
+	$('#birthday').datebox('setValue', "");
+	$('#psId').combobox('setValue', "");
+	$('#phone').val("");
+	$('#address').val("");
 	$('#ext1').val("");
 
 }
@@ -127,5 +125,5 @@ function openStudentModifyDialog() {
 	$('#fm').form('load', row);
 
 	// $('#EMP_NO').attr("disabled", "disabled");
-	url = "EmployeeServlet?method=UpdateEmployee&EMP_NO=" + row.EMP_NO;
+	url = "updateEmployee?no=" + row.no;
 }

@@ -37,7 +37,9 @@
 				<option value="">请选择...</option>
 				<option value="M">男</option>
 				<option value="F">女</option>
-			</select> &nbsp;出生日期：&nbsp; <input class="easyui-datebox" id="s_bbirthday" style="width: 100px" name="s_bbirthday" size="10" editable="false" /> -> <input class="easyui-datebox" id="s_ebirthday" style="width: 100px" name="s_ebirthday" size="10" editable="false" /> &nbsp;政治面貌：&nbsp; <input class="easyui-combobox" id="s_PS_TYPE" name="s_PS_TYPE" style="width: 120px;" size="10" data-options="panelHeight:'auto',editable:false,valueField:'PS_TYPE',textField:'PS_Name',url:'PoliticalStatusServlet?method=PoliticalStatusComboboxInfo'" /> <a href="javascript:searchStudent()" class="easyui-linkbutton" iconCls="icon-search" plain="true">搜索</a>
+			</select> &nbsp;出生日期：&nbsp; <input class="easyui-datebox" id="s_bbirthday" style="width: 100px" name="s_bbirthday" size="10" editable="false" /> -> <input class="easyui-datebox" id="s_ebirthday" style="width: 100px" name="s_ebirthday" size="10" editable="false" /> &nbsp;政治面貌：&nbsp; 
+			<input class="easyui-combobox" id="s_PS_TYPE" name="s_PS_TYPE" style="width: 120px;" size="10" data-options="panelHeight:'auto',editable:false,valueField:'psType',textField:'psName',url:'queryPoliticalStatusList'" /> 
+			<a href="javascript:searchStudent()" class="easyui-linkbutton" iconCls="icon-search" plain="true">搜索</a>
 		</div>
 	</div>
 
@@ -46,10 +48,10 @@
 			<table>
 				<tr>
 					<td width="80" align="right">工号：</td>
-					<td><input type="text" name="EMP_NO" id="EMP_NO" class="easyui-validatebox" required="true" maxlength="10" /></td>
+					<td><input type="text" name="no" id="no" class="easyui-validatebox" required="true" maxlength="10" /></td>
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td width="80" align="right">姓名：</td>
-					<td><input type="text" name="EMP_NAME" id="EMP_NAME" class="easyui-validatebox" required="true" /></td>
+					<td><input type="text" name="name" id="name" class="easyui-validatebox" required="true" /></td>
 				</tr>
 				<!-- 手动增加员工信息时不需要输入密码 ，默认密码为员工号，员工首次登陆时需强制修改密码 -->
 				<tr>
@@ -61,25 +63,25 @@
 				</tr>
 				<tr>
 					<td width="80" align="right">性别：</td>
-					<td><select class="easyui-combobox" name="EMP_SEX" id="EMP_SEX" editable="false" panelHeight="auto" style="width: 135px;">
+					<td><select class="easyui-combobox" name="sex" id="sex" editable="false" panelHeight="auto" style="width: 135px;">
 							<option value="">请选择...</option>
 							<option value="M">男</option>
 							<option value="F">女</option>
 					</select></td>
 					<td></td>
 					<td width="80" align="right">出生日期：</td>
-					<td><input class="easyui-datebox" id="EMP_Birthday" name="EMP_Birthday" editable="false" required="true" /></td>
+					<td><input class="easyui-datebox" id="birthday" name="birthday" editable="false" required="true" /></td>
 				</tr>
 				<tr>
 					<td width="80" align="right">政治面貌：</td>
-					<td><input class="easyui-combobox" id="PS_TYPE" name="PS_TYPE" data-options=" panelHeight:'auto',editable:false,valueField:'PS_TYPE',textField:'PS_Name',url:'PoliticalStatusServlet?method=PoliticalStatusComboboxInfo'" /></td>
+					<td><input class="easyui-combobox" id="psId" name="psId" data-options=" panelHeight:'auto',editable:false,valueField:'psType',textField:'psName',url:'queryPoliticalStatusList'" /></td>
 					<td></td>
 					<td width="80" align="right">电话：</td>
-					<td><input type="text" name="EMP_Phone" id="EMP_Phone" class="easyui-validatebox" required="true" maxlength="11" validType="phone" /></td>
+					<td><input type="text" name="phone" id="phone" class="easyui-validatebox" required="true" maxlength="11" validType="phone" /></td>
 				</tr>
 				<tr>
 					<td width="80" align="right">地址：</td>
-					<td colspan="4"><textarea rows="1" cols="60" name="EMP_Address" id="EMP_Address"></textarea></td>
+					<td colspan="4"><textarea rows="1" cols="60" name="address" id="address"></textarea></td>
 				</tr>
 				<tr>
 					<td width="80" align="right">备注：</td>
