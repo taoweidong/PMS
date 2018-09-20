@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Table(name = "t_employee")
 public class Employee {
@@ -37,6 +38,12 @@ public class Employee {
 	private String sex;
 
 	/**
+	 * 性别中文描述
+	 */
+	@Transient
+	private String sexDesc;
+
+	/**
 	 * 生日
 	 */
 	@Column(name = "EMP_Birthday")
@@ -47,6 +54,27 @@ public class Employee {
 	 */
 	@Column(name = "PS_ID")
 	private String psId;
+	/**
+	 * 政治面貌中文描述：忽略此字段，非数据库中的字段
+	 */
+	@Transient
+	private String psIdDesc;
+
+	public String getSexDesc() {
+		return sexDesc;
+	}
+
+	public void setSexDesc(String sexDesc) {
+		this.sexDesc = sexDesc;
+	}
+
+	public String getPsIdDesc() {
+		return psIdDesc;
+	}
+
+	public void setPsIdDesc(String psIdDesc) {
+		this.psIdDesc = psIdDesc;
+	}
 
 	/**
 	 * 电话
@@ -128,6 +156,13 @@ public class Employee {
 	 * @return EMP_SEX - 性别：M-男;F-女
 	 */
 	public String getSex() {
+		// if (StringUtils.equals(sex, "M")) {
+		// return "男";
+		// } else if (StringUtils.equals(sex, "F")) {
+		// return "女";
+		// } else {
+		// return sex;
+		// }
 		return sex;
 	}
 

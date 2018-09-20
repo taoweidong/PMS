@@ -1,5 +1,9 @@
 package com.pms.entity;
 
+import java.util.Map;
+
+import com.google.common.collect.Maps;
+
 /**
  * 返回结果集.
  * @author Taowd
@@ -49,6 +53,19 @@ public class ReturnData {
 		returnData.setSuccess(false);
 		returnData.setErrorMsg(errorMsg);
 		return returnData;
+	}
+
+	/**
+	 * 返回EasyUI中DataTable需要的数据格式.
+	 * @param total  总数
+	 * @param object 数据集合
+	 * @return
+	 */
+	public static Map<String, Object> getEasyUIData(Object total, Object object) {
+		Map<String, Object> map = Maps.newHashMap();
+		map.put("total", total);
+		map.put("rows", object);
+		return map;
 	}
 
 }

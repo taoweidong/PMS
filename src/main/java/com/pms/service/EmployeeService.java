@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pms.entity.Employee;
+import com.pms.entity.ReturnData;
 
 public interface EmployeeService {
 
@@ -16,10 +17,23 @@ public interface EmployeeService {
 	 */
 	Employee checkEmployee(final String userName, final String password, final String role);
 
-	Map<String, Object> queryEmployee(Integer page, Integer rows);
+	Map<String, Object> queryEmployee(Integer page, Integer rows, Employee employee);
 
-	Map<String, Object> EmployeeSave(Employee employee);
+	/**
+	 * 
+	 * 更新用户信息.
+	 * @param employee
+	 * @return
+	 */
+	ReturnData EmployeeSave(Employee employee);
 
 	List<Map<String, Object>> comboEmployee();
+
+	/**
+	 * 删除用户信息.
+	 * @param ids
+	 * @return
+	 */
+	ReturnData deleteEmployee(String ids);
 
 }

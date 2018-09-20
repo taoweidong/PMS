@@ -3,6 +3,7 @@ package com.pms.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,10 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.pms.entity.Employee;
+import com.pms.entity.ReturnData;
 import com.pms.mapper.EmployeeMapper;
 import com.pms.service.EmployeeService;
+import com.pms.util.DictionaryConversion;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -44,31 +47,33 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employee;
 	}
 
+	/**
+	 * 查询
+	 */
 	@Override
-	public Map<String, Object> queryEmployee(Integer page, Integer rows) {
-
-		Map<String, Object> paramMap = Maps.newHashMap();
-
-		Map<String, Object> result = Maps.newHashMap();
+	public Map<String, Object> queryEmployee(Integer page, Integer rows, Employee employee) {
 
 		PageHelper.startPage(page, rows);
-		List<Employee> list = employeeMapper.queryEmployeeAll(paramMap);
+		List<Employee> list = employeeMapper.select(employee);
+		list.forEach(x -> {
+			x.setSexDesc(DictionaryConversion.sexDictionaryToDesc(x.getSex()));
+		});
+
 		PageInfo<Employee> pageInfo = new PageInfo<Employee>(list);
 
-		result.put("total", pageInfo.getTotal());
-		result.put("rows", list);
-
-		LOGGER.info(JSON.toJSONString(result));
-
-		return result;
+		return ReturnData.getEasyUIData(pageInfo.getTotal(), list);
 	}
 
 	@Override
-	public Map<String, Object> EmployeeSave(Employee employee) {
+	public ReturnData EmployeeSave(Employee employee) {
 
-		employeeMapper.updateByPrimaryKey(employee);
+		int result = employeeMapper.updateByPrimaryKey(employee);
+		if (result > 0) {
+			return ReturnData.success();
+		} else {
+			return ReturnData.fail("更新失败!");
+		}
 
-		return null;
 	}
 
 	@Override
@@ -86,6 +91,30 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		return resultMap;
 
+	}
+
+	/**
+	 * 删除用户信息.
+	 */
+	@Override
+	public ReturnData deleteEmployee(String ids) {
+		StringBuffer fail = new StringBuffer();
+
+		List<String> list = Lists.newArrayList(StringUtils.split(ids, ","));
+		for (String id : list) {
+			Employee admin = new Employee();
+			admin.setNo(id);
+			int returnDate = employeeMapper.delete(admin);
+			if (returnDate <= 0) {
+				fail.append("[" + id + "]删除错误;");
+			}
+		}
+
+		if (StringUtils.isEmpty(fail.toString())) {
+			return ReturnData.success();
+		} else {
+			return ReturnData.fail(StringUtils.removeEnd(fail.toString(), ";"));
+		}
 	}
 
 }

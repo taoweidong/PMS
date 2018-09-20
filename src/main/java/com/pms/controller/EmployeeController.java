@@ -3,6 +3,8 @@ package com.pms.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.pms.entity.Employee;
 import com.pms.entity.ReturnData;
 import com.pms.service.EmployeeService;
+import com.pms.util.AESUtil;
+import com.pms.util.DateUtil;
+import com.pms.utils.CheckInfo;
 
 @Controller
 public class EmployeeController {
@@ -31,7 +37,6 @@ public class EmployeeController {
 	@RequestMapping("/employeeManage")
 	public String index() {
 
-		LOGGER.debug("访问主页:EmployeeManage");
 		return "EmployeeManage";
 	}
 
@@ -44,13 +49,30 @@ public class EmployeeController {
 	@ResponseBody
 	@RequestMapping(value = "/queryEmployee", method = RequestMethod.POST)
 	public Map<String, Object> queryPersionInfo(@RequestParam("page") Integer page,
-			@RequestParam("rows") Integer rows, @RequestParam("no") String no,
-			@RequestParam("name") String name, @RequestParam("birthday") String birthday,
-			@RequestParam("sex") String sex, @RequestParam("cboPsType") String cboPsType) {
+			@RequestParam("rows") Integer rows,
+			@RequestParam(value = "no", defaultValue = StringUtils.EMPTY) String no,
+			@RequestParam(value = "name", defaultValue = StringUtils.EMPTY) String name,
+			@RequestParam(value = "startBirthday", defaultValue = StringUtils.EMPTY) String startBirthday,
+			@RequestParam(value = "sex", defaultValue = StringUtils.EMPTY) String sex,
+			@RequestParam(value = "cboPsType", defaultValue = StringUtils.EMPTY) String cboPsType) {
+		Map<String, Object> result = Maps.newHashMap();
+		Employee employee = new Employee();
+		try {
+			employee.setNo(StringUtils.trimToNull(no));
+			employee.setName(StringUtils.trimToNull(name));
+			if (!StringUtils.isEmpty(startBirthday)) {
+				employee.setBirthday(
+						DateUtils.parseDate(StringUtils.trimToEmpty(startBirthday), "yyyy-MM-dd"));
+			}
 
-		Map<String, Object> result = employeeService.queryEmployee(page, rows);
+			employee.setSex(StringUtils.trimToNull(sex));
+			employee.setPsId(StringUtils.trimToNull(cboPsType));
 
-		System.out.println(JSON.toJSONString(result));
+			result = employeeService.queryEmployee(page, rows, employee);
+
+		} catch (Exception e) {
+			LOGGER.error("查询异常信息", e);
+		}
 
 		return result;
 
@@ -77,12 +99,15 @@ public class EmployeeController {
 
 		returnData.addAll(result);
 
-		System.out.println(JSON.toJSONString(returnData));
-
 		return returnData;
 
 	}
 
+	/**
+	 * 更新信息.
+	 * @param no
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/EmployeeSave", method = RequestMethod.POST)
 	public Map<String, Object> employeeSave(@RequestParam("no") String no) {
@@ -106,9 +131,9 @@ public class EmployeeController {
 	@RequestMapping(value = "/deleteEmployee", method = RequestMethod.POST)
 	public ReturnData deleteEmployee(@RequestParam("ids") String ids) {
 
-		// ReturnData result = new ReturnData();
+		ReturnData result = employeeService.deleteEmployee(ids);
 
-		return ReturnData.success();
+		return result;
 
 	}
 
@@ -127,16 +152,44 @@ public class EmployeeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/updateEmployee", method = RequestMethod.POST)
-	public ReturnData updateEmployee(@RequestParam("no") String no,
-			@RequestParam("name") String name, @RequestParam("passwd") String passwd,
-			@RequestParam("sex") String sex, @RequestParam("birthday") String birthday,
-			@RequestParam("psId") String psId, @RequestParam("phone") String phone,
-			@RequestParam("address") String address, @RequestParam("ext1") String ext1) {
+	public ReturnData updateEmployee(
+			@RequestParam(value = "no", defaultValue = StringUtils.EMPTY) String no,
+			@RequestParam(value = "name", defaultValue = StringUtils.EMPTY) String name,
+			@RequestParam(value = "passwd", defaultValue = StringUtils.EMPTY) String passwd,
+			@RequestParam(value = "sex", defaultValue = StringUtils.EMPTY) String sex,
+			@RequestParam(value = "birthday", defaultValue = StringUtils.EMPTY) String birthday,
+			@RequestParam(value = "psId", defaultValue = StringUtils.EMPTY) String psId,
+			@RequestParam(value = "phone", defaultValue = StringUtils.EMPTY) String phone,
+			@RequestParam(value = "address", defaultValue = StringUtils.EMPTY) String address,
+			@RequestParam(value = "ext1", defaultValue = StringUtils.EMPTY) String ext1) {
 
-		// ReturnData result = new ReturnData();
+		if (StringUtils.isEmpty(passwd)) {
+			return ReturnData.fail("密码不能为空!");
+		}
 
-		return ReturnData.success();
+		if (!CheckInfo.isMobileNO(StringUtils.trimToEmpty(phone))) {
+			return ReturnData.fail("手机号格式不正确!");
+		}
 
+		Employee employee = new Employee();
+		try {
+			employee.setNo(StringUtils.trimToEmpty(no));
+			employee.setName(StringUtils.trimToEmpty(name));
+			employee.setSex(StringUtils.trimToEmpty(sex));
+			employee.setPwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(passwd)));
+			employee.setBirthday(DateUtils.parseDate(birthday, "yyyy-MM-dd"));
+			employee.setPsId(StringUtils.trimToEmpty(psId));
+			employee.setPhone(StringUtils.trimToEmpty(phone));
+			employee.setAddress(StringUtils.trimToEmpty(address));
+			employee.setExt1(StringUtils.trimToEmpty(ext1));
+			employee.setExt2(DateUtil.getCurrentDateStr());
+
+			return employeeService.EmployeeSave(employee);
+
+		} catch (Exception e) {
+			LOGGER.error("更新发生异常", e);
+			return ReturnData.fail("更新发生异常");
+		}
 	}
 
 	/**

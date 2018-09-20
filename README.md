@@ -90,3 +90,6 @@
 - STS: Version: 3.9.5.RELEASE
 - maven:apache-maven-3.5.0
 
+# 2018年9月20日
+- 注意通用mapper中对于那些非数据库中的属性可以使用：@Transient进行忽略
+

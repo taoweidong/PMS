@@ -9,6 +9,7 @@ $.extend($.fn.validatebox.defaults.rules, {
 		message : '字段不匹配'
 	}
 });
+
 var url;
 // 查询方法--easyui封装的方法，从table表中进行筛选数据
 function searchStudent() {
@@ -17,8 +18,8 @@ function searchStudent() {
 		no : $('#s_EMP_NO').val(),
 		name : $('#s_EMP_NAME').val(),
 		sex : $('#s_EMP_SEX').combobox('getValue'),
-		birthday : $('#s_bbirthday').datebox('getValue'),
-		birthday : $('#s_ebirthday').datebox('getValue'),
+		startBirthday : $('#s_bbirthday').datebox('getValue'),
+		endBirthday : $('#s_ebirthday').datebox('getValue'),
 		cboPsType : $('#s_PS_TYPE').combobox('getValue')
 	});
 }
@@ -74,7 +75,6 @@ function saveStudent() {
 		success : function(result) {
 			// 把JSON对象转为javascript对象
 			var result = eval('(' + result + ')');
-			console.log(result);
 			if (result.success) {
 				$.messager.alert("系统提示", "保存成功");
 				resetValue();
@@ -125,5 +125,5 @@ function openStudentModifyDialog() {
 	$('#fm').form('load', row);
 
 	// $('#EMP_NO').attr("disabled", "disabled");
-	url = "updateEmployee?no=" + row.no;
+	url = "updateEmployee";
 }
