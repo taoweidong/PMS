@@ -20,12 +20,18 @@ public interface EmployeeService {
 	Map<String, Object> queryEmployee(Integer page, Integer rows, Employee employee);
 
 	/**
-	 * 
 	 * 更新用户信息.
 	 * @param employee
 	 * @return
 	 */
-	ReturnData EmployeeSave(Employee employee);
+	ReturnData updateEmployee(Employee employee);
+
+	/**
+	 * 新增.
+	 * @param employee
+	 * @return
+	 */
+	ReturnData addEmployee(Employee employee);
 
 	List<Map<String, Object>> comboEmployee();
 

@@ -17,8 +17,9 @@ import com.pms.entity.Administrator;
 import com.pms.entity.ReturnData;
 import com.pms.service.AdminService;
 import com.pms.util.AESUtil;
+import com.pms.util.CheckInfo;
 import com.pms.util.Constant;
-import com.pms.utils.CheckInfo;
+import com.pms.util.StringUtil;
 
 /**
  * 管理员控制器
@@ -119,6 +120,7 @@ public class AdminController {
 		}
 
 		Administrator admin = new Administrator();
+		admin.setId(StringUtil.GetUUID());
 		admin.setNo(no);
 		admin.setName(name);
 		admin.setPwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(newPassword)));
@@ -127,7 +129,7 @@ public class AdminController {
 		admin.setExt2(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date().getTime()));
 		admin.setExt3(Constant.GENERAL_MANAGER);
 
-		ReturnData result = adminService.updateAdmin(admin);
+		ReturnData result = adminService.addAdmin(admin);
 		return result;
 	}
 

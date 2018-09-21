@@ -203,4 +203,22 @@ public class AdminServiceImpl implements AdminService {
 		return list;
 	}
 
+	@Override
+	public ReturnData addAdmin(Administrator admin) {
+		// 检查该用户是否已经存在
+		Administrator one = new Administrator();
+		one.setNo(admin.getNo());
+		Administrator flag = administratorMapper.selectOne(one);
+		if (flag != null) {
+			return ReturnData.fail("该员工已存在!");
+		}
+
+		int result = administratorMapper.insertSelective(admin);
+		if (result > 0) {
+			return ReturnData.success();
+		} else {
+			return ReturnData.fail("新增失败!");
+		}
+	}
+
 }

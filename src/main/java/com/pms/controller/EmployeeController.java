@@ -21,8 +21,8 @@ import com.pms.entity.Employee;
 import com.pms.entity.ReturnData;
 import com.pms.service.EmployeeService;
 import com.pms.util.AESUtil;
+import com.pms.util.CheckInfo;
 import com.pms.util.DateUtil;
-import com.pms.utils.CheckInfo;
 
 @Controller
 public class EmployeeController {
@@ -184,9 +184,10 @@ public class EmployeeController {
 			employee.setExt1(StringUtils.trimToEmpty(ext1));
 			employee.setExt2(DateUtil.getCurrentDateStr());
 
-			return employeeService.EmployeeSave(employee);
+			return employeeService.updateEmployee(employee);
 
 		} catch (Exception e) {
+
 			LOGGER.error("更新发生异常", e);
 			return ReturnData.fail("更新发生异常");
 		}
@@ -199,11 +200,44 @@ public class EmployeeController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
-	public ReturnData addEmployee(@RequestParam("no") String no) {
+	public ReturnData addEmployee(
+			@RequestParam(value = "no", defaultValue = StringUtils.EMPTY) String no,
+			@RequestParam(value = "name", defaultValue = StringUtils.EMPTY) String name,
+			@RequestParam(value = "passwd", defaultValue = StringUtils.EMPTY) String passwd,
+			@RequestParam(value = "sex", defaultValue = StringUtils.EMPTY) String sex,
+			@RequestParam(value = "birthday", defaultValue = StringUtils.EMPTY) String birthday,
+			@RequestParam(value = "psId", defaultValue = StringUtils.EMPTY) String psId,
+			@RequestParam(value = "phone", defaultValue = StringUtils.EMPTY) String phone,
+			@RequestParam(value = "address", defaultValue = StringUtils.EMPTY) String address,
+			@RequestParam(value = "ext1", defaultValue = StringUtils.EMPTY) String ext1) {
 
-		// ReturnData result = new ReturnData();
+		if (StringUtils.isEmpty(passwd)) {
+			return ReturnData.fail("密码不能为空!");
+		}
 
-		return ReturnData.success();
+		if (!CheckInfo.isMobileNO(StringUtils.trimToEmpty(phone))) {
+			return ReturnData.fail("手机号格式不正确!");
+		}
+
+		Employee employee = new Employee();
+		try {
+			employee.setNo(StringUtils.trimToEmpty(no));
+			employee.setName(StringUtils.trimToEmpty(name));
+			employee.setSex(StringUtils.trimToEmpty(sex));
+			employee.setPwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(passwd)));
+			employee.setBirthday(DateUtils.parseDate(birthday, "yyyy-MM-dd"));
+			employee.setPsId(StringUtils.trimToEmpty(psId));
+			employee.setPhone(StringUtils.trimToEmpty(phone));
+			employee.setAddress(StringUtils.trimToEmpty(address));
+			employee.setExt1(StringUtils.trimToEmpty(ext1));
+			employee.setExt2(DateUtil.getCurrentDateStr());
+
+			return employeeService.addEmployee(employee);
+
+		} catch (Exception e) {
+			LOGGER.error("新增发生异常", e);
+			return ReturnData.fail("新增发生异常");
+		}
 
 	}
 

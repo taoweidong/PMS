@@ -40,4 +40,11 @@ public interface AdminService {
 	 * @return
 	 */
 	ReturnData cancelSuperAdmin(String ids);
+
+	/**
+	 * 新增管理员.
+	 * @param admin
+	 * @return
+	 */
+	ReturnData addAdmin(Administrator admin);
 }

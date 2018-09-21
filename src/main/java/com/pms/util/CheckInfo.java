@@ -1,4 +1,4 @@
-package com.pms.utils;
+package com.pms.util;
 
 import org.apache.commons.lang3.StringUtils;
 

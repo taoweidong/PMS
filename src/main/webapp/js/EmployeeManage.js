@@ -67,7 +67,7 @@ function saveStudent() {
 				return false;
 			}
 			if ($('#psId').combobox("getValue") == "") {
-				$.messager.alert("系统提示", "请选择所属岗位");
+				$.messager.alert("系统提示", "请选择政治面貌");
 				return false;
 			}
 			return $(this).form("validate");

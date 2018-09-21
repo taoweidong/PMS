@@ -65,7 +65,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public ReturnData EmployeeSave(Employee employee) {
+	public ReturnData updateEmployee(Employee employee) {
 
 		int result = employeeMapper.updateByPrimaryKey(employee);
 		if (result > 0) {
@@ -114,6 +114,26 @@ public class EmployeeServiceImpl implements EmployeeService {
 			return ReturnData.success();
 		} else {
 			return ReturnData.fail(StringUtils.removeEnd(fail.toString(), ";"));
+		}
+	}
+
+	/**
+	 * 新增用户信息.
+	 */
+	@Override
+	public ReturnData addEmployee(Employee employee) {
+
+		// 检查该用户是否已经存在
+		Employee flag = employeeMapper.selectByPrimaryKey(employee.getNo());
+		if (flag != null) {
+			return ReturnData.fail("该员工已存在!");
+		}
+
+		int result = employeeMapper.insertSelective(employee);
+		if (result > 0) {
+			return ReturnData.success();
+		} else {
+			return ReturnData.fail("新增失败!");
 		}
 	}
 
