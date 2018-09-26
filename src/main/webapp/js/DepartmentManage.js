@@ -12,7 +12,7 @@ function searchDepartment() {
 function openDepartmentAddDialog() {
 	$('#wu-form-2').form('clear');
 	$('#wu-dialog-2').dialog('open').dialog("setTitle", "添加部门信息");
-	url = "DepartmentServlet?method=AddDepartment";
+	url = "addDepartment";
 
 }
 function openDepartmentModifyDialog() {
@@ -24,13 +24,14 @@ function openDepartmentModifyDialog() {
 		$.messager.alert("系统提示", "请选择要一条要编辑的数据！");
 		return;
 	}
+
 	// 获取选中的员工信息
 	var row = selectedRows[0];
 	// 打开编辑员工信息的页面 并设置标题
 	$('#wu-dialog-2').dialog("open").dialog("setTitle", "编辑信息");
 	// 把选中行的数据加载到弹出的表单信息中 即把修改编辑的数据塞到表单中
 	$('#wu-form-2').form('load', row);
-	url = "DepartmentServlet?method=UpdateDepartment&DEP_ID=" + row.DEP_ID;
+	url = "updateDepartment?depId=" + row.DEP_ID;
 
 }
 // 保存修改的和新增的信息
@@ -43,7 +44,6 @@ function saveDepartment() {
 		success : function(result) {
 			// 把JSON对象转为javascript对象
 			var result = eval('(' + result + ')');
-			console.log("返回的JSON对象" + result);
 			if (result.errorMsg) {
 				$.messager.alert("系统提示", result.errorMsg);
 				return;
@@ -71,16 +71,14 @@ function deleteDepartment() {
 		strIds.push(selectedRows[i].DEP_ID);
 	}
 	var ids = strIds.join(",");
-	$.messager.confirm("系统提示", "您确定要删除这<font color=red>" + selectedRows.length
-			+ "</font>条数据吗？", function(r) {
+	$.messager.confirm("系统提示", "您确定要删除吗？", function(r) {
 		if (r) {
-			$.post("DepartmentServlet?method=DeleteDepartment", {
-				delIds : ids
+			$.post("deleteDepartment", {
+				ids : ids
 			}, function(result) {
 				// 此处已经指定以JSON运行响应，无需再进行转换
 				if (result.success) {
-					$.messager.alert("系统提示", "您已经成功删除了<font color=red>"
-							+ result.delNums + "</font>条数据！");
+					$.messager.alert("系统提示", "删除成功！");
 					$('#wu-datagrid-2').datagrid('reload');
 				} else {
 					$.messager.alert("系统提示", result.errorMsg);

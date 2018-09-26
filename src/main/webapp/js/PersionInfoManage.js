@@ -128,14 +128,10 @@ function saveAdmin() {
 
 // 清空表单
 function resetValue() {
-	$('#EMP_NO').val("");
-	$('#EMP_NAME').val("");
-	$('#EMP_SEX').combobox('setValue', "");
-	$('#EMP_Birthday').datebox('setValue', "");
-	$('#PS_TYPE').combobox('setValue', "");
-	$('#EMP_Phone').val("");
-	$('#EMP_Address').val("");
-	$('#ext1').val("");
+	$('#no').val("");
+	$('#name').val("");
+	$('#phone').combobox('setValue', "");
+	$('#ext1').datebox('setValue', "");
 
 }
 function closeStudentDialog() {
@@ -159,9 +155,7 @@ function openStudentModifyDialog() {
 	$('#dlg').dialog("open").dialog("setTitle", "编辑职工信息");
 	// 把选中行的数据加载到弹出的表单信息中 即把修改编辑的数据塞到表单中
 	$('#fm').form('load', row);
-	/*
-	 * <%if ("user".equals((String) session.getAttribute("userRole"))) {%> url =
-	 * "EmployeeSave?no=" + row.id; <%} else {%> url = "updateAdmin?id=" +
-	 * row.id; <%}%>
-	 */
+
+	url = "updatePersional";
+
 }

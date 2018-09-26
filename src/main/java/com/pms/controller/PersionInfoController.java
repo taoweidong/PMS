@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.pms.entity.ReturnData;
 import com.pms.service.PersionInfoService;
 
 @Controller
@@ -53,6 +54,29 @@ public class PersionInfoController {
 
 		return result;
 
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/updatePersional", method = RequestMethod.POST)
+	public ReturnData updatePersional(@RequestParam("no") String no,
+			@RequestParam("name") String name, @RequestParam("phone") String phone,
+			@RequestParam("ext1") String ext1) throws Exception {
+
+		// if (!CheckInfo.isMobileNO(StringUtils.trimToEmpty(phone))) {
+		// return ReturnData.fail("手机号格式不正确!");
+		// }
+		//
+		// Administrator admin = new Administrator();
+		// admin.setId(StringUtil.GetUUID());
+		// admin.setNo(no);
+		// admin.setName(name);
+		// admin.setPhone(phone);
+		// admin.setExt1(ext1);
+		// admin.setExt2(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date().getTime()));
+		// admin.setExt3(Constant.GENERAL_MANAGER);
+		//
+		// ReturnData result = adminService.addAdmin(admin);
+		return ReturnData.success();
 	}
 
 	/** Default constructor */

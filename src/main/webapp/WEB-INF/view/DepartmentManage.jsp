@@ -41,11 +41,11 @@
 			<table>
 				<tr>
 					<td width="80" align="right">部门名称:</td>
-					<td><input type="text" name="DEP_NAME" id="DEP_NAME" class="easyui-validatebox" required="true" /></td>
+					<td><input type="text" name="name" id="name" class="easyui-validatebox" required="true" /></td>
 				</tr>
 				<tr>
 					<td width="80" align="right">领导工号:</td>
-					<td><input class="easyui-combobox" id="DEP_LEADER" name="DEP_LEADER" data-options="panelHeight:'auto',editable:false,valueField:'EMP_NO',textField:'EMP_NAME',url:'EmployeeServlet?method=ComboListEmployee'" /></td>
+					<td><input class="easyui-combobox" id="leader" name="leader" data-options="panelHeight:'auto',editable:false,valueField:'EMP_NO',textField:'EMP_NAME',url:'comboListEmployee'" /></td>
 				</tr>
 			</table>
 		</form>

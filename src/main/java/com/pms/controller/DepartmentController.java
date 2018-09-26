@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
+import com.pms.entity.Department;
+import com.pms.entity.ReturnData;
 import com.pms.service.DepartmentService;
 
 @Controller
@@ -50,6 +52,47 @@ public class DepartmentController {
 		Map<String, Object> result = departmentService.queryDepartment(page, rows, paramMap);
 
 		System.out.println(JSON.toJSONString(result));
+
+		return result;
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/updateDepartment", method = RequestMethod.POST)
+	public ReturnData updateDepartment(
+			@RequestParam(value = "depId", defaultValue = StringUtils.EMPTY) String depId,
+			@RequestParam(value = "name", defaultValue = StringUtils.EMPTY) String name,
+			@RequestParam(value = "leader", defaultValue = StringUtils.EMPTY) String leader) {
+
+		Department department = new Department();
+		try {
+
+			return departmentService.updateDepartment(department);
+
+		} catch (Exception e) {
+
+			LOGGER.error("更新发生异常", e);
+			return ReturnData.fail("更新发生异常");
+		}
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/deleteDepartment", method = RequestMethod.POST)
+	public ReturnData deleteDepartment(@RequestParam("ids") String ids) {
+
+		ReturnData result = departmentService.deleteDepartment(ids);
+
+		return result;
+
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/addDepartment", method = RequestMethod.POST)
+	public ReturnData addDepartment(
+			@RequestParam(value = "name", defaultValue = StringUtils.EMPTY) String name,
+			@RequestParam(value = "leader", defaultValue = StringUtils.EMPTY) String leader) {
+		Department department = new Department();
+		ReturnData result = departmentService.addDepartment(department);
 
 		return result;
 

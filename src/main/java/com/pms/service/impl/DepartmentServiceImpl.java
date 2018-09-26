@@ -13,6 +13,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
 import com.pms.entity.Department;
+import com.pms.entity.ReturnData;
 import com.pms.mapper.DepartmentMapper;
 import com.pms.service.DepartmentService;
 
@@ -41,6 +42,24 @@ public class DepartmentServiceImpl implements DepartmentService {
 		LOGGER.info(JSON.toJSONString(result));
 
 		return result;
+	}
+
+	@Override
+	public ReturnData updateDepartment(Department department) {
+		// TODO Auto-generated method stub
+		return ReturnData.success();
+	}
+
+	@Override
+	public ReturnData deleteDepartment(String ids) {
+		// TODO Auto-generated method stub
+		return ReturnData.success();
+	}
+
+	@Override
+	public ReturnData addDepartment(Department department) {
+		// TODO Auto-generated method stub
+		return ReturnData.success();
 	}
 
 }
