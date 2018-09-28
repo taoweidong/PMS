@@ -3,6 +3,7 @@ package com.pms.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.pms.entity.Department;
 import com.pms.entity.ReturnData;
@@ -44,22 +46,62 @@ public class DepartmentServiceImpl implements DepartmentService {
 		return result;
 	}
 
+	/**
+	 * 更新操作
+	 */
 	@Override
 	public ReturnData updateDepartment(Department department) {
-		// TODO Auto-generated method stub
+		try {
+			int result = departmentMapper.updateByPrimaryKey(department);
+			if (result > 0) {
+				return ReturnData.success();
+			}
+		} catch (Exception e) {
+			LOGGER.error("更新异常!", e);
+			return ReturnData.fail("更新异常!");
+		}
+
 		return ReturnData.success();
 	}
 
 	@Override
 	public ReturnData deleteDepartment(String ids) {
 		// TODO Auto-generated method stub
-		return ReturnData.success();
+		System.out.println(ids);
+
+		StringBuffer fail = new StringBuffer();
+
+		List<String> list = Lists.newArrayList(StringUtils.split(ids, ","));
+		for (String id : list) {
+			Department department = new Department();
+			department.setId(id);
+			int returnDate = departmentMapper.delete(department);
+			if (returnDate <= 0) {
+				fail.append("[" + id + "]删除错误;");
+			}
+		}
+
+		if (StringUtils.isEmpty(fail.toString())) {
+			return ReturnData.success();
+		} else {
+			return ReturnData.fail(StringUtils.removeEnd(fail.toString(), ";"));
+		}
+
 	}
 
+	/**
+	 * 新增
+	 */
 	@Override
 	public ReturnData addDepartment(Department department) {
 		// TODO Auto-generated method stub
-		return ReturnData.success();
+		int result = departmentMapper.insert(department);
+		if (result > 0) {
+			return ReturnData.success();
+		} else {
+			return ReturnData.fail("新增失败!");
+		}
+
 	}
 
 }

@@ -17,9 +17,11 @@ import com.google.common.collect.Maps;
 import com.pms.entity.Department;
 import com.pms.entity.ReturnData;
 import com.pms.service.DepartmentService;
+import com.pms.util.StringUtil;
 
 @Controller
 public class DepartmentController {
+
 	/**
 	 * 日志工具
 	 */
@@ -65,6 +67,10 @@ public class DepartmentController {
 			@RequestParam(value = "leader", defaultValue = StringUtils.EMPTY) String leader) {
 
 		Department department = new Department();
+		department.setId(depId);
+		department.setName(name);
+		department.setLeader(leader);
+
 		try {
 
 			return departmentService.updateDepartment(department);
@@ -92,9 +98,18 @@ public class DepartmentController {
 			@RequestParam(value = "name", defaultValue = StringUtils.EMPTY) String name,
 			@RequestParam(value = "leader", defaultValue = StringUtils.EMPTY) String leader) {
 		Department department = new Department();
-		ReturnData result = departmentService.addDepartment(department);
+		try {
+			department.setId(StringUtil.generateShortUuid());
+			department.setName(name);
+			department.setLeader(leader);
 
-		return result;
+			return departmentService.addDepartment(department);
+
+		} catch (Exception e) {
+			LOGGER.error("添加异常", e);
+		}
+
+		return ReturnData.fail("添加失败");
 
 	}
 

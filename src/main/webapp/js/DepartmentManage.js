@@ -31,7 +31,7 @@ function openDepartmentModifyDialog() {
 	$('#wu-dialog-2').dialog("open").dialog("setTitle", "编辑信息");
 	// 把选中行的数据加载到弹出的表单信息中 即把修改编辑的数据塞到表单中
 	$('#wu-form-2').form('load', row);
-	url = "updateDepartment?depId=" + row.DEP_ID;
+	url = "updateDepartment?depId=" + row.id;
 
 }
 // 保存修改的和新增的信息
@@ -44,7 +44,7 @@ function saveDepartment() {
 		success : function(result) {
 			// 把JSON对象转为javascript对象
 			var result = eval('(' + result + ')');
-			if (result.errorMsg) {
+			if (!result.success) {
 				$.messager.alert("系统提示", result.errorMsg);
 				return;
 			} else {
@@ -68,7 +68,7 @@ function deleteDepartment() {
 	}
 	var strIds = [];
 	for (var i = 0; i < selectedRows.length; i++) {
-		strIds.push(selectedRows[i].DEP_ID);
+		strIds.push(selectedRows[i].id);
 	}
 	var ids = strIds.join(",");
 	$.messager.confirm("系统提示", "您确定要删除吗？", function(r) {
