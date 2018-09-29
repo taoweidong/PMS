@@ -59,18 +59,16 @@
 	<mvc:default-servlet-handler />
 
 	<!--拦截器配置 -->
-	<!--<mvc:interceptors> -->
-	<!--<mvc:interceptor> -->
-	<!--<mvc:mapping path="/contest/**"/> -->
-	<!--<mvc:mapping path="/problem/sub/**"/> -->
-	<!--<mvc:exclude-mapping path="/contest"/> -->
-	<!--<bean class="cn.edu.aust.interceptor.LoginIntercepTor"/> -->
-	<!--</mvc:interceptor> -->
-	<!--</mvc:interceptors> -->
-
 	<mvc:interceptors>
 		<mvc:interceptor>
+			<!-- 拦截器路径配置 -->
 			<mvc:mapping path="/**" />
+			<!-- 拦截器不需要拦截的路径 -->
+			<mvc:exclude-mapping path="/images/**" />
+			<mvc:exclude-mapping path="/css/**" />
+			<mvc:exclude-mapping path="/js/**" />
+			<mvc:exclude-mapping
+				path="/jquery-easyui-1.3.4/**" />
 			<bean class="com.pms.Interceptor.PermissionInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>

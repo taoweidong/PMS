@@ -75,10 +75,11 @@ public class IndexController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String login(final Model model, final @RequestParam(name = "userName") String userName,
 			final @RequestParam(name = "password") String password,
-			final @RequestParam(name = "role") String role, HttpSession session) {
+			final @RequestParam(name = "role") String role, HttpSession httpSession) {
 		try {
 			// 检查用户信息
 			if (StringUtils.equals(role, "user")) {
+
 				Employee employee = employeeService.checkEmployee(userName,
 						AESUtil.parseByte2HexStr(AESUtil.encrypt(password)), role);
 
@@ -89,13 +90,14 @@ public class IndexController {
 				} else {
 					user = employee.getName();
 					roleFlag = role;
+
+					// 设置session
+					httpSession.setAttribute("user", employee);
+					httpSession.setAttribute("role", role);
 				}
 
 			} else if (StringUtils.equals(role, "admin")
 					|| StringUtils.equals(role, "superAdmin")) { // 检查管理员信息
-				// 验证登录功能
-				System.out.println(password);
-				System.out.println(AESUtil.parseByte2HexStr(AESUtil.encrypt(password)));
 
 				Administrator admin = adminService.checkAdmin(userName,
 						AESUtil.parseByte2HexStr(AESUtil.encrypt(password)), role);
@@ -106,6 +108,10 @@ public class IndexController {
 				} else {
 					user = admin.getName();
 					roleFlag = role;
+
+					// 设置session
+					httpSession.setAttribute("user", admin);
+					httpSession.setAttribute("role", role);
 				}
 			} else {
 				model.addAttribute(ERROR, "角色不存在");
@@ -117,10 +123,6 @@ public class IndexController {
 			model.addAttribute(ERROR, "登录发生异常，请联系管理员!");
 			return "index";
 		}
-
-		// 设置session
-		session.setAttribute("user", userName);
-		session.setAttribute("role", role);
 
 		return "redirect:main";
 	}

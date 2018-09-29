@@ -16,7 +16,22 @@
 			<img src="images/main.jpg" />
 		</div>
 		<div style="font-size: 20px; color: #8B8B8B; font-family: '楷体'; padding-top: 50px">
-			<font size="3"> <strong>当前用户：</strong>【${user}】--<strong>角色</strong>【${role} 】
+			<font size="3"> <strong>当前用户：</strong>【${sessionScope.user.name}】--
+			<strong>角色</strong>【
+			<c:choose>
+					<c:when test="${sessionScope.role eq 'admin'}">
+						<c:out value="管理员">
+						</c:out>
+					</c:when>
+					<c:when test="${sessionScope.role eq 'superAdmin'}">
+						<c:out value="超级管理员">
+						</c:out>
+					</c:when>
+					<c:otherwise>
+						<c:out value="普通用户">
+						</c:out>
+					</c:otherwise>
+				</c:choose>】
 			</font>
 		</div>
 	</div>
@@ -40,7 +55,7 @@
 				<a href="javascript:openTab('部门信息管理','departmentManage','icon-user-business-boss')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-user-business-boss'" style="width: 150px;">部门管理</a>
 			</div>
 			<div title="岗位管理" data-options="iconCls:'icon-report-key'" style="padding: 10px">
-				<a href="javascript:openTab('个人职位管理','applyInduction','icon-report-edit')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-report-edit'" style="width: 150px;">个人职位管理</a> <a href="javascript:openTab('岗位信息管理','positionsManage','icon-report-disk')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-report-disk'" style="width: 150px;">岗位管理</a> <a href="javascript:openTab('岗位申请审批','applyInductionApprove','icon-report')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-report'" style="width: 150px;">岗位申请审批</a>
+				<a href="javascript:openTab('岗位信息管理','positionsManage','icon-report-disk')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-report-disk'" style="width: 150px;">岗位管理</a>
 			</div>
 			<div title="职工管理" data-options="iconCls:'icon-user-group'" style="padding: 10px">
 

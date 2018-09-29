@@ -2,6 +2,9 @@ package com.pms.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.pms.entity.ReturnData;
+import com.pms.service.AdminService;
 import com.pms.service.PersionInfoService;
+import com.pms.util.CheckInfo;
 
 @Controller
 public class PersionInfoController {
@@ -24,6 +29,9 @@ public class PersionInfoController {
 
 	@Autowired
 	private PersionInfoService persionInfoManageService;
+
+	@Autowired
+	private AdminService adminService;
 
 	/**
 	 * 个人信息管理.
@@ -57,11 +65,34 @@ public class PersionInfoController {
 	}
 
 	@ResponseBody
-	@RequestMapping(value = "/updatePersional", method = RequestMethod.POST)
-	public ReturnData updatePersional(@RequestParam("no") String no,
-			@RequestParam("name") String name, @RequestParam("phone") String phone,
-			@RequestParam("ext1") String ext1) throws Exception {
+	@RequestMapping(value = "/updatePersion", method = RequestMethod.POST)
+	public ReturnData updatePersion(@RequestParam("id") String id, @RequestParam("no") String no,
+			@RequestParam("name") String name, @RequestParam("newPassword") String newPassword,
+			@RequestParam("phone") String phone, @RequestParam("ext1") String ext1,
+			HttpSession httpSession) throws Exception {
 
+		// 角色
+		String role = (String) httpSession.getAttribute("role");
+		if (StringUtils.equals(role, "user")) {// 普通用户的保存
+
+		} else// 管理员更新
+		{
+
+			if (!CheckInfo.isMobileNO(StringUtils.trimToEmpty(phone))) {
+				return ReturnData.fail("手机号格式不正确!");
+			}
+
+			// Administrator admin = adminService.selectAdminById(id);
+			// // admin.setId(id);
+			// admin.setNo(no);
+			// admin.setName(name);
+			// admin.setPhone(phone);
+			// admin.setExt1(ext1);
+			// admin.setExt2(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new
+			// Date().getTime()));
+
+			// ReturnData result = adminService.updateAdmin(admin);
+		}
 		// if (!CheckInfo.isMobileNO(StringUtils.trimToEmpty(phone))) {
 		// return ReturnData.fail("手机号格式不正确!");
 		// }

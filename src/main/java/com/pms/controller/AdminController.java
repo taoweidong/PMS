@@ -119,6 +119,11 @@ public class AdminController {
 			return ReturnData.fail("手机号格式不正确!");
 		}
 
+		List<Administrator> listAdmin = adminService.selectAdminListById(no);
+		if (listAdmin != null && listAdmin.size() > 1) {
+			return ReturnData.fail("该登录账号已存在!");
+		}
+
 		Administrator admin = new Administrator();
 		admin.setId(StringUtil.GetUUID());
 		admin.setNo(no);
@@ -150,11 +155,6 @@ public class AdminController {
 
 		if (!CheckInfo.isMobileNO(StringUtils.trimToEmpty(phone))) {
 			return ReturnData.fail("手机号格式不正确!");
-		}
-
-		List<Administrator> listAdmin = adminService.selectAdminListById(no);
-		if (listAdmin != null && listAdmin.size() > 1) {
-			return ReturnData.fail("该登录账号已存在!");
 		}
 
 		Administrator admin = adminService.selectAdminById(id);
