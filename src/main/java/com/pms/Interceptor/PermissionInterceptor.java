@@ -50,6 +50,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 		String role = (String) request.getSession().getAttribute("role");
 		if (role == null) {
 			LOGGER.debug("Interceptor：跳转到login页面！");
+			//這裡需要注意的是，静态资源的加载，不需要进行拦截，否则无法显示样式
 			request.getRequestDispatcher("/WEB-INF/view/index.jsp").forward(request, response);
 			return false;
 		} else {

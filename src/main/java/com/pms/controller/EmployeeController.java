@@ -155,7 +155,6 @@ public class EmployeeController {
 	public ReturnData updateEmployee(
 			@RequestParam(value = "no", defaultValue = StringUtils.EMPTY) String no,
 			@RequestParam(value = "name", defaultValue = StringUtils.EMPTY) String name,
-			@RequestParam(value = "passwd", defaultValue = StringUtils.EMPTY) String passwd,
 			@RequestParam(value = "sex", defaultValue = StringUtils.EMPTY) String sex,
 			@RequestParam(value = "birthday", defaultValue = StringUtils.EMPTY) String birthday,
 			@RequestParam(value = "psId", defaultValue = StringUtils.EMPTY) String psId,
@@ -163,20 +162,15 @@ public class EmployeeController {
 			@RequestParam(value = "address", defaultValue = StringUtils.EMPTY) String address,
 			@RequestParam(value = "ext1", defaultValue = StringUtils.EMPTY) String ext1) {
 
-		if (StringUtils.isEmpty(passwd)) {
-			return ReturnData.fail("密码不能为空!");
-		}
-
 		if (!CheckInfo.isMobileNO(StringUtils.trimToEmpty(phone))) {
 			return ReturnData.fail("手机号格式不正确!");
 		}
 
-		Employee employee = new Employee();
+		Employee employee = employeeService.selectEmployeeById(no);
 		try {
 			employee.setNo(StringUtils.trimToEmpty(no));
 			employee.setName(StringUtils.trimToEmpty(name));
 			employee.setSex(StringUtils.trimToEmpty(sex));
-			employee.setPwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(passwd)));
 			employee.setBirthday(DateUtils.parseDate(birthday, "yyyy-MM-dd"));
 			employee.setPsId(StringUtils.trimToEmpty(psId));
 			employee.setPhone(StringUtils.trimToEmpty(phone));
@@ -203,17 +197,12 @@ public class EmployeeController {
 	public ReturnData addEmployee(
 			@RequestParam(value = "no", defaultValue = StringUtils.EMPTY) String no,
 			@RequestParam(value = "name", defaultValue = StringUtils.EMPTY) String name,
-			@RequestParam(value = "passwd", defaultValue = StringUtils.EMPTY) String passwd,
 			@RequestParam(value = "sex", defaultValue = StringUtils.EMPTY) String sex,
 			@RequestParam(value = "birthday", defaultValue = StringUtils.EMPTY) String birthday,
 			@RequestParam(value = "psId", defaultValue = StringUtils.EMPTY) String psId,
 			@RequestParam(value = "phone", defaultValue = StringUtils.EMPTY) String phone,
 			@RequestParam(value = "address", defaultValue = StringUtils.EMPTY) String address,
 			@RequestParam(value = "ext1", defaultValue = StringUtils.EMPTY) String ext1) {
-
-		if (StringUtils.isEmpty(passwd)) {
-			return ReturnData.fail("密码不能为空!");
-		}
 
 		if (!CheckInfo.isMobileNO(StringUtils.trimToEmpty(phone))) {
 			return ReturnData.fail("手机号格式不正确!");
@@ -224,7 +213,7 @@ public class EmployeeController {
 			employee.setNo(StringUtils.trimToEmpty(no));
 			employee.setName(StringUtils.trimToEmpty(name));
 			employee.setSex(StringUtils.trimToEmpty(sex));
-			employee.setPwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(passwd)));
+			employee.setPwd(AESUtil.parseByte2HexStr(AESUtil.encrypt("123456")));
 			employee.setBirthday(DateUtils.parseDate(birthday, "yyyy-MM-dd"));
 			employee.setPsId(StringUtils.trimToEmpty(psId));
 			employee.setPhone(StringUtils.trimToEmpty(phone));

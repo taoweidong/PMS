@@ -19,7 +19,8 @@
 				<th field="sex" width="50" hidden="true" align="center">性别Code</th>
 				<th field="sexDesc" width="50" align="center">性别</th>
 				<th field="birthday" width="80" align="center">出生日期</th>
-				<th field="psId" width="80" align="center">政治面貌</th>
+				<th field="psId" width="80" hidden="true" align="center">政治面貌code</th>
+				<th field="psIdDesc" width="80" align="center">政治面貌</th>
 				<th field="phone" width="100" align="center">电话</th>
 				<th field="address" width="150" align="center">地址</th>
 				<th field="ext1" width="150" align="center">备注</th>
@@ -34,7 +35,7 @@
 			<a href="javascript:openStudentAddDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加</a> <a href="javascript:openStudentModifyDialog()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改</a> <a href="javascript:deleteStudent()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
 		</div>
 		<div>
-			&nbsp;工号：&nbsp; <input type="text" class="wu-text" style="width: 100px" name="s_EMP_NO" id="s_EMP_NO" size="10" /> &nbsp;姓名：&nbsp; <input type="text" class="wu-text" style="width: 100px" name="s_EMP_NAME" id="s_EMP_NAME" size="10" /> &nbsp;性别：&nbsp; <select class="easyui-combobox" style="width: 100px" name="s_EMP_SEX" id="s_EMP_SEX" editable="false" panelHeight="auto">
+			&nbsp;工号：&nbsp; <input type="text" class="wu-text" style="width: 100px" name="s_EMP_NO" id="s_EMP_NO" size="10" /> &nbsp; 姓名：&nbsp; <input type="text" class="wu-text" style="width: 100px" name="s_EMP_NAME" id="s_EMP_NAME" size="10" /> &nbsp; 性别：&nbsp; <select class="easyui-combobox" style="width: 100px" name="s_EMP_SEX" id="s_EMP_SEX" editable="false" panelHeight="auto">
 				<option value="">请选择...</option>
 				<option value="M">男</option>
 				<option value="F">女</option>
@@ -51,14 +52,6 @@
 					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 					<td width="80" align="right">姓名：</td>
 					<td><input type="text" name="name" id="name" class="easyui-validatebox" required="true" /></td>
-				</tr>
-				<!-- 手动增加员工信息时不需要输入密码 ，默认密码为员工号，员工首次登陆时需强制修改密码 -->
-				<tr>
-					<td width="80" align="right">密码：</td>
-					<td><input type="password" name="passwd" id="passwd" class="easyui-validatebox" value="" maxlength="8" required="true" /></td>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td width="80" align="right">确认密码：</td>
-					<td><input type="password" name="passwd2" id="passwd2" class="easyui-validatebox" maxlength="8" validType="equalTo['#passwd']" invalidMessage="两次输入的密码不一致" value="" required="true" /></td>
 				</tr>
 				<tr>
 					<td width="80" align="right">性别：</td>

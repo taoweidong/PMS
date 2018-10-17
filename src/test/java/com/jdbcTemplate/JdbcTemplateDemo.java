@@ -21,7 +21,7 @@ import com.pms.entity.Administrator;
  */
 public class JdbcTemplateDemo {
 
-	// JdbcTemplate使用步骤：
+	// JdbcTemplate使用步骤： 
 	// 1、导入jar包；2、设置数据库信息；3、设置数据源；4、调用jdbcTemplate对象中的方法实现操作
 	private JdbcTemplate jdbcTemplate = new JdbcTemplate();
 

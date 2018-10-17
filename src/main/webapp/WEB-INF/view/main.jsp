@@ -66,7 +66,10 @@
 			</div>
 			<div title="系统管理" data-options="iconCls:'icon-wrench'" style="padding: 10px; border: none;">
 
-				<a href="javascript:openTab('政治面貌管理','politicalStatusManager','icon-group-edit')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-group-edit'" style="width: 150px;"> 政治面貌管理</a> <a href="javascript:openTab('管理员管理','adminManager','icon-group-key')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-group-key'" style="width: 150px;">管理员管理</a> <a href="javascript:openPasswordModifyDialog()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-advancedsettings'" style="width: 150px;"> 修改密码</a> <a href="javascript:logout()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-undo'" style="width: 150px;"> 安全退出</a>
+				<a href="javascript:openTab('政治面貌管理','politicalStatusManager','icon-group-edit')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-group-edit'" style="width: 150px;"> 政治面貌管理</a> 
+				<a href="javascript:openTab('管理员管理','adminManager','icon-group-key')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-group-key'" style="width: 150px;">管理员管理</a> 
+				<a href="javascript:openPasswordModifyDialog()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-advancedsettings'" style="width: 150px;"> 修改密码</a>
+				 <a href="javascript:logout()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-undo'" style="width: 150px;"> 安全退出</a>
 			</div>
 		</div>
 

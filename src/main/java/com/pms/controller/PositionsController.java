@@ -2,6 +2,7 @@ package com.pms.controller;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
 import com.pms.service.PositionsService;
 
 @Controller
@@ -33,12 +33,16 @@ public class PositionsController {
 
 	@ResponseBody
 	@RequestMapping(value = "/queryPositions", method = RequestMethod.POST)
-	public Map<String, Object> queryPositions(@RequestParam("page") Integer page,
-			@RequestParam("rows") Integer rows) {
-		System.out.println("rows:" + rows + "   page:" + page);
-		Map<String, Object> result = positionsService.queryPositions(page, rows);
+	public Map<String, Object> queryPositions(
+			@RequestParam(value = "POS_NAME", defaultValue = StringUtils.EMPTY) String name,
+			@RequestParam(value = "DEP_ID", defaultValue = StringUtils.EMPTY) String depId,
+			@RequestParam(value = "startDate", defaultValue = StringUtils.EMPTY) String startDate,
+			@RequestParam(value = "endDate", defaultValue = StringUtils.EMPTY) String endDate,
+			@RequestParam(value = "page", defaultValue = "1") Integer page,
+			@RequestParam(value = "rows", defaultValue = "15") Integer rows) {
 
-		System.out.println(JSON.toJSONString(result));
+		Map<String, Object> result = positionsService.queryPositions(page, rows, name, depId,
+				startDate, endDate);
 
 		return result;
 

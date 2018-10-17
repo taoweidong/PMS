@@ -2,9 +2,13 @@ package com.pms.util;
 
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
 import com.google.common.collect.Maps;
 
+@Component
 public class DictionaryConversion {
+
 
 	public static final Map<String, String> sexDic = Maps.newHashMap();
 	static {
@@ -23,7 +27,6 @@ public class DictionaryConversion {
 		} else {
 			return code;
 		}
-
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.pms.controller;
 
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,53 +16,56 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.pms.entity.Administrator;
+import com.pms.entity.Employee;
 import com.pms.entity.ReturnData;
 import com.pms.service.AdminService;
-import com.pms.service.PersionInfoService;
+import com.pms.service.EmployeeService;
+import com.pms.util.AESUtil;
 import com.pms.util.CheckInfo;
+import com.pms.util.DateUtil;
 
 @Controller
 public class PersionInfoController {
 	/**
 	 * 日志工具
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
-
-	@Autowired
-	private PersionInfoService persionInfoManageService;
+	private static final Logger LOGGER = LoggerFactory.getLogger(PersionInfoController.class);
 
 	@Autowired
 	private AdminService adminService;
+
+	@Autowired
+	private EmployeeService employeeService;
 
 	/**
 	 * 个人信息管理.
 	 * @return
 	 */
 	@RequestMapping("/persionInfoManage")
-	public String persionInfoManage() {
+	public String persionInfoManage(HttpSession httpSession) {
 		// 如果你的spring mvc配置文件中配置了跳转后缀则不需要加.jsp后缀
 		// 即直接return "demo/pagefile";
 		LOGGER.debug("个人信息管理");
 
+		// 更新session中的数据
+		String role = (String) httpSession.getAttribute("role");
+		if (StringUtils.equals(role, "user")) {// 普通用户的保存
+
+			// session中的数据获取id
+			Employee emp = (Employee) httpSession.getAttribute("user");
+			// 获取最新数据，更新session
+			Employee employee = employeeService.selectEmployeeById(emp.getNo());
+
+			// 设置session
+			httpSession.setAttribute("user", employee);
+			httpSession.setAttribute("role", role);
+
+		} else if (StringUtils.equals(role, "admin") || StringUtils.equals(role, "superAdmin")) { // 检查管理员信息
+
+		}
+
 		return "PersionInfoManage";
-	}
-
-	/**
-	 * 查询所有信息.
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/PersionInfo", method = RequestMethod.POST)
-	public Map<String, Object> queryPersionInfo(@RequestParam("page") Integer page,
-			@RequestParam("rows") Integer rows) {
-
-		System.out.println("rows:" + rows + "   page:" + page);
-		Map<String, Object> result = persionInfoManageService.queryPersionInfo(page, rows);
-
-		System.out.println(JSON.toJSONString(result));
-
-		return result;
-
 	}
 
 	@ResponseBody
@@ -70,10 +74,19 @@ public class PersionInfoController {
 			@RequestParam("name") String name, @RequestParam("newPassword") String newPassword,
 			@RequestParam("phone") String phone, @RequestParam("ext1") String ext1,
 			HttpSession httpSession) throws Exception {
-
+		ReturnData result = new ReturnData();
 		// 角色
 		String role = (String) httpSession.getAttribute("role");
 		if (StringUtils.equals(role, "user")) {// 普通用户的保存
+
+			Employee employee = employeeService.selectEmployeeById(no);
+			employee.setName(StringUtils.trimToEmpty(name));
+			employee.setPwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(newPassword)));
+			employee.setPhone(StringUtils.trimToEmpty(phone));
+			employee.setExt1(StringUtils.trimToEmpty(ext1));
+			employee.setExt2(DateUtil.getCurrentDateStr());
+
+			result = employeeService.updateEmployee(employee);
 
 		} else// 管理员更新
 		{
@@ -82,32 +95,19 @@ public class PersionInfoController {
 				return ReturnData.fail("手机号格式不正确!");
 			}
 
-			// Administrator admin = adminService.selectAdminById(id);
-			// // admin.setId(id);
-			// admin.setNo(no);
-			// admin.setName(name);
-			// admin.setPhone(phone);
-			// admin.setExt1(ext1);
-			// admin.setExt2(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new
-			// Date().getTime()));
+			Administrator admin = adminService.selectAdminById(id);
+			admin.setNo(no);
+			admin.setPwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(newPassword)));
+			admin.setName(name);
+			admin.setPhone(phone);
+			admin.setExt1(StringUtils.trimToEmpty(ext1));
+			admin.setExt2(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date().getTime()));
 
-			// ReturnData result = adminService.updateAdmin(admin);
+			System.out.println(JSON.toJSON(admin));
+
+			result = adminService.updateAdmin(admin);
 		}
-		// if (!CheckInfo.isMobileNO(StringUtils.trimToEmpty(phone))) {
-		// return ReturnData.fail("手机号格式不正确!");
-		// }
-		//
-		// Administrator admin = new Administrator();
-		// admin.setId(StringUtil.GetUUID());
-		// admin.setNo(no);
-		// admin.setName(name);
-		// admin.setPhone(phone);
-		// admin.setExt1(ext1);
-		// admin.setExt2(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date().getTime()));
-		// admin.setExt3(Constant.GENERAL_MANAGER);
-		//
-		// ReturnData result = adminService.addAdmin(admin);
-		return ReturnData.success();
+		return result;
 	}
 
 	/** Default constructor */

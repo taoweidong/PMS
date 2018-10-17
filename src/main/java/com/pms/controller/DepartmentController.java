@@ -1,5 +1,6 @@
 package com.pms.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.pms.entity.Department;
 import com.pms.entity.ReturnData;
@@ -110,6 +112,29 @@ public class DepartmentController {
 		}
 
 		return ReturnData.fail("添加失败");
+
+	}
+
+	/**
+	 * 下拉框获取部门信息.
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/cboDepartmentList", method = RequestMethod.POST)
+	public List<Map<String, Object>> cboDepartmentList() {
+		List<Map<String, Object>> returnData = Lists.newArrayList();
+
+		Map<String, Object> param = Maps.newHashMap();
+		param.put("id", "");
+		param.put("name", "请选择...");
+
+		returnData.add(param);
+
+		List<Map<String, Object>> result = departmentService.cboDepartmentList();
+
+		returnData.addAll(result);
+
+		return returnData;
 
 	}
 

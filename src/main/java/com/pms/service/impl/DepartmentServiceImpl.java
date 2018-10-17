@@ -3,6 +3,7 @@ package com.pms.service.impl;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,9 @@ import com.pms.entity.Department;
 import com.pms.entity.ReturnData;
 import com.pms.mapper.DepartmentMapper;
 import com.pms.service.DepartmentService;
+
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.entity.Example.Criteria;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -102,6 +106,50 @@ public class DepartmentServiceImpl implements DepartmentService {
 			return ReturnData.fail("新增失败!");
 		}
 
+	}
+
+	@Override
+	public boolean findDepartmentByNo(String empNo) {
+		boolean resultFlag = false;
+		try {
+			Example example = new Example(Department.class);
+			Criteria criteria = example.createCriteria();
+			criteria.andCondition("DEP_LEADER = " + empNo);
+			List<Department> returnList = departmentMapper.selectByExample(example);
+			if (!CollectionUtils.isEmpty(returnList)) {
+				resultFlag = true;
+			} else {
+				resultFlag = false;
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			LOGGER.error("findDepartmentByNo 发生异常!", e);
+			resultFlag = false;
+		}
+
+		return resultFlag;
+	}
+
+	@Override
+	public Department findDepartmentById(String depNo) {
+		return departmentMapper.selectByPrimaryKey(depNo);
+	}
+
+	@Override
+	public List<Map<String, Object>> cboDepartmentList() {
+		List<Map<String, Object>> resultMap = Lists.newArrayList();
+
+		List<Department> listEmployee = departmentMapper.selectAll();
+		for (Department item : listEmployee) {
+			Map<String, Object> param = Maps.newHashMap();
+			param.put("id", item.getId());
+			param.put("name", item.getName());
+			resultMap.add(param);
+			param = null;
+		}
+
+		return resultMap;
 	}
 
 }

@@ -18,7 +18,10 @@
 			</div>
 
 			<div class="wu-toolbar-search">
-				<label>添加日期：</label> <input class="easyui-datebox" id="startDate" name="startDate" style="width: 100px" size="10" editable="false"> -> <input class="easyui-datebox" id="endDate" name="endDate" style="width: 100px" size="10" editable="false"> <label>部门：</label> <input class="easyui-combobox" id="DEP_ID" name="DEP_ID" data-options="panelHeight:'auto',editable:false,valueField:'DEP_ID',textField:'DEP_NAME',url:'DepartmentServlet?method=DepartmentComboboxInfo'" /> </select> <label>岗位名称：</label> <input type="text" class="wu-text" style="width: 100px" name="s_POS_NAME" id="s_POS_NAME" size="10" /> <a href="javascript:searchPositions()" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
+				<label>添加日期：</label> <input class="easyui-datebox" id="startDate" name="startDate" style="width: 100px" size="10" editable="false"> -> <input class="easyui-datebox" id="endDate" name="endDate" style="width: 100px" size="10" editable="false"> 
+				<label>部门：</label> <input class="easyui-combobox" id="DEP_ID" name="DEP_ID" data-options="panelHeight:'auto',editable:false,valueField:'id',textField:'name',url:'cboDepartmentList'" /> 
+				<label>岗位名称：</label> <input type="text" class="wu-text" style="width: 100px" name="s_POS_NAME" id="s_POS_NAME" size="10" />
+				<a href="javascript:searchPositions()" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
 			</div>
 		</div>
 		<!-- End of toolbar -->
@@ -28,9 +31,9 @@
 					<th field="cb" checkbox="true"></th>
 					<th field="id" width="80" align="center">ID</th>
 					<th field="name" width="90" align="center">岗位名称</th>
-					<th field="depId" width="90" hidden="true" align="center">部门编号</th>
-					<th field="DEP_NAME" width="90" align="center">部门名称</th>
-					<th field="DEP_LEADER" width="90" align="center">部门领导</th>
+					<th field="depId" width="30" hidden="true" align="center">部门编号</th>
+					<th field="depName" width="60" align="center">部门名称</th>
+					<th field="depLeader" width="60" align="center">部门领导</th>
 					<th field="content" width="90" align="center">岗位职责</th>
 					<th field="salary" width="90" align="center">岗位工资</th>
 					<th field="allowance" width="90" align="center">岗位津贴</th>
@@ -46,34 +49,33 @@
 		<form id="fm" method="post">
 			<table>
 				<tr>
-					<td width="100" align="right">岗位ID：</td>
-					<td><input type="text" name="POS_ID" id="POS_ID" class="easyui-validatebox" required="true" /></td>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td width="100" align="right">岗位名称：</td>
-					<td><input type="text" name="POS_NAME" id="POS_NAME" class="easyui-validatebox" required="true" /></td>
+					<td width="100" align="right">岗位ID</td>
+					<td><input type="text" readonly="readonly" name="id" id="id" class="easyui-validatebox" required="true" /></td>
+					<td width="100" align="right">岗位名称</td>
+					<td><input type="text" name="name" id="name" class="easyui-validatebox" required="true" /></td>
 				</tr>
 				<tr>
-					<td width="100" align="right">部&nbsp;&nbsp;&nbsp;&nbsp;门：</td>
-					<td><input class="easyui-combobox" id="DEP_ID" name="DEP_ID" data-options="panelHeight:'auto',editable:false,valueField:'DEP_ID',textField:'DEP_NAME',url:'DepartmentServlet?method=DepartmentComboboxInfo'" /></td>
-					<td></td>
-					<td width="100" align="right">岗位薪资：</td>
-					<td><input type="text" name="POS_SALARY" id="POS_SALARY" class="easyui-numberbox" precision="2" max="9999999.99" style="width: 133px" size="10" maxlength="12" required="true" /></td>
+					<td width="100" align="right">部门</td>
+					<td><input class="easyui-combobox" id="depId" name="depId" data-options="panelHeight:'auto',editable:false,valueField:'id',textField:'name',url:'cboDepartmentList'" /></td>
+
+					<td width="100" align="right">岗位薪资</td>
+					<td><input type="text" name="salary" id="salary" class="easyui-numberbox" precision="2" max="9999999.99" style="width: 133px" size="10" maxlength="12" required="true" /></td>
 				</tr>
 				<tr>
-					<td width="100" align="right">岗位补贴：</td>
-					<td><input type="text" name="POS_ALLOWANCE" id="POS_ALLOWANCE" class="easyui-numberbox" precision="2" max="9999999.99" style="width: 133px" size="10" maxlength="12" required="true" /></td>
-					<td></td>
-					<td width="100" align="right">特殊补贴：</td>
-					<td><input type="text" name="POS_PERQUISITES" id="POS_PERQUISITES" class="easyui-numberbox" precision="2" max="9999999.99" style="width: 133px" size="10" maxlength="12" required="true" /></td>
+					<td width="100" align="right">岗位补贴</td>
+					<td><input type="text" name="allowance" id="allowance" class="easyui-numberbox" precision="2" max="9999999.99" style="width: 133px" size="10" maxlength="12" required="true" /></td>
+
+					<td width="100" align="right">特殊补贴</td>
+					<td><input type="text" name="perquisites" id="perquisites" class="easyui-numberbox" precision="2" max="9999999.99" style="width: 133px" size="10" maxlength="12" required="true" /></td>
 				</tr>
 				<tr>
-					<td width="100" align="right">岗位职责：</td>
-					<td colspan="4"><textarea rows="1" cols="60" name="POS_CONTENT" id="POS_CONTENT"></textarea></td>
+					<td width="100" align="right">岗位职责</td>
+					<td colspan="4"><textarea rows="1" cols="60" name="content" id="content"></textarea></td>
 
 				</tr>
 				<tr>
-					<td width="100" align="right">备注：</td>
-					<td colspan="4"><textarea rows="7" cols="60" name="EXT1" id="EXT1"></textarea></td>
+					<td width="100" align="right">备注</td>
+					<td colspan="4"><textarea rows="7" cols="60" name="ext1" id="ext1"></textarea></td>
 				</tr>
 			</table>
 		</form>

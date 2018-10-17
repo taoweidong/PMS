@@ -80,7 +80,7 @@ function modifyPassword() {
 function logout() {
 	$.messager.confirm("系统提示", "您确定要退出系统吗", function(r) {
 		if (r) {
-			window.location.href = "index.jsp";
+			window.location.href = "/PMS/logout";
 		}
 	});
 }

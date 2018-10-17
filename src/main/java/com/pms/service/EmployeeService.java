@@ -42,4 +42,11 @@ public interface EmployeeService {
 	 */
 	ReturnData deleteEmployee(String ids);
 
+	/**
+	 * 根据id查询一个用户信息.
+	 * @param no
+	 * @return
+	 */
+	Employee selectEmployeeById(String no);
+
 }

@@ -45,9 +45,7 @@
 					</tr>
 					<tr>
 						<td width="100" align="right">备注：</td>
-						<td colspan="4"><textarea rows="4" cols="60" name="ext1" id="ext1">
-						${sessionScope.user.ext1}
-						</textarea></td>
+						<td colspan="4"><textarea rows="4" cols="60" name="ext1" id="ext1">${sessionScope.user.ext1}</textarea></td>
 					</tr>
 				</table>
 			</form>
@@ -68,9 +66,12 @@
 					// 把JSON对象转为javascript对象
 					var result = eval('(' + result + ')');
 					if (result.success) {
-						$.messager.alert("系统提示", "保存成功");
+						$.messager.alert("系统提示", "保存成功,下次登陆生效!");
 						//resetValue();
 						//$('#ff').datagrid("reload");// 重新加载表格
+						//$('#ff').dialog("close");// 关闭dialog
+						location.reload();
+
 					} else {
 						$.messager.alert("系统提示", result.errorMsg);
 						return;

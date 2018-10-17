@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Table(name = "t_positionsinfo")
 public class Positionsinfo {
@@ -23,6 +24,31 @@ public class Positionsinfo {
 	 */
 	@Column(name = "DEP_ID")
 	private String depId;
+
+	/**
+	 * 部门名称
+	 */
+	@Transient
+	private String depName;
+
+	@Transient
+	private String depLeader;
+
+	public String getDepName() {
+		return depName;
+	}
+
+	public void setDepName(String depName) {
+		this.depName = depName;
+	}
+
+	public String getDepLeader() {
+		return depLeader;
+	}
+
+	public void setDepLeader(String depLeader) {
+		this.depLeader = depLeader;
+	}
 
 	/**
 	 * 岗位名称

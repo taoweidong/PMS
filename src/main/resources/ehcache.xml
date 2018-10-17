@@ -12,7 +12,7 @@
             diskExpiryThreadIntervalSeconds="120"
             memoryStoreEvictionPolicy="LRU">
     </defaultCache>
-      <!--
+    <!--
     name：Cache的唯一标识  
     maxElementsInMemory：内存中最大缓存对象数  
     maxElementsOnDisk：磁盘中最大缓存对象数，若是0表示无穷大  

@@ -65,8 +65,21 @@ public class IndexController {
 		return "index";
 	}
 
+	@RequestMapping("/logout")
+	public String logout(HttpServletRequest request) {
+		request.getSession().invalidate();
+
+		request.getSession().removeAttribute("role");
+
+		System.out.println(request.getSession().getAttribute("role"));
+
+		LOGGER.debug("logout");
+
+		return "index";
+	}
+
 	/**
-	 * 登录功能 此处使用重定向方式，注意：重定向可以修改URL地址，放置表单重复提交..
+	 * 登录功能 此处使用重定向方式，注意：重定向可以修改URL地址 防止表单重复提交..
 	 * @param userName 用户名
 	 * @param password 密码
 	 * @param role     角色

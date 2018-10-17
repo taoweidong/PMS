@@ -60,4 +60,15 @@ public class PoliticalStatusServiceImpl implements PoliticalStatusService {
 		return resultMap;
 	}
 
+	@Override
+	public Map<String, Object> queryPoliticalStatusCbo() {
+		
+		Map<String, Object> param = Maps.newHashMap();
+		List<Politicalstatus> listEmployee = politicalstatusMapper.selectAll();
+		for (Politicalstatus item : listEmployee) {
+			param.put(item.getType(), item.getName());
+		}
+		return param;
+	}
+
 }

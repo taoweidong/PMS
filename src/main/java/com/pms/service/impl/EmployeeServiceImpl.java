@@ -17,7 +17,9 @@ import com.google.common.collect.Maps;
 import com.pms.entity.Employee;
 import com.pms.entity.ReturnData;
 import com.pms.mapper.EmployeeMapper;
+import com.pms.service.DepartmentService;
 import com.pms.service.EmployeeService;
+import com.pms.service.PoliticalStatusService;
 import com.pms.util.DictionaryConversion;
 
 @Service
@@ -27,6 +29,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
 	private EmployeeMapper employeeMapper;
+
+	@Autowired
+	private PoliticalStatusService politicalStatusService;
+
+	@Autowired
+	private DepartmentService departmentService;
 
 	@Override
 	public Employee checkEmployee(String userName, String password, String role) {
@@ -55,8 +63,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		PageHelper.startPage(page, rows);
 		List<Employee> list = employeeMapper.select(employee);
+
+		// 性别转中文描述
 		list.forEach(x -> {
 			x.setSexDesc(DictionaryConversion.sexDictionaryToDesc(x.getSex()));
+		});
+
+		// 政治面貌转中文描述
+		Map<String, Object> cboList = politicalStatusService.queryPoliticalStatusCbo();
+		list.forEach(x -> {
+			String key = x.getPsId();
+			if (cboList.containsKey(key)) {
+				x.setPsIdDesc(cboList.get(key).toString());
+			}
+
 		});
 
 		PageInfo<Employee> pageInfo = new PageInfo<Employee>(list);
@@ -102,6 +122,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		List<String> list = Lists.newArrayList(StringUtils.split(ids, ","));
 		for (String id : list) {
+
+			// 检查是否作为部门领导
+			if (departmentService.findDepartmentByNo(id)) {
+				fail.append("[" + id + "]正在使用，无法删除;");
+				continue;
+			}
 			Employee admin = new Employee();
 			admin.setNo(id);
 			int returnDate = employeeMapper.delete(admin);
@@ -135,6 +161,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 		} else {
 			return ReturnData.fail("新增失败!");
 		}
+	}
+
+	@Override
+	public Employee selectEmployeeById(String no) {
+		// TODO Auto-generated method stub
+		return employeeMapper.selectByPrimaryKey(no);
 	}
 
 }
