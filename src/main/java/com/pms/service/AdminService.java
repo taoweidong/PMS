@@ -27,6 +27,8 @@ public interface AdminService {
 
 	ReturnData deleteAdmin(String ids);
 
+	List<Map<String, Object>> comboAdmin();
+
 	/**
 	 * 设置超级管理员.
 	 * @param ids
@@ -47,4 +49,6 @@ public interface AdminService {
 	 * @return
 	 */
 	ReturnData addAdmin(Administrator admin);
+
+	Map<String, Object> dicAdmin();
 }

@@ -54,7 +54,8 @@
 			</timeBasedFileNamingAndTriggeringPolicy>
 		</rollingPolicy>
 		<layout class="ch.qos.logback.classic.PatternLayout">
-			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{56}.%method:%L -%msg%n</pattern>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread]
+				%logger{56}.%method:%L -%msg%n</pattern>
 		</layout>
 	</appender>
 
@@ -72,7 +73,8 @@
 			</timeBasedFileNamingAndTriggeringPolicy>
 		</rollingPolicy>
 		<layout class="ch.qos.logback.classic.PatternLayout">
-			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{56}.%method:%L - %msg%n</pattern>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread]
+				%logger{56}.%method:%L - %msg%n</pattern>
 		</layout>
 		<!-- 下面为配置只输出error级别的日志 -->
 		<filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -109,6 +111,9 @@
 		<appender-ref ref="file.async" /><!-- 即com.lin包下级别为 ${log.root.level}的才会使用file.async来打印 -->
 		<appender-ref ref="file.error" />
 	</logger>
+
+	<!--设置当前项目的日志输出级别 -->
+	<logger name="com.pms" level="DEBUG" />
 
 	<!-- root将级别为${log.root.level}及大于${log.root.level}的日志信息交给已经配置好的名为“Console”的appender处理，“Console”appender将信息打印到Console,其它同理 -->
 	<root level="${log.root.level}">

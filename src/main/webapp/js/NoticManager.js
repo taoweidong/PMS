@@ -4,8 +4,8 @@ var url;
  */
 function searchNotices() {
 	$('#wu-datagrid-2').datagrid('load', {
-		NOT_TITLE : $('#s_NOT_TITLE').val(),
-		ADMIN_NAME : $('#s_ADMIN_NAME').val(),
+		title : $('#s_NOT_TITLE').val(),
+		name : $('#s_DEP_LEADER').combobox('getValue'),
 		startDate : $('#startDate').datebox('getValue'),
 		endDate : $('#endDate').datebox('getValue')
 
@@ -22,15 +22,14 @@ function NoticeSave() {
 		success : function(result) {
 			// 把JSON对象转为javascript对象
 			var result = eval('(' + result + ')');
-			if (result.errorMsg) {
-				$.messager.alert("系统提示", result.errorMsg);
-				return;
-			} else {
+			if (result.success) {
 				$.messager.alert("系统提示", "保存成功");
 				resetValue();
 				$('#wu-dialog-2').dialog("close");// 关闭dialog
 				$('#wu-datagrid-2').datagrid("reload");// 重新加载表格
-
+			} else {
+				$.messager.alert("系统提示", result.errorMsg);
+				return;
 			}
 		}
 	});
@@ -47,19 +46,18 @@ function deleteNotices() {
 	}
 	var strIds = [];
 	for (var i = 0; i < selectedRows.length; i++) {
-		strIds.push(selectedRows[i].NOT_ID);
+		strIds.push(selectedRows[i].id);
 	}
 	var ids = strIds.join(",");
 	$.messager.confirm("系统提示", "您确定要删除这<font color=red>" + selectedRows.length
 			+ "</font>条数据吗？", function(r) {
 		if (r) {
-			$.post("NoticeServlet?method=DeleteNotice", {
-				delIds : ids
+			$.post("deleteNotice", {
+				ids : ids
 			}, function(result) {
 				// 此处已经指定以JSON运行响应，无需再进行转换
 				if (result.success) {
-					$.messager.alert("系统提示", "您已经成功删除了<font color=red>"
-							+ result.delNums + "</font>条数据！");
+					$.messager.alert("系统提示", "删除成功！");
 					$('#wu-datagrid-2').datagrid('reload');
 				} else {
 					$.messager.alert("系统提示", result.errorMsg);
@@ -91,8 +89,7 @@ function closeNoticesDialog() {
  */
 function resetValue() {
 	$('#title').val("");
-	$('#PS_Name').val("");
-	$('#Ext2').val("");
+	$('#content').val("");
 }
 /**
  * Name 打开修改窗口

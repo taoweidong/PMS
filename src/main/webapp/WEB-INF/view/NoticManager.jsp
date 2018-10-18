@@ -19,11 +19,12 @@
 			</div>
 			<div class="wu-toolbar-search">
 				<label>更新日期：</label> <input class="easyui-datebox" id="startDate" name="startDate" style="width: 100px" size="10" editable="false"> -> <input class="easyui-datebox" id="endDate" name="endDate" style="width: 100px" size="10" editable="false">
-				<!-- 	<label>添加人：</label>
-				<input class="easyui-combobox" id="DEP_LEADER" name="DEP_LEADER"
-					data-options="panelHeight:'auto',editable:false,valueField:'EMP_NO',textField:'EMP_NAME',url:'EmployeeComboList'" />
- 				-->
-				<label>标题：</label> <input id="s_NOT_TITLE" name="s_NOT_TITLE" class="wu-text" style="width: 100px;"> <label>发布人：</label> <input id="s_ADMIN_NAME" name="s_ADMIN_NAME" class="wu-text" style="width: 100px;"> <a href="javascript:searchNotices()" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
+				<label>发布人：</label>
+				<input class="easyui-combobox" id="s_DEP_LEADER" name="s_DEP_LEADER"
+					data-options="panelHeight:'auto',editable:false,valueField:'EMP_NO',textField:'EMP_NAME',url:'comboUser'"  />
+ 			
+				<label>标题：</label> <input id="s_NOT_TITLE" name="s_NOT_TITLE" class="wu-text" style="width: 100px;"> 
+				 <a href="javascript:searchNotices()" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
 			</div>
 		</div>
 		<!-- End of toolbar -->
@@ -36,7 +37,7 @@
 					<th field="content" width="100" align="center">内容</th>
 					<th field="date" width="80" align="center">更新日期</th>
 					<th field="author" width="100" hidden="true" align="center">发布人ID</th>
-					<th field="ADMIN_NAME" width="100" align="center">发布人</th>
+					<th field="authorName" width="100" align="center">发布人</th>
 					<th field="EXT1" width="100" hidden="true" align="center">备注</th>
 					<th field="EXT2" width="100" hidden="true" align="center">备注3</th>
 					<th field="EXT3" width="100" hidden="true" align="center">备注3</th>

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.pms.entity.Employee;
@@ -100,25 +99,6 @@ public class EmployeeController {
 		returnData.addAll(result);
 
 		return returnData;
-
-	}
-
-	/**
-	 * 更新信息.
-	 * @param no
-	 * @return
-	 */
-	@ResponseBody
-	@RequestMapping(value = "/EmployeeSave", method = RequestMethod.POST)
-	public Map<String, Object> employeeSave(@RequestParam("no") String no) {
-
-		// Employee employee = new Employee();
-
-		Map<String, Object> result = Maps.newHashMap();
-
-		System.out.println(JSON.toJSONString(no));
-
-		return result;
 
 	}
 

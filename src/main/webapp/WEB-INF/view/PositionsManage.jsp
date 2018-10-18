@@ -35,9 +35,9 @@
 					<th field="depName" width="60" align="center">部门名称</th>
 					<th field="depLeader" width="60" align="center">部门领导</th>
 					<th field="content" width="90" align="center">岗位职责</th>
-					<th field="salary" width="90" align="center">岗位工资</th>
-					<th field="allowance" width="90" align="center">岗位津贴</th>
-					<th field="perquisites" width="90" align="center">特殊津贴</th>
+					<th field="salary" width="60" align="center">岗位工资</th>
+					<th field="allowance" width="60" align="center">岗位津贴</th>
+					<th field="perquisites" width="60" align="center">特殊津贴</th>
 					<th field="ext1" width="50" align="center">备注</th>
 					<th field="ext2" width="80" align="center">更新时间</th>
 					<th field="ext3" width="100" hidden="true" align="center">备注3</th>
@@ -50,7 +50,7 @@
 			<table>
 				<tr>
 					<td width="100" align="right">岗位ID</td>
-					<td><input type="text" readonly="readonly" name="id" id="id" class="easyui-validatebox" required="true" /></td>
+					<td><input type="text"  name="id" id="id" class="easyui-validatebox" required="true" /></td>
 					<td width="100" align="right">岗位名称</td>
 					<td><input type="text" name="name" id="name" class="easyui-validatebox" required="true" /></td>
 				</tr>
@@ -81,7 +81,8 @@
 		</form>
 	</div>
 	<div id="dia-buttons">
-		<a href="javascript:savePositions()" class="easyui-linkbutton" iconCls="icon-ok">保存</a> <a href="javascript:closeGradeDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
+		<a href="javascript:savePositions()" class="easyui-linkbutton" iconCls="icon-ok">保存</a> 
+		<a href="javascript:closeGradeDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
 </body>
 </html>

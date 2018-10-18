@@ -49,4 +49,6 @@ public interface EmployeeService {
 	 */
 	Employee selectEmployeeById(String no);
 
+	Map<String, Object> dicEmployee();
+
 }

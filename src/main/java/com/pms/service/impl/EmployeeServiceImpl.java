@@ -169,4 +169,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeMapper.selectByPrimaryKey(no);
 	}
 
+	@Override
+	public Map<String, Object> dicEmployee() {
+		Map<String, Object> param = Maps.newHashMap();
+		List<Employee> listEmployee = employeeMapper.selectAll();
+		for (Employee item : listEmployee) {
+			param.put(item.getNo(), item.getName());
+		}
+
+		return param;
+	}
+
 }

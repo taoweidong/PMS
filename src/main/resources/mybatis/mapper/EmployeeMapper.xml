@@ -24,9 +24,12 @@
 		ext1, ext2, ext3
 	</sql>
 	<select id="queryEmployeeAll" resultMap="BaseResultMap">
-		SELECT EMP_NO,EMP_PWD,EMP_NAME,
-		(CASE WHEN EMP_SEX = 'M' THEN '男' WHEN EMP_SEX = 'F' THEN '女' END ) AS EMP_SEX,
-		EMP_Birthday,(SELECT PS_Name FROM t_politicalstatus WHERE PS_TYPE =PS_ID ) AS PS_ID,
+		SELECT
+		EMP_NO,EMP_PWD,EMP_NAME,
+		(CASE WHEN EMP_SEX = 'M' THEN '男' WHEN EMP_SEX
+		= 'F' THEN '女' END ) AS EMP_SEX,
+		EMP_Birthday,(SELECT PS_Name FROM
+		t_politicalstatus WHERE PS_TYPE =PS_ID ) AS PS_ID,
 		EMP_Phone,EMP_Address,ext1,ext2,ext3 FROM t_employee
 	</select>
 </mapper>

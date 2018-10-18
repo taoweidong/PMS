@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Table(name = "t_notice")
 public class Notice {
@@ -35,10 +36,24 @@ public class Notice {
 	private String date;
 
 	/**
-	 * 作者
+	 * 发布人工号
 	 */
 	@Column(name = "NOT_AUTHOR")
 	private String author;
+	
+	/**
+	 * 发布人姓名
+	 */
+	@Transient
+	private String authorName;
+
+	public String getAuthorName() {
+		return authorName;
+	}
+
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
+	}
 
 	/**
 	 * 暂未使用

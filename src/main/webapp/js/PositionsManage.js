@@ -16,24 +16,22 @@ function deletePositions() {
 	}
 	var strIds = [];
 	for ( var i = 0; i < selectedRows.length; i++) {
-		strIds.push(selectedRows[i].POS_ID);
+		strIds.push(selectedRows[i].id);
 	}
 	var ids = strIds.join(",");
 	// alert(ids);
 	$.messager.confirm("系统提示", "您确定要删除这<font color=red>" + selectedRows.length
 			+ "</font>条数据吗？", function(r) {
 		if (r) {
-			$.post("PositionsServlet?method=DeletePositions", {
-				delIds : ids
+			$.post("deletePositions", {
+				ids : ids
 			}, function(result) {
 				if (result.success) {
-					$.messager.alert("系统提示", "您已经成功删除了<font color=red>"
-							+ result.delNums + "</font>条数据！");
+					$.messager.alert("系统提示", "删除成功！");
 					$('#wu-datagrid-2').datagrid('reload');
 				} else {
 					$.messager.alert("系统提示", '<font color="red">'
-							+ selectedRows[result.errorIndex].gradeName
-							+ '</font>' + result.errorMsg);
+							+ result.errorMsg + '</font>' );
 				}
 			}, "json");
 		}
@@ -42,7 +40,7 @@ function deletePositions() {
 
 function openPositionsAddDialog() {
 	$('#dlg').dialog('open').dialog("setTitle", "添加岗位信息");
-	url = "PositionsServlet?method=AddPositions";
+	url = "addPositions";
 }
 function openPositionsModifyDialog() {
 	var selectedRows = $('#wu-datagrid-2').datagrid('getSelections');
@@ -53,21 +51,21 @@ function openPositionsModifyDialog() {
 	var row = selectedRows[0];// 取得要编辑的那条记录
 	$('#dlg').dialog("open").dialog("setTitle", "编辑岗位信息");
 	$('#fm').form('load', row);// 把修改编辑的数据塞到表单中
-	url = "PositionsServlet?method=UpdatePositions&POS_ID=" + row.POS_ID;
+	url = "updatePositions";
 }
 function closeGradeDialog() {
 	$('#dlg').dialog("close");
 	resetValue();
 }
 function resetValue() {
-	$('#POS_ID').val("");
-	$('#POS_NAME').val("");
-	$('#DEP_LEADER').val("");
-	$('#POS_CONTENT').val("");
-	$('#POS_SALARY').val("");
-	$('#POS_ALLOWANCE').val("");
-	$('#POS_PERQUISITES').val("");
-	$('#EXT1').val("");
+	$('#id').val("");
+	$('#name').val("");
+	$('#depId').combobox('setValue', "");
+	$('#salary').val("");
+	$('#allowance').val("");
+	$('#perquisites').val("");
+	$('#content').val("");
+	$('#ext1').val("");
 }
 function savePositions() {
 	$('#fm').form("submit", {

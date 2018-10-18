@@ -51,10 +51,6 @@ public class AdminServiceImpl implements AdminService {
 		return admin;
 	}
 
-	/** Default constructor */
-	public AdminServiceImpl() {
-	}
-
 	@Override
 	public Map<String, Object> queryAdmin(Integer page, Integer rows, Administrator administrator) {
 		Map<String, Object> result = Maps.newHashMap();
@@ -219,6 +215,34 @@ public class AdminServiceImpl implements AdminService {
 		} else {
 			return ReturnData.fail("新增失败!");
 		}
+	}
+
+	@Override
+	public List<Map<String, Object>> comboAdmin() {
+		List<Map<String, Object>> resultMap = Lists.newArrayList();
+
+		List<Administrator> listEmployee = administratorMapper.selectAll();
+		for (Administrator item : listEmployee) {
+			Map<String, Object> param = Maps.newHashMap();
+			param.put("EMP_NO", item.getId());
+			param.put("EMP_NAME", item.getName());
+			resultMap.add(param);
+			param = null;
+		}
+
+		return resultMap;
+	}
+
+	@Override
+	public Map<String, Object> dicAdmin() {
+		Map<String, Object> param = Maps.newHashMap();
+
+		List<Administrator> listEmployee = administratorMapper.selectAll();
+		for (Administrator item : listEmployee) {
+			param.put(item.getId(), item.getName());
+		}
+
+		return param;
 	}
 
 }

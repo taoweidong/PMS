@@ -1,7 +1,11 @@
 package com.pms.controller;
 
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Maps;
+import com.pms.entity.Administrator;
+import com.pms.entity.Employee;
+import com.pms.entity.Notice;
+import com.pms.entity.ReturnData;
 import com.pms.service.NoticService;
+import com.pms.util.DateUtil;
+import com.pms.util.IDGenerator;
 
 @Controller
 public class NoticController {
@@ -36,13 +45,15 @@ public class NoticController {
 
 	@ResponseBody
 	@RequestMapping(value = "/queryNotice", method = RequestMethod.POST)
-	public Map<String, Object> queryPersionInfo(@RequestParam("page") Integer page,
-			@RequestParam("rows") Integer rows) {
+	public Map<String, Object> queryPersionInfo(
+			@RequestParam(value = "title", defaultValue = StringUtils.EMPTY) String title,
+			@RequestParam(value = "name", defaultValue = StringUtils.EMPTY) String name,
+			@RequestParam(value = "startDate", defaultValue = StringUtils.EMPTY) String startDate,
+			@RequestParam(value = "endDate", defaultValue = StringUtils.EMPTY) String endDate,
+			@RequestParam("page") Integer page, @RequestParam("rows") Integer rows) {
 
-		System.out.println("rows:" + rows + "   page:" + page);
-		Map<String, Object> result = noticService.queryNoticInfo(page, rows);
-
-		System.out.println(JSON.toJSONString(result));
+		Map<String, Object> result = noticService.queryNoticInfo(page, rows, title, name, startDate,
+				endDate);
 
 		return result;
 
@@ -56,13 +67,31 @@ public class NoticController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/updateNotice", method = RequestMethod.POST)
-	public Map<String, Object> updateNotice(@RequestParam("id") String id,
-			@RequestParam("title") String title, @RequestParam("content") String content) {
+	public ReturnData updateNotice(@RequestParam("id") String id,
+			@RequestParam("title") String title, @RequestParam("content") String content,
+			HttpServletRequest request) {
 
-		Map<String, Object> result = Maps.newHashMap();
+		Notice notice = noticService.selectNoticeById(StringUtils.trimToEmpty(id));
+		try {
+			notice.setId(StringUtils.trimToEmpty(id));
+			notice.setTitle(StringUtils.trimToEmpty(title));
+			notice.setContent(StringUtils.trimToEmpty(content));
+			notice.setDate(DateUtil.getCurrentDateStr());
+			// 设置发布人工号，从session中获取数据
+			Object user = request.getSession().getAttribute("user");
+			if (user instanceof Administrator) {
+				notice.setAuthor(((Administrator) user).getId());
+			} else if (user instanceof Employee) {
+				notice.setAuthor(((Employee) user).getNo());
+			}
 
-		System.out.println(title + "===" + content);
-		return result;
+			return noticService.updateNotice(notice);
+
+		} catch (Exception e) {
+
+			LOGGER.error("更新发生异常", e);
+			return ReturnData.fail("更新发生异常");
+		}
 	}
 
 	/**
@@ -74,16 +103,49 @@ public class NoticController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/addNotice", method = RequestMethod.POST)
-	public Map<String, Object> addNotice(@RequestParam("title") String title,
-			@RequestParam("content") String content) {
+	public ReturnData addNotice(@RequestParam("title") String title,
+			@RequestParam("content") String content, HttpServletRequest request) {
 
-		Map<String, Object> result = Maps.newHashMap();
+		Notice notice = new Notice();
+		try {
+			notice.setId(IDGenerator.getInstance().getID() + "");
+			notice.setTitle(StringUtils.trimToEmpty(title));
+			notice.setContent(StringUtils.trimToEmpty(content));
+			notice.setDate(DateUtil.getCurrentDateStr());
+			// 设置发布人工号，从session中获取数据
+			Object user = request.getSession().getAttribute("user");
+			if (user instanceof Administrator) {
+				notice.setAuthor(((Administrator) user).getId());
+			} else if (user instanceof Employee) {
+				notice.setAuthor(((Employee) user).getNo());
+			}
 
-		System.out.println(title + "===" + content);
-		return result;
+			return noticService.addNotice(notice);
+
+		} catch (Exception e) {
+
+			LOGGER.error("更新发生异常", e);
+			return ReturnData.fail("更新发生异常");
+		}
 	}
 
-	/** Default constructor */
-	public NoticController() {
+	@ResponseBody
+	@RequestMapping(value = "/deleteNotice", method = RequestMethod.POST)
+	public ReturnData deleteNotice(@RequestParam("ids") String ids) {
+
+		return noticService.deleteNotice(ids);
+
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/comboUser", method = RequestMethod.POST)
+	public List<Map<String, Object>> comboUser() {
+		List<Map<String, Object>> returnData = noticService.comboUser();
+
+		System.out.println(JSON.toJSONString(returnData));
+
+		return returnData;
+
+	}
+
 }
