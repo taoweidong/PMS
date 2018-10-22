@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.pms.entity.Department;
@@ -54,8 +53,6 @@ public class DepartmentController {
 		paramMap.put("depNo", StringUtils.trimToEmpty(depNo));
 
 		Map<String, Object> result = departmentService.queryDepartment(page, rows, paramMap);
-
-		System.out.println(JSON.toJSONString(result));
 
 		return result;
 

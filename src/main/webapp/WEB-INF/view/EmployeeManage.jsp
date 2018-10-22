@@ -6,8 +6,19 @@
 <head>
 
 <title>职工信息管理</title>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/EmployeeManage.js"></script>
 
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/EmployeeManage.js"></script>
+<script type="text/javascript">
+	var buttons = $.extend([], $.fn.datebox.defaults.buttons);
+	buttons.splice(1, 0, {
+		text : '清空',
+		handler : function(target) {
+			$(target).combo("setValue", "").combo("setText", ""); // 设置空值
+			$(target).combo("hidePanel"); // 点击清空按钮之后关闭日期选择面板
+		}
+	});
+	$.fn.datebox.defaults.buttons = buttons;
+</script>
 </head>
 <body>
 	<table id="dg" class="easyui-datagrid" fitColumns="true" pagination="true" fit="true" pageSize="10" rownumbers="true" url="queryEmployee" toolbar="#tb">
@@ -29,7 +40,6 @@
 			</tr>
 		</thead>
 	</table>
-
 	<div id="tb">
 		<div>
 			<a href="javascript:openStudentAddDialog()" class="easyui-linkbutton" iconCls="icon-add" plain="true">添加</a> <a href="javascript:openStudentModifyDialog()" class="easyui-linkbutton" iconCls="icon-edit" plain="true">修改</a> <a href="javascript:deleteStudent()" class="easyui-linkbutton" iconCls="icon-remove" plain="true">删除</a>
@@ -85,16 +95,6 @@
 	<div id="dia-buttons">
 		<a href="javascript:saveStudent()" class="easyui-linkbutton" iconCls="icon-ok">保存</a> <a href="javascript:closeStudentDialog()" class="easyui-linkbutton" iconCls="icon-cancel">关闭</a>
 	</div>
-	<script type="text/javascript">
-		var buttons = $.extend([], $.fn.datebox.defaults.buttons);
-		buttons.splice(1, 0, {
-			text : '清空',
-			handler : function(target) {
-				$(target).combo("setValue", "").combo("setText", ""); // 设置空值
-				$(target).combo("hidePanel"); // 点击清空按钮之后关闭日期选择面板
-			}
-		});
-		$.fn.datebox.defaults.buttons = buttons;
-	</script>
+
 </body>
 </html>

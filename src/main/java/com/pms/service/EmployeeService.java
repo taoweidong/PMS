@@ -51,4 +51,6 @@ public interface EmployeeService {
 
 	Map<String, Object> dicEmployee();
 
+	boolean findPoliticalstatusByType(String id);
+
 }

@@ -98,7 +98,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	 */
 	@Override
 	public ReturnData addDepartment(Department department) {
-		// TODO Auto-generated method stub
+
 		int result = departmentMapper.insert(department);
 		if (result > 0) {
 			return ReturnData.success();

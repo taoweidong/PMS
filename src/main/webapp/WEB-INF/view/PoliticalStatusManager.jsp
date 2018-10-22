@@ -5,7 +5,7 @@
 <html>
 <head>
 
-<title>公告管理</title>
+<title>政治面貌管理</title>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/PoliticalStatusManager.js"></script>
 
@@ -41,16 +41,12 @@
 		<form id="wu-form-2" method="post">
 			<table>
 				<tr>
-					<td width="80" align="right">类型标识:</td>
-					<td><input type="text" name="PS_TYPE" id="PS_TYPE" required="true" class="easyui-validatebox" class="wu-text" /></td>
-				</tr>
-				<tr>
 					<td width="80" align="right">类型名称:</td>
-					<td><input type="text" name="PS_Name" id="PS_Name" required="true" class="easyui-validatebox" class="wu-text" /></td>
+					<td><input type="text" name="name" id="name" required="true" class="easyui-validatebox" class="wu-text" /></td>
 				</tr>
 				<tr>
 					<td width="80" align="right">备注:</td>
-					<td><textarea name="Ext2" id="Ext2" rows="6" class="wu-textarea" style="width: 260px"></textarea></td>
+					<td><textarea name="ext2" id="ext2" rows="6" class="wu-textarea" style="width: 260px"></textarea></td>
 				</tr>
 			</table>
 		</form>

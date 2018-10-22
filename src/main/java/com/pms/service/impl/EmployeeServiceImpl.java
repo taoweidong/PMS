@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
@@ -44,10 +43,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 			Employee record = new Employee();
 			record.setNo(userName);
 			record.setPwd(password);
-
 			employee = employeeMapper.selectOne(record);
 
-			System.out.println(JSON.toJSONString(employee));
 		} catch (Exception e) {
 			LOGGER.error("checkEmployee exception", e);
 		}
@@ -148,7 +145,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 */
 	@Override
 	public ReturnData addEmployee(Employee employee) {
-
 		// 检查该用户是否已经存在
 		Employee flag = employeeMapper.selectByPrimaryKey(employee.getNo());
 		if (flag != null) {
@@ -165,7 +161,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public Employee selectEmployeeById(String no) {
-		// TODO Auto-generated method stub
 		return employeeMapper.selectByPrimaryKey(no);
 	}
 
@@ -178,6 +173,28 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 
 		return param;
+	}
+
+	@Override
+	public boolean findPoliticalstatusByType(String id) {
+		List<Employee> listData = Lists.newArrayList();
+		try {
+
+			Employee record = new Employee();
+			record.setPsId(id);
+			listData = employeeMapper.select(record);
+
+			if (listData != null && listData.size() > 0) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (Exception e) {
+			LOGGER.error("checkEmployee exception", e);
+			return true;
+		}
+
 	}
 
 }

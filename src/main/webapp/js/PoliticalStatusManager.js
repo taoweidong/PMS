@@ -5,8 +5,8 @@ var url;
 function searchPoliticalStatus() {
 	console.log($('#s_PS_TYPE').val());
 	$('#wu-datagrid-2').datagrid('load', {
-		PS_TYPE : $('#s_PS_TYPE').val(),
-		PS_Name : $('#s_PS_Name').val()
+		type : $('#s_PS_TYPE').val(),
+		name : $('#s_PS_Name').val()
 	});
 }
 // 保存修改的和新增的员工信息
@@ -20,15 +20,14 @@ function savePoliticalStatus() {
 			// 把JSON对象转为javascript对象
 			var result = eval('(' + result + ')');
 			console.log("返回的JSON对象" + result);
-			if (result.errorMsg) {
-				$.messager.alert("系统提示", result.errorMsg);
-				return;
-			} else {
+			if (result.success) {
 				$.messager.alert("系统提示", "保存成功");
 				resetValue();
 				$('#wu-dialog-2').dialog("close");// 关闭dialog
 				$('#wu-datagrid-2').datagrid("reload");// 重新加载表格
-
+			} else {
+				$.messager.alert("系统提示", result.errorMsg);
+				return;
 			}
 		}
 	});
@@ -44,20 +43,19 @@ function deletePoliticalStatust() {
 		return;
 	}
 	var strIds = [];
-	for ( var i = 0; i < selectedRows.length; i++) {
-		strIds.push(selectedRows[i].PS_TYPE);
+	for (var i = 0; i < selectedRows.length; i++) {
+		strIds.push(selectedRows[i].type);
 	}
 	var ids = strIds.join(",");
 	$.messager.confirm("系统提示", "您确定要删除这<font color=red>" + selectedRows.length
 			+ "</font>条数据吗？", function(r) {
 		if (r) {
-			$.post("PoliticalStatusServlet?method=DeletePoliticalStatus", {
-				delIds : ids
+			$.post("deletePoliticalStatus", {
+				ids : ids
 			}, function(result) {
 				// 此处已经指定以JSON运行响应，无需再进行转换
 				if (result.success) {
-					$.messager.alert("系统提示", "您已经成功删除了<font color=red>"
-							+ result.delNums + "</font>条数据！");
+					$.messager.alert("系统提示", "刪除成功！");
 					$('#wu-datagrid-2').datagrid('reload');
 				} else {
 					$.messager.alert("系统提示", result.errorMsg);
@@ -73,7 +71,7 @@ function deletePoliticalStatust() {
 function openPoliticalStatustAddDialog() {
 	$('#wu-form-2').form('clear');
 	$('#wu-dialog-2').dialog('open').dialog("setTitle", "添加政治面貌");
-	url = "PoliticalStatusServlet?method=AddPoliticalStatus";
+	url = "addPoliticalStatus";
 
 }
 /**
@@ -88,9 +86,9 @@ function closePoliticalStatusDialog() {
  * 功能：清空表单
  */
 function resetValue() {
-	$('#PS_TYPE').val("");
-	$('#PS_Name').val("");
-	$('#Ext2').val("");
+	$('#type').val("");
+	$('#name').val("");
+	$('#ext2').val("");
 }
 /**
  * Name 打开修改窗口
@@ -110,7 +108,6 @@ function openPoliticalStatustModifyDialog() {
 	$('#wu-dialog-2').dialog("open").dialog("setTitle", "编辑信息");
 	// 把选中行的数据加载到弹出的表单信息中 即把修改编辑的数据塞到表单中
 	$('#wu-form-2').form('load', row);
-	url = "PoliticalStatusServlet?method=UpdatePoliticalStatus&PS_TYPE="
-			+ row.PS_TYPE;
+	url = "updatePoliticalStatus?type=" + row.type;
 
 }
