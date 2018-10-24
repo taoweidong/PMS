@@ -56,6 +56,8 @@
 			</div>
 			<div title="岗位管理" data-options="iconCls:'icon-report-key'" style="padding: 10px">
 				<a href="javascript:openTab('岗位信息管理','positionsManage','icon-report-disk')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-report-disk'" style="width: 150px;">岗位管理</a>
+				<a href="javascript:openTab('职位管理','applyInduction','icon-report-disk')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-report-disk'" style="width: 150px;">职位管理</a>
+				<a href="javascript:openTab('入职审批管理','applyInductionApprove','icon-report-disk')" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-report-disk'" style="width: 150px;">入职审批管理</a>
 			</div>
 			<div title="职工管理" data-options="iconCls:'icon-user-group'" style="padding: 10px">
 

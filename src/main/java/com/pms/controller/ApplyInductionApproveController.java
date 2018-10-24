@@ -19,7 +19,4 @@ public class ApplyInductionApproveController {
 		return "ApplyInductionApprove";
 	}
 
-	/** Default constructor */
-	public ApplyInductionApproveController() {
-	}
 }

@@ -39,7 +39,7 @@
 					<th field="id" hidden="true" width="80" align="center">ID</th>
 					<th field="empNo" width="90" align="center">员工工号</th>
 					<th field="EMP_NAME" width="50" align="center">员工姓名</th>
-					<th field="posId" hidden="true" width="80" align="center">岗位编号</th>
+					<th field="posId" width="80" align="center">岗位编号</th>
 					<th field="POS_NAME" width="100" align="center">岗位名称</th>
 					<th field="IND_DATE" width="100" align="center">申请日期</th>
 					<th field="IND_STATE" hidden="true" width="100" align="center">申请状态</th>

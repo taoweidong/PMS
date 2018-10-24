@@ -43,8 +43,4 @@ public class ApplyInductionController {
 		return result;
 
 	}
-
-	/** Default constructor */
-	public ApplyInductionController() {
-	}
 }
