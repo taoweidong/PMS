@@ -19,7 +19,8 @@
 
 			</div>
 			<div class="wu-toolbar-search">
-				<label>类型标识：</label> <input name="s_PS_TYPE" id="s_PS_TYPE" class="wu-text" style="width: 100px"> <label>类型名称：</label> <input name="s_PS_Name" id="s_PS_Name" class="wu-text" style="width: 100px"> <a href="javascript:searchPoliticalStatus()" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
+				<label>类型标识：</label> 
+				<input name="s_PS_TYPE" id="s_PS_TYPE" class="wu-text" style="width: 100px"> <label>类型名称：</label> <input name="s_PS_Name" id="s_PS_Name" class="wu-text" style="width: 100px"> <a href="javascript:searchPoliticalStatus()" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
 			</div>
 		</div>
 		<!-- End of toolbar -->

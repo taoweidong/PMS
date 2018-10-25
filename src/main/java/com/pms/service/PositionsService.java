@@ -1,5 +1,6 @@
 package com.pms.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.pms.entity.Positionsinfo;
@@ -53,5 +54,7 @@ public interface PositionsService {
 	 * @return
 	 */
 	ReturnData deletePositionsinfo(String ids);
+
+	List<Map<String, Object>> cboPositionsinfoList();
 
 }

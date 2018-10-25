@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Table(name = "t_inductioninfo")
 public class Inductioninfo {
@@ -23,10 +24,38 @@ public class Inductioninfo {
 	private String empNo;
 
 	/**
+	 * 领导姓名
+	 */
+	@Transient
+	private String empName;
+
+	public String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+
+	/**
 	 * 职位ID
 	 */
 	@Column(name = "POS_ID")
 	private String posId;
+
+	/**
+	 * 职位名称
+	 */
+	@Transient
+	private String posName;
+
+	public String getPosName() {
+		return posName;
+	}
+
+	public void setPosName(String posName) {
+		this.posName = posName;
+	}
 
 	/**
 	 * 申请时间
@@ -41,6 +70,20 @@ public class Inductioninfo {
 	private String state;
 
 	/**
+	 * 状态描述
+	 */
+	@Transient
+	private String stateDesc;
+
+	public String getStateDesc() {
+		return stateDesc;
+	}
+
+	public void setStateDesc(String stateDesc) {
+		this.stateDesc = stateDesc;
+	}
+
+	/**
 	 * 离职时间
 	 */
 	@Column(name = "IND_ENDDATE")
@@ -53,6 +96,20 @@ public class Inductioninfo {
 	private String ext1;
 
 	/**
+	 * 申请状态描述
+	 */
+	@Transient
+	private String ext1Desc;
+
+	public String getExt1Desc() {
+		return ext1Desc;
+	}
+
+	public void setExt1Desc(String ext1Desc) {
+		this.ext1Desc = ext1Desc;
+	}
+
+	/**
 	 * 审批日期
 	 */
 	@Column(name = "EXT2")
@@ -63,6 +120,20 @@ public class Inductioninfo {
 	 */
 	@Column(name = "EXT3")
 	private String ext3;
+
+	/**
+	 * 申请类型描述
+	 */
+	@Transient
+	private String ext3Desc;
+
+	public String getExt3Desc() {
+		return ext3Desc;
+	}
+
+	public void setExt3Desc(String ext3Desc) {
+		this.ext3Desc = ext3Desc;
+	}
 
 	/**
 	 * 离职原因

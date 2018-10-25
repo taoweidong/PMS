@@ -50,7 +50,7 @@ public class PositionsServiceImpl implements PositionsService {
 
 	@Autowired
 	private EmployeeService employeeService;
-	
+
 	@Autowired
 	private ApplyInductionService applyInductionService;
 
@@ -166,10 +166,10 @@ public class PositionsServiceImpl implements PositionsService {
 		for (String id : list) {
 
 			// 检查岗位是否在使用中
-			 if (applyInductionService.findInductionByPosId(id)) {
-				 fail.append("[" + id + "]正在使用，无法删除;");
-				 continue;
-			 }
+			if (applyInductionService.findInductionByPosId(id)) {
+				fail.append("[" + id + "]正在使用，无法删除;");
+				continue;
+			}
 			Positionsinfo admin = new Positionsinfo();
 			admin.setId(id);
 			int returnDate = positionsinfoMapper.delete(admin);
@@ -183,6 +183,22 @@ public class PositionsServiceImpl implements PositionsService {
 		} else {
 			return ReturnData.fail(StringUtils.removeEnd(fail.toString(), ";"));
 		}
+	}
+
+	@Override
+	public List<Map<String, Object>> cboPositionsinfoList() {
+		List<Map<String, Object>> resultMap = Lists.newArrayList();
+
+		List<Positionsinfo> listEmployee = positionsinfoMapper.selectAll();
+		for (Positionsinfo item : listEmployee) {
+			Map<String, Object> param = Maps.newHashMap();
+			param.put("id", item.getId());
+			param.put("name", item.getName());
+			resultMap.add(param);
+			param = null;
+		}
+
+		return resultMap;
 	}
 
 }

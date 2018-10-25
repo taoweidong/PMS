@@ -4,10 +4,10 @@ var url;
  */
 function searchApplyInduction() {
 	$('#wu-datagrid-2').datagrid('load', {
-		POS_NAME : $('#s_POS_NAME').val(),
+		posName : $('#s_POS_NAME').combobox('getValue'),
 		startDate : $('#startDate').datebox('getValue'),
 		endDate : $('#endDate').datebox('getValue'),
-		approveState : $('#s_approveState').combobox('getValue'),
+		approveState : $('#s_approveState').combobox('getValue')
 
 	});
 }
@@ -57,7 +57,7 @@ function deleteInduction() {
 		return;
 	}
 	var strIds = [];
-	for ( var i = 0; i < selectedRows.length; i++) {
+	for (var i = 0; i < selectedRows.length; i++) {
 		strIds.push(selectedRows[i].IND_ID);
 	}
 	var ids = strIds.join(",");
@@ -89,7 +89,7 @@ function ApproveInduction() {
 		return;
 	}
 	var strIds = [];
-	for ( var i = 0; i < selectedRows.length; i++) {
+	for (var i = 0; i < selectedRows.length; i++) {
 		strIds.push(selectedRows[i].IND_ID);
 	}
 	var ids = strIds.join(",");

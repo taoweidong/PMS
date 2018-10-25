@@ -1,6 +1,7 @@
 package com.pms.controller;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.pms.entity.Positionsinfo;
 import com.pms.entity.ReturnData;
 import com.pms.service.PositionsService;
@@ -135,4 +138,28 @@ public class PositionsController {
 		return result;
 
 	}
+
+	/**
+	 * 岗位信息下拉框.
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/cboPositionsinfoList", method = RequestMethod.POST)
+	public List<Map<String, Object>> cboPositionsinfoList() {
+		List<Map<String, Object>> returnData = Lists.newArrayList();
+
+		Map<String, Object> param = Maps.newHashMap();
+		param.put("id", "");
+		param.put("name", "请选择...");
+
+		returnData.add(param);
+
+		List<Map<String, Object>> result = positionsService.cboPositionsinfoList();
+
+		returnData.addAll(result);
+
+		return returnData;
+
+	}
+
 }

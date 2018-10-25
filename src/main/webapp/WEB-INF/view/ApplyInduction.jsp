@@ -27,7 +27,7 @@
 					<option value="00">申请中</option>
 					<option value="11">审批已通过</option>
 					<option value="22">审批未通过</option>
-				</select> <label>岗位名称：</label> <input id="s_POS_NAME" name="s_POS_NAME" class="wu-text" style="width: 100px;"> <a href="javascript:searchApplyInduction()" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
+				</select> <label>岗位名称：</label> <input class="easyui-combobox" id="s_POS_NAME" name="s_POS_NAME" data-options="panelHeight:'auto',editable:false,valueField:'id',textField:'name',url:'cboPositionsinfoList'" /> <a href="javascript:searchApplyInduction()" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
 			</div>
 		</div>
 
@@ -38,16 +38,16 @@
 					<th field="cb" checkbox="true"></th>
 					<th field="id" hidden="true" width="80" align="center">ID</th>
 					<th field="empNo" width="90" align="center">员工工号</th>
-					<th field="EMP_NAME" width="50" align="center">员工姓名</th>
-					<th field="posId" width="80" align="center">岗位编号</th>
-					<th field="POS_NAME" width="100" align="center">岗位名称</th>
-					<th field="IND_DATE" width="100" align="center">申请日期</th>
-					<th field="IND_STATE" hidden="true" width="100" align="center">申请状态</th>
-					<th field="typeName" width="100" align="center">申请类别</th>
+					<th field="empName" width="50" align="center">员工姓名</th>
+					<th field="posId" width="80" hidden="true" align="center">岗位编号</th>
+					<th field="posName" width="100" align="center">岗位名称</th>
+					<th field="date" width="100" align="center">申请日期</th>
+					<th field="ext3Desc" width="100" align="center">申请类别</th>
 					<th field="ext3" width="100" hidden="true" align="center">申请类别code</th>
-					<th field="state" width="100" align="center">状态</th>
+					<th field="state" width="100" hidden="true" align="center">状态code</th>
+					<th field="stateDesc" width="100" align="center">状态</th>
 					<th field="ext1" width="100" hidden="true" align="center">审批状态</th>
-					<th field="approveName" width="100" align="center">审批状态</th>
+					<th field="ext1Desc" width="100" align="center">审批状态</th>
 					<th field="ext2" width="100" align="center">审批日期</th>
 				</tr>
 			</thead>
@@ -59,7 +59,7 @@
 			<table>
 				<tr>
 					<td width="120" align="right">申请岗位:</td>
-					<td><input class="easyui-combobox" id="POS_ID" name="POS_ID" style="width: 130px" data-options="panelHeight:'auto',editable:false,valueField:'POS_ID',textField:'POS_NAME',url:'PositionsServlet?method=PositionsComboboxInfo'" /> </select></td>
+					<td><input class="easyui-combobox" id="POS_ID" name="POS_ID" style="width: 130px" data-options="panelHeight:'auto',editable:false,valueField:'id',textField:'name',url:'cboPositionsinfoList'" /> </select></td>
 					<td></td>
 					<td width="120" align="right">申请类别:</td>
 					<td><select class="easyui-combobox" style="width: 130px" name="EXT3" id="EXT3" editable="false" panelHeight="auto">
