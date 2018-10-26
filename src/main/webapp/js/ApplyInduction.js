@@ -14,34 +14,31 @@ function searchApplyInduction() {
 
 // 保存修改的和新增申请信息
 function InductionSave() {
-	// alert(url);
 	$('#wu-form-2').form("submit", {
 		url : url,
 		onSubmit : function() {
-			if ($('#POS_ID').combobox("getValue") == "") {
+			if ($('#posId').combobox("getValue") == "") {
 				$.messager.alert("系统提示", "请选择申请岗位");
 				return false;
 			}
-			if ($('#EXT3').combobox("getValue") == "") {
+			if ($('#ext3').combobox("getValue") == "") {
 				$.messager.alert("系统提示", "请选择申请类别");
 				return false;
 			}
 			return $(this).form("validate");
 		},
 		success : function(result) {
-
 			// 把JSON对象转为javascript对象
 			var result = eval('(' + result + ')');
 			console.log("返回的JSON对象" + result);
-			if (result.errorMsg) {
-				$.messager.alert("系统提示", result.errorMsg);
-				return;
-			} else {
+			if (result.success) {
 				$.messager.alert("系统提示", "保存成功");
 				resetValue();
 				$('#wu-dialog-2').dialog("close");// 关闭dialog
 				$('#wu-datagrid-2').datagrid("reload");// 重新加载表格
-
+			} else {
+				$.messager.alert("系统提示", result.errorMsg);
+				return;
 			}
 		}
 	});
@@ -58,19 +55,18 @@ function deleteInduction() {
 	}
 	var strIds = [];
 	for (var i = 0; i < selectedRows.length; i++) {
-		strIds.push(selectedRows[i].IND_ID);
+		strIds.push(selectedRows[i].id);
 	}
 	var ids = strIds.join(",");
 	$.messager.confirm("系统提示", "您确定要删除这<font color=red>" + selectedRows.length
 			+ "</font>条数据吗？", function(r) {
 		if (r) {
-			$.post("ApplyInductionServlet?method=DeleteUserApplyInduction", {
-				delIds : ids
+			$.post("deleteUserApplyInduction", {
+				ids : ids
 			}, function(result) {
 				// 此处已经指定以JSON运行响应，无需再进行转换
 				if (result.success) {
-					$.messager.alert("系统提示", "您已经成功删除了<font color=red>"
-							+ result.delNums + "</font>条数据！");
+					$.messager.alert("系统提示", "删除成功！");
 					$('#wu-datagrid-2').datagrid('reload');
 				} else {
 					$.messager.alert("系统提示", result.errorMsg);
@@ -90,19 +86,18 @@ function ApproveInduction() {
 	}
 	var strIds = [];
 	for (var i = 0; i < selectedRows.length; i++) {
-		strIds.push(selectedRows[i].IND_ID);
+		strIds.push(selectedRows[i].id);
 	}
 	var ids = strIds.join(",");
 	$.messager.confirm("系统提示", "您确定要提交这<font color=red>" + selectedRows.length
 			+ "</font>条数据吗？", function(r) {
 		if (r) {
-			$.post("ApplyInductionServlet?method=UserApprove", {
-				delIds : ids
+			$.post("addUserApprove", {
+				ids : ids
 			}, function(result) {
 				// 此处已经指定以JSON运行响应，无需再进行转换
 				if (result.success) {
-					$.messager.alert("系统提示", "您已经成功提交了<font color=red>"
-							+ result.delNums + "</font>条申请！");
+					$.messager.alert("系统提示", "提交成功！");
 					$('#wu-datagrid-2').datagrid('reload');
 				} else {
 					$.messager.alert("系统提示", result.errorMsg);
@@ -118,7 +113,7 @@ function ApproveInduction() {
 function openApproveInductionDialog() {
 	$('#wu-form-2').form('clear');
 	$('#wu-dialog-2').dialog('open').dialog("setTitle", "职位申请");
-	url = "ApplyInductionServlet?method=AddUserApplyInduction";
+	url = "addUserApplyInduction";
 
 }
 /**
@@ -133,9 +128,8 @@ function closeNoticesDialog() {
  * 功能：清空表单
  */
 function resetValue() {
-	$('#PS_TYPE').val("");
-	$('#PS_Name').val("");
-	$('#Ext2').val("");
+	$('#posId').combobox('setValue', "");
+	$('#ext3').combobox('setValue', "");
 }
 /**
  * Name 打开修改窗口
@@ -155,7 +149,6 @@ function openInductionModifyDialog() {
 	$('#wu-dialog-2').dialog("open").dialog("setTitle", "编辑信息");
 	// 把选中行的数据加载到弹出的表单信息中 即把修改编辑的数据塞到表单中
 	$('#wu-form-2').form('load', row);
-	url = "ApplyInductionServlet?method=UpdateUserApplyApprove&IND_ID="
-			+ row.IND_ID;
+	url = "updateUserApplyApprove?id=" + row.id;
 
 }

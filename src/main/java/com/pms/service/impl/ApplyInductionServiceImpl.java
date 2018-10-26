@@ -16,11 +16,15 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.pms.entity.Administrator;
 import com.pms.entity.Employee;
 import com.pms.entity.Inductioninfo;
 import com.pms.entity.Positionsinfo;
+import com.pms.entity.ReturnData;
 import com.pms.mapper.InductioninfoMapper;
+import com.pms.service.AdminService;
 import com.pms.service.ApplyInductionService;
 import com.pms.service.EmployeeService;
 import com.pms.service.PositionsService;
@@ -41,6 +45,9 @@ public class ApplyInductionServiceImpl implements ApplyInductionService {
 
 	@Autowired
 	private EmployeeService employeeService;
+
+	@Autowired
+	private AdminService adminService;
 
 	@Override
 	public Map<String, Object> queryApplyInduction(Integer page, Integer rows, String posName,
@@ -89,7 +96,14 @@ public class ApplyInductionServiceImpl implements ApplyInductionService {
 
 			// 设置领导名称
 			Employee employee = employeeService.selectEmployeeById(x.getEmpNo());
-			x.setEmpName(employee.getName());
+			if (employee != null) {
+				x.setEmpName(employee.getName());
+			} else {
+				Administrator admin = adminService.selectAdminById(x.getEmpNo());
+				if (admin != null) {
+					x.setEmpName(admin.getName());
+				}
+			}
 
 			if (StringUtils.equals(x.getState(), "0")) {
 				x.setStateDesc("在职");
@@ -153,6 +167,78 @@ public class ApplyInductionServiceImpl implements ApplyInductionService {
 		}
 
 		return resultFlag;
+	}
+
+	@Override
+	public ReturnData deleteUserApplyInduction(String ids, String role) {
+		StringBuffer fail = new StringBuffer();
+
+		List<String> list = Lists.newArrayList(StringUtils.split(ids, ","));
+		for (String id : list) {
+			Inductioninfo department = inductioninfoMapper.selectByPrimaryKey(id);
+			if (StringUtils.equals(role, "user")
+					&& !StringUtils.equals("33", department.getExt1())) {
+				fail.append("[" + id + "]该状态不允许删除;");
+				continue;
+			}
+
+			int returnDate = inductioninfoMapper.delete(department);
+			if (returnDate <= 0) {
+				fail.append("[" + id + "]删除错误;");
+			}
+		}
+
+		if (StringUtils.isEmpty(fail.toString())) {
+			return ReturnData.success();
+		} else {
+			return ReturnData.fail(StringUtils.removeEnd(fail.toString(), ";"));
+		}
+	}
+
+	/**
+	 * 根据id查询信息
+	 */
+	@Override
+	public Inductioninfo findInductionById(String id) {
+		return inductioninfoMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public ReturnData addUserApplyInduction(Inductioninfo inductioninfo) {
+		// 新增前检查是否已经申请该类型的记录：职位+类型
+		Example example = new Example(Inductioninfo.class);
+		Example.Criteria criteria = example.createCriteria();
+		// 相等查询
+		criteria.andEqualTo("empNo", inductioninfo.getEmpNo());
+		criteria.andEqualTo("posId", inductioninfo.getPosId());
+		criteria.andEqualTo("ext3", inductioninfo.getExt3());
+		List<Inductioninfo> list = inductioninfoMapper.selectByExample(example);
+
+		if (list != null && list.size() > 0) {
+			return ReturnData.fail("该申请类型已经存在!");
+		}
+
+		int result = inductioninfoMapper.insert(inductioninfo);
+		if (result > 0) {
+			return ReturnData.success();
+		} else {
+			return ReturnData.fail("新增失败!");
+		}
+	}
+
+	@Override
+	public ReturnData updateUserApplyApprove(Inductioninfo inductioninfo) {
+		try {
+			int result = inductioninfoMapper.updateByPrimaryKey(inductioninfo);
+			if (result > 0) {
+				return ReturnData.success();
+			}
+		} catch (Exception e) {
+			LOGGER.error("更新异常!", e);
+			return ReturnData.fail("更新异常!");
+		}
+
+		return ReturnData.success();
 	}
 
 }

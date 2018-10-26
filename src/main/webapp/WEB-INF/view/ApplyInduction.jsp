@@ -59,10 +59,10 @@
 			<table>
 				<tr>
 					<td width="120" align="right">申请岗位:</td>
-					<td><input class="easyui-combobox" id="POS_ID" name="POS_ID" style="width: 130px" data-options="panelHeight:'auto',editable:false,valueField:'id',textField:'name',url:'cboPositionsinfoList'" /> </select></td>
+					<td><input class="easyui-combobox" id="posId" name="posId" style="width: 130px" data-options="panelHeight:'auto',editable:false,valueField:'id',textField:'name',url:'cboPositionsinfoList'" /> </select></td>
 					<td></td>
 					<td width="120" align="right">申请类别:</td>
-					<td><select class="easyui-combobox" style="width: 130px" name="EXT3" id="EXT3" editable="false" panelHeight="auto">
+					<td><select class="easyui-combobox" style="width: 130px" name="ext3" id="ext3" editable="false" panelHeight="auto">
 							<option value="">请选择...</option>
 							<option value="IN">入职申请</option>
 							<option value="OUT">离职申请</option>

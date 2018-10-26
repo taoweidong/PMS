@@ -70,9 +70,6 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public ReturnData deleteDepartment(String ids) {
-		// TODO Auto-generated method stub
-		System.out.println(ids);
-
 		StringBuffer fail = new StringBuffer();
 
 		List<String> list = Lists.newArrayList(StringUtils.split(ids, ","));
