@@ -210,7 +210,4 @@ public class EmployeeController {
 
 	}
 
-	/** Default constructor */
-	public EmployeeController() {
-	}
 }

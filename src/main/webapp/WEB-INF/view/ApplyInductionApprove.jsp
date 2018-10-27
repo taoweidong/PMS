@@ -20,16 +20,22 @@
 			</div>
 
 			<div class="wu-toolbar-search">
-				<label>申请日期：</label> <input class="easyui-datebox" id="startDate" name="startDate" style="width: 100px" size="10" editable="false"> -> <input class="easyui-datebox" id="endDate" name="endDate" style="width: 100px" size="10" editable="false"> <label>工号：</label> <input class="easyui-combobox" id="s_EMP_NO" name="s_EMP_NO" data-options="panelHeight:'auto',editable:false,valueField:'EMP_NO',textField:'EMP_NAME',url:'EmployeeComboList'" /> </select> <label>审批状态：</label> <select class="easyui-combobox" style="width: 100px" name="s_approveState" id="s_approveState" editable="false" panelHeight="auto">
+				<label>申请日期：</label> 
+				<input class="easyui-datebox" id="startDate" name="startDate" style="width: 100px" size="10" editable="false"> -> <input class="easyui-datebox" id="endDate" name="endDate" style="width: 100px" size="10" editable="false"> 
+				<label>工号：</label> 
+				<input class="easyui-combobox" id="s_EMP_NO" name="s_EMP_NO" data-options="panelHeight:'auto',editable:false,valueField:'id',textField:'name',url:'getUserNameComboList'" />
+				<label>审批状态：</label> <select class="easyui-combobox" style="width: 100px" name="s_approveState" id="s_approveState" editable="false" panelHeight="auto">
 					<option value="">请选择...</option>
 					<option value="00">申请中</option>
 					<option value="11">审批已通过</option>
 					<option value="22">审批未通过</option>
 				</select> <label>在职状态：</label> <select class="easyui-combobox" style="width: 100px" name="s_IND_STATE" id="s_IND_STATE" editable="false" panelHeight="auto">
 					<option value="">请选择...</option>
-					<option value="1">入职</option>
-					<option value="0">离职</option>
-				</select> <label>岗位名称：</label> <input id="s_POS_NAME" name="s_POS_NAME" class="wu-text" style="width: 100px;"> <a href="javascript:searchApplyInduction()" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
+					<option value="IN">入职</option>
+					<option value="OUT">离职</option>
+				</select> <label>岗位名称：</label> 
+				<input class="easyui-combobox" id="s_POS_NAME" name="s_POS_NAME" data-options="panelHeight:'auto',editable:false,valueField:'id',textField:'name',url:'cboPositionsinfoList'" />
+				<a href="javascript:searchApplyInduction()" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
 			</div>
 		</div>
 
@@ -61,7 +67,7 @@
 			<table>
 				<tr>
 					<td width="120" align="right">审批操作:</td>
-					<td><select class="easyui-combobox" style="width: 100px" name="EXT1" id="EXT1" editable="false" panelHeight="auto">
+					<td><select class="easyui-combobox" style="width: 100px" name="ext1" id="ext1" editable="false" panelHeight="auto">
 							<option value="">请选择...</option>
 							<option value="11">审批通过</option>
 							<option value="22">审批未通过</option>

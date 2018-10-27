@@ -27,7 +27,9 @@
 					<option value="00">申请中</option>
 					<option value="11">审批已通过</option>
 					<option value="22">审批未通过</option>
-				</select> <label>岗位名称：</label> <input class="easyui-combobox" id="s_POS_NAME" name="s_POS_NAME" data-options="panelHeight:'auto',editable:false,valueField:'id',textField:'name',url:'cboPositionsinfoList'" /> <a href="javascript:searchApplyInduction()" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
+				</select> <label>岗位名称：</label> 
+				<input class="easyui-combobox" id="s_POS_NAME" name="s_POS_NAME" data-options="panelHeight:'auto',editable:false,valueField:'id',textField:'name',url:'cboPositionsinfoList'" />
+				 <a href="javascript:searchApplyInduction()" class="easyui-linkbutton" iconCls="icon-search">开始检索</a>
 			</div>
 		</div>
 

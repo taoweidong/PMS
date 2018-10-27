@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50536
 File Encoding         : 65001
 
-Date: 2018-10-24 23:20:13
+Date: 2018-10-27 21:51:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -118,37 +118,27 @@ INSERT INTO `t_employee` VALUES ('9999999999', 'A9CBADCCCEAC5887D2518403369CD9AD
 DROP TABLE IF EXISTS `t_inductioninfo`;
 CREATE TABLE `t_inductioninfo` (
   `IND_ID` varchar(50) NOT NULL COMMENT '唯一标识',
-  `EMP_NO` varchar(10) DEFAULT NULL COMMENT '员工工号',
-  `POS_ID` varchar(10) DEFAULT NULL COMMENT '职位ID',
-  `IND_DATE` varchar(50) DEFAULT NULL COMMENT '申请时间',
+  `EMP_NO` varchar(100) DEFAULT NULL COMMENT '员工工号',
+  `POS_ID` varchar(100) DEFAULT NULL COMMENT '职位ID',
+  `IND_DATE` datetime DEFAULT NULL COMMENT '申请时间',
   `IND_STATE` varchar(2) DEFAULT NULL COMMENT '状态：0--在职；1--解聘',
-  `IND_ENDDATE` varchar(50) DEFAULT NULL COMMENT '离职时间',
+  `IND_ENDDATE` datetime DEFAULT NULL COMMENT '离职时间',
   `IND_Reasons` text COMMENT '离职原因',
   `EXT1` varchar(100) DEFAULT NULL COMMENT '申请状态：00 申请中;11 已审批通过;22 审批未通过;33 未提交【员工已增加但是未提交】可删除',
   `EXT2` varchar(100) DEFAULT NULL COMMENT '审批日期',
   `EXT3` varchar(200) DEFAULT NULL COMMENT '申请类型  IN 入职申请  OUT 离职申请',
   PRIMARY KEY (`IND_ID`),
   KEY `FK_Reference_2` (`EMP_NO`),
-  KEY `FK_Reference_3` (`POS_ID`),
-  CONSTRAINT `FK_Reference_2` FOREIGN KEY (`EMP_NO`) REFERENCES `t_employee` (`EMP_NO`),
-  CONSTRAINT `FK_Reference_3` FOREIGN KEY (`POS_ID`) REFERENCES `t_positionsinfo` (`POS_ID`)
+  KEY `FK_Reference_3` (`POS_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='员工的入职信息，职工的岗位信息等。';
 
 -- ----------------------------
 -- Records of t_inductioninfo
 -- ----------------------------
-INSERT INTO `t_inductioninfo` VALUES ('09EB68CB2EEB11E7BA1FF33F6331CA66', '1214210135', '01005', '2017-05-02 11:54:27', null, null, null, '33', null, 'IN');
-INSERT INTO `t_inductioninfo` VALUES ('12001', '1214210136', '01003', '2017-03-28', '0', '2017-03-28', '渎职导致离职', '22', '2017-04-17 13:17:56', 'OUT');
-INSERT INTO `t_inductioninfo` VALUES ('12002', '1214210135', '01001', '2017-03-28', '1', null, '在职', '22', '2017-04-17 13:17:42', 'IN');
-INSERT INTO `t_inductioninfo` VALUES ('1BCF4B862F2F11E7B9121CDE058071B6', '100112004', '01002', '2017-05-02 20:01:43', '1', null, null, '11', '2017-05-02 20:58:54', 'IN');
-INSERT INTO `t_inductioninfo` VALUES ('212F15272F2F11E7B9121CDE058071B6', '100112004', '01001', '2017-05-02 20:01:52', '0', null, null, '11', '2017-05-02 20:59:19', 'OUT');
-INSERT INTO `t_inductioninfo` VALUES ('2CA26253211711E780F03B2507B36D07', '1214210135', '01002', '2017-04-14', '1', null, null, '11', '2017-05-02 20:40:55', 'IN');
-INSERT INTO `t_inductioninfo` VALUES ('2DF4037D2F3111E7B9121CDE058071B6', '100112004', '01006', '2017-05-02 20:16:32', null, null, null, '33', null, 'OUT');
-INSERT INTO `t_inductioninfo` VALUES ('39233B2B2F3011E7B9121CDE058071B6', '100112004', '01003', '2017-05-02 20:09:42', '0', null, null, '11', '2017-05-02 20:31:15', 'IN');
-INSERT INTO `t_inductioninfo` VALUES ('7711504820DA11E780F03B2507B36D07', '1214210135', '01003', '2012-01-12', '1', null, '', '11', '2017-05-02 20:40:42', 'IN');
-INSERT INTO `t_inductioninfo` VALUES ('7C9184362F3011E7B9121CDE058071B6', '100112004', '01005', '2017-05-02 20:11:35', '1', null, null, '11', '2017-05-02 20:40:08', 'IN');
-INSERT INTO `t_inductioninfo` VALUES ('BC77B13A2F3011E7B9121CDE058071B6', '100112004', '01006', '2017-05-02 20:13:22', '0', null, null, '11', '2017-05-02 20:26:26', 'IN');
-INSERT INTO `t_inductioninfo` VALUES ('C0C3892E2F3011E7B9121CDE058071B6', '100112004', '01003', '2017-05-02 20:13:29', '0', null, null, '11', '2017-05-02 20:40:15', 'OUT');
+INSERT INTO `t_inductioninfo` VALUES ('12001', '1214210136', '01003', '2017-03-28 00:00:00', '0', '2017-03-28 00:00:00', '渎职导致离职', '22', '2017-04-17 13:17:56', 'OUT');
+INSERT INTO `t_inductioninfo` VALUES ('478110572', '20170414002', '01002', '2018-10-26 22:40:29', null, null, null, '33', null, 'IN');
+INSERT INTO `t_inductioninfo` VALUES ('530248724', '1214210136', '01004', '2018-10-27 21:40:05', null, null, null, '33', null, 'IN');
+INSERT INTO `t_inductioninfo` VALUES ('704242818', '20170414002', '01003', '2018-10-27 21:04:10', null, null, null, '33', null, 'IN');
 
 -- ----------------------------
 -- Table structure for t_notice
@@ -225,8 +215,8 @@ CREATE TABLE `t_positionsinfo` (
 -- Records of t_positionsinfo
 -- ----------------------------
 INSERT INTO `t_positionsinfo` VALUES ('01001', 'POS20170419205305', '普通职员', '端茶倒水', '4521.00', '1200.00', '1233.00', '备注1爱好的金卡是的哈卡接收到很快就阿萨德', '2018-10-22 22:33:20', null);
-INSERT INTO `t_positionsinfo` VALUES ('01002', 'IWGJI9Q9', '局长7', '管下属sdadsadadasd', '77700.00', '9900.00', '1200.88', '测试002埃里克森教大家的萨达克拉建档立卡', '2018-10-18 20:10:14', null);
+INSERT INTO `t_positionsinfo` VALUES ('01002', 'IWGJI9Q9', '实施顾问', '管下属sdadsadadasd', '77700.00', '9900.00', '1200.88', '测试002埃里克森教大家的萨达克拉建档立卡', '2018-10-25 23:05:15', null);
 INSERT INTO `t_positionsinfo` VALUES ('01003', 'EGOIDMBS', '部门经理', '管理部门asda', '4512.56', '456.00', '1200.00', '测试1111adsadasdsadadad', '2018-10-18 20:09:45', null);
 INSERT INTO `t_positionsinfo` VALUES ('01004', 'POS20170419205305', '文书', '负责部门文职工作', '4000.00', '1200.00', '125.35', '测试001', '2018-10-17 13:40:17', null);
-INSERT INTO `t_positionsinfo` VALUES ('01005', 'POS20170419205305', '测试岗位001', '测试数据001', '4500.00', '5600.00', '1200.00', '测试修改', '2018-10-18 20:14:28', null);
+INSERT INTO `t_positionsinfo` VALUES ('01005', 'POS20170419205305', '测试岗位', '测试数据001', '4500.00', '5600.00', '1200.00', '测试修改', '2018-10-25 23:05:05', null);
 INSERT INTO `t_positionsinfo` VALUES ('01006', 'FS8TV3VY', '大堂经理', '测试金额控件限制', '324.89', '5600.25', '5610.11', '测试测试9090909900搭建了卡萨丁', '2018-10-18 20:13:19', null);

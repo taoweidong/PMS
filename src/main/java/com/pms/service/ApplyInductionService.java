@@ -1,5 +1,6 @@
 package com.pms.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.pms.entity.Inductioninfo;
@@ -13,8 +14,7 @@ import com.pms.entity.ReturnData;
  */
 public interface ApplyInductionService {
 
-	Map<String, Object> queryApplyInduction(Integer page, Integer rows, String posName,
-			String approveState, String startDate, String endDate, String role, String userId);
+	Map<String, Object> queryApplyInduction(Integer page, Integer rows, String startDate, String endDate, String role,Inductioninfo inductioninfo);
 
 	/**
 	 * 检查岗位是否在使用.
@@ -50,5 +50,7 @@ public interface ApplyInductionService {
 	 * @return
 	 */
 	ReturnData updateUserApplyApprove(Inductioninfo inductioninfo);
+
+	List<Map<String, Object>> getUserNameComboList();
 
 }

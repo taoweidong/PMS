@@ -1,5 +1,6 @@
 package com.pms.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.pms.entity.Administrator;
 import com.pms.entity.Employee;
 import com.pms.entity.Inductioninfo;
@@ -46,6 +49,8 @@ public class ApplyInductionController {
 			@RequestParam(value = "posName", defaultValue = StringUtils.EMPTY) String posName,
 			@RequestParam(value = "startDate", defaultValue = StringUtils.EMPTY) String startDate,
 			@RequestParam(value = "endDate", defaultValue = StringUtils.EMPTY) String endDate,
+			@RequestParam(value = "indState", defaultValue = StringUtils.EMPTY) String indState,
+			@RequestParam(value = "empNo", defaultValue = StringUtils.EMPTY) String empNo,	
 			@RequestParam(value = "approveState", defaultValue = StringUtils.EMPTY) String approveState) {
 
 		String role = request.getSession().getAttribute("role").toString();
@@ -57,9 +62,20 @@ public class ApplyInductionController {
 		} else if (user instanceof Employee) {
 			userId = ((Employee) user).getNo();
 		}
+		
+		Inductioninfo inductioninfo = new Inductioninfo();
+		inductioninfo.setPosId(posName);
+		inductioninfo.setExt3(indState);
+	
+		
+		if (!StringUtils.equals(role, "user")) {
+			inductioninfo.setEmpNo(empNo);
+		}else
+		{
+			inductioninfo.setEmpNo(userId);
+		}
 
-		Map<String, Object> result = applyInductionService.queryApplyInduction(page, rows, posName,
-				approveState, startDate, endDate, role, userId);
+		Map<String, Object> result = applyInductionService.queryApplyInduction(page, rows, startDate, endDate, role, inductioninfo);
 
 		return result;
 
@@ -159,4 +175,47 @@ public class ApplyInductionController {
 
 		return result;
 	}
+
+	/**
+	 * 管理员审批操作
+	 * @param id
+	 * @param posId
+	 * @param ext3
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/updateAdminApplyApprove", method = RequestMethod.POST)
+	public ReturnData updateAdminApplyApprove(@RequestParam("id") String id,
+			@RequestParam("ext1") String ext1) throws Exception {
+
+		Inductioninfo inductioninfo = applyInductionService.findInductionById(id);
+		inductioninfo.setExt1(StringUtils.trimToEmpty(ext1));
+		inductioninfo.setExt2(DateUtil.getCurrentDateStr());
+
+		ReturnData result = applyInductionService.updateUserApplyApprove(inductioninfo);
+
+		return result;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/getUserNameComboList", method = RequestMethod.POST)
+	public List<Map<String, Object>> getUserNameComboList() {
+		List<Map<String, Object>> returnData = Lists.newArrayList();
+
+		Map<String, Object> param = Maps.newHashMap();
+		param.put("id", "");
+		param.put("name", "请选择...");
+
+		returnData.add(param);
+
+		List<Map<String, Object>> result = applyInductionService.getUserNameComboList();
+
+		returnData.addAll(result);
+
+		return returnData;
+
+	}
+	
 }

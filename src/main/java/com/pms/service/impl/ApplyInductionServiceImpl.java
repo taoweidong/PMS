@@ -50,25 +50,35 @@ public class ApplyInductionServiceImpl implements ApplyInductionService {
 	private AdminService adminService;
 
 	@Override
-	public Map<String, Object> queryApplyInduction(Integer page, Integer rows, String posName,
-			String approveState, String startDate, String endDate, String role, String userId) {
+	public Map<String, Object> queryApplyInduction(Integer page, Integer rows, String startDate,
+			String endDate, String role, Inductioninfo inductioninfo) {
 		Map<String, Object> result = Maps.newHashMap();
 
 		Example example = new Example(Inductioninfo.class);
 		Example.Criteria criteria = example.createCriteria();
 
 		// 相等查询
-		if (StringUtils.isNotBlank(approveState)) {
-			criteria.andEqualTo("ext1", approveState);
+		if (!StringUtils.equals(role, "user")) {
+			criteria.andNotEqualTo("ext1", "33");// 管理員只查詢已经提交的信息
+		} else {
+			if (StringUtils.isNotBlank(inductioninfo.getExt1())) {
+				criteria.andEqualTo("ext1", inductioninfo.getExt1());
+			}
+		}
+
+		// 相等查询
+		if (StringUtils.isNotBlank(inductioninfo.getPosId())) {
+			criteria.andEqualTo("posId", inductioninfo.getPosId());
 		}
 		// 相等查询
-		if (StringUtils.isNotBlank(posName)) {
-			criteria.andEqualTo("posId", posName);
+		if (StringUtils.isNotBlank(inductioninfo.getExt3())) {
+			criteria.andEqualTo("ext3", inductioninfo.getExt3());
 		}
 		// 相等查询
-		if (StringUtils.equals(role, "user")) {
-			criteria.andEqualTo("empNo", userId);
+		if (StringUtils.isNotBlank(inductioninfo.getEmpNo())) {
+			criteria.andEqualTo("empNo", inductioninfo.getEmpNo());
 		}
+
 		// 筛选时间--在某个时间段内
 		if (StringUtils.isNotBlank(startDate)) {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -239,6 +249,11 @@ public class ApplyInductionServiceImpl implements ApplyInductionService {
 		}
 
 		return ReturnData.success();
+	}
+
+	@Override
+	public List<Map<String, Object>> getUserNameComboList() {
+		return inductioninfoMapper.getUserNameComboList();
 	}
 
 }

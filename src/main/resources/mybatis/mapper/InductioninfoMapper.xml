@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.pms.mapper.InductioninfoMapper" >
   <resultMap id="BaseResultMap" type="com.pms.entity.Inductioninfo" >
     <!--
@@ -33,4 +33,11 @@
     -->
     IND_Reasons
   </sql>
+  
+  <select id="getUserNameComboList" resultType="java.util.HashMap">
+	 (SELECT a.EMP_NO AS id,b.EMP_NAME AS name FROM t_inductioninfo a LEFT JOIN t_employee b ON a.EMP_NO = b.EMP_NO WHERE b.EMP_NO IS NOT NULL)
+		UNION
+	(SELECT a.EMP_NO AS id,b.ADMIN_NAME AS name FROM t_inductioninfo a LEFT JOIN t_administrator b ON a.EMP_NO = b.ADMIN_ID WHERE b.ADMIN_ID IS NOT NULL)
+  </select>
+  
 </mapper>
