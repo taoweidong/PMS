@@ -92,12 +92,12 @@
 			<table cellspacing="8px">
 				<tr>
 					<td>用户名：</td>
-					<td><input type="text" id="userName" name="userName" value="XXXXXX" readonly="readonly" style="width: 200px" /></td>
+					<td><input type="text" id="userName" name="userName" value="${sessionScope.user.name}" readonly="readonly" style="width: 200px" /></td>
 				</tr>
-				<tr>
+				<%-- 			<tr>
 					<td>原密码：</td>
-					<td><input type="password" id="oldPassword" class="easyui-validatebox" maxlength="12" validType="newEqualToOld['XXX']" invalidMessage="密码验证失败" value="" required="true" style="width: 200px" /></td>
-				</tr>
+					<td><input type="password" id="oldPassword" class="easyui-validatebox" maxlength="12" validType="newEqualToOld['${sessionScope.user.pwd}']" invalidMessage="密码验证失败" value="" required="true" style="width: 200px" /></td>
+				</tr> --%>
 				<tr>
 					<td>新密码：</td>
 					<td><input type="password" id="newPassword" name="newPassword" class="easyui-validatebox" required="true" style="width: 200px" /></td>

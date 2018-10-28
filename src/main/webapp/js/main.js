@@ -5,11 +5,27 @@ $.extend($.fn.validatebox.defaults.rules, {
 	newEqualToOld : {
 		validator : function(value, param) {
 			console.log(param[0] + "------" + value);
-			return param[0] == value;
+			var resultFlag = false;
+			// 向后台发送一个post请求
+			$.post("checkPwd", {
+				password : value
+			}, function(result) {
+				console.log(result);
+
+				if (result.success) {
+					// $.messager.alert("系统提示","添加成功","info");
+					resultFlag = true;
+				} else {
+					// $.messager.alert("系统提示","添加失败","error");
+					resultFlag = false;
+				}
+			}, "json");
+			return resultFlag;
 		},
 		message : '字段不匹配'
 	}
 });
+
 /**
  * 功能：校验第一次输入的密码和第二次修改的密码是否一致
  */
@@ -47,7 +63,7 @@ function openTab(text, url, iconCls) {
 /* 打开修改密码的弹出框 */
 function openPasswordModifyDialog() {
 	$("#dlg").dialog("open").dialog("setTitle", "修改密码");
-	url = "PasswordModify";
+	url = "passwordModify";
 
 }
 function closePasswordModifyDialog() {

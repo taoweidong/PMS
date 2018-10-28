@@ -89,12 +89,8 @@ function saveStudent() {
 		success : function(result) {
 			// 把JSON对象转为javascript对象
 			var result = eval('(' + result + ')');
-			console.log(result);
 			if (result.success) {
 				$.messager.alert("系统提示", "更新成功,，下一次登录生效！");
-				resetValue();
-				$('#dlg').dialog("close");// 关闭dialog
-				$('#dg').datagrid("reload");// 重新加载表格
 			} else {
 				$.messager.alert("系统提示", result.errorMsg);
 				return;
@@ -112,12 +108,8 @@ function saveAdmin() {
 		success : function(result) {
 			// 把JSON对象转为javascript对象
 			var result = eval('(' + result + ')');
-			console.log(result);
 			if (result.success) {
-				$.messager.alert("系统提示", "更新成功,，下一次登录生效！");
-				resetValue();
-				$('#dlg').dialog("close");// 关闭dialog
-				$('#dg').datagrid("reload");// 重新加载表格
+				$.messager.alert("系统提示", "更新成功,下一次登录生效！");
 			} else {
 				$.messager.alert("系统提示", result.errorMsg);
 				return;

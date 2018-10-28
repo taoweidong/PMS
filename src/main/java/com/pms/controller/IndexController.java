@@ -40,18 +40,7 @@ public class IndexController {
 	@Autowired
 	private EmployeeService employeeService;
 
-	private static final String USER = "user";
-	private static final String ROLE = "role";
 	private static final String ERROR = "error";
-
-	/**
-	 * 用户名
-	 */
-	private String user = "";
-	/**
-	 * 角色
-	 */
-	private String roleFlag = "";
 
 	/**
 	 * 主页导航功能.
@@ -70,8 +59,6 @@ public class IndexController {
 		request.getSession().invalidate();
 
 		request.getSession().removeAttribute("role");
-
-		System.out.println(request.getSession().getAttribute("role"));
 
 		LOGGER.debug("logout");
 
@@ -101,9 +88,6 @@ public class IndexController {
 					model.addAttribute(ERROR, "用户名或密码输入错误!");
 					return "index";
 				} else {
-					user = employee.getName();
-					roleFlag = role;
-
 					// 设置session
 					httpSession.setAttribute("user", employee);
 					httpSession.setAttribute("role", role);
@@ -119,9 +103,6 @@ public class IndexController {
 					model.addAttribute(ERROR, "用户名或密码输入错误!");
 					return "index";
 				} else {
-					user = admin.getName();
-					roleFlag = role;
-
 					// 设置session
 					httpSession.setAttribute("user", admin);
 					httpSession.setAttribute("role", role);
@@ -147,13 +128,15 @@ public class IndexController {
 	 * @return 主页地址
 	 */
 	@RequestMapping("/main")
-	public String main(final Model model, final HttpServletRequest request) {
+	public String main(Model model, HttpSession httpSession) {
+		// 更新session中的数据
+		String role = (String) httpSession.getAttribute("role");
+		Object user = httpSession.getAttribute("user");
 
-		// HttpSession session = request.getSession();
-		model.addAttribute(USER, user);
-		model.addAttribute(ROLE, roleFlag);
+		if (user == null || StringUtils.isBlank(role)) {
+			return "redirect:logout";
+		}
 
-		// model.addAttribute("user", admin);
 		return "main";
 	}
 }

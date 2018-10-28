@@ -3,6 +3,7 @@ package com.pms.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
 import com.pms.entity.Administrator;
 import com.pms.entity.Employee;
 import com.pms.entity.ReturnData;
@@ -68,6 +68,76 @@ public class PersionInfoController {
 		return "PersionInfoManage";
 	}
 
+	/**
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/checkPwd", method = RequestMethod.POST)
+	public ReturnData checkPwd(@RequestParam("password") String password,
+			HttpServletRequest request) throws Exception {
+
+		Object user = request.getSession().getAttribute("user");
+		if (user instanceof Administrator) {
+			if (StringUtils.equals(((Administrator) user).getPwd(),
+					AESUtil.parseByte2HexStr(AESUtil.encrypt(password)))) {
+				return ReturnData.success();
+			}
+		} else if (user instanceof Employee) {
+			if (StringUtils.equals(((Employee) user).getPwd(),
+					AESUtil.parseByte2HexStr(AESUtil.encrypt(password)))) {
+				return ReturnData.success();
+			}
+		}
+
+		return ReturnData.fail("密码错误!");
+	}
+
+	/**
+	 * 更新密码.
+	 * @param password
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping(value = "/passwordModify", method = RequestMethod.POST)
+	public ReturnData passwordModify(@RequestParam("newPassword") String newPassword,
+			@RequestParam("newPassword2") String newPassword2, HttpServletRequest request)
+			throws Exception {
+
+		if (!StringUtils.equals(newPassword, newPassword2)) {
+			return ReturnData.fail("密码不一致!");
+		}
+
+		if (StringUtils.isBlank(newPassword)) {
+			return ReturnData.fail("密码不能为空!");
+		}
+
+		Object user = request.getSession().getAttribute("user");
+		if (user instanceof Administrator) {
+			Administrator admin = (Administrator) user;
+			admin.setPwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(newPassword)));
+			return adminService.updateAdmin(admin);
+		} else if (user instanceof Employee) {
+			Employee employee = (Employee) user;
+			employee.setPwd(AESUtil.parseByte2HexStr(AESUtil.encrypt(newPassword)));
+			return employeeService.updateEmployee(employee);
+		}
+
+		return ReturnData.fail("修改失败!");
+	}
+
+	/**
+	 * 更新个人信息.
+	 * @param id
+	 * @param no
+	 * @param name
+	 * @param newPassword
+	 * @param phone
+	 * @param ext1
+	 * @param httpSession
+	 * @return
+	 * @throws Exception
+	 */
 	@ResponseBody
 	@RequestMapping(value = "/updatePersion", method = RequestMethod.POST)
 	public ReturnData updatePersion(@RequestParam("id") String id, @RequestParam("no") String no,
@@ -88,6 +158,10 @@ public class PersionInfoController {
 
 			result = employeeService.updateEmployee(employee);
 
+			// 清除旧数据
+			httpSession.removeAttribute("user");
+			httpSession.setAttribute("user", employee);
+
 		} else// 管理员更新
 		{
 
@@ -103,14 +177,13 @@ public class PersionInfoController {
 			admin.setExt1(StringUtils.trimToEmpty(ext1));
 			admin.setExt2(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date().getTime()));
 
-			System.out.println(JSON.toJSON(admin));
-
 			result = adminService.updateAdmin(admin);
+
+			// 清除旧数据
+			httpSession.removeAttribute("user");
+			httpSession.setAttribute("user", admin);
 		}
 		return result;
 	}
 
-	/** Default constructor */
-	public PersionInfoController() {
-	}
 }
