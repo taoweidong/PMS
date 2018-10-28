@@ -164,7 +164,7 @@
 												<tr>
 													<td width=100 align=right><input style="border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" id=btnLogin src="${pageContext.request.contextPath}/images/btn1.jpg" type=image name=btnLogin onclick="javascript:login();return false;"></td>
 													<td width=100 align=middle><input style="border-right-width: 0px; border-top-width: 0px; border-bottom-width: 0px; border-left-width: 0px" id=btnReset src="${pageContext.request.contextPath}/images/btn2.jpg" type="image" name=btnReset onclick="javascript:loginIdClear();return false;"></td>
-													<td width=100 align=left><a href="javascript:openStudentAddDialog()" class="easyui-linkbutton" iconCls="button" plain="true">注册</a></td>
+													<!-- <td width=100 align=left><a href="javascript:openStudentAddDialog()" class="easyui-linkbutton" iconCls="button" plain="true">注册</a></td> -->
 												</tr>
 											</tbody>
 										</table>
