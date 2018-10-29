@@ -12,8 +12,10 @@
 	<context:annotation-config />
 	<!--启动定时器 -->
 	<task:annotation-driven />
-	<!--启用缓存 -->
-	<!-- 	<cache:annotation-driven /> -->
+
+	<!-- 加载数据库配置文件 -->
+	<context:property-placeholder
+		location="classpath:db.properties" />
 
 	<!-- 启动组件扫描，排除@Controller组件，该组件由SpringMVC配置文件扫描 -->
 	<context:component-scan base-package="com.pms">
@@ -23,10 +25,6 @@
 			expression="org.springframework.web.bind.annotation.RestController" />
 	</context:component-scan>
 
-
-	<!-- 加载数据库配置文件 -->
-	<context:property-placeholder
-		location="classpath:db.properties" />
 	<!--配置数据库连接池Druid -->
 	<bean id="dataSource"
 		class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
@@ -89,20 +87,6 @@
 		<property name="sqlSessionFactoryBeanName"
 			value="sqlSessionFactory" />
 	</bean>
-
-	<!--产生ehcache的缓存管理器,并把ehcache的cacheManager注入到Spring的EhCacheCacheManager -->
-	<!-- 	
-	<bean id="defaultCacheManager"
-		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation" value="classpath:ehcache.xml" />
-	</bean> -->
-	<!--注入spring缓存管理器
-	-->
-	<!--<bean id="cacheManager"
-		class="org.springframework.cache.ehcache.EhCacheCacheManager">
-		<property name="cacheManager" ref="defaultCacheManager" />
-	</bean> -->
-	<!--ehcache配置结束 -->
 
 	<!--配置事务管理,如果想更加精细控制,则使用注解事务 -->
 	<bean name="transactionManager"

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50536
 File Encoding         : 65001
 
-Date: 2018-10-27 21:51:46
+Date: 2018-10-29 22:57:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,7 +36,7 @@ CREATE TABLE `t_administrator` (
 -- ----------------------------
 INSERT INTO `t_administrator` VALUES ('1fba6ae328004629945fe361a736fc59', '100115', '9AF23FC3DA0A8E4B6955C63E3A50AD53', '李三三', '18293892838', '敖德萨所大大所大所多爱看的骄傲的看见爱上了肯德基爱打架埃里克的爱神的箭看拉家带口啦搭建卡丢了敬爱的卡拉数据的', '2018-09-16 23:11:48', '超级管理员');
 INSERT INTO `t_administrator` VALUES ('20170414001', '100113', '9AF23FC3DA0A8E4B6955C63E3A50AD53', '测试001ddddd', '15878909876', '测试修改2123131测试9999', '2018-09-16 23:11:01', '超级管理员');
-INSERT INTO `t_administrator` VALUES ('20170414002', 'admin', '9AF23FC3DA0A8E4B6955C63E3A50AD53', '李三', '18999999999', '测试444ggggg', '2018-10-05 20:38:05', '超级管理员');
+INSERT INTO `t_administrator` VALUES ('20170414002', 'admin', '9AF23FC3DA0A8E4B6955C63E3A50AD53', '李三', '18999999999', '测试', '2018-10-28 22:35:17', '超级管理员');
 INSERT INTO `t_administrator` VALUES ('5318ce088af545d88852628fdd01f217', '100118', '9AF23FC3DA0A8E4B6955C63E3A50AD53', 'asddad', '15878909876', 'asdadasdasda', '2018-09-21 23:24:07', '超级管理员');
 INSERT INTO `t_administrator` VALUES ('72b62b394e8d4cc293c98b6b26ea2aa5', '909090', '9AF23FC3DA0A8E4B6955C63E3A50AD53', '栗子', '18293892383', '测试2222', '2018-09-16 22:25:07', '超级管理员');
 INSERT INTO `t_administrator` VALUES ('c19e27174cee436cbae738929d9a7ca7', '100117', '9AF23FC3DA0A8E4B6955C63E3A50AD53', '909090', '18239239829', '测试ppp', '2018-09-16 23:12:32', '超级管理员');
